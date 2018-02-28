@@ -1,16 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card } from 'material-ui/Card';
 
-import Map from './Map';
-
-export default class Layout extends React.Component {
+export default class PaperCard extends React.Component {
   render() {
     return (
       <Card
         className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
         style={styles.card}
       >
-        <Map />
+        heelo
       </Card>
     );
   }
@@ -23,4 +22,8 @@ const styles = {
     borderRadius: '2px',
     minHeight: '500px',
   },
+};
+
+PaperCard.propTypes = {
+  papers: PropTypes.array,
 };

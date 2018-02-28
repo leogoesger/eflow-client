@@ -5,8 +5,10 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import configureStore, { history } from './store/configureStore';
 import Root from './components/Root';
+import '../node_modules/animate.css/animate.min.css';
 import '../node_modules/flexboxgrid/css/flexboxgrid.min.css';
 import './styles/styles.css';
+
 const store = configureStore();
 
 render(

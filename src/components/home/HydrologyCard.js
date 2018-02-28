@@ -10,14 +10,12 @@ export default class HydrologyCard extends React.Component {
   render() {
     return (
       <Paper
-        className="col-lg-9 col-md-9 col-xs-12"
+        className="col-lg-9 col-md-9 col-xs-12 "
         style={styles.tabsCard}
         zDepth={2}
       >
         <div className="col-lg-4 col-md-4 col-xs-12">
-          <div style={{ width: '100%' }}>
-            <FlatButton label="Hydrology" />
-          </div>
+          <FlatButton label="Hydrology" />
         </div>
       </Paper>
     );

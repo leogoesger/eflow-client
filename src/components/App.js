@@ -7,12 +7,13 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import { Colors } from '../styles';
 import Home from '../containers/Home';
+import Header from '../containers/Header';
+import Footer from '../containers/Footer';
 import Hydrology from '../containers/Hydrology';
 import Morphology from '../containers/Morphology';
 import Function from '../containers/Function';
 import Team from '../containers/Team';
-import Header from '../containers/Header';
-import Footer from '../containers/Footer';
+import Paper from '../containers/Paper';
 
 class App extends React.Component {
   render() {
@@ -31,6 +32,7 @@ class App extends React.Component {
               <Route exact path="/morphology" component={Morphology} />
               <Route exact path="/function" component={Function} />
               <Route exact path="/team" component={Team} />
+              <Route exact path="/paper" component={Paper} />
             </Switch>
             <Footer />
           </div>

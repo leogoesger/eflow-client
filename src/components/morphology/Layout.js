@@ -6,7 +6,10 @@ import Map from './Map';
 export default class Layout extends React.Component {
   render() {
     return (
-      <Card className="col-lg-9 col-md-9 col-xs-12" style={styles.card}>
+      <Card
+        className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
+        style={styles.card}
+      >
         heelo
       </Card>
     );

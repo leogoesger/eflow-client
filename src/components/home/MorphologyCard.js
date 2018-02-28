@@ -15,9 +15,7 @@ export default class MorphologyCard extends React.Component {
         zDepth={2}
       >
         <div className="col-lg-4 col-md-4 col-xs-12">
-          <div style={{ width: '100%' }}>
-            <FlatButton label="Hydrology" />
-          </div>
+          <FlatButton label="Morphology" />
         </div>
       </Paper>
     );

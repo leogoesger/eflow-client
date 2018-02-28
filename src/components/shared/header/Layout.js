@@ -90,7 +90,6 @@ const styles = {
     textTransform: 'none',
     color: Colors.grey,
     fontSize: Theme.buttonLabelSmall,
-    padding: '5px 0px',
   },
 };
 
