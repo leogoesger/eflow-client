@@ -22,6 +22,7 @@ export default class NavRight extends React.Component {
           icon={<Book />}
           style={styles.headerButton}
           labelStyle={styles.headerWhiteButtonLabel}
+          hoverColor={'rgba(12, 12, 12, 0.1)'}
           onClick={() => navigateTo('/paper')}
         />
         <FlatButton
@@ -29,6 +30,7 @@ export default class NavRight extends React.Component {
           className="e2e-header-login-btn"
           labelPosition="after"
           icon={<Person />}
+          hoverColor={'rgba(12, 12, 12, 0.1)'}
           style={styles.headerButton}
           labelStyle={styles.headerWhiteButtonLabel}
           onClick={() => navigateTo('/team')}
@@ -46,17 +48,17 @@ const styles = {
     lineHeight: '30px',
   },
   headerButton: {
-    color: Colors.white,
     height: '36px',
+    color: Colors.grey,
     borderRadius: Theme.buttonBorderRadius,
   },
   headerWhiteButtonLabel: {
     marginLeft: '2px',
     marginRight: '5px',
     textTransform: 'none',
+    color: Colors.grey,
     fontSize: Theme.buttonLabelSmall,
     padding: '5px 0px',
-    color: Colors.white,
   },
 };
 

@@ -3,7 +3,8 @@ const Colors = {
   offWhite: '#DFE0E1',
   black: '#323232',
   offBlack: '#404448',
-  blue: '#2196F3',
+  blue: '#0288D1',
+  grey: '#616161',
 
   // paper
   lightGreyPaper: '#fafafa',

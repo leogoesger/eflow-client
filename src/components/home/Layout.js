@@ -1,12 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import HydrologyCard from './HydrologyCard';
+import MorphologyCard from './MorphologyCard';
+import FunctionCard from './FunctionCard';
 
 export default class Layout extends React.Component {
   render() {
-    return <div>{this.props.text}</div>;
+    return (
+      <div>
+        <HydrologyCard />
+        <MorphologyCard />
+        <FunctionCard />
+      </div>
+    );
   }
 }
-
-Layout.propTypes = {
-  text: PropTypes.string,
-};
