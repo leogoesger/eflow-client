@@ -7,6 +7,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import { Colors } from '../styles';
 import Home from '../containers/Home';
+import Hydrology from '../containers/Hydrology';
+import Header from '../containers/Header';
 
 class App extends React.Component {
   render() {
@@ -18,8 +20,10 @@ class App extends React.Component {
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
+            <Header />
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/hydrolgy" component={Hydrology} />
             </Switch>
           </div>
         </MuiThemeProvider>
