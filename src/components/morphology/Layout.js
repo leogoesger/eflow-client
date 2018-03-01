@@ -1,8 +1,6 @@
 import React from 'react';
 import { Card } from 'material-ui/Card';
 
-import Map from './Map';
-
 export default class Layout extends React.Component {
   render() {
     return (

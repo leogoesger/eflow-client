@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import Layout from '../components/paper/Layout';
 
@@ -10,14 +8,4 @@ export class Paper extends React.Component {
   }
 }
 
-Paper.propTypes = {};
-
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Paper);
+export default Paper;
