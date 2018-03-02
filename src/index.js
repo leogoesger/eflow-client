@@ -1,13 +1,14 @@
 // Set up your application entry point here...
 
 import React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import configureStore, { history } from './store/configureStore';
+import {render} from 'react-dom';
+import {AppContainer} from 'react-hot-loader';
+import configureStore, {history} from './store/configureStore';
 import Root from './components/Root';
 import '../node_modules/animate.css/animate.min.css';
 import '../node_modules/flexboxgrid/css/flexboxgrid.min.css';
 import './styles/styles.css';
+import '../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
 const store = configureStore();
 
