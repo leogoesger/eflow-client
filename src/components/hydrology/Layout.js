@@ -1,26 +1,37 @@
 import React from 'react';
-import { Card } from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
 
 import Map from './Map';
 
 export default class Layout extends React.Component {
   render() {
     return (
-      <Card
-        className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
-        style={styles.card}
+      <div
+        className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+        style={styles.container}
       >
         <Map />
-      </Card>
+        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <Paper style={styles.graph}>{'DH'}</Paper>
+          <Paper style={styles.graph}>{'Hello World'}</Paper>
+        </div>
+      </div>
     );
   }
 }
 
 const styles = {
-  card: {
-    margin: '0 auto',
-    marginTop: '120px',
-    borderRadius: '2px',
-    minHeight: '500px',
+  container: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    margin: '120px auto',
+    minHeight: '800px',
+  },
+  graph: {
+    height: '380px',
+    width: '100%',
+    marginLeft: '-10px',
+    marginBottom: '20px',
   },
 };
