@@ -1,11 +1,11 @@
 import React from 'react';
 import MapGL from 'react-map-gl';
 import {defaultMapStyle, dataLayer} from './map-style.js';
+import axios from 'axios';
 // import * as d3 from 'd3';
 
 import {fromJS} from 'immutable';
 import {classification} from '../../constants/classification.js';
-import geoJson from './output.json';
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -15,8 +15,8 @@ export default class Map extends React.Component {
       data: null,
       mapGL: null,
       viewport: {
-        width: 500,
-        height: 800,
+        width: 200,
+        height: 900,
         latitude: 36.7783,
         longitude: -119.4179,
         zoom: 5,
@@ -56,13 +56,23 @@ export default class Map extends React.Component {
     );
   }
 
-  _loadData = data => {
-    const mapStyle = defaultMapStyle
-      .setIn(['sources', 'classData'], fromJS({type: 'geojson', data}))
-      .set('layers', defaultMapStyle.get('layers').push(dataLayer));
+  _loadData() {
+    axios
+      .get(
+        // 'https://cdn.rawgit.com/leogoesger/eflow-node-api/31cf68bd/src/static/classTopo.json'
+        'https://cdn.rawgit.com/leogoesger/eflow-node-api/31cf68bd/src/static/classGeo.json'
+      )
+      .then(({data}) => {
+        // data = data.objects.output;
+        console.log(defaultMapStyle);
+        const mapStyle = defaultMapStyle
+          .setIn(['sources', 'classData'], fromJS({type: 'geojson', data}))
+          .set('layers', defaultMapStyle.get('layers').push(dataLayer));
 
-    this.setState({data, mapStyle});
-  };
+        console.log(mapStyle);
+        this.setState({data, mapStyle});
+      });
+  }
 
   _onHover = event => {
     const {features, srcEvent: {offsetX, offsetY}} = event;
@@ -97,20 +107,19 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <div style={{height: '100%'}}>
-        <MapGL
-          ref={map => (this.mapRef = map)}
-          {...this.state.viewport}
-          mapStyle={this.state.mapStyle}
-          minZoom={5}
-          onLoad={() => this._loadData(geoJson)}
-          onHover={e => this._onHover(e)}
-          onViewportChange={viewport => this._onViewportChange(viewport)}
-          mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
-        >
-          {this._renderTooltip()}
-        </MapGL>
-      </div>
+      <MapGL
+        ref={map => (this.mapRef = map)}
+        {...this.state.viewport}
+        mapStyle={this.state.mapStyle}
+        minZoom={5}
+        maxZoom={8}
+        onLoad={() => this._loadData()}
+        onHover={e => this._onHover(e)}
+        onViewportChange={viewport => this._onViewportChange(viewport)}
+        mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
+      >
+        {this._renderTooltip()}
+      </MapGL>
     );
   }
 }

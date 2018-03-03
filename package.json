@@ -9,8 +9,7 @@
     "preinstall": "node tools/nodeVersionCheck.js",
     "start-message": "babel-node tools/startMessage.js",
     "prestart": "npm run start-message",
-    "start":
-      "concurrently -k -r -s first \"npm run test:watch\" \"npm run open:src\" \"npm run lint:watch\"",
+    "start": "concurrently -k -r -s first \"npm run test:watch\" \"npm run open:src\" \"npm run lint:watch\"",
     "open:src": "babel-node tools/srcServer.js",
     "open:dist": "babel-node tools/distServer.js",
     "lint": "esw webpack.config.* src tools --color",
@@ -22,8 +21,7 @@
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",
     "test:cover": "npm run test -- --coverage ",
-    "test:cover:CI":
-      "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test:watch": "jest --watch",
     "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
     "analyze-bundle": "babel-node ./tools/analyzeBundle.js"
@@ -32,8 +30,10 @@
   "license": "MIT",
   "dependencies": {
     "animate.css": "3.6.1",
+    "axios": "0.18.0",
     "d3": "4.13.0",
     "flexboxgrid": "6.3.1",
+    "get-json": "1.0.0",
     "immutable": "3.8.2",
     "material-ui": "0.19.4",
     "object-assign": "4.1.0",
@@ -79,7 +79,6 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "20.0.4",
     "jest-cli": "20.0.4",
-    "json-loader": "0.5.4",
     "mockdate": "2.0.1",
     "node": "8.9.4",
     "node-sass": "4.5.3",
@@ -110,16 +109,23 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "<rootDir>/tools/assetsTransformer.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/assetsTransformer.js",
       "\\.(css)$": "<rootDir>/tools/assetsTransformer.js"
     },
-    "setupFiles": ["raf/polyfill", "./tools/enzymeTestAdapterSetup.js"]
+    "setupFiles": [
+      "raf/polyfill",
+      "./tools/enzymeTestAdapterSetup.js"
+    ]
   },
   "babel": {
     "env": {
       "development": {
-        "presets": ["env", "react", "react-hmre", "stage-1"]
+        "presets": [
+          "env",
+          "react",
+          "react-hmre",
+          "stage-1"
+        ]
       },
       "production": {
         "presets": [
@@ -144,7 +150,11 @@
         ]
       },
       "test": {
-        "presets": ["env", "react", "stage-1"]
+        "presets": [
+          "env",
+          "react",
+          "stage-1"
+        ]
       }
     }
   },
@@ -156,7 +166,9 @@
       "plugin:import/warnings",
       "plugin:react/recommended"
     ],
-    "plugins": ["react"],
+    "plugins": [
+      "react"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 6,

@@ -26,7 +26,7 @@ const styles = {
     justifyContent: 'space-around',
     flexWrap: 'wrap',
     margin: '120px auto',
-    minHeight: '800px',
+    height: '100%',
   },
   graph: {
     height: '364px',
