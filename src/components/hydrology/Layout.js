@@ -29,7 +29,7 @@ const styles = {
     minHeight: '800px',
   },
   graph: {
-    height: '380px',
+    height: '364px',
     width: '100%',
     marginLeft: '-10px',
     marginBottom: '20px',

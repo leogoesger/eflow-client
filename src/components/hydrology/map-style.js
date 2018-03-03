@@ -6,7 +6,7 @@ export const dataLayer = fromJS({
   source: 'classData',
   type: 'line',
   interactive: true,
-  minzoom: 6,
+  minzoom: 5,
   paint: {
     'line-color': {
       property: 'CLASS',

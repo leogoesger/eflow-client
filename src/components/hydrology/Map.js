@@ -1,10 +1,11 @@
 import React from 'react';
 import MapGL from 'react-map-gl';
 import {defaultMapStyle, dataLayer} from './map-style.js';
+// import * as d3 from 'd3';
 
 import {fromJS} from 'immutable';
-import geoJson from './sample.json';
 import {classification} from '../../constants/classification.js';
+import geoJson from './output.json';
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class Map extends React.Component {
       data: null,
       mapGL: null,
       viewport: {
-        width: 600,
+        width: 500,
         height: 800,
         latitude: 36.7783,
         longitude: -119.4179,
@@ -29,7 +30,6 @@ export default class Map extends React.Component {
     window.addEventListener('resize', this._resize);
     this._resize();
     this.setState({mapGL: this.mapRef.getMap()});
-    setTimeout(() => (window.state2 = this.state), 1000);
   }
 
   componentWillUnmount() {
@@ -97,11 +97,12 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{height: '100%'}}>
         <MapGL
           ref={map => (this.mapRef = map)}
           {...this.state.viewport}
           mapStyle={this.state.mapStyle}
+          minZoom={5}
           onLoad={() => this._loadData(geoJson)}
           onHover={e => this._onHover(e)}
           onViewportChange={viewport => this._onViewportChange(viewport)}
