@@ -8,16 +8,15 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div
-        className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+        className="col-lg-11 col-md-11 col-sm-11 col-xs-12"
         style={styles.container}
       >
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-          classifictions={this.props.classifictions}
+          classifications={this.props.classifications}
         />
         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Paper style={styles.graph}>{'DH'}</Paper>
-          <Paper style={styles.graph}>{'Hello World'}</Paper>
+          <Paper style={styles.graph} />
         </div>
       </div>
     );
@@ -25,7 +24,7 @@ export default class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  classifictions: PropTypes.array,
+  classifications: PropTypes.array,
 };
 
 const styles = {
@@ -37,7 +36,7 @@ const styles = {
     height: '100%',
   },
   graph: {
-    height: '348px',
+    height: '800px',
     width: '100%',
     marginBottom: '20px',
   },

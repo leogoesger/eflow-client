@@ -11,18 +11,18 @@ export class Hydrology extends React.Component {
   }
 
   render() {
-    return <Layout classifictions={this.props.classifictions} />;
+    return <Layout classifications={this.props.classifications} />;
   }
 }
 
 Hydrology.propTypes = {
   fetchClassifications: PropTypes.func,
-  classifictions: PropTypes.array,
+  classifications: PropTypes.array,
 };
 
 const mapStateToProps = state => {
   return {
-    classifictions: state.classification.classes,
+    classifications: state.classification.classifications,
   };
 };
 
