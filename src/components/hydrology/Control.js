@@ -26,6 +26,7 @@ export default class Control extends React.Component {
 
   handleToggle(classNumber) {
     this.setState({[classNumber]: !this.state[classNumber]});
+    this.props.hideLayer(classNumber);
   }
 
   _renderControllers() {
@@ -52,6 +53,7 @@ export default class Control extends React.Component {
 
 Control.propTypes = {
   classifications: PropTypes.array,
+  hideLayer: PropTypes.func,
 };
 
 const styles = {

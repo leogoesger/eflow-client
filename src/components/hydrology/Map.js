@@ -23,7 +23,7 @@ export default class Map extends React.Component {
         height: 900,
         latitude: 36.7783,
         longitude: -119.4179,
-        zoom: 5,
+        zoom: 5.3,
       },
       x: null,
       y: null,
@@ -111,9 +111,37 @@ export default class Map extends React.Component {
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
     const hoveredFeature =
-      features && features.find(f => f.layer.id === 'data');
+      features && features.find(f => f.layer.id.indexOf('class') >= 0);
     if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-      this.setState({features, x: offsetX, y: offsetY});
+      this.setState({hoveredFeature, x: offsetX, y: offsetY});
+    }
+  }
+
+  _hideLayer(className) {
+    const arrayIndex = this.state.mapStyle
+      .get('layers')
+      .toJS()
+      .findIndex(item => item.id === className);
+
+    if (
+      this.state.mapStyle.getIn([
+        'layers',
+        arrayIndex,
+        'layout',
+        'visibility',
+      ]) === 'visible'
+    ) {
+      const mapStyle = this.state.mapStyle.setIn(
+        ['layers', `${arrayIndex}`, 'layout', 'visibility'],
+        'none'
+      );
+      this.setState({mapStyle});
+    } else {
+      const mapStyle = this.state.mapStyle.setIn(
+        ['layers', arrayIndex, 'layout', 'visibility'],
+        'visible'
+      );
+      this.setState({mapStyle});
     }
   }
 
@@ -147,6 +175,7 @@ export default class Map extends React.Component {
         mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
       >
         {this._renderTooltip()}
+        <Control hideLayer={className => this._hideLayer(className)} />
       </MapGL>
     );
   }
