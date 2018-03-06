@@ -5,7 +5,7 @@ import _ from 'lodash';
 import {fromJS} from 'immutable';
 
 import {defaultMapStyle, dataLayer} from './map-style.js';
-import {classification} from '../../constants/classification.js';
+import {classification} from '../../constants/classification';
 import Control from './Control';
 
 export default class Map extends React.Component {
@@ -27,6 +27,7 @@ export default class Map extends React.Component {
       },
       x: null,
       y: null,
+      hoveredFeature: null,
     };
   }
 
@@ -44,43 +45,43 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.classifications !== this.state.classifications) {
-    //   const combinedMapStyle = {};
-    //   const combinedLayer = [];
-    //   nextProps.classifications.forEach(geoClass => {
-    //     combinedMapStyle[`class${geoClass.classId}`] = {
-    //       data: geoClass.geometry,
-    //       type: 'geojson',
-    //     };
-    //
-    //     let newDataLayer = dataLayer
-    //       .set('source', `class${geoClass.classId}`)
-    //       .set('id', `class${geoClass.classId}`);
-    //     combinedLayer.push(newDataLayer.toJS());
-    //   });
-    //
-    //   const newCombinedLayer = fromJS(
-    //     defaultMapStyle
-    //       .get('layers')
-    //       .toJS()
-    //       .concat(combinedLayer)
-    //   );
-    //
-    //   const mapStyle = defaultMapStyle
-    //     .set(
-    //       'sources',
-    //       fromJS(
-    //         _.assign(
-    //           {},
-    //           defaultMapStyle.get('sources').toJS(),
-    //           combinedMapStyle
-    //         )
-    //       )
-    //     )
-    //     .set('layers', newCombinedLayer);
-    //
-    //   this.setState({mapStyle});
-    // }
+    if (nextProps.classifications !== this.state.classifications) {
+      const combinedMapStyle = {};
+      const combinedLayer = [];
+      nextProps.classifications.forEach(geoClass => {
+        combinedMapStyle[`class${geoClass.classId}`] = {
+          data: geoClass.geometry,
+          type: 'geojson',
+        };
+
+        let newDataLayer = dataLayer
+          .set('source', `class${geoClass.classId}`)
+          .set('id', `class${geoClass.classId}`);
+        combinedLayer.push(newDataLayer.toJS());
+      });
+
+      const newCombinedLayer = fromJS(
+        defaultMapStyle
+          .get('layers')
+          .toJS()
+          .concat(combinedLayer)
+      );
+
+      const mapStyle = defaultMapStyle
+        .set(
+          'sources',
+          fromJS(
+            _.assign(
+              {},
+              defaultMapStyle.get('sources').toJS(),
+              combinedMapStyle
+            )
+          )
+        )
+        .set('layers', newCombinedLayer);
+
+      this.setState({mapStyle});
+    }
   }
 
   _resize() {
@@ -103,17 +104,17 @@ export default class Map extends React.Component {
     );
   }
 
+  _onViewportChange(viewport) {
+    this.setState({viewport, hoveredFeature: null, x: null, y: null});
+  }
+
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
     const hoveredFeature =
       features && features.find(f => f.layer.id === 'data');
     if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-      this.setState({hoveredFeature, x: offsetX, y: offsetY});
+      this.setState({features, x: offsetX, y: offsetY});
     }
-  }
-
-  _onViewportChange(viewport) {
-    this.setState({viewport, hoveredFeature: null, x: null, y: null});
   }
 
   _renderTooltip() {
@@ -146,7 +147,6 @@ export default class Map extends React.Component {
         mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
       >
         {this._renderTooltip()}
-        <Control />
       </MapGL>
     );
   }
