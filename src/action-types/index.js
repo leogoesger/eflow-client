@@ -1,7 +1,7 @@
-import ClassTypes from './class';
+import ClassificationTypes from './classification';
 
-export { ClassTypes };
+export {ClassificationTypes};
 
 export default {
-  ClassTypes,
+  ClassificationTypes,
 };

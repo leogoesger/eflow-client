@@ -1,9 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
 import {defaultMapStyle, dataLayer} from './map-style.js';
-import axios from 'axios';
-// import * as d3 from 'd3';
-
 import {fromJS} from 'immutable';
 import {classification} from '../../constants/classification.js';
 
@@ -29,14 +27,18 @@ export default class Map extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this._resize);
     this._resize();
-    this.setState({mapGL: this.mapRef.getMap()});
+    // this.setState({mapGL: this.mapRef.getMap()});
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
 
-  _resize = () => {
+  componentWillUpdate(nextProps) {
+    console.log(nextProps.classifictions);
+  }
+
+  _resize() {
     this.setState({
       viewport: {
         ...this.state.viewport,
@@ -44,7 +46,7 @@ export default class Map extends React.Component {
         height: window.innerHeight,
       },
     });
-  };
+  }
 
   _shouldUpdate(features, offsetX, offsetY, x) {
     return Boolean(
@@ -56,32 +58,31 @@ export default class Map extends React.Component {
     );
   }
 
-  _loadData() {
-    axios
-      .get(
-        // 'https://cdn.rawgit.com/leogoesger/eflow-node-api/31cf68bd/src/static/classTopo.json'
-        'https://cdn.rawgit.com/leogoesger/eflow-node-api/31cf68bd/src/static/classGeo.json'
-      )
-      .then(({data}) => {
-        // data = data.objects.output;
-        console.log(defaultMapStyle);
-        const mapStyle = defaultMapStyle
-          .setIn(['sources', 'classData'], fromJS({type: 'geojson', data}))
-          .set('layers', defaultMapStyle.get('layers').push(dataLayer));
+  // _loadData() {
+  //   d3.json(
+  //     'https://cdn.rawgit.com/leogoesger/eflow-node-api/31cf68bd/src/static/classGeo.json',
+  //     (error, data) => {
+  //       const mapStyle = defaultMapStyle
+  //         .setIn(['sources', 'classData'], fromJS({type: 'geojson', data}))
+  //         .set('layers', defaultMapStyle.get('layers').push(dataLayer));
+  //       this.setState({mapStyle: mapStyle});
+  //     }
+  //   );
+  // }
 
-        console.log(mapStyle);
-        this.setState({data, mapStyle});
-      });
+  _loadData() {
+    const data = this.props.classifictions;
+    console.log(data);
   }
 
-  _onHover = event => {
+  _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
     const hoveredFeature =
       features && features.find(f => f.layer.id === 'data');
     if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
       this.setState({hoveredFeature, x: offsetX, y: offsetY});
     }
-  };
+  }
 
   _onViewportChange(viewport) {
     this.setState({viewport, hoveredFeature: null, x: null, y: null});
@@ -108,7 +109,7 @@ export default class Map extends React.Component {
   render() {
     return (
       <MapGL
-        ref={map => (this.mapRef = map)}
+        // ref={map => (this.mapRef = map)}
         {...this.state.viewport}
         mapStyle={this.state.mapStyle}
         minZoom={5}
@@ -123,3 +124,7 @@ export default class Map extends React.Component {
     );
   }
 }
+
+Map.propTypes = {
+  classifictions: PropTypes.array,
+};

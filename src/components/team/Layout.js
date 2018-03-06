@@ -1,21 +1,24 @@
 import React from 'react';
-import { Card, CardMedia, CardTitle } from 'material-ui/Card';
+import {Card, CardMedia, CardTitle} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 
 import BillGates from '../../constants/billgates.jpg';
 
 export default class Layout extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
+  handleOpen() {
+    this.setState({open: true});
+  }
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  handleClose() {
+    this.setState({open: false});
+  }
 
   _renderMembers() {
     const members = [
@@ -73,7 +76,7 @@ export default class Layout extends React.Component {
             marginBottom: '30px',
           }}
         >
-          <Card style={{ cursor: 'pointer' }} onClick={() => this.handleOpen()}>
+          <Card style={{cursor: 'pointer'}} onClick={() => this.handleOpen()}>
             <CardMedia overlay={<CardTitle subtitle={member.name} />}>
               <img src={BillGates} alt="" />
             </CardMedia>
@@ -84,7 +87,7 @@ export default class Layout extends React.Component {
   }
   render() {
     return (
-      <div className="row col-lg-10 col-md-10" style={{ margin: '120px auto' }}>
+      <div className="row col-lg-10 col-md-10" style={{margin: '120px auto'}}>
         {this._renderMembers()}
         <Dialog
           title="Dialog With Actions"
