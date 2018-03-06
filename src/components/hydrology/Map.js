@@ -7,6 +7,7 @@ import {fromJS} from 'immutable';
 import {defaultMapStyle, dataLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
 import Control from './Control';
+import Loader from '../shared/loader/Loader';
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ export default class Map extends React.Component {
       x: null,
       y: null,
       hoveredFeature: null,
+      loading: true,
     };
   }
 
@@ -81,6 +83,7 @@ export default class Map extends React.Component {
         .set('layers', newCombinedLayer);
 
       this.setState({mapStyle});
+      setTimeout(() => this.setState({loading: false}), 3000);
     }
   }
 
@@ -105,7 +108,9 @@ export default class Map extends React.Component {
   }
 
   _onViewportChange(viewport) {
-    this.setState({viewport, hoveredFeature: null, x: null, y: null});
+    if (!this.state.loading) {
+      this.setState({viewport, hoveredFeature: null, x: null, y: null});
+    }
   }
 
   _onHover(event) {
@@ -176,6 +181,7 @@ export default class Map extends React.Component {
       >
         {this._renderTooltip()}
         <Control hideLayer={className => this._hideLayer(className)} />
+        <Loader loading={this.state.loading} />
       </MapGL>
     );
   }
