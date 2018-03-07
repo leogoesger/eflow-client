@@ -33,3 +33,23 @@ export const dataLayer = fromJS({
 });
 
 export const defaultMapStyle = fromJS(MAP_STYLE);
+
+export const gaugeLayer = fromJS({
+  id: 'gauges',
+  source: 'gauges',
+  type: 'circle',
+  interactive: true,
+  minzoom: 5,
+  layout: {
+    visibility: 'visible',
+  },
+  paint: {
+    'circle-radius': {
+      base: 3.5,
+      stops: [[5, 2.2], [7, 4]],
+    },
+    'circle-stroke-color': '#0277bd',
+    'circle-stroke-width': 1,
+    'circle-color': '#fff',
+  },
+});

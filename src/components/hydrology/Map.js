@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
-import _ from 'lodash';
-import {fromJS} from 'immutable';
 
-import {defaultMapStyle, dataLayer} from './map-style.js';
+import {defaultMapStyle, dataLayer, gaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
 import Control from './Control';
 import Loader from '../shared/loader/Loader';
+import {getMapStyle} from '../../utils/helpers';
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -30,6 +29,7 @@ export default class Map extends React.Component {
       y: null,
       hoveredFeature: null,
       loading: true,
+      gauges: null,
     };
   }
 
@@ -47,40 +47,14 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.classifications !== this.state.classifications) {
-      const combinedMapStyle = {};
-      const combinedLayer = [];
-      nextProps.classifications.forEach(geoClass => {
-        combinedMapStyle[`class${geoClass.classId}`] = {
-          data: geoClass.geometry,
-          type: 'geojson',
-        };
-
-        let newDataLayer = dataLayer
-          .set('source', `class${geoClass.classId}`)
-          .set('id', `class${geoClass.classId}`);
-        combinedLayer.push(newDataLayer.toJS());
-      });
-
-      const newCombinedLayer = fromJS(
-        defaultMapStyle
-          .get('layers')
-          .toJS()
-          .concat(combinedLayer)
+    if (nextProps.classifications !== this.props.classifications) {
+      const mapStyle = getMapStyle(
+        nextProps.classifications,
+        nextProps.gauges,
+        defaultMapStyle,
+        dataLayer,
+        gaugeLayer
       );
-
-      const mapStyle = defaultMapStyle
-        .set(
-          'sources',
-          fromJS(
-            _.assign(
-              {},
-              defaultMapStyle.get('sources').toJS(),
-              combinedMapStyle
-            )
-          )
-        )
-        .set('layers', newCombinedLayer);
 
       this.setState({mapStyle});
       setTimeout(() => this.setState({loading: false}), 3000);
@@ -115,10 +89,17 @@ export default class Map extends React.Component {
 
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
-    const hoveredFeature =
-      features && features.find(f => f.layer.id.indexOf('class') >= 0);
-    if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-      this.setState({hoveredFeature, x: offsetX, y: offsetY});
+
+    if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
+      const hoveredFeature =
+        features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
+      return this.setState({hoveredFeature, x: offsetX, y: offsetY});
+    } else {
+      const hoveredFeature =
+        features && features.find(f => f.layer.id.indexOf('class') >= 0);
+      if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
+        this.setState({hoveredFeature, x: offsetX, y: offsetY});
+      }
     }
   }
 
@@ -156,16 +137,31 @@ export default class Map extends React.Component {
     if (!x || !y) {
       return;
     }
-    return (
-      hoveredFeature && (
-        <div
-          className="tooltip"
-          style={{position: 'absolute', left: x, top: y}}
-        >
-          <div>{classification[hoveredFeature.properties.CLASS - 1]}</div>
-        </div>
-      )
-    );
+    console.log(hoveredFeature);
+
+    if (hoveredFeature.layer.id.indexOf('class') >= 0) {
+      return (
+        hoveredFeature && (
+          <div
+            className="tooltip"
+            style={{position: 'absolute', left: x, top: y}}
+          >
+            <div>{classification[hoveredFeature.properties.CLASS - 1]}</div>
+          </div>
+        )
+      );
+    } else {
+      return (
+        hoveredFeature && (
+          <div
+            className="tooltip"
+            style={{position: 'absolute', left: x, top: y}}
+          >
+            <div>{hoveredFeature.properties.stationName}</div>
+          </div>
+        )
+      );
+    }
   }
 
   render() {
@@ -175,6 +171,8 @@ export default class Map extends React.Component {
         mapStyle={this.state.mapStyle}
         minZoom={5}
         maxZoom={8}
+        buffer={0}
+        icon-allow-overlap={false}
         onHover={e => this._onHover(e)}
         onViewportChange={viewport => this._onViewportChange(viewport)}
         mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
@@ -189,4 +187,14 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   classifications: PropTypes.array,
+  gauges: PropTypes.array,
+};
+
+const styles = {
+  marker: {
+    width: '5px',
+    height: '5px',
+    background: 'yellow',
+    borderRadius: '50%',
+  },
 };
