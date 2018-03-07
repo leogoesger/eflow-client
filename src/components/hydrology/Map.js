@@ -189,12 +189,3 @@ Map.propTypes = {
   classifications: PropTypes.array,
   gauges: PropTypes.array,
 };
-
-const styles = {
-  marker: {
-    width: '5px',
-    height: '5px',
-    background: 'yellow',
-    borderRadius: '50%',
-  },
-};
