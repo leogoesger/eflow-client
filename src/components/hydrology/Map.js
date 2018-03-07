@@ -89,10 +89,17 @@ export default class Map extends React.Component {
 
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
-    const hoveredFeature =
-      features && features.find(f => f.layer.id.indexOf('class') >= 0);
-    if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-      this.setState({hoveredFeature, x: offsetX, y: offsetY});
+
+    if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
+      const hoveredFeature =
+        features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
+      return this.setState({hoveredFeature, x: offsetX, y: offsetY});
+    } else {
+      const hoveredFeature =
+        features && features.find(f => f.layer.id.indexOf('class') >= 0);
+      if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
+        this.setState({hoveredFeature, x: offsetX, y: offsetY});
+      }
     }
   }
 
@@ -130,16 +137,31 @@ export default class Map extends React.Component {
     if (!x || !y) {
       return;
     }
-    return (
-      hoveredFeature && (
-        <div
-          className="tooltip"
-          style={{position: 'absolute', left: x, top: y}}
-        >
-          <div>{classification[hoveredFeature.properties.CLASS - 1]}</div>
-        </div>
-      )
-    );
+    console.log(hoveredFeature);
+
+    if (hoveredFeature.layer.id.indexOf('class') >= 0) {
+      return (
+        hoveredFeature && (
+          <div
+            className="tooltip"
+            style={{position: 'absolute', left: x, top: y}}
+          >
+            <div>{classification[hoveredFeature.properties.CLASS - 1]}</div>
+          </div>
+        )
+      );
+    } else {
+      return (
+        hoveredFeature && (
+          <div
+            className="tooltip"
+            style={{position: 'absolute', left: x, top: y}}
+          >
+            <div>{hoveredFeature.properties.stationName}</div>
+          </div>
+        )
+      );
+    }
   }
 
   render() {
