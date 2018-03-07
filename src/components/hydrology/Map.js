@@ -137,7 +137,6 @@ export default class Map extends React.Component {
     if (!x || !y) {
       return;
     }
-    console.log(hoveredFeature);
 
     if (hoveredFeature.layer.id.indexOf('class') >= 0) {
       return (
