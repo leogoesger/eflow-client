@@ -4,7 +4,7 @@ import MapGL from 'react-map-gl';
 import _ from 'lodash';
 import {fromJS} from 'immutable';
 
-import {defaultMapStyle, dataLayer} from './map-style.js';
+import {defaultMapStyle, dataLayer, gaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
 import Control from './Control';
 import Loader from '../shared/loader/Loader';
@@ -30,6 +30,7 @@ export default class Map extends React.Component {
       y: null,
       hoveredFeature: null,
       loading: true,
+      gauges: null,
     };
   }
 
@@ -47,44 +48,49 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.classifications !== this.state.classifications) {
-      const combinedMapStyle = {};
-      const combinedLayer = [];
-      nextProps.classifications.forEach(geoClass => {
-        combinedMapStyle[`class${geoClass.classId}`] = {
-          data: geoClass.geometry,
-          type: 'geojson',
-        };
-
-        let newDataLayer = dataLayer
-          .set('source', `class${geoClass.classId}`)
-          .set('id', `class${geoClass.classId}`);
-        combinedLayer.push(newDataLayer.toJS());
-      });
-
-      const newCombinedLayer = fromJS(
+    if (nextProps.classifications !== this.props.classifications) {
+      const mapStyle = this._getMapStyle(
+        nextProps.classifications,
         defaultMapStyle
-          .get('layers')
-          .toJS()
-          .concat(combinedLayer)
       );
-
-      const mapStyle = defaultMapStyle
-        .set(
-          'sources',
-          fromJS(
-            _.assign(
-              {},
-              defaultMapStyle.get('sources').toJS(),
-              combinedMapStyle
-            )
-          )
-        )
-        .set('layers', newCombinedLayer);
 
       this.setState({mapStyle});
       setTimeout(() => this.setState({loading: false}), 3000);
     }
+  }
+
+  _getMapStyle(classifications, defaultMapStyle) {
+    const combinedMapStyle = {};
+    const combinedLayer = [];
+    classifications.forEach(geoClass => {
+      combinedMapStyle[`class${geoClass.classId}`] = {
+        data: geoClass.geometry,
+        type: 'geojson',
+      };
+
+      let newDataLayer = dataLayer
+        .set('source', `class${geoClass.classId}`)
+        .set('id', `class${geoClass.classId}`);
+      combinedLayer.push(newDataLayer.toJS());
+    });
+
+    const newCombinedLayer = fromJS(
+      defaultMapStyle
+        .get('layers')
+        .toJS()
+        .concat(combinedLayer)
+    );
+
+    const mapStyle = defaultMapStyle
+      .set(
+        'sources',
+        fromJS(
+          _.assign({}, defaultMapStyle.get('sources').toJS(), combinedMapStyle)
+        )
+      )
+      .set('layers', newCombinedLayer);
+
+    return mapStyle;
   }
 
   _resize() {
@@ -175,6 +181,8 @@ export default class Map extends React.Component {
         mapStyle={this.state.mapStyle}
         minZoom={5}
         maxZoom={8}
+        buffer={0}
+        icon-allow-overlap={false}
         onHover={e => this._onHover(e)}
         onViewportChange={viewport => this._onViewportChange(viewport)}
         mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
@@ -189,4 +197,14 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   classifications: PropTypes.array,
+  gauges: PropTypes.array,
+};
+
+const styles = {
+  marker: {
+    width: '5px',
+    height: '5px',
+    background: 'yellow',
+    borderRadius: '50%',
+  },
 };
