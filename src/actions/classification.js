@@ -11,7 +11,6 @@ const fetchClassificationObjects = classifications => {
 export function fetchClassifications() {
   return async dispatch => {
     try {
-      console.log(process.env.SERVER_ADDRESS);
       const classifications = await request.get(
         `${process.env.SERVER_ADDRESS}/api/geoclasses`
       );
