@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
-import _ from 'lodash';
-import {fromJS} from 'immutable';
 
 import {defaultMapStyle, dataLayer, gaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
 import Control from './Control';
 import Loader from '../shared/loader/Loader';
+import {getMapStyle} from '../../utils/helpers';
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -49,48 +48,17 @@ export default class Map extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.classifications !== this.props.classifications) {
-      const mapStyle = this._getMapStyle(
+      const mapStyle = getMapStyle(
         nextProps.classifications,
-        defaultMapStyle
+        nextProps.gauges,
+        defaultMapStyle,
+        dataLayer,
+        gaugeLayer
       );
 
       this.setState({mapStyle});
       setTimeout(() => this.setState({loading: false}), 3000);
     }
-  }
-
-  _getMapStyle(classifications, defaultMapStyle) {
-    const combinedMapStyle = {};
-    const combinedLayer = [];
-    classifications.forEach(geoClass => {
-      combinedMapStyle[`class${geoClass.classId}`] = {
-        data: geoClass.geometry,
-        type: 'geojson',
-      };
-
-      let newDataLayer = dataLayer
-        .set('source', `class${geoClass.classId}`)
-        .set('id', `class${geoClass.classId}`);
-      combinedLayer.push(newDataLayer.toJS());
-    });
-
-    const newCombinedLayer = fromJS(
-      defaultMapStyle
-        .get('layers')
-        .toJS()
-        .concat(combinedLayer)
-    );
-
-    const mapStyle = defaultMapStyle
-      .set(
-        'sources',
-        fromJS(
-          _.assign({}, defaultMapStyle.get('sources').toJS(), combinedMapStyle)
-        )
-      )
-      .set('layers', newCombinedLayer);
-
-    return mapStyle;
   }
 
   _resize() {

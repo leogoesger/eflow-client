@@ -36,17 +36,20 @@ export const defaultMapStyle = fromJS(MAP_STYLE);
 
 export const gaugeLayer = fromJS({
   id: 'gauges',
-  type: 'circle',
   source: 'gauges',
-  'source-layer': 'sf2010',
+  type: 'circle',
+  interactive: true,
+  minzoom: 5,
+  layout: {
+    visibility: 'visible',
+  },
   paint: {
-    // make circles larger as the user zooms from z12 to z22
     'circle-radius': {
-      base: 1.75,
-      stops: [[12, 2], [22, 180]],
+      base: 3.5,
+      stops: [[5, 2.2], [7, 4]],
     },
-    // color circles by ethnicity, using a match expression
-    // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
-    'circle-color': '#3bb2d0',
+    'circle-stroke-color': '#0277bd',
+    'circle-stroke-width': 1,
+    'circle-color': '#fff',
   },
 });
