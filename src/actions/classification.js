@@ -11,8 +11,9 @@ const fetchClassificationObjects = classifications => {
 export function fetchClassifications() {
   return async dispatch => {
     try {
+      console.log(process.env.SERVER_ADDRESS);
       const classifications = await request.get(
-        'http://127.0.0.1:8080/api/geoclasses'
+        `${process.env.SERVER_ADDRESS}/api/geoclasses`
       );
       dispatch(fetchClassificationObjects(classifications.body));
     } catch (e) {
