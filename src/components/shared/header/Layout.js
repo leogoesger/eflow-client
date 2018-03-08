@@ -1,8 +1,8 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 
-import { Colors, Theme } from '../../../styles';
-import { navigateTo } from '../../../utils/helpers';
+import {Colors, Theme} from '../../../styles';
+import {navigateTo} from '../../../utils/helpers';
 import NavRight from './NavRight';
 
 export default class Layout extends React.Component {
@@ -10,9 +10,9 @@ export default class Layout extends React.Component {
     return (
       <div style={styles.nav}>
         <div style={styles.container}>
-          <div className="row" style={{ margin: '0px' }}>
+          <div className="row" style={{margin: '0px'}}>
             <div style={styles.logo} onClick={() => navigateTo('/')}>
-              <span style={{ lineHeight: '55px', marginRight: '40px' }}>
+              <span style={{lineHeight: '55px', marginRight: '40px'}}>
                 {'eflow'}
               </span>
             </div>

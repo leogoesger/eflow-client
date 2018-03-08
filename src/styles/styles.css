@@ -128,6 +128,7 @@ body {
   width: 100%;
   background: url('../constants/backslant.svg') 0px 1100px no-repeat,
     url('../constants/backslant-head.svg') 160px 60px no-repeat;
+  background-position: left 0px bottom -180px, right 0px top 60px;
   background-color: #f5f6f7;
 }
 .tooltip {
@@ -140,4 +141,14 @@ body {
   font-size: 10px;
   z-index: 9;
   pointer-events: none;
+}
+.title {
+  display: flex;
+  justify-content: left;
+  font-weight: 300;
+  padding-left: 25px;
+  font-size: 40px;
+  line-height: 50px;
+  color: #757575;
+  font: Roboto, sans-serif;
 }
