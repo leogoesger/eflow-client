@@ -62,7 +62,11 @@ export default class HydrologyCard extends React.Component {
           </div>
           <div style={styles.subContainer}>
             <Card style={styles.subContainerCard}>
-              <CardHeader style={styles.title} title="Stream Classifications" />
+              <CardHeader
+                style={styles.title}
+                title="Stream Classifications"
+                titleColor="#424242"
+              />
               <CardText style={styles.text}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 mattis pretium massa. Aliquam erat volutpat.
@@ -70,7 +74,11 @@ export default class HydrologyCard extends React.Component {
             </Card>
 
             <Card style={styles.subContainerCard}>
-              <CardHeader style={styles.title} title="Dimensional Hydrograph" />
+              <CardHeader
+                style={styles.title}
+                title="Dimensional Hydrograph"
+                titleColor="#424242"
+              />
               <CardText style={styles.text}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 mattis pretium massa. Aliquam erat volutpat.
@@ -78,7 +86,11 @@ export default class HydrologyCard extends React.Component {
             </Card>
 
             <Card style={styles.subContainerCard}>
-              <CardHeader style={styles.title} title="Annual Flow Metrics" />
+              <CardHeader
+                style={styles.title}
+                title="Annual Flow Metrics"
+                titleColor="#424242"
+              />
               <CardText style={styles.text}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 mattis pretium massa. Aliquam erat volutpat.
@@ -130,6 +142,8 @@ const styles = {
   title: {
     fontWeight: '600',
     lineHeight: '20px',
+    paddingRight: '0px',
+    paddingBottom: '0px',
   },
 
   text: {
