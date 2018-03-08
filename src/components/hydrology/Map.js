@@ -12,7 +12,7 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapStyle: {},
+      mapStyle: defaultMapStyle,
       data: {
         type: 'FeatureCollection',
         features: [],
@@ -33,10 +33,6 @@ export default class Map extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.setState({mapStyle: defaultMapStyle});
-  }
-
   componentDidMount() {
     window.addEventListener('resize', () => this._resize());
     this._resize();
@@ -47,15 +43,13 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.gauges !== this.props.gauges) {
-      const mapStyle = getGaugeLayer(
-        nextProps.gauges,
-        defaultMapStyle,
-        gaugeLayer
-      );
+    const mapStyle = getGaugeLayer(
+      nextProps.gauges,
+      defaultMapStyle,
+      gaugeLayer
+    );
 
-      this.setState({mapStyle, loading: false});
-    }
+    this.setState({mapStyle, loading: false});
   }
 
   _resize() {

@@ -3,16 +3,21 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {fetchClassifications} from '../actions/classification';
+import {fetchGauges} from '../actions/gauge';
 import Layout from '../components/hydrology/Layout';
 
 export class Hydrology extends React.Component {
   render() {
     return <Layout gauges={this.props.gauges} />;
   }
+  componentWillMount() {
+    this.props.fetchGauges();
+  }
 }
 
 Hydrology.propTypes = {
   fetchClassifications: PropTypes.func,
+  fetchGauges: PropTypes.func,
   gauges: PropTypes.array,
 };
 
@@ -25,6 +30,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchClassifications: () => dispatch(fetchClassifications()),
+    fetchGauges: () => dispatch(fetchGauges()),
   };
 };
 

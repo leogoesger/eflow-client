@@ -9,10 +9,6 @@ class Header extends React.Component {
   render() {
     return <Layout />;
   }
-
-  componentWillMount() {
-    this.props.fetchGauges();
-  }
 }
 
 const mapStateToProps = state => {
@@ -29,6 +25,7 @@ const mapDispatchToProps = dispatch => {
 
 Header.propTypes = {
   fetchGauges: PropTypes.func,
+  gauges: PropTypes.array,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
