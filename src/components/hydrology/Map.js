@@ -99,29 +99,23 @@ export default class Map extends React.Component {
     }
   }
 
-  _hideLayer(className) {
+  _hideLayer(className, condition) {
+    console.log(className, condition);
     const arrayIndex = this.state.mapStyle
       .get('layers')
       .toJS()
       .findIndex(item => item.id === className);
 
-    if (
-      this.state.mapStyle.getIn([
-        'layers',
-        arrayIndex,
-        'layout',
-        'visibility',
-      ]) === 'visible'
-    ) {
+    if (condition) {
       const mapStyle = this.state.mapStyle.setIn(
         ['layers', `${arrayIndex}`, 'layout', 'visibility'],
-        'none'
+        'visible'
       );
       this.setState({mapStyle});
     } else {
       const mapStyle = this.state.mapStyle.setIn(
         ['layers', arrayIndex, 'layout', 'visibility'],
-        'visible'
+        'none'
       );
       this.setState({mapStyle});
     }
@@ -173,7 +167,11 @@ export default class Map extends React.Component {
         mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
       >
         {this._renderTooltip()}
-        <Control hideLayer={className => this._hideLayer(className)} />
+        <Control
+          hideLayer={(className, condition) =>
+            this._hideLayer(className, condition)
+          }
+        />
         <Loader loading={this.state.loading} />
       </MapGL>
     );

@@ -25,8 +25,9 @@ export default class Control extends React.Component {
   }
 
   handleToggle(classNumber) {
-    this.setState({[classNumber]: !this.state[classNumber]});
-    this.props.hideLayer(classNumber);
+    this.setState({[classNumber]: !this.state[classNumber]}, () =>
+      this.props.hideLayer(classNumber, this.state[classNumber])
+    );
   }
 
   _renderControllers() {
