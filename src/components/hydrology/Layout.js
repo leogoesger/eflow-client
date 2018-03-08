@@ -13,7 +13,6 @@ export default class Layout extends React.Component {
       >
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-          classifications={this.props.classifications}
           gauges={this.props.gauges}
         />
         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -25,7 +24,6 @@ export default class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  classifications: PropTypes.array,
   gauges: PropTypes.array,
 };
 

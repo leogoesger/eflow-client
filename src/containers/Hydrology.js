@@ -6,29 +6,18 @@ import {fetchClassifications} from '../actions/classification';
 import Layout from '../components/hydrology/Layout';
 
 export class Hydrology extends React.Component {
-  componentWillMount() {
-    this.props.fetchClassifications();
-  }
-
   render() {
-    return (
-      <Layout
-        classifications={this.props.classifications}
-        gauges={this.props.gauges}
-      />
-    );
+    return <Layout gauges={this.props.gauges} />;
   }
 }
 
 Hydrology.propTypes = {
   fetchClassifications: PropTypes.func,
-  classifications: PropTypes.array,
   gauges: PropTypes.array,
 };
 
 const mapStateToProps = state => {
   return {
-    classifications: state.classification.classifications,
     gauges: state.gauge.gauges,
   };
 };

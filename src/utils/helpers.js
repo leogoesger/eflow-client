@@ -75,3 +75,47 @@ export function getMapStyle(
 
   return mapStyle_gauge;
 }
+
+export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
+  const newCombinedLayer = fromJS(
+    defaultMapStyle
+      .get('layers')
+      .toJS()
+      .concat(gaugeLayer)
+  );
+
+  const combinedGauges = {
+    gauges: {
+      data: {type: 'FeatureCollection', features: []},
+      type: 'geojson',
+    },
+  };
+  gauges.forEach(gauge => {
+    if (gauge.geometry) {
+      const properties = {properties: {stationName: gauge.stationName}};
+      const geometry = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [
+            gauge.geometry.coordinates[1],
+            gauge.geometry.coordinates[0],
+          ],
+        },
+      };
+      combinedGauges.gauges.data.features.push(
+        _.assign({}, geometry, properties)
+      );
+    }
+  });
+  const mapStyle = defaultMapStyle
+    .set(
+      'sources',
+      fromJS(
+        _.assign({}, defaultMapStyle.get('sources').toJS(), combinedGauges)
+      )
+    )
+    .set('layers', newCombinedLayer);
+
+  return mapStyle;
+}
