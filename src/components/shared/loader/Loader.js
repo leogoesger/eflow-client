@@ -25,6 +25,7 @@ export default class Loader extends React.Component {
 const styles = {
   container: {
     position: 'fixed',
+    zIndex: '10',
     top: '0',
     left: '0',
     height: '100%',

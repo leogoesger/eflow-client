@@ -49,7 +49,7 @@ export default class Map extends React.Component {
       gaugeLayer
     );
 
-    this.setState({mapStyle, loading: false});
+    this.setState({mapStyle});
   }
 
   _resize() {
@@ -154,6 +154,7 @@ export default class Map extends React.Component {
         minZoom={5}
         maxZoom={8}
         buffer={0}
+        onLoad={() => this.setState({loading: false})}
         icon-allow-overlap={false}
         onHover={e => this._onHover(e)}
         onViewportChange={viewport => this._onViewportChange(viewport)}
