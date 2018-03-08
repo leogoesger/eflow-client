@@ -100,7 +100,6 @@ export default class Map extends React.Component {
   }
 
   _hideLayer(className, condition) {
-    console.log(className, condition);
     const arrayIndex = this.state.mapStyle
       .get('layers')
       .toJS()
