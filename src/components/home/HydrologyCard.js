@@ -28,7 +28,6 @@ export default class HydrologyCard extends React.Component {
               flexShrink: 0,
               height: '100%',
               width: '100%',
-              minWidth: '450px',
             }}
           />
         </div>
@@ -99,7 +98,7 @@ const styles = {
     borderRadius: '2px',
     minHeight: '565px',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     padding: '0',
   },
 
@@ -118,14 +117,14 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    width: '60%',
+    width: '58%',
   },
 
   left: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '35%',
+    width: '40%',
   },
 
   title: {
