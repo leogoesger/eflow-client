@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Book from 'material-ui/svg-icons/action/book';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardText} from 'material-ui/Card';
 
 import hydrology from '../../constants/hydrology.png';
 import {navigateTo} from '../../utils/helpers';
