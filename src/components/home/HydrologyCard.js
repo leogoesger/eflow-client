@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Book from 'material-ui/svg-icons/action/book';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 
-import streamClass from '../../constants/streamClass.png';
+import hydrology from '../../constants/hydrology.png';
 import {navigateTo} from '../../utils/helpers';
 import {Colors} from '../../styles';
 
@@ -23,7 +23,7 @@ export default class HydrologyCard extends React.Component {
       >
         <div style={styles.left}>
           <img
-            src={streamClass}
+            src={hydrology}
             style={{
               flexShrink: 0,
               height: '100%',
@@ -97,7 +97,7 @@ const styles = {
     margin: '0 auto',
     marginTop: '130px',
     borderRadius: '2px',
-    minHeight: '600px',
+    minHeight: '565px',
     display: 'flex',
     justifyContent: 'space-around',
     padding: '0',
@@ -120,11 +120,12 @@ const styles = {
     justifyContent: 'space-around',
     width: '60%',
   },
+
   left: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '40%',
+    width: '35%',
   },
 
   title: {
@@ -134,5 +135,6 @@ const styles = {
 
   text: {
     lineHeight: '20px',
+    color: '#757575',
   },
 };
