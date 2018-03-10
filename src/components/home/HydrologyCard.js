@@ -34,7 +34,7 @@ export default class HydrologyCard extends React.Component {
         <div style={styles.right}>
           <div className="title">
             {
-              'Hydrology tool helps you easily visualize stream classifications and stream gauge data.'
+              'The Functional Flows Calculator allows users to visualize and quantify the natural flow regime across California.'
             }
           </div>
           <div
@@ -62,26 +62,31 @@ export default class HydrologyCard extends React.Component {
           </div>
           <div style={styles.subContainer}>
             <Card style={styles.subContainerCard}>
-              <div style={styles.title}>{'Stream Classifications'}</div>
+              <div style={styles.title}>{'Stream Classification'}</div>
               <CardText style={styles.text}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                mattis pretium massa. Aliquam erat volutpat.
+                {
+                  'California is organized into nine stream classes with distinct natural flow regime patterns and watershed controls.'
+                }
+              </CardText>
+            </Card>
+
+            <Card style={{...styles.subContainerCard, width: '33%'}}>
+              <div style={styles.title}>
+                {'Dimensionless Reference Hydrographs'}
+              </div>
+              <CardText style={styles.text}>
+                {
+                  'Summary stream class hydrographs illustrate season and inter-annual daily flow patterns.'
+                }
               </CardText>
             </Card>
 
             <Card style={styles.subContainerCard}>
-              <div style={styles.title}>{'Dimensional Hydrograph'}</div>
+              <div style={styles.title}>{'Functional Flow Metrics'}</div>
               <CardText style={styles.text}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                mattis pretium massa. Aliquam erat volutpat.
-              </CardText>
-            </Card>
-
-            <Card style={styles.subContainerCard}>
-              <div style={styles.title}>{'Annual Flow Metrics'}</div>
-              <CardText style={styles.text}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                mattis pretium massa. Aliquam erat volutpat.
+                {
+                  'Flow metrics quantify key aspects of the natural flow regime linked to critical ecosystem functions.'
+                }
               </CardText>
             </Card>
           </div>
@@ -109,7 +114,6 @@ const styles = {
 
   subContainerCard: {
     boxShadow: 'none',
-    display: 'flex',
     width: '30%',
   },
 
@@ -135,6 +139,8 @@ const styles = {
     paddingLeft: '15px',
     paddingRight: '0px',
     paddingBottom: '0px',
+    fontSize: '14px',
+    height: '35px',
   },
 
   text: {

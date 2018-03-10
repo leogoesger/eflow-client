@@ -1,11 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
 
 import Map from './Map';
+import Hydrograph from './Hydrograph';
 
 export default class Layout extends React.Component {
   render() {
+    const DRHdata = [
+      {date: '1', flow: 180},
+      {date: '2', flow: 250},
+      {date: '3', flow: 150},
+      {date: '4', flow: 496},
+      {date: '5', flow: 140},
+      {date: '6', flow: 380},
+      {date: '7', flow: 100},
+      {date: '8', flow: 150},
+    ];
+
     return (
       <div
         className="col-lg-11 col-md-11 col-sm-11 col-xs-12"
@@ -16,7 +27,7 @@ export default class Layout extends React.Component {
           gauges={this.props.gauges}
         />
         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Paper style={styles.graph} />
+          <Hydrograph DRHdata={DRHdata} />
         </div>
       </div>
     );
@@ -34,10 +45,5 @@ const styles = {
     flexWrap: 'wrap',
     margin: '120px auto',
     height: '100%',
-  },
-  graph: {
-    height: '800px',
-    width: '100%',
-    marginBottom: '20px',
   },
 };

@@ -127,9 +127,12 @@ body {
   margin: 0 auto;
   width: 100%;
   min-width: 1000px;
-  background: url('../constants/backslant.svg') 0px 1100px no-repeat,
-    url('../constants/backslant-head.svg') 160px 60px no-repeat;
-  background-position: left 0px bottom -180px, right 0px top 60px;
+  background: url('../constants/backslant-head.svg') 160px 60px no-repeat;
+
+  /* background: url('../constants/backslant.svg') 0px 1100px no-repeat,
+    url('../constants/backslant-head.svg') 160px 60px no-repeat; */
+  background-position: right 0px top 60px;
+  /* background-position: left 0px bottom -180px, right 0px top 60px; */
   background-color: #f5f6f7;
 }
 .tooltip {

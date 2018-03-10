@@ -10,18 +10,24 @@ export default class Layout extends React.Component {
     return (
       <div style={styles.nav}>
         <div style={styles.container}>
-          <div className="row" style={{margin: '0px'}}>
-            <div style={styles.logo} onClick={() => navigateTo('/')}>
-              <span style={{lineHeight: '55px', marginRight: '40px'}}>
-                {'eflow'}
-              </span>
-            </div>
+          <div style={styles.logo} onClick={() => navigateTo('/')}>
+            <span style={{lineHeight: '55px', marginRight: '40px'}}>
+              {'eFlows'}
+            </span>
+          </div>
+          <div
+            style={{
+              width: '35%',
+              display: 'flex',
+              justifyContent: 'space-around',
+            }}
+          >
             <FlatButton
               className="e2e-header-sign-up-btn"
               label="Hydrology"
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}
-              hoverColor={'rgba(12, 12, 12, 0.1)'}
+              hoverColor={'white'}
               onClick={() => navigateTo('/hydrology')}
             />
             <FlatButton
@@ -29,15 +35,15 @@ export default class Layout extends React.Component {
               label="Morphlogy"
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}
-              hoverColor={'rgba(12, 12, 12, 0.1)'}
+              hoverColor={'white'}
               onClick={() => navigateTo('/morphology')}
             />
             <FlatButton
               className="e2e-header-sign-up-btn"
-              label="Function"
+              label="Ecology"
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}
-              hoverColor={'rgba(12, 12, 12, 0.1)'}
+              hoverColor={'white'}
               onClick={() => navigateTo('/function')}
             />
           </div>
@@ -60,13 +66,15 @@ const styles = {
   },
   container: {
     margin: '0 auto',
-    width: '80%',
+    width: '95%',
     display: 'flex',
     justifyContent: 'space-between',
   },
   logo: {
-    fontFamily: 'Comic Sans MS',
+    fontFamily: 'sans-serif',
+    marginTop: '2px',
     color: Colors.grey,
+    fontWeight: '600',
     fontSize: '22px',
     cursor: 'pointer',
   },

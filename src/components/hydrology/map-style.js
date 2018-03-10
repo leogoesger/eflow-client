@@ -1,5 +1,5 @@
 import {fromJS} from 'immutable';
-import MAP_STYLE from '../../constants/map-style-basic.json';
+import MAP_STYLE from '../../constants/map-style.json';
 
 export const dataLayer = fromJS({
   id: 'data',
@@ -48,7 +48,7 @@ export const gaugeLayer = fromJS({
       base: 3.5,
       stops: [[5, 2.2], [7, 4]],
     },
-    'circle-stroke-color': '#0277bd',
+    'circle-stroke-color': '#616161',
     'circle-stroke-width': 1,
     'circle-color': '#fff',
   },
