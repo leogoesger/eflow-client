@@ -10,11 +10,11 @@ export default class Layout extends React.Component {
       {date: '1', flow: 180},
       {date: '2', flow: 250},
       {date: '3', flow: 150},
-      {date: '4', flow: 496},
+      {date: '4', flow: 696},
       {date: '5', flow: 140},
-      {date: '6', flow: 380},
+      {date: '6', flow: 200},
       {date: '7', flow: 100},
-      {date: '8', flow: 150},
+      {date: '8', flow: 0},
     ];
 
     return (

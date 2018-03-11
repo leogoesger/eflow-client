@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
+import Axis from './Axis';
+
 export default class LinePlot extends React.Component {
   constructor(props) {
     super(props);
@@ -17,21 +19,17 @@ export default class LinePlot extends React.Component {
   }
 
   updateD3(props) {
-    const {data, width, height, margin} = props;
-
-    // const parseDate = d3.timeParse('%m-%d-%Y');
-    // data.forEach(d => (d.date = parseDate(d.date)));
-    // console.log(data, width, height, margin);
+    const {data, width, height} = props;
 
     this.xScale
-      .domain(d3.extent(data, d => d.date))
-      .range([0, width - margin.left - margin.right]);
+      .domain(d3.extent(data, d => this.props.xValue(d)))
+      .range([0, width]);
 
-    this.yScale.domain([0, d3.max(data, d => d.flow + 5)]).range([height, 0]);
+    this.yScale.domain([0, d3.max(data, d => d.flow) + 50]).range([height, 0]);
 
     this.line
-      .x(d => this.xScale(d.date))
-      .y(d => this.yScale(d.flow))
+      .x(d => this.xScale(this.props.xValue(d)))
+      .y(d => this.yScale(this.props.yValue(d)))
       .curve(d3.curveCardinal);
   }
 
@@ -39,9 +37,29 @@ export default class LinePlot extends React.Component {
     const transform = `translate(${this.props.x}, ${this.props.y})`;
     if (this.line(this.props.data)) {
       return (
-        <svg width={this.props.width} height={this.props.height}>
-          <g transform={transform} style={{fill: 'none', stroke: '#000'}}>
-            <path d={this.line(this.props.data)} strokeLinecap="round" />
+        <svg width={this.props.width + 50} height={this.props.height + 75}>
+          <g style={{fill: 'none', stroke: '#000'}}>
+            <path
+              transform={transform}
+              d={this.line(this.props.data)}
+              strokeLinecap="round"
+            />
+            <Axis
+              scale={this.xScale}
+              data={this.props.data}
+              x={this.props.x}
+              gridLength={this.props.height}
+              y={this.props.y + this.props.height}
+              orientation="bottom"
+            />
+            <Axis
+              scale={this.yScale}
+              data={this.props.data}
+              x={this.props.x}
+              y={this.props.y}
+              gridLength={this.props.width}
+              orientation="left"
+            />
           </g>
         </svg>
       );
@@ -59,5 +77,6 @@ LinePlot.propTypes = {
   data: PropTypes.array,
   width: PropTypes.number,
   height: PropTypes.number,
-  margin: PropTypes.object,
+  xValue: PropTypes.func,
+  yValue: PropTypes.func,
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 
-import LinePlot from '../shared/plots/LinePlot';
+import {LinePlot} from '../shared/plots';
 
 class Hydrograph extends React.Component {
   constructor(props) {
@@ -22,20 +22,20 @@ class Hydrograph extends React.Component {
   }
 
   _setContainerWidth() {
-    this.setState({containerWidth: window.innerWidth / 2.5});
+    this.setState({containerWidth: window.innerWidth / 2.7});
   }
 
   render() {
-    const margin = {top: 5, right: 5, bottom: 5, left: 5};
     return (
       <Paper style={styles.graph}>
         <LinePlot
-          x={20}
+          x={this.state.containerWidth / 10}
           y={20}
-          margin={margin}
           width={this.state.containerWidth}
           height={400}
           data={this.props.DRHdata}
+          xValue={value => value.date}
+          yValue={value => value.flow}
         />
       </Paper>
     );
