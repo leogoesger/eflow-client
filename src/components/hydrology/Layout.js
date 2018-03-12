@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Map from './Map';
-import Hydrograph from './Hydrograph';
+import HydroTabs from './HydroTabs';
 
 export default class Layout extends React.Component {
   render() {
@@ -22,12 +22,16 @@ export default class Layout extends React.Component {
         className="col-lg-11 col-md-11 col-sm-11 col-xs-12"
         style={styles.container}
       >
+        <div style={styles.banner} />
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
         />
-        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Hydrograph DRHdata={DRHdata} />
+        <div
+          className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+          style={{zIndex: '2'}}
+        >
+          <HydroTabs DRHdata={DRHdata} />
         </div>
       </div>
     );
@@ -43,7 +47,16 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     flexWrap: 'wrap',
-    margin: '120px auto',
+    margin: '150px auto',
     height: '100%',
+  },
+  banner: {
+    backgroundColor: '#424242',
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    height: '220px',
+    zIndex: '0',
   },
 };

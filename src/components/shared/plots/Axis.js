@@ -63,8 +63,6 @@ const Axis = blackBox(function() {
       .ticks(5);
     d3.select(this.anchor).call(axis);
   }
-  d3.selectAll('.tick line, .domain').style('stroke', '#bdbdbd');
-  d3.selectAll('.tick text').style('font', '14px sans-serif');
 });
 
 export default Axis;

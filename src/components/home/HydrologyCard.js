@@ -99,7 +99,6 @@ export default class HydrologyCard extends React.Component {
 const styles = {
   tabsCard: {
     margin: '0 auto',
-    marginTop: '130px',
     borderRadius: '2px',
     minHeight: '565px',
     display: 'flex',

@@ -38,12 +38,7 @@ export default class LinePlot extends React.Component {
     if (this.line(this.props.data)) {
       return (
         <svg width={this.props.width + 50} height={this.props.height + 75}>
-          <g style={{fill: 'none', stroke: '#000'}}>
-            <path
-              transform={transform}
-              d={this.line(this.props.data)}
-              strokeLinecap="round"
-            />
+          <g style={{fill: 'none'}}>
             <Axis
               scale={this.xScale}
               data={this.props.data}
@@ -59,6 +54,13 @@ export default class LinePlot extends React.Component {
               y={this.props.y}
               gridLength={this.props.width}
               orientation="left"
+            />
+            <path
+              transform={transform}
+              d={this.line(this.props.data)}
+              strokeLinecap="round"
+              strokeWidth="3"
+              stroke="#1976d2"
             />
           </g>
         </svg>

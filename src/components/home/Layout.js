@@ -20,7 +20,7 @@ export default class Layout extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <Loader loading={this.state.loading} />
         <div className="animated fadeInUp">
           <HydrologyCard />
@@ -31,3 +31,12 @@ export default class Layout extends React.Component {
     );
   }
 }
+
+const styles = {
+  container: {
+    background: 'url("../constants/backslant-head.svg") 160px 60px no-repeat',
+    backgroundPosition: 'right 0px top 10px',
+    backgroundColor: '#f5f6f7',
+    paddingTop: '130px',
+  },
+};

@@ -127,14 +127,8 @@ body {
   margin: 0 auto;
   width: 100%;
   min-width: 1000px;
-  background: url('../constants/backslant-head.svg') 160px 60px no-repeat;
-
-  /* background: url('../constants/backslant.svg') 0px 1100px no-repeat,
-    url('../constants/backslant-head.svg') 160px 60px no-repeat; */
-  background-position: right 0px top 60px;
-  /* background-position: left 0px bottom -180px, right 0px top 60px; */
-  background-color: #f5f6f7;
 }
+
 .tooltip {
   position: absolute;
   margin: 8px;
@@ -155,4 +149,16 @@ body {
   line-height: 50px;
   color: #757575;
   font: Roboto, sans-serif;
+}
+
+.tick line,
+.domain {
+  stroke: #bdbdbd;
+}
+
+.tick text {
+  font: 14px sans-serif;
+  font-weight: 200;
+  stroke: #424242;
+  padding: 2px;
 }
