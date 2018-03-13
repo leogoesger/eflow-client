@@ -54,12 +54,7 @@ const Axis = blackBox(function() {
       .tickSize(-this.props.gridLength, 0, 10)
       .tickSizeOuter(0)
       .scale(this.props.scale)
-      .tickFormat(d => {
-        if (d == 1) {
-          return null;
-        }
-        return `${d3.format('.2s')(d)}`;
-      })
+
       .ticks(5);
     d3.select(this.anchor).call(axis);
   }

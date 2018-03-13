@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 
-import {LinePlot} from '../shared/plots';
+import {LinePlot} from '../../shared/plots';
 import Summary from './Summary';
 
 const Hydrograph = props => {
   let hydroData = [];
   if (props.currentGauge) {
     props.currentGauge.hydrographs[0].data.forEach((ele, index) =>
-      hydroData.push({date: index, flow: ele})
+      hydroData.push({date: index + 1, flow: ele})
     );
   } else {
     props.currentClassification.hydrographs[0].data.forEach((ele, index) =>
-      hydroData.push({date: index, flow: ele})
+      hydroData.push({date: index + 1, flow: ele})
     );
   }
 

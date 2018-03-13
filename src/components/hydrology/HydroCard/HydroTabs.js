@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
-import {Colors} from '../../styles';
+import {Colors} from '../../../styles';
 import Hydrograph from './Hydrograph';
 import HydroInfo from './HydroInfo';
 

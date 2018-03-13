@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Map from './Map';
-import HydroTabs from './HydroTabs';
-import GeneralInfo from './GeneralInfo';
+import HydroTabs from './HydroCard/HydroTabs';
+import GeneralTabs from './GeneralInfo/GeneralTabs';
 
 export default class Layout extends React.Component {
   _renderGeneralInfo() {
     if (!this.props.currentGauge && !this.props.currentClassification) {
-      return <GeneralInfo />;
+      return <GeneralTabs />;
     }
     return (
       <HydroTabs
