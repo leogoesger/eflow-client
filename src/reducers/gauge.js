@@ -4,6 +4,7 @@ import objectAssign from 'object-assign';
 type STATE = {};
 type ACTION = {};
 const initialState: STATE = {
+  gauge: null,
   gauges: null,
   error: null,
 };

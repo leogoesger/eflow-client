@@ -26,12 +26,19 @@ export default class Layout extends React.Component {
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
+          classifications={this.props.classifications}
+          fetchClassification={classId =>
+            this.props.fetchClassification(classId)
+          }
         />
         <div
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           style={{zIndex: '2'}}
         >
-          <HydroTabs DRHdata={DRHdata} />
+          <HydroTabs
+            DRHdata={DRHdata}
+            classifications={this.props.classifications}
+          />
         </div>
       </div>
     );
@@ -40,6 +47,8 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   gauges: PropTypes.array,
+  classifications: PropTypes.object,
+  fetchClassification: PropTypes.func,
 };
 
 const styles = {

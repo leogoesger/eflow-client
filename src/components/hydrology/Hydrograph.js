@@ -1,16 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import {
-  Table,
-  TableBody,
-  TableRow,
-  TableRowColumn,
-  TableHeader,
-  TableHeaderColumn,
-} from 'material-ui/Table';
+import Divider from 'material-ui/Divider';
 
 import {LinePlot} from '../shared/plots';
+import Summary from './Summary';
 
 const Hydrograph = props => {
   const tableData = [
@@ -74,66 +68,9 @@ const Hydrograph = props => {
         xValue={value => value.date}
         yValue={value => value.flow}
       />
+      <Divider />
 
-      <div style={{width: '90%', margin: '0 auto'}}>
-        <Table
-          height={'290px'}
-          fixedHeader={true}
-          selectable={true}
-          multiSelectable={true}
-        >
-          <TableHeader
-            displaySelectAll={false}
-            adjustForCheckbox={false}
-            enableSelectAll={false}
-            style={{height: '40px', padding: '0px'}}
-          >
-            <TableRow style={{height: '20px'}}>
-              <TableHeaderColumn style={{height: '20px'}}>
-                Metric
-              </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '20px'}}>
-                20 Percentille
-              </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '20px'}}>
-                50 Percentille
-              </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '20px'}}>
-                90 Percentille
-              </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            displayRowCheckbox={false}
-            deselectOnClickaway={true}
-            showRowHover={true}
-            stripedRows={false}
-          >
-            {tableData.map((row, index) => (
-              <TableRow
-                key={index}
-                style={{height: '40px', padding: '0px', cursor: 'pointer'}}
-              >
-                <TableRowColumn
-                  tooltip="The ID"
-                  style={{height: '15px', paddingTop: '15px'}}
-                >
-                  {row.name}
-                </TableRowColumn>
-                <TableRowColumn style={{height: '15px'}}>
-                  {row.status}
-                </TableRowColumn>
-                <TableRowColumn style={{height: '15px'}}>
-                  {row.status1}
-                </TableRowColumn>
-                <TableRowColumn style={{height: '15px'}}>
-                  {row.status2}
-                </TableRowColumn>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <Summary summaryData={tableData} />
     </Paper>
   );
 };

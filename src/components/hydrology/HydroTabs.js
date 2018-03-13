@@ -49,7 +49,7 @@ class HydroTabs extends React.Component {
         <Tab label="Info" value="a">
           <HydroInfo />
         </Tab>
-        <Tab label="Plots" value="b">
+        <Tab label="Plot" value="b">
           <Hydrograph
             containerWidth={this.state.containerWidth}
             data={this.props.DRHdata}

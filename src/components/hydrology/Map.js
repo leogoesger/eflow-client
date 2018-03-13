@@ -50,6 +50,7 @@ export default class Map extends React.Component {
     );
 
     this.setState({mapStyle});
+    console.log(this.props.classifications);
   }
 
   _resize() {
@@ -88,7 +89,17 @@ export default class Map extends React.Component {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('class') >= 0);
       if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-        this.setState({hoveredFeature, x: offsetX, y: offsetY});
+        this.setState({hoveredFeature, x: offsetX, y: offsetY}, () => {
+          if (
+            !this.props.classifications[
+              `class${this.state.hoveredFeature.properties.CLASS}`
+            ]
+          ) {
+            this.props.fetchClassification(
+              this.state.hoveredFeature.properties.CLASS
+            );
+          }
+        });
       }
     }
   }
@@ -174,4 +185,6 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
+  classifications: PropTypes.object,
+  fetchClassification: PropTypes.func,
 };

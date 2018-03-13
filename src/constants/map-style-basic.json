@@ -357,7 +357,10 @@
       },
       "paint": {
         "line-color": "#fbc02d",
-        "line-width": 1.2
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -370,7 +373,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#0D47A1"
+        "line-color": "#0D47A1",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -381,7 +388,11 @@
       "interactive": true,
       "layout": {},
       "paint": {
-        "line-color": "#00bcd4"
+        "line-color": "#00bcd4",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -394,7 +405,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#ff6f00"
+        "line-color": "#ff6f00",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -407,7 +422,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#F44336"
+        "line-color": "#F44336",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -420,7 +439,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#087f23"
+        "line-color": "#087f23",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -433,7 +456,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#f06292"
+        "line-color": "#f06292",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -446,7 +473,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#7E57C2"
+        "line-color": "#7E57C2",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     },
     {
@@ -459,7 +490,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#C51162"
+        "line-color": "#C51162",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
       }
     }
   ],
