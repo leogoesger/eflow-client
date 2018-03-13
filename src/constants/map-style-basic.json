@@ -357,10 +357,7 @@
       },
       "paint": {
         "line-color": "#fbc02d",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -374,10 +371,7 @@
       },
       "paint": {
         "line-color": "#0D47A1",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -389,10 +383,7 @@
       "layout": {},
       "paint": {
         "line-color": "#00bcd4",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -406,10 +397,7 @@
       },
       "paint": {
         "line-color": "#ff6f00",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -423,10 +411,7 @@
       },
       "paint": {
         "line-color": "#F44336",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -440,10 +425,7 @@
       },
       "paint": {
         "line-color": "#087f23",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -457,10 +439,7 @@
       },
       "paint": {
         "line-color": "#f06292",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -474,10 +453,7 @@
       },
       "paint": {
         "line-color": "#7E57C2",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     },
     {
@@ -491,10 +467,7 @@
       },
       "paint": {
         "line-color": "#C51162",
-        "line-width": {
-          "base": 0.5,
-          "stops": [[6, 1.2], [7, 2]]
-        }
+        "line-width": 1
       }
     }
   ],

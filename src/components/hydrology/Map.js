@@ -89,17 +89,7 @@ export default class Map extends React.Component {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('class') >= 0);
       if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-        this.setState({hoveredFeature, x: offsetX, y: offsetY}, () => {
-          if (
-            !this.props.classifications[
-              `class${this.state.hoveredFeature.properties.CLASS}`
-            ]
-          ) {
-            this.props.fetchClassification(
-              this.state.hoveredFeature.properties.CLASS
-            );
-          }
-        });
+        this.setState({hoveredFeature, x: offsetX, y: offsetY});
       }
     }
   }
@@ -130,6 +120,12 @@ export default class Map extends React.Component {
 
     if (!x || !y) {
       return;
+    }
+    if (
+      hoveredFeature.properties.CLASS &&
+      !this.props.classifications[`class${hoveredFeature.properties.CLASS}`]
+    ) {
+      this.props.fetchClassification(hoveredFeature.properties.CLASS);
     }
 
     if (hoveredFeature.layer.id.indexOf('class') >= 0) {
