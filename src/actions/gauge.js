@@ -1,5 +1,6 @@
 import request from 'superagent';
 import {GaugeTypes as types} from '../action-types';
+import {removeCurrentClass} from './classification';
 
 const fetchGaugeObjects = gauges => {
   return {
@@ -8,6 +9,23 @@ const fetchGaugeObjects = gauges => {
   };
 };
 
+const updateCurrentGaugeObject = gaugeId => {
+  return {
+    type: types.UPDATE_CURRENT_GAUGE_OBJECT,
+    gaugeId,
+  };
+};
+
+export function removeCurrentGauge() {
+  return async dispatch => {
+    try {
+      dispatch(updateCurrentGaugeObject(null));
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
 export function fetchGauges() {
   return async dispatch => {
     try {
@@ -15,6 +33,17 @@ export function fetchGauges() {
         `${process.env.SERVER_ADDRESS}/api/gauges`
       );
       dispatch(fetchGaugeObjects(gauges.body));
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
+export function updateCurrentGauge(gaugeId) {
+  return async dispatch => {
+    try {
+      dispatch(removeCurrentClass());
+      dispatch(updateCurrentGaugeObject(gaugeId));
     } catch (e) {
       throw e;
     }

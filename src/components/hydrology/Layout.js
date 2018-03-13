@@ -5,6 +5,25 @@ import Map from './Map';
 import HydroTabs from './HydroTabs';
 
 export default class Layout extends React.Component {
+  _getCurrentGaugeObject(gauges, gaugeId) {
+    if (gauges) {
+      const currentGauge = gauges.filter(gauge => gauge.id === gaugeId);
+      return currentGauge[0];
+    } else {
+      return null;
+    }
+  }
+
+  _getCurrentClassObject(classes, classId) {
+    if (classes) {
+      if (Object.keys(classes).includes(`class${classId}`)) {
+        return classes[`class${classId}`];
+      }
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const DRHdata = [
       {date: '1', flow: 180},
@@ -17,6 +36,15 @@ export default class Layout extends React.Component {
       {date: '8', flow: 0},
     ];
 
+    const currentGaugeObject = this._getCurrentGaugeObject(
+        this.props.gauges,
+        this.props.currentGauge
+      ),
+      currentClassObject = this._getCurrentClassObject(
+        this.props.classifications,
+        this.props.currentClassification
+      );
+
     return (
       <div
         className="col-lg-11 col-md-11 col-sm-11 col-xs-12"
@@ -26,10 +54,13 @@ export default class Layout extends React.Component {
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
+          currentGauge={this.props.currentGauge}
           classifications={this.props.classifications}
           fetchClassification={classId =>
             this.props.fetchClassification(classId)
           }
+          updateCurrentGauge={gaugeId => this.props.updateCurrentGauge(gaugeId)}
+          updateCurrentClass={classId => this.props.updateCurrentClass(classId)}
         />
         <div
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
@@ -37,7 +68,8 @@ export default class Layout extends React.Component {
         >
           <HydroTabs
             DRHdata={DRHdata}
-            classifications={this.props.classifications}
+            currentGauge={currentGaugeObject}
+            currentClassification={currentClassObject}
           />
         </div>
       </div>
@@ -47,8 +79,12 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   gauges: PropTypes.array,
+  currentGauge: PropTypes.number,
   classifications: PropTypes.object,
+  currentClassification: PropTypes.number,
+  updateCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
+  updateCurrentClass: PropTypes.func,
 };
 
 const styles = {

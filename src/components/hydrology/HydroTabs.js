@@ -47,12 +47,16 @@ class HydroTabs extends React.Component {
         inkBarStyle={{backgroundColor: Colors.gold}}
       >
         <Tab label="Info" value="a">
-          <HydroInfo />
+          <HydroInfo
+            currentClassification={this.props.currentClassification}
+            currentGauge={this.props.currentGauge}
+          />
         </Tab>
         <Tab label="Plot" value="b">
           <Hydrograph
             containerWidth={this.state.containerWidth}
             data={this.props.DRHdata}
+            currentClassification={this.props.currentClassification}
           />
         </Tab>
       </Tabs>
@@ -62,6 +66,8 @@ class HydroTabs extends React.Component {
 
 HydroTabs.propTypes = {
   DRHdata: PropTypes.array.isRequired,
+  currentGauge: PropTypes.object,
+  currentClassification: PropTypes.object,
 };
 
 export default HydroTabs;

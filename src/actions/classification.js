@@ -1,5 +1,6 @@
 import request from 'superagent';
 import {ClassificationTypes as types} from '../action-types';
+import {removeCurrentGauge} from './gauge';
 
 const fetchClassificationObject = classification => {
   return {
@@ -15,6 +16,16 @@ const updateCurrentClassObject = classId => {
   };
 };
 
+export function removeCurrentClass() {
+  return async dispatch => {
+    try {
+      dispatch(updateCurrentClassObject(null));
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
 export function fetchClassification(classId) {
   return async dispatch => {
     try {
@@ -22,6 +33,7 @@ export function fetchClassification(classId) {
         `${process.env.SERVER_ADDRESS}/api/classes/${classId}`
       );
       dispatch(fetchClassificationObject(classification.body));
+      dispatch(updateCurrentClassObject(classId));
     } catch (e) {
       throw e;
     }
@@ -31,6 +43,7 @@ export function fetchClassification(classId) {
 export function updateCurrentClass(classId) {
   return async dispatch => {
     try {
+      dispatch(removeCurrentGauge());
       dispatch(updateCurrentClassObject(classId));
     } catch (e) {
       throw e;

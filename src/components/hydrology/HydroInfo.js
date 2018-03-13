@@ -1,9 +1,10 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 
-const HydroInfo = () => {
+const HydroInfo = props => {
   return (
     <Paper style={styles.graph}>
+      {JSON.stringify(props)}
       <h2 style={styles.headline}>Controllable Tab B</h2>
       <p>
         This is another example of a controllable tab. Remember, if you use

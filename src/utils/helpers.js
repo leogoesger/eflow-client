@@ -95,7 +95,11 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   gauges.forEach(gauge => {
     if (gauge.geometry) {
       const properties = {
-        properties: {stationName: gauge.stationName, classId: gauge.classId},
+        properties: {
+          stationName: gauge.stationName,
+          classId: gauge.classId,
+          gaugeId: gauge.id,
+        },
       };
       const geometry = {
         type: 'Feature',

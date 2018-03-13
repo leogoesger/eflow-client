@@ -50,7 +50,6 @@ export default class Map extends React.Component {
     );
 
     this.setState({mapStyle});
-    console.log(this.props.classifications);
   }
 
   _resize() {
@@ -79,16 +78,31 @@ export default class Map extends React.Component {
     }
   }
 
+  _requestCurrentFeature(hoveredFeature) {
+    if (hoveredFeature.layer.id.indexOf('class') >= 0) {
+      this.props.fetchClassification(hoveredFeature.properties.CLASS);
+    } else {
+      this.props.updateCurrentGauge(hoveredFeature.properties.gaugeId);
+    }
+  }
+
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
     if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
-      return this.setState({hoveredFeature, x: offsetX, y: offsetY});
+      if (
+        hoveredFeature.properties.gaugeId !==
+        this.state.hoveredFeature.properties.gaugeId
+      ) {
+        this._requestCurrentFeature(hoveredFeature);
+        return this.setState({hoveredFeature, x: offsetX, y: offsetY});
+      }
     } else {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('class') >= 0);
       if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
+        this._requestCurrentFeature(hoveredFeature);
         this.setState({hoveredFeature, x: offsetX, y: offsetY});
       }
     }
@@ -120,12 +134,6 @@ export default class Map extends React.Component {
 
     if (!x || !y) {
       return;
-    }
-    if (
-      hoveredFeature.properties.CLASS &&
-      !this.props.classifications[`class${hoveredFeature.properties.CLASS}`]
-    ) {
-      this.props.fetchClassification(hoveredFeature.properties.CLASS);
     }
 
     if (hoveredFeature.layer.id.indexOf('class') >= 0) {
@@ -181,6 +189,9 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
+  currentGauge: PropTypes.number,
+  updateCurrentGauge: PropTypes.func,
   classifications: PropTypes.object,
+  updateCurrentClass: PropTypes.func,
   fetchClassification: PropTypes.func,
 };
