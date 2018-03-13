@@ -55,8 +55,8 @@ class HydroTabs extends React.Component {
         <Tab label="Plot" value="b">
           <Hydrograph
             containerWidth={this.state.containerWidth}
-            data={this.props.DRHdata}
             currentClassification={this.props.currentClassification}
+            currentGauge={this.props.currentGauge}
           />
         </Tab>
       </Tabs>
@@ -65,7 +65,6 @@ class HydroTabs extends React.Component {
 }
 
 HydroTabs.propTypes = {
-  DRHdata: PropTypes.array.isRequired,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
 };

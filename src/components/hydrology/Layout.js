@@ -3,48 +3,22 @@ import PropTypes from 'prop-types';
 
 import Map from './Map';
 import HydroTabs from './HydroTabs';
+import GeneralInfo from './GeneralInfo';
 
 export default class Layout extends React.Component {
-  _getCurrentGaugeObject(gauges, gaugeId) {
-    if (gauges) {
-      const currentGauge = gauges.filter(gauge => gauge.id === gaugeId);
-      return currentGauge[0];
-    } else {
-      return null;
+  _renderGeneralInfo() {
+    if (!this.props.currentGauge && !this.props.currentClassification) {
+      return <GeneralInfo />;
     }
-  }
-
-  _getCurrentClassObject(classes, classId) {
-    if (classes) {
-      if (Object.keys(classes).includes(`class${classId}`)) {
-        return classes[`class${classId}`];
-      }
-    } else {
-      return null;
-    }
+    return (
+      <HydroTabs
+        currentGauge={this.props.currentGauge}
+        currentClassification={this.props.currentClassification}
+      />
+    );
   }
 
   render() {
-    const DRHdata = [
-      {date: '1', flow: 180},
-      {date: '2', flow: 250},
-      {date: '3', flow: 150},
-      {date: '4', flow: 696},
-      {date: '5', flow: 140},
-      {date: '6', flow: 200},
-      {date: '7', flow: 100},
-      {date: '8', flow: 0},
-    ];
-
-    const currentGaugeObject = this._getCurrentGaugeObject(
-        this.props.gauges,
-        this.props.currentGauge
-      ),
-      currentClassObject = this._getCurrentClassObject(
-        this.props.classifications,
-        this.props.currentClassification
-      );
-
     return (
       <div
         className="col-lg-11 col-md-11 col-sm-11 col-xs-12"
@@ -54,23 +28,18 @@ export default class Layout extends React.Component {
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
-          currentGauge={this.props.currentGauge}
           classifications={this.props.classifications}
           fetchClassification={classId =>
             this.props.fetchClassification(classId)
           }
-          updateCurrentGauge={gaugeId => this.props.updateCurrentGauge(gaugeId)}
+          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
           updateCurrentClass={classId => this.props.updateCurrentClass(classId)}
         />
         <div
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           style={{zIndex: '2'}}
         >
-          <HydroTabs
-            DRHdata={DRHdata}
-            currentGauge={currentGaugeObject}
-            currentClassification={currentClassObject}
-          />
+          {this._renderGeneralInfo()}
         </div>
       </div>
     );
@@ -79,10 +48,10 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   gauges: PropTypes.array,
-  currentGauge: PropTypes.number,
+  currentGauge: PropTypes.object,
   classifications: PropTypes.object,
-  currentClassification: PropTypes.number,
-  updateCurrentGauge: PropTypes.func,
+  currentClassification: PropTypes.object,
+  fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
   updateCurrentClass: PropTypes.func,
 };

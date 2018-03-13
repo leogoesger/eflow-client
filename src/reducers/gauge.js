@@ -14,8 +14,8 @@ export default function(state: STATE = initialState, action: ACTION) {
     case types.FETCH_GAUGE_OBJECTS:
       return objectAssign({}, state, {gauges: action.gauges});
 
-    case types.UPDATE_CURRENT_GAUGE_OBJECT:
-      return objectAssign({}, state, {currentGauge: action.gaugeId});
+    case types.FETCH_CURRENT_GAUGE_OBJECT:
+      return objectAssign({}, state, {currentGauge: action.gauge});
 
     default:
       return state;

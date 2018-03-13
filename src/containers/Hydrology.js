@@ -6,7 +6,7 @@ import {
   fetchClassification,
   updateCurrentClass,
 } from '../actions/classification';
-import {fetchGauges, updateCurrentGauge} from '../actions/gauge';
+import {fetchGauges, fetchCurrentGauge} from '../actions/gauge';
 import Layout from '../components/hydrology/Layout';
 
 export class Hydrology extends React.Component {
@@ -14,14 +14,28 @@ export class Hydrology extends React.Component {
     this.props.fetchGauges();
   }
 
+  _getCurrentClassObject(classes, classId) {
+    if (classes) {
+      if (Object.keys(classes).includes(`class${classId}`)) {
+        return classes[`class${classId}`];
+      }
+    } else {
+      return null;
+    }
+  }
+
   render() {
+    const currentClassObject = this._getCurrentClassObject(
+      this.props.classifications,
+      this.props.currentClassification
+    );
     return (
       <Layout
         gauges={this.props.gauges}
         currentGauge={this.props.currentGauge}
-        updateCurrentGauge={gaugeId => this.props.updateCurrentGauge(gaugeId)}
         classifications={this.props.classifications}
-        currentClassification={this.props.currentClassification}
+        fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+        currentClassification={currentClassObject}
         fetchClassification={classId => this.props.fetchClassification(classId)}
         updateCurrentClass={classId => this.props.updateCurrentClass(classId)}
       />
@@ -33,9 +47,9 @@ Hydrology.propTypes = {
   fetchClassification: PropTypes.func,
   updateCurrentClass: PropTypes.func,
   fetchGauges: PropTypes.func,
+  fetchCurrentGauge: PropTypes.func,
   gauges: PropTypes.array,
-  updateCurrentGauge: PropTypes.func,
-  currentGauge: PropTypes.number,
+  currentGauge: PropTypes.object,
   classifications: PropTypes.object,
   currentClassification: PropTypes.number,
 };
@@ -54,7 +68,7 @@ const mapDispatchToProps = dispatch => {
     fetchClassification: classId => dispatch(fetchClassification(classId)),
     updateCurrentClass: classId => dispatch(updateCurrentClass(classId)),
     fetchGauges: () => dispatch(fetchGauges()),
-    updateCurrentGauge: gaugeId => dispatch(updateCurrentGauge(gaugeId)),
+    fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
   };
 };
 

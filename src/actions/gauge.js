@@ -9,20 +9,16 @@ const fetchGaugeObjects = gauges => {
   };
 };
 
-const updateCurrentGaugeObject = gaugeId => {
+const fetchCurrentGaugeObject = gauge => {
   return {
-    type: types.UPDATE_CURRENT_GAUGE_OBJECT,
-    gaugeId,
+    type: types.FETCH_CURRENT_GAUGE_OBJECT,
+    gauge,
   };
 };
 
 export function removeCurrentGauge() {
-  return async dispatch => {
-    try {
-      dispatch(updateCurrentGaugeObject(null));
-    } catch (e) {
-      throw e;
-    }
+  return dispatch => {
+    dispatch(fetchCurrentGaugeObject(null));
   };
 }
 
@@ -39,11 +35,14 @@ export function fetchGauges() {
   };
 }
 
-export function updateCurrentGauge(gaugeId) {
+export function fetchCurrentGauge(gaugeId) {
   return async dispatch => {
     try {
+      const gauge = await request.get(
+        `${process.env.SERVER_ADDRESS}/api/gauges/${gaugeId}`
+      );
       dispatch(removeCurrentClass());
-      dispatch(updateCurrentGaugeObject(gaugeId));
+      dispatch(fetchCurrentGaugeObject(gauge.body));
     } catch (e) {
       throw e;
     }

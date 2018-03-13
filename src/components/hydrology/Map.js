@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
+import {debounce} from 'lodash';
 
 import {defaultMapStyle, gaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
@@ -31,6 +32,10 @@ export default class Map extends React.Component {
       loading: true,
       gauges: null,
     };
+    this.requestFeature = debounce(
+      hoveredFeature => this._requestCurrentFeature(hoveredFeature),
+      200
+    );
   }
 
   componentDidMount() {
@@ -50,6 +55,19 @@ export default class Map extends React.Component {
     );
 
     this.setState({mapStyle});
+  }
+
+  _requestCurrentFeature(hoveredFeature) {
+    if (hoveredFeature.layer.id.indexOf('class') >= 0) {
+      if (
+        !this.props.classifications[`class${hoveredFeature.properties.CLASS}`]
+      ) {
+        this.props.fetchClassification(hoveredFeature.properties.CLASS);
+      }
+      this.props.updateCurrentClass(hoveredFeature.properties.CLASS);
+    } else {
+      this.props.fetchCurrentGauge(hoveredFeature.properties.gaugeId);
+    }
   }
 
   _resize() {
@@ -78,14 +96,6 @@ export default class Map extends React.Component {
     }
   }
 
-  _requestCurrentFeature(hoveredFeature) {
-    if (hoveredFeature.layer.id.indexOf('class') >= 0) {
-      this.props.fetchClassification(hoveredFeature.properties.CLASS);
-    } else {
-      this.props.updateCurrentGauge(hoveredFeature.properties.gaugeId);
-    }
-  }
-
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
     if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
@@ -95,14 +105,14 @@ export default class Map extends React.Component {
         hoveredFeature.properties.gaugeId !==
         this.state.hoveredFeature.properties.gaugeId
       ) {
-        this._requestCurrentFeature(hoveredFeature);
+        this.requestFeature(hoveredFeature);
         return this.setState({hoveredFeature, x: offsetX, y: offsetY});
       }
     } else {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('class') >= 0);
       if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-        this._requestCurrentFeature(hoveredFeature);
+        this.requestFeature(hoveredFeature);
         this.setState({hoveredFeature, x: offsetX, y: offsetY});
       }
     }
@@ -189,8 +199,7 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
-  currentGauge: PropTypes.number,
-  updateCurrentGauge: PropTypes.func,
+  fetchCurrentGauge: PropTypes.func,
   classifications: PropTypes.object,
   updateCurrentClass: PropTypes.func,
   fetchClassification: PropTypes.func,

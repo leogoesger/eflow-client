@@ -46,28 +46,32 @@ const Summary = props => {
           showRowHover={true}
           stripedRows={false}
         >
-          {props.summaryData.map((row, index) => (
-            <TableRow
-              key={index}
-              style={{height: '40px', padding: '0px', cursor: 'pointer'}}
-            >
-              <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
-                <Tooltip title="Welcome to React" position="top" arrow={true}>
-                  {row.name}
-                </Tooltip>
-              </TableRowColumn>
+          {Object.keys(props.summaryData).map(key => {
+            if (props.summaryData[key].length === 3) {
+              return (
+                <TableRow
+                  key={key}
+                  style={{height: '40px', padding: '0px', cursor: 'pointer'}}
+                >
+                  <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
+                    <Tooltip title={key} position="top" arrow={true}>
+                      {key}
+                    </Tooltip>
+                  </TableRowColumn>
 
-              <TableRowColumn style={{height: '15px'}}>
-                {row.status}
-              </TableRowColumn>
-              <TableRowColumn style={{height: '15px'}}>
-                {row.status1}
-              </TableRowColumn>
-              <TableRowColumn style={{height: '15px'}}>
-                {row.status2}
-              </TableRowColumn>
-            </TableRow>
-          ))}
+                  <TableRowColumn style={{height: '15px'}}>
+                    {props.summaryData[key][0]}
+                  </TableRowColumn>
+                  <TableRowColumn style={{height: '15px'}}>
+                    {props.summaryData[key][1]}
+                  </TableRowColumn>
+                  <TableRowColumn style={{height: '15px'}}>
+                    {props.summaryData[key][2]}
+                  </TableRowColumn>
+                </TableRow>
+              );
+            }
+          })}
         </TableBody>
       </Table>
     </div>
@@ -75,7 +79,7 @@ const Summary = props => {
 };
 
 Summary.propTypes = {
-  summaryData: PropTypes.array,
+  summaryData: PropTypes.object,
 };
 
 const styles = {
