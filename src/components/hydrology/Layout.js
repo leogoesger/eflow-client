@@ -30,12 +30,10 @@ export default class Layout extends React.Component {
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
-          classifications={this.props.classifications}
           fetchClassification={classId =>
             this.props.fetchClassification(classId)
           }
           fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-          updateCurrentClass={classId => this.props.updateCurrentClass(classId)}
           toggleGeneral={condition => this.props.toggleGeneral(condition)}
         />
         <div
@@ -55,11 +53,9 @@ Layout.propTypes = {
   showGeneralInfo: PropTypes.bool,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
-  classifications: PropTypes.object,
   currentClassification: PropTypes.object,
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
-  updateCurrentClass: PropTypes.func,
   toggleGeneral: PropTypes.func,
 };
 

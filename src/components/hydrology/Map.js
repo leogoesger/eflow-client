@@ -48,24 +48,21 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const mapStyle = getGaugeLayer(
-      nextProps.gauges,
-      defaultMapStyle,
-      gaugeLayer
-    );
+    if (!this.props.gauges) {
+      const mapStyle = getGaugeLayer(
+        nextProps.gauges,
+        defaultMapStyle,
+        gaugeLayer
+      );
 
-    this.setState({mapStyle});
+      this.setState({mapStyle});
+    }
   }
 
   _requestCurrentFeature(hoveredFeature) {
     if (hoveredFeature.layer.id.indexOf('class') >= 0) {
-      if (
-        !this.props.classifications[`class${hoveredFeature.properties.CLASS}`]
-      ) {
-        this.props.toggleGeneral(false);
-        this.props.fetchClassification(hoveredFeature.properties.CLASS);
-      }
-      this.props.updateCurrentClass(hoveredFeature.properties.CLASS);
+      this.props.toggleGeneral(false);
+      this.props.fetchClassification(hoveredFeature.properties.CLASS);
     } else {
       this.props.toggleGeneral(false);
       this.props.fetchCurrentGauge(hoveredFeature.properties.gaugeId);
@@ -104,8 +101,9 @@ export default class Map extends React.Component {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
       if (
+        hoveredFeature &&
         hoveredFeature.properties.gaugeId !==
-        this.state.hoveredFeature.properties.gaugeId
+          this.state.hoveredFeature.properties.gaugeId
       ) {
         this.requestFeature(hoveredFeature);
         return this.setState({hoveredFeature, x: offsetX, y: offsetY});
@@ -202,8 +200,6 @@ export default class Map extends React.Component {
 Map.propTypes = {
   gauges: PropTypes.array,
   fetchCurrentGauge: PropTypes.func,
-  classifications: PropTypes.object,
-  updateCurrentClass: PropTypes.func,
   fetchClassification: PropTypes.func,
   toggleGeneral: PropTypes.func,
 };

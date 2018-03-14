@@ -4,22 +4,15 @@ import {removeCurrentGauge} from './gauge';
 
 const fetchClassificationObject = classification => {
   return {
-    type: types.UPDATE_CLASSIFICATION_OBJECT,
+    type: types.FETCH_CLASSIFICATION_OBJECT,
     classification,
-  };
-};
-
-const updateCurrentClassObject = classId => {
-  return {
-    type: types.UPDATE_CURRENT_CLASS_OBJECT,
-    classId,
   };
 };
 
 export function removeCurrentClass() {
   return async dispatch => {
     try {
-      dispatch(updateCurrentClassObject(null));
+      dispatch(fetchClassificationObject(null));
     } catch (e) {
       throw e;
     }
@@ -33,17 +26,6 @@ export function fetchClassification(classId) {
         `${process.env.SERVER_ADDRESS}/api/classes/${classId}`
       );
       dispatch(fetchClassificationObject(classification.body));
-      dispatch(updateCurrentClassObject(classId));
-    } catch (e) {
-      throw e;
-    }
-  };
-}
-
-export function updateCurrentClass(classId) {
-  return async dispatch => {
-    try {
-      dispatch(updateCurrentClassObject(classId));
       dispatch(removeCurrentGauge());
     } catch (e) {
       throw e;
