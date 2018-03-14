@@ -1,13 +1,13 @@
 import ClassificationTypes from './classification';
 import GaugeTypes from './gauge';
-import SharedTypes from './shared';
+import HydrologyTypes from './hydrology';
 
 export {ClassificationTypes};
 export {GaugeTypes};
-export {SharedTypes};
+export {HydrologyTypes};
 
 export default {
   ClassificationTypes,
   GaugeTypes,
-  SharedTypes,
+  HydrologyTypes,
 };

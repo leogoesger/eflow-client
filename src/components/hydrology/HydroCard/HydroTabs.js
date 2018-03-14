@@ -11,7 +11,13 @@ class HydroTabs extends React.Component {
     super(props);
     this.state = {
       containerWidth: 400,
+      summaryData: null,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentGauge || nextProps.currentClassification) {
+      this._getSummaryData(nextProps);
+    }
   }
 
   componentDidMount() {
@@ -23,6 +29,16 @@ class HydroTabs extends React.Component {
     window.removeEventListener('resize', () => this._setContainerWidth());
   }
 
+  _getSummaryData(nextProps) {
+    let summaryData = {};
+    if (nextProps.currentGauge) {
+      summaryData = nextProps.currentGauge;
+    } else {
+      summaryData = nextProps.currentClassification;
+    }
+    this.setState({summaryData: summaryData});
+  }
+
   _setContainerWidth() {
     this.setState({containerWidth: window.innerWidth / 2.7});
   }
@@ -31,10 +47,11 @@ class HydroTabs extends React.Component {
     this.props.updateTab(tabValue);
   }
 
+  _disabledBtn() {
+    return Boolean(this.props.currentGauge || this.props.currentClassification);
+  }
+
   render() {
-    if (!this.props.currentClassification && !this.props.currentGauge) {
-      return null;
-    }
     return (
       <Tabs
         value={this.props.tabValue}
@@ -46,17 +63,26 @@ class HydroTabs extends React.Component {
         }}
         inkBarStyle={{backgroundColor: Colors.gold}}
       >
-        <Tab label="Info" value="a">
+        <Tab label="Data" value="a">
           <HydroInfo
             currentClassification={this.props.currentClassification}
             currentGauge={this.props.currentGauge}
+            summaryData={this.state.summaryData}
+            removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
           />
         </Tab>
-        <Tab label="Plot" value="b">
+        <Tab
+          label="Plot"
+          value="b"
+          disabled={!this._disabledBtn()}
+          style={this._disabledBtn() ? null : {cursor: 'not-allowed'}}
+        >
           <Hydrograph
             containerWidth={this.state.containerWidth}
             currentClassification={this.props.currentClassification}
             currentGauge={this.props.currentGauge}
+            summaryData={this.state.summaryData}
+            removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
           />
         </Tab>
       </Tabs>
@@ -69,6 +95,7 @@ HydroTabs.propTypes = {
   updateTab: PropTypes.func,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
+  removeClassGaugeProps: PropTypes.func,
 };
 
 export default HydroTabs;

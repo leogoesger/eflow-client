@@ -3,23 +3,8 @@ import PropTypes from 'prop-types';
 
 import Map from './Map';
 import HydroTabs from './HydroCard/HydroTabs';
-import GeneralTabs from './GeneralInfo/GeneralTabs';
 
 export default class Layout extends React.Component {
-  _renderGeneralInfo() {
-    if (this.props.showGeneralInfo) {
-      return <GeneralTabs />;
-    }
-    return (
-      <HydroTabs
-        tabValue={this.props.tabValue}
-        updateTab={tabValue => this.props.updateTab(tabValue)}
-        currentGauge={this.props.currentGauge}
-        currentClassification={this.props.currentClassification}
-      />
-    );
-  }
-
   render() {
     return (
       <div
@@ -34,13 +19,18 @@ export default class Layout extends React.Component {
             this.props.fetchClassification(classId)
           }
           fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-          toggleGeneral={condition => this.props.toggleGeneral(condition)}
         />
         <div
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           style={{zIndex: '2'}}
         >
-          {this._renderGeneralInfo()}
+          <HydroTabs
+            tabValue={this.props.tabValue}
+            updateTab={tabValue => this.props.updateTab(tabValue)}
+            currentGauge={this.props.currentGauge}
+            currentClassification={this.props.currentClassification}
+            removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+          />
         </div>
       </div>
     );
@@ -50,13 +40,12 @@ export default class Layout extends React.Component {
 Layout.propTypes = {
   tabValue: PropTypes.string,
   updateTab: PropTypes.func,
-  showGeneralInfo: PropTypes.bool,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
-  toggleGeneral: PropTypes.func,
+  removeClassGaugeProps: PropTypes.func,
 };
 
 const styles = {

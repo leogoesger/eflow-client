@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {fetchClassification} from '../actions/classification';
-import {fetchGauges, fetchCurrentGauge} from '../actions/gauge';
-import {updateTab, toggleGeneral} from '../actions/shared';
+import {
+  fetchClassification,
+  removeCurrentClass,
+} from '../actions/classification';
+import {
+  fetchGauges,
+  fetchCurrentGauge,
+  removeCurrentGauge,
+} from '../actions/gauge';
+import {updateTab} from '../actions/hydrology';
 import Layout from '../components/hydrology/Layout';
 
 export class Hydrology extends React.Component {
@@ -12,18 +19,23 @@ export class Hydrology extends React.Component {
     this.props.fetchGauges();
   }
 
+  removeClassGaugeProps() {
+    this.props.removeCurrentGauge();
+    this.props.removeCurrentClass();
+    this.props.updateTab('a');
+  }
+
   render() {
     return (
       <Layout
         gauges={this.props.gauges}
         tabValue={this.props.tabValue}
-        showGeneralInfo={this.props.showGeneralInfo}
         currentGauge={this.props.currentGauge}
         fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
         currentClassification={this.props.currentClassification}
         fetchClassification={classId => this.props.fetchClassification(classId)}
         updateTab={tabValue => this.props.updateTab(tabValue)}
-        toggleGeneral={condition => this.props.toggleGeneral(condition)}
+        removeClassGaugeProps={() => this.removeClassGaugeProps()}
       />
     );
   }
@@ -36,16 +48,15 @@ Hydrology.propTypes = {
   gauges: PropTypes.array,
   tabValue: PropTypes.string,
   updateTab: PropTypes.func,
-  showGeneralInfo: PropTypes.bool,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
-  toggleGeneral: PropTypes.func,
+  removeCurrentGauge: PropTypes.func,
+  removeCurrentClass: PropTypes.func,
 };
 
 const mapStateToProps = state => {
   return {
-    tabValue: state.shared.tabValue,
-    showGeneralInfo: state.shared.showGeneralInfo,
+    tabValue: state.hydrology.tabValue,
     gauges: state.gauge.gauges,
     currentGauge: state.gauge.currentGauge,
     currentClassification: state.classification.currentClassification,
@@ -58,7 +69,8 @@ const mapDispatchToProps = dispatch => {
     fetchGauges: () => dispatch(fetchGauges()),
     fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
     updateTab: tabValue => dispatch(updateTab(tabValue)),
-    toggleGeneral: condtion => dispatch(toggleGeneral(condtion)),
+    removeCurrentGauge: () => dispatch(removeCurrentGauge()),
+    removeCurrentClass: () => dispatch(removeCurrentClass()),
   };
 };
 

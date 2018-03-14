@@ -6,7 +6,7 @@ const Colors = {
   blue: '#0288D1',
   grey: '#616161',
   lightGrey: '#9e9e9e',
-  gold: '#fbc02d',
+  gold: '#ffb300',
 
   // paper
   lightGreyPaper: '#fafafa',

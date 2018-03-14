@@ -9,12 +9,45 @@ import {
   TableHeader,
   TableHeaderColumn,
 } from 'material-ui/Table';
+import {metricNameMap} from '../../../constants/classification';
+
+const renderRow = summaryData => {
+  if (!summaryData) {
+    return null;
+  }
+  return Object.keys(summaryData).map(key => {
+    if (summaryData[key].length === 3) {
+      return (
+        <TableRow
+          key={key}
+          style={{height: '40px', padding: '0px', cursor: 'pointer'}}
+        >
+          <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
+            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+              {key}
+            </Tooltip>
+          </TableRowColumn>
+
+          <TableRowColumn style={{height: '15px'}}>
+            {summaryData[key][0]}
+          </TableRowColumn>
+          <TableRowColumn style={{height: '15px'}}>
+            {summaryData[key][1]}
+          </TableRowColumn>
+          <TableRowColumn style={{height: '15px'}}>
+            {summaryData[key][2]}
+          </TableRowColumn>
+        </TableRow>
+      );
+    }
+  });
+};
 
 const Summary = props => {
   return (
     <div style={styles.container}>
       <Table
-        height={'270px'}
+        height={'570px'}
         fixedHeader={true}
         selectable={true}
         multiSelectable={true}
@@ -46,32 +79,7 @@ const Summary = props => {
           showRowHover={true}
           stripedRows={false}
         >
-          {Object.keys(props.summaryData).map(key => {
-            if (props.summaryData[key].length === 3) {
-              return (
-                <TableRow
-                  key={key}
-                  style={{height: '40px', padding: '0px', cursor: 'pointer'}}
-                >
-                  <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
-                    <Tooltip title={key} position="top" arrow={true}>
-                      {key}
-                    </Tooltip>
-                  </TableRowColumn>
-
-                  <TableRowColumn style={{height: '15px'}}>
-                    {props.summaryData[key][0]}
-                  </TableRowColumn>
-                  <TableRowColumn style={{height: '15px'}}>
-                    {props.summaryData[key][1]}
-                  </TableRowColumn>
-                  <TableRowColumn style={{height: '15px'}}>
-                    {props.summaryData[key][2]}
-                  </TableRowColumn>
-                </TableRow>
-              );
-            }
-          })}
+          {renderRow(props.summaryData)}
         </TableBody>
       </Table>
     </div>
