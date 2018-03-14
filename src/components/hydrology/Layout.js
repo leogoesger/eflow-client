@@ -7,11 +7,13 @@ import GeneralTabs from './GeneralInfo/GeneralTabs';
 
 export default class Layout extends React.Component {
   _renderGeneralInfo() {
-    if (!this.props.currentGauge && !this.props.currentClassification) {
+    if (this.props.showGeneralInfo) {
       return <GeneralTabs />;
     }
     return (
       <HydroTabs
+        tabValue={this.props.tabValue}
+        updateTab={tabValue => this.props.updateTab(tabValue)}
         currentGauge={this.props.currentGauge}
         currentClassification={this.props.currentClassification}
       />
@@ -34,6 +36,7 @@ export default class Layout extends React.Component {
           }
           fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
           updateCurrentClass={classId => this.props.updateCurrentClass(classId)}
+          toggleGeneral={condition => this.props.toggleGeneral(condition)}
         />
         <div
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
@@ -47,6 +50,9 @@ export default class Layout extends React.Component {
 }
 
 Layout.propTypes = {
+  tabValue: PropTypes.string,
+  updateTab: PropTypes.func,
+  showGeneralInfo: PropTypes.bool,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
   classifications: PropTypes.object,
@@ -54,6 +60,7 @@ Layout.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
   updateCurrentClass: PropTypes.func,
+  toggleGeneral: PropTypes.func,
 };
 
 const styles = {

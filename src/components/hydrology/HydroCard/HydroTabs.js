@@ -11,7 +11,6 @@ class HydroTabs extends React.Component {
     super(props);
     this.state = {
       containerWidth: 400,
-      value: 'a',
     };
   }
 
@@ -28,17 +27,18 @@ class HydroTabs extends React.Component {
     this.setState({containerWidth: window.innerWidth / 2.7});
   }
 
-  handleChange(value) {
-    this.setState({
-      value: value,
-    });
+  _handleChange(tabValue) {
+    this.props.updateTab(tabValue);
   }
 
   render() {
+    if (!this.props.currentClassification && !this.props.currentGauge) {
+      return null;
+    }
     return (
       <Tabs
-        value={this.state.value}
-        onChange={value => this.handleChange(value)}
+        value={this.props.tabValue}
+        onChange={tabValue => this._handleChange(tabValue)}
         tabItemContainerStyle={{
           backgroundColor: Colors.blue,
           borderTopLeftRadius: '2px',
@@ -65,6 +65,8 @@ class HydroTabs extends React.Component {
 }
 
 HydroTabs.propTypes = {
+  tabValue: PropTypes.string,
+  updateTab: PropTypes.func,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
 };

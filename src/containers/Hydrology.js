@@ -7,6 +7,7 @@ import {
   updateCurrentClass,
 } from '../actions/classification';
 import {fetchGauges, fetchCurrentGauge} from '../actions/gauge';
+import {updateTab, toggleGeneral} from '../actions/shared';
 import Layout from '../components/hydrology/Layout';
 
 export class Hydrology extends React.Component {
@@ -32,12 +33,16 @@ export class Hydrology extends React.Component {
     return (
       <Layout
         gauges={this.props.gauges}
+        tabValue={this.props.tabValue}
+        showGeneralInfo={this.props.showGeneralInfo}
         currentGauge={this.props.currentGauge}
         classifications={this.props.classifications}
         fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
         currentClassification={currentClassObject}
         fetchClassification={classId => this.props.fetchClassification(classId)}
         updateCurrentClass={classId => this.props.updateCurrentClass(classId)}
+        updateTab={tabValue => this.props.updateTab(tabValue)}
+        toggleGeneral={condition => this.props.toggleGeneral(condition)}
       />
     );
   }
@@ -49,13 +54,19 @@ Hydrology.propTypes = {
   fetchGauges: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,
   gauges: PropTypes.array,
+  tabValue: PropTypes.string,
+  updateTab: PropTypes.func,
+  showGeneralInfo: PropTypes.bool,
   currentGauge: PropTypes.object,
   classifications: PropTypes.object,
   currentClassification: PropTypes.number,
+  toggleGeneral: PropTypes.func,
 };
 
 const mapStateToProps = state => {
   return {
+    tabValue: state.shared.tabValue,
+    showGeneralInfo: state.shared.showGeneralInfo,
     gauges: state.gauge.gauges,
     currentGauge: state.gauge.currentGauge,
     classifications: state.classification.classifications,
@@ -69,6 +80,8 @@ const mapDispatchToProps = dispatch => {
     updateCurrentClass: classId => dispatch(updateCurrentClass(classId)),
     fetchGauges: () => dispatch(fetchGauges()),
     fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
+    updateTab: tabValue => dispatch(updateTab(tabValue)),
+    toggleGeneral: condtion => dispatch(toggleGeneral(condtion)),
   };
 };
 

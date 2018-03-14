@@ -1,14 +1,27 @@
 import {SharedTypes as types} from '../action-types';
 
-const updateSelectedTab = value => {
+const updateSelectedTab = tabValue => {
   return {
     type: types.UPDATE_SELECTED_TAB,
-    value,
+    tabValue,
   };
 };
 
-export function removeCurrentGauge(value) {
+const toggleGeneralInfo = condition => {
+  return {
+    type: types.TOGGLE_GENERAL_INFO,
+    condition,
+  };
+};
+
+export function updateTab(tabValue) {
   return dispatch => {
-    dispatch(updateSelectedTab(value));
+    dispatch(updateSelectedTab(tabValue));
+  };
+}
+
+export function toggleGeneral(condition) {
+  return dispatch => {
+    dispatch(toggleGeneralInfo(condition));
   };
 }

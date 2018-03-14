@@ -41,8 +41,8 @@ export function fetchCurrentGauge(gaugeId) {
       const gauge = await request.get(
         `${process.env.SERVER_ADDRESS}/api/gauges/${gaugeId}`
       );
-      dispatch(removeCurrentClass());
       dispatch(fetchCurrentGaugeObject(gauge.body));
+      dispatch(removeCurrentClass());
     } catch (e) {
       throw e;
     }

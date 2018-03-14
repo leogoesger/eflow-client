@@ -62,10 +62,12 @@ export default class Map extends React.Component {
       if (
         !this.props.classifications[`class${hoveredFeature.properties.CLASS}`]
       ) {
+        this.props.toggleGeneral(false);
         this.props.fetchClassification(hoveredFeature.properties.CLASS);
       }
       this.props.updateCurrentClass(hoveredFeature.properties.CLASS);
     } else {
+      this.props.toggleGeneral(false);
       this.props.fetchCurrentGauge(hoveredFeature.properties.gaugeId);
     }
   }
@@ -203,4 +205,5 @@ Map.propTypes = {
   classifications: PropTypes.object,
   updateCurrentClass: PropTypes.func,
   fetchClassification: PropTypes.func,
+  toggleGeneral: PropTypes.func,
 };

@@ -43,8 +43,8 @@ export function fetchClassification(classId) {
 export function updateCurrentClass(classId) {
   return async dispatch => {
     try {
-      dispatch(removeCurrentGauge());
       dispatch(updateCurrentClassObject(classId));
+      dispatch(removeCurrentGauge());
     } catch (e) {
       throw e;
     }
