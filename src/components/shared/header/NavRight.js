@@ -4,13 +4,13 @@ import FlatButton from 'material-ui/FlatButton';
 import Person from 'material-ui/svg-icons/action/supervisor-account';
 import Book from 'material-ui/svg-icons/av/library-books';
 
-import { navigateTo } from '../../../utils/helpers';
-import { Colors, Theme } from '../../../styles';
+import {navigateTo} from '../../../utils/helpers';
+import {Colors, Theme} from '../../../styles';
 
 export default class NavRight extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { menuOpen: false };
+    this.state = {menuOpen: false};
   }
 
   render() {
@@ -22,7 +22,7 @@ export default class NavRight extends React.Component {
           icon={<Book />}
           style={styles.headerButton}
           labelStyle={styles.headerWhiteButtonLabel}
-          hoverColor={'rgba(12, 12, 12, 0.1)'}
+          hoverColor={'white'}
           onClick={() => navigateTo('/paper')}
         />
         <FlatButton
@@ -30,7 +30,7 @@ export default class NavRight extends React.Component {
           className="e2e-header-login-btn"
           labelPosition="after"
           icon={<Person />}
-          hoverColor={'rgba(12, 12, 12, 0.1)'}
+          hoverColor={'white'}
           style={styles.headerButton}
           labelStyle={styles.headerWhiteButtonLabel}
           onClick={() => navigateTo('/team')}

@@ -9,6 +9,7 @@ import '../node_modules/animate.css/animate.min.css';
 import '../node_modules/flexboxgrid/css/flexboxgrid.min.css';
 import './styles/styles.css';
 import '../node_modules/mapbox-gl/dist/mapbox-gl.css';
+import 'react-tippy/dist/tippy.css';
 
 const store = configureStore();
 

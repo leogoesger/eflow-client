@@ -1,20 +1,32 @@
 import request from 'superagent';
 import {ClassificationTypes as types} from '../action-types';
+import {removeCurrentGauge} from './gauge';
 
-const fetchClassificationObjects = classifications => {
+const fetchClassificationObject = classification => {
   return {
-    type: types.FETCH_CLASSIFICATION_OBJECTS,
-    classifications,
+    type: types.FETCH_CLASSIFICATION_OBJECT,
+    classification,
   };
 };
 
-export function fetchClassifications() {
+export function removeCurrentClass() {
   return async dispatch => {
     try {
-      const classifications = await request.get(
-        `${process.env.SERVER_ADDRESS}/api/geoclasses`
+      dispatch(fetchClassificationObject(null));
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
+export function fetchClassification(classId) {
+  return async dispatch => {
+    try {
+      const classification = await request.get(
+        `${process.env.SERVER_ADDRESS}/api/classes/${classId}`
       );
-      dispatch(fetchClassificationObjects(classifications.body));
+      dispatch(fetchClassificationObject(classification.body));
+      dispatch(removeCurrentGauge());
     } catch (e) {
       throw e;
     }

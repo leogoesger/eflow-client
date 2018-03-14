@@ -1,5 +1,6 @@
 const GaugeTypes = {
   FETCH_GAUGE_OBJECTS: 'FETCH_GAUGE_OBJECTS',
+  FETCH_CURRENT_GAUGE_OBJECT: 'FETCH_CURRENT_GAUGE_OBJECT',
 };
 
 export default GaugeTypes;

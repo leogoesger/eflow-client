@@ -52,7 +52,9 @@ export function getMapStyle(
   };
   gauges.forEach(gauge => {
     if (gauge.geometry) {
-      const properties = {properties: {stationName: gauge.stationName}};
+      const properties = {
+        properties: {stationName: gauge.stationName, classId: gauge.classId},
+      };
       const geometry = {
         type: 'Feature',
         geometry: {
@@ -92,7 +94,13 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   };
   gauges.forEach(gauge => {
     if (gauge.geometry) {
-      const properties = {properties: {stationName: gauge.stationName}};
+      const properties = {
+        properties: {
+          stationName: gauge.stationName,
+          classId: gauge.classId,
+          gaugeId: gauge.id,
+        },
+      };
       const geometry = {
         type: 'Feature',
         geometry: {

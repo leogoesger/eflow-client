@@ -1,0 +1,248 @@
+{
+  "version": 8,
+  "name": "eflow_map",
+  "metadata": {
+    "mapbox:groups": {
+      "1442872203304.4841": {
+        "name": "admin boundaries",
+        "collapsed": false
+      }
+    },
+    "mapbox:autocomposite": true,
+    "mapbox:trackposition": false
+  },
+  "center": [-121.28720003287475, 38.11675127600566],
+  "zoom": 7.234210765549141,
+  "bearing": 0,
+  "pitch": 0,
+  "light": {
+    "anchor": "map",
+    "intensity": 0.5,
+    "color": "hsl(0, 0%, 100%)"
+  },
+  "sources": {
+    "composite": {
+      "url":
+        "mapbox://mapbox.mapbox-streets-v7,leogoesger.3d48e8up,leogoesger.5m9gjooo,leogoesger.bgou28ji,leogoesger.dxk7vbd0,leogoesger.6yk7jk4v,leogoesger.1qd17caw,leogoesger.6p3lfm0y,leogoesger.daucd12f,leogoesger.advo2mh6",
+      "type": "vector"
+    }
+  },
+  "sprite": "mapbox://sprites/leogoesger/cjehuen2y6v842ssytpno39q8",
+  "glyphs": "mapbox://fonts/leogoesger/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#f0e9d8"
+      }
+    },
+    {
+      "id": "water underlay",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "water",
+      "layout": {},
+      "paint": {
+        "fill-color": "hsl(211, 33%, 80%)",
+        "fill-translate": [0, 0]
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "water",
+      "layout": {},
+      "paint": {
+        "fill-color": "hsl(212, 48%, 78%)"
+      }
+    },
+    {
+      "id": "waterway",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "waterway",
+      "layout": {
+        "line-cap": "round"
+      },
+      "paint": {
+        "line-color": "#3c8de3",
+        "line-width": {
+          "base": 1.5,
+          "stops": [[0, 1], [1, 1], [18, 3]]
+        }
+      }
+    },
+    {
+      "id": "admin state",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "1442872203304.4841"
+      },
+      "source": "composite",
+      "source-layer": "admin",
+      "filter": ["all", ["==", "admin_level", 4], ["==", "maritime", 0]],
+      "layout": {
+        "line-cap": "square",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-opacity": {
+          "base": 1,
+          "stops": [[2, 0], [3, 1]]
+        },
+        "line-dasharray": {
+          "base": 1,
+          "stops": [[0, [5, 2, 1, 2]], [5, [3, 2, 1, 2]]]
+        },
+        "line-width": {
+          "base": 1.1,
+          "stops": [[3, 1], [20, 4]]
+        },
+        "line-color": "#31339e"
+      }
+    },
+    {
+      "id": "admin country case",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "1442872203304.4841"
+      },
+      "source": "composite",
+      "source-layer": "admin",
+      "filter": ["all", ["==", "maritime", 0], ["in", "admin_level", 2, 3]],
+      "layout": {
+        "line-cap": "square",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": "#f0e9d8",
+        "line-width": {
+          "base": 1.1,
+          "stops": [[6, 4.5], [20, 7]]
+        },
+        "line-opacity": 1
+      }
+    },
+    {
+      "id": "class1",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class1-dz2hvt",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#fbc02d",
+        "line-width": 1.2
+      }
+    },
+    {
+      "id": "class2",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class2-00uzq4",
+      "interactive": true,
+      "layout": {},
+      "paint": {
+        "line-color": "#0D47A1"
+      }
+    },
+    {
+      "id": "class3",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class3-7o2fmu",
+      "interactive": true,
+      "layout": {},
+      "paint": {
+        "line-color": "#00bcd4"
+      }
+    },
+    {
+      "id": "class4",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class4-1sxwkn",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#ff6f00"
+      }
+    },
+    {
+      "id": "class5",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class5-64lwf9",
+      "interactive": true,
+      "layout": {},
+      "paint": {
+        "line-color": "#e53935",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "class6",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class6-4osdj8",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#087f23"
+      }
+    },
+    {
+      "id": "class7",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class7-9pkku2",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#f06292"
+      }
+    },
+    {
+      "id": "class8",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class8-0ztc53",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#7E57C2"
+      }
+    },
+    {
+      "id": "class9",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class9-3j4gme",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#C51162"
+      }
+    }
+  ],
+  "created": "2018-03-08T01:37:47.822Z",
+  "id": "cjehuen2y6v842ssytpno39q8",
+  "modified": "2018-03-10T21:02:22.403Z",
+  "owner": "leogoesger",
+  "visibility": "private",
+  "draft": false
+}
