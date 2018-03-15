@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {
   Table,
@@ -13,6 +14,18 @@ import {
 import {classInfo} from '../../../constants/classification';
 
 export default class ClassGaugeList extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.classifications) {
+      return null;
+    }
+    nextProps.classifications.forEach((classification, index) => {
+      nextProps.classifications[index].gauges = _.sortBy(
+        classification.gauges,
+        e => e.id
+      );
+    });
+  }
+
   _renderRow(gauges) {
     if (!gauges) {
       return null;
@@ -36,8 +49,20 @@ export default class ClassGaugeList extends React.Component {
     });
   }
 
+  _hoverRow(rowNumber, index) {
+    this.props.updateHoveredGauge(
+      this.props.classifications[index].gauges[rowNumber].id
+    );
+  }
+
+  _selectRow(rowNumber, index) {
+    this.props.fetchCurrentGauge(
+      this.props.classifications[index].gauges[rowNumber].id
+    );
+  }
+
   _renderClassCard(classes) {
-    return classes.map(classification => {
+    return classes.map((classification, index) => {
       const abbre = classInfo[`class${classification.id}`].abbre;
       const gaugeCount = classification.gauges.length;
       return (
@@ -49,7 +74,13 @@ export default class ClassGaugeList extends React.Component {
             showExpandableButton={true}
           />
           <CardText expandable={true}>
-            <Table fixedHeader={true} selectable={true} multiSelectable={false}>
+            <Table
+              fixedHeader={true}
+              selectable={true}
+              multiSelectable={false}
+              onRowHover={rowNumber => this._hoverRow(rowNumber, index)}
+              onRowSelection={rowNumber => this._selectRow(rowNumber, index)}
+            >
               <TableHeader
                 displaySelectAll={false}
                 adjustForCheckbox={false}
@@ -93,6 +124,8 @@ export default class ClassGaugeList extends React.Component {
 
 ClassGaugeList.propTypes = {
   classifications: PropTypes.array,
+  updateHoveredGauge: PropTypes.func,
+  fetchCurrentGauge: PropTypes.func,
 };
 
 const styles = {

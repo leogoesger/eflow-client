@@ -31,6 +31,10 @@ export default class Layout extends React.Component {
             currentClassification={this.props.currentClassification}
             removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
             classifications={this.props.classifications}
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            updateHoveredGauge={gaugeId =>
+              this.props.updateHoveredGauge(gaugeId)
+            }
           />
         </div>
       </div>
@@ -48,6 +52,7 @@ Layout.propTypes = {
   fetchClassification: PropTypes.func,
   removeClassGaugeProps: PropTypes.func,
   classifications: PropTypes.array,
+  updateHoveredGauge: PropTypes.func,
 };
 
 const styles = {

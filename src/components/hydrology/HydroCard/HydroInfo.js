@@ -19,7 +19,13 @@ class HydroInfo extends React.Component {
     } else if (this.props.currentClassification) {
       return this._renderClassInfo();
     } else {
-      return <ClassGaugeList classifications={this.props.classifications} />;
+      return (
+        <ClassGaugeList
+          classifications={this.props.classifications}
+          updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
+          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+        />
+      );
     }
   }
   _renderGaugeInfo() {
@@ -119,6 +125,8 @@ HydroInfo.propTypes = {
   summaryData: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
   classifications: PropTypes.array,
+  updateHoveredGauge: PropTypes.func,
+  fetchCurrentGauge: PropTypes.func,
 };
 
 export default HydroInfo;

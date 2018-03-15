@@ -47,7 +47,7 @@ const Summary = props => {
   return (
     <div style={styles.container}>
       <Table
-        height={'570px'}
+        height={'560px'}
         fixedHeader={true}
         selectable={true}
         multiSelectable={true}
