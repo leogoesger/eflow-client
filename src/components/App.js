@@ -25,7 +25,7 @@ class App extends React.Component {
     return (
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <div>
+          <div style={{backgroundColor: '#f5f6f7'}}>
             <Header />
             <Switch>
               <Route exact path="/" component={Home} />

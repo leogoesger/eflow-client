@@ -162,3 +162,11 @@ body {
   stroke: #424242;
   padding: 2px;
 }
+
+.homeContainer {
+  background: url('../constants/backslant-head.svg') 160px 60px no-repeat;
+  background-position: right 0px top 10px;
+  background-color: #f5f6f7;
+  padding-top: 130px;
+  padding-bottom: 30px;
+}
