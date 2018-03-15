@@ -49,6 +49,7 @@ export default class Map extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.gauges) {
+      console.log('changing gauges');
       const mapStyle = getGaugeLayer(
         nextProps.gauges,
         defaultMapStyle,
@@ -56,6 +57,9 @@ export default class Map extends React.Component {
       );
 
       this.setState({mapStyle});
+    }
+    if (nextProps.hoveredGauge) {
+      console.log(nextProps.hoveredGauge);
     }
   }
 
@@ -198,6 +202,7 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
+  hoveredGauge: PropTypes.object,
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
 };

@@ -31,6 +31,7 @@ export class Hydrology extends React.Component {
     return (
       <Layout
         gauges={this.props.gauges}
+        hoveredGauge={this.props.hoveredGauge}
         tabValue={this.props.tabValue}
         currentGauge={this.props.currentGauge}
         classifications={this.props.classifications}
@@ -51,6 +52,7 @@ Hydrology.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   classifications: PropTypes.array,
   gauges: PropTypes.array,
+  hoveredGauge: PropTypes.object,
   tabValue: PropTypes.string,
   updateTab: PropTypes.func,
   currentGauge: PropTypes.object,
@@ -65,6 +67,7 @@ const mapStateToProps = state => {
   return {
     tabValue: state.hydrology.tabValue,
     gauges: state.gauge.gauges,
+    hoveredGauge: state.hydrology.hoveredGauge,
     classifications: state.classification.classifications,
     currentGauge: state.gauge.currentGauge,
     currentClassification: state.classification.currentClassification,

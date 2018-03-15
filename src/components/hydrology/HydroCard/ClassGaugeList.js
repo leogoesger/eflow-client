@@ -14,16 +14,33 @@ import {
 import {classInfo} from '../../../constants/classification';
 
 export default class ClassGaugeList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      classifications: null,
+    };
+  }
+
+  componentWillMount() {
+    this._updateState(this.props);
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.classifications) {
+    this._updateState(nextProps);
+  }
+
+  _updateState(props) {
+    if (!props.classifications) {
       return null;
     }
-    nextProps.classifications.forEach((classification, index) => {
-      nextProps.classifications[index].gauges = _.sortBy(
+    const classifications = _.cloneDeep(props.classifications);
+    classifications.forEach((classification, index) => {
+      classifications[index].gauges = _.sortBy(
         classification.gauges,
         e => e.id
       );
     });
+    this.setState({classifications});
   }
 
   _renderRow(gauges) {
@@ -51,13 +68,13 @@ export default class ClassGaugeList extends React.Component {
 
   _hoverRow(rowNumber, index) {
     this.props.updateHoveredGauge(
-      this.props.classifications[index].gauges[rowNumber].id
+      this.state.classifications[index].gauges[rowNumber].id
     );
   }
 
   _selectRow(rowNumber, index) {
     this.props.fetchCurrentGauge(
-      this.props.classifications[index].gauges[rowNumber].id
+      this.state.classifications[index].gauges[rowNumber].id
     );
   }
 
@@ -111,12 +128,12 @@ export default class ClassGaugeList extends React.Component {
     });
   }
   render() {
-    if (!this.props.classifications) {
+    if (!this.state.classifications) {
       return null;
     }
     return (
       <div className="helloalsdkfjal" style={styles.container}>
-        {this._renderClassCard(this.props.classifications)}
+        {this._renderClassCard(this.state.classifications)}
       </div>
     );
   }

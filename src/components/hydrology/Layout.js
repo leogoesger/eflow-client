@@ -21,6 +21,7 @@ export default class Layout extends React.Component {
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
+          hoveredGauge={this.props.hoveredGauge}
           fetchClassification={classId =>
             this.props.fetchClassification(classId)
           }
@@ -48,6 +49,7 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   tabValue: PropTypes.string,
+  hoveredGauge: PropTypes.object,
   updateTab: PropTypes.func,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
