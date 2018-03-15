@@ -5,6 +5,12 @@ import Map from './Map';
 import HydroTabs from './HydroCard/HydroTabs';
 
 export default class Layout extends React.Component {
+  _updateHoverGauge(gaugeId) {
+    this.props.updateHoveredGauge(
+      this.props.gauges.find(gauge => gauge.id === gaugeId)
+    );
+  }
+
   render() {
     return (
       <div
@@ -32,9 +38,7 @@ export default class Layout extends React.Component {
             removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
             classifications={this.props.classifications}
             fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-            updateHoveredGauge={gaugeId =>
-              this.props.updateHoveredGauge(gaugeId)
-            }
+            updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
           />
         </div>
       </div>

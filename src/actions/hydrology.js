@@ -7,10 +7,10 @@ const updateSelectedTab = tabValue => {
   };
 };
 
-const updateHoveredGaugeId = gaugeId => {
+const updateHoveredGaugeId = gauge => {
   return {
     type: types.UPDATE_HOVERED_GAUGE,
-    gaugeId,
+    gauge,
   };
 };
 
@@ -20,8 +20,8 @@ export function updateTab(tabValue) {
   };
 }
 
-export function updateHoveredGauge(gaugeId) {
+export function updateHoveredGauge(gauge) {
   return dispatch => {
-    dispatch(updateHoveredGaugeId(gaugeId));
+    dispatch(updateHoveredGaugeId(gauge));
   };
 }

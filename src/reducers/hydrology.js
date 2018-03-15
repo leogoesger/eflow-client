@@ -5,7 +5,7 @@ type STATE = {};
 type ACTION = {};
 const initialState: STATE = {
   tabValue: 'a',
-  hoveredGaugeId: null,
+  hoveredGauge: null,
   error: null,
 };
 
@@ -15,7 +15,7 @@ export default function(state: STATE = initialState, action: ACTION) {
       return objectAssign({}, state, {tabValue: action.tabValue});
 
     case types.UPDATE_HOVERED_GAUGE:
-      return objectAssign({}, state, {hoveredGaugeId: action.gaugeId});
+      return objectAssign({}, state, {hoveredGauge: action.gauge});
 
     default:
       return state;

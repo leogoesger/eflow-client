@@ -100,6 +100,7 @@ export default class Map extends React.Component {
         features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
       if (
         hoveredFeature &&
+        this.state.hoveredFeature &&
         hoveredFeature.properties.gaugeId !==
           this.state.hoveredFeature.properties.gaugeId
       ) {
