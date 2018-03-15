@@ -34,7 +34,7 @@ class HydroInfo extends React.Component {
         <CardHeader
           title={this.props.currentGauge.stationName}
           subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
-            classification[this.props.currentGauge.classId]
+            classification[this.props.currentGauge.classId - 1]
           }`}
           actAsExpander={false}
           showExpandableButton={false}

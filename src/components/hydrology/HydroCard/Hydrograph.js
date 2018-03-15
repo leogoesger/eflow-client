@@ -40,7 +40,7 @@ class Hydrograph extends React.Component {
         <CardHeader
           title={this.props.currentGauge.stationName}
           subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
-            classification[this.props.currentGauge.classId]
+            classification[this.props.currentGauge.classId - 1]
           }`}
           actAsExpander={false}
           showExpandableButton={false}
@@ -64,16 +64,44 @@ class Hydrograph extends React.Component {
     );
   }
 
+  // _getHydroData(nextProps) {
+  //   this._getHydroData2(nextProps);
+  //   let hydroData = [];
+  //   if (nextProps.currentGauge) {
+  //     nextProps.currentGauge.hydrographs[2].data.forEach((ele, index) =>
+  //       hydroData.push({date: index + 1, flow: ele})
+  //     );
+  //   } else {
+  //     nextProps.currentClassification.hydrographs[2].data.forEach(
+  //       (ele, index) => hydroData.push({date: index + 1, flow: ele})
+  //     );
+  //   }
+  //   this.setState({hydroData: hydroData});
+  // }
+
   _getHydroData(nextProps) {
-    let hydroData = [];
+    let hydroData = {
+      TEN: [],
+      TWENTYFIVE: [],
+      FIFTY: [],
+      SEVENTYFIVE: [],
+      NINTY: [],
+    };
     if (nextProps.currentGauge) {
-      nextProps.currentGauge.hydrographs[2].data.forEach((ele, index) =>
-        hydroData.push({date: index + 1, flow: ele})
-      );
+      nextProps.currentGauge.hydrographs.forEach(hydrograph => {
+        hydrograph.data.forEach((ele, index) => {
+          hydroData[hydrograph.percentille].push({date: index + 1, flow: ele});
+        });
+      });
     } else {
-      nextProps.currentClassification.hydrographs[2].data.forEach(
-        (ele, index) => hydroData.push({date: index + 1, flow: ele})
-      );
+      nextProps.currentClassification.hydrographs.forEach(classification => {
+        classification.data.forEach((ele, index) => {
+          hydroData[classification.percentille].push({
+            date: index + 1,
+            flow: ele,
+          });
+        });
+      });
     }
     this.setState({hydroData: hydroData});
   }
@@ -89,9 +117,9 @@ class Hydrograph extends React.Component {
           </div>
           <LinePlot
             x={this.props.containerWidth / 10}
-            y={20}
+            y={50}
             width={this.props.containerWidth}
-            height={450}
+            height={300}
             data={this.state.hydroData}
             xValue={value => value.date}
             yValue={value => value.flow}

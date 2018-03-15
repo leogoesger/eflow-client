@@ -19,13 +19,13 @@ export default class LinePlot extends React.Component {
   }
 
   updateD3(props) {
-    const {data, width, height} = props;
+    let {data, width, height} = props;
 
     this.xScale
-      .domain(d3.extent(data, d => this.props.xValue(d)))
+      .domain(d3.extent(data.NINTY, d => this.props.xValue(d)))
       .range([0, width]);
 
-    this.yScale.domain([0, d3.max(data, d => d.flow) + 50]).range([height, 0]);
+    this.yScale.domain([0, d3.max(data.NINTY, d => d.flow)]).range([height, 0]);
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
@@ -35,13 +35,13 @@ export default class LinePlot extends React.Component {
 
   render() {
     const transform = `translate(${this.props.x}, ${this.props.y})`;
-    if (this.line(this.props.data)) {
+    if (this.line(this.props.data.NINTY)) {
       return (
-        <svg width={this.props.width + 50} height={this.props.height + 75}>
+        <svg width={this.props.width + 100} height={this.props.height + 100}>
           <g style={{fill: 'none'}}>
             <Axis
               scale={this.xScale}
-              data={this.props.data}
+              data={this.props.data.NINTY}
               x={this.props.x}
               gridLength={this.props.height}
               y={this.props.y + this.props.height}
@@ -49,7 +49,7 @@ export default class LinePlot extends React.Component {
             />
             <Axis
               scale={this.yScale}
-              data={this.props.data}
+              data={this.props.data.NINTY}
               x={this.props.x}
               y={this.props.y}
               gridLength={this.props.width}
@@ -57,10 +57,38 @@ export default class LinePlot extends React.Component {
             />
             <path
               transform={transform}
-              d={this.line(this.props.data)}
+              d={this.line(this.props.data.NINTY)}
               strokeLinecap="round"
               strokeWidth="3"
-              stroke="#1976d2"
+              stroke="#2196f3"
+            />
+            <path
+              transform={transform}
+              d={this.line(this.props.data.SEVENTYFIVE)}
+              strokeLinecap="round"
+              strokeWidth="3"
+              stroke="#4fc3f7"
+            />
+            <path
+              transform={transform}
+              d={this.line(this.props.data.FIFTY)}
+              strokeLinecap="round"
+              strokeWidth="3"
+              stroke="#ef5350"
+            />
+            <path
+              transform={transform}
+              d={this.line(this.props.data.TWENTYFIVE)}
+              strokeLinecap="round"
+              strokeWidth="3"
+              stroke="#4fc3f7"
+            />
+            <path
+              transform={transform}
+              d={this.line(this.props.data.TEN)}
+              strokeLinecap="round"
+              strokeWidth="3"
+              stroke="#2196f3"
             />
           </g>
         </svg>
@@ -76,7 +104,7 @@ LinePlot.defaultProps = {
 LinePlot.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
-  data: PropTypes.array,
+  data: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
   xValue: PropTypes.func,
