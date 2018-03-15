@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
-import {debounce} from 'lodash';
+import {debounce, assign} from 'lodash';
+import {fromJS} from 'immutable';
 
-import {defaultMapStyle, gaugeLayer} from './map-style.js';
+import {defaultMapStyle, gaugeLayer, hoveredGaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
 import Control from './Control';
 import Loader from '../shared/loader/Loader';
@@ -30,7 +31,6 @@ export default class Map extends React.Component {
       y: null,
       hoveredFeature: null,
       loading: true,
-      gauges: null,
     };
     this.requestFeature = debounce(
       hoveredFeature => this._requestCurrentFeature(hoveredFeature),
@@ -48,18 +48,81 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.gauges) {
-      console.log('changing gauges');
+    if (nextProps.gauges && this.props.gauges !== nextProps.gauges) {
       const mapStyle = getGaugeLayer(
         nextProps.gauges,
         defaultMapStyle,
         gaugeLayer
       );
-
       this.setState({mapStyle});
+    } else if (nextProps.hoveredGauge) {
+      this._updateCurrentHoverGauge(nextProps);
+    } else {
+      return null;
     }
-    if (nextProps.hoveredGauge) {
-      console.log(nextProps.hoveredGauge);
+
+    // this._updateCurrentHoverGauge(nextProps);
+  }
+
+  _updateCurrentHoverGauge(nextProps) {
+    if (nextProps.hoveredGauge && nextProps.hoveredGauge.geometry) {
+      const hoveredGauge = {
+        hoveredGauge: {
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [
+                    nextProps.hoveredGauge.geometry.coordinates[1],
+                    nextProps.hoveredGauge.geometry.coordinates[0],
+                  ],
+                },
+                properties: {classId: nextProps.hoveredGauge.classId},
+              },
+            ],
+          },
+          type: 'geojson',
+        },
+      };
+
+      //If the layer is not exist yet, this will create a new layer
+      if (
+        !this.state.mapStyle
+          .get('layers')
+          .toJS()
+          .find(e => e.id == 'hoveredGauge')
+      ) {
+        const newCombinedLayer = fromJS(
+          this.state.mapStyle
+            .get('layers')
+            .toJS()
+            .concat(hoveredGaugeLayer)
+        );
+        const newMapStyle = this.state.mapStyle
+          .set(
+            'sources',
+            fromJS(
+              assign(
+                {},
+                this.state.mapStyle.get('sources').toJS(),
+                hoveredGauge
+              )
+            )
+          )
+          .set('layers', newCombinedLayer);
+        return this.setState({mapStyle: newMapStyle});
+      }
+
+      const newMapStyle = this.state.mapStyle.set(
+        'sources',
+        fromJS(
+          assign({}, this.state.mapStyle.get('sources').toJS(), hoveredGauge)
+        )
+      );
+      this.setState({mapStyle: newMapStyle});
     }
   }
 
