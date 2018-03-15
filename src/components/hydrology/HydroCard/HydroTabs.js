@@ -14,11 +14,6 @@ class HydroTabs extends React.Component {
       summaryData: null,
     };
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentGauge || nextProps.currentClassification) {
-      this._getSummaryData(nextProps);
-    }
-  }
 
   componentDidMount() {
     this._setContainerWidth();
@@ -27,6 +22,12 @@ class HydroTabs extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this._setContainerWidth());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentGauge || nextProps.currentClassification) {
+      this._getSummaryData(nextProps);
+    }
   }
 
   _getSummaryData(nextProps) {

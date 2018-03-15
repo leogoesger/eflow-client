@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
 import {debounce, assign} from 'lodash';
 import {fromJS} from 'immutable';
+import Snackbar from 'material-ui/Snackbar';
 
 import {defaultMapStyle, gaugeLayer, hoveredGaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
@@ -14,6 +15,7 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       mapStyle: defaultMapStyle,
       data: {
         type: 'FeatureCollection',
@@ -55,13 +57,14 @@ export default class Map extends React.Component {
         gaugeLayer
       );
       this.setState({mapStyle});
-    } else if (nextProps.hoveredGauge) {
+    } else if (
+      nextProps.hoveredGauge &&
+      this.props.hoveredGauge !== nextProps.hoveredGauge
+    ) {
       this._updateCurrentHoverGauge(nextProps);
     } else {
       return null;
     }
-
-    // this._updateCurrentHoverGauge(nextProps);
   }
 
   _updateCurrentHoverGauge(nextProps) {
@@ -123,7 +126,17 @@ export default class Map extends React.Component {
         )
       );
       this.setState({mapStyle: newMapStyle});
+    } else if (nextProps.hoveredGauge && !nextProps.hoveredGauge.geometry) {
+      this.setState({
+        open: true,
+      });
     }
+  }
+
+  _handleRequestClose() {
+    this.setState({
+      open: false,
+    });
   }
 
   _requestCurrentFeature(hoveredFeature) {
@@ -258,6 +271,14 @@ export default class Map extends React.Component {
           }
         />
         <Loader loading={this.state.loading} />
+        <Snackbar
+          open={this.state.open}
+          message={`Gauge ${
+            this.props.hoveredGauge.id
+          } do not have location Info.`}
+          autoHideDuration={4000}
+          onRequestClose={() => this._handleRequestClose()}
+        />
       </MapGL>
     );
   }
