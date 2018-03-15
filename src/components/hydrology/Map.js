@@ -250,6 +250,14 @@ export default class Map extends React.Component {
     }
   }
 
+  _getSnackBarMessage() {
+    if (this.props.hoveredGauge) {
+      return `Gauge ${this.props.hoveredGauge.id} do not have location Info.`;
+    } else {
+      return 'nothing';
+    }
+  }
+
   render() {
     return (
       <MapGL
@@ -271,11 +279,10 @@ export default class Map extends React.Component {
           }
         />
         <Loader loading={this.state.loading} />
+
         <Snackbar
           open={this.state.open}
-          message={`Gauge ${
-            this.props.hoveredGauge.id
-          } do not have location Info.`}
+          message={this._getSnackBarMessage()}
           autoHideDuration={4000}
           onRequestClose={() => this._handleRequestClose()}
         />

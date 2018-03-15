@@ -10,10 +10,10 @@ import Home from '../containers/Home';
 import Header from '../containers/Header';
 import Footer from '../containers/Footer';
 import Hydrology from '../containers/Hydrology';
-import Morphology from '../containers/Morphology';
-import Ecology from '../containers/Ecology';
-import Team from '../containers/Team';
-import Paper from '../containers/Paper';
+// import Morphology from '../containers/Morphology';
+// import Ecology from '../containers/Ecology';
+// import Team from '../containers/Team';
+// import Paper from '../containers/Paper';
 import Construction from '../containers/Construction';
 
 class App extends React.Component {
