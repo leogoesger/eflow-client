@@ -5,6 +5,12 @@ import Map from './Map';
 import HydroTabs from './HydroCard/HydroTabs';
 
 export default class Layout extends React.Component {
+  _updateHoverGauge(gaugeId) {
+    this.props.updateHoveredGauge(
+      this.props.gauges.find(gauge => gauge.id === gaugeId)
+    );
+  }
+
   render() {
     return (
       <div
@@ -15,6 +21,7 @@ export default class Layout extends React.Component {
         <Map
           className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
+          hoveredGauge={this.props.hoveredGauge}
           fetchClassification={classId =>
             this.props.fetchClassification(classId)
           }
@@ -30,6 +37,9 @@ export default class Layout extends React.Component {
             currentGauge={this.props.currentGauge}
             currentClassification={this.props.currentClassification}
             removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+            classifications={this.props.classifications}
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
           />
         </div>
       </div>
@@ -39,6 +49,7 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   tabValue: PropTypes.string,
+  hoveredGauge: PropTypes.object,
   updateTab: PropTypes.func,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
@@ -46,6 +57,8 @@ Layout.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
   removeClassGaugeProps: PropTypes.func,
+  classifications: PropTypes.array,
+  updateHoveredGauge: PropTypes.func,
 };
 
 const styles = {

@@ -14,11 +14,6 @@ class HydroTabs extends React.Component {
       summaryData: null,
     };
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentGauge || nextProps.currentClassification) {
-      this._getSummaryData(nextProps);
-    }
-  }
 
   componentDidMount() {
     this._setContainerWidth();
@@ -27,6 +22,12 @@ class HydroTabs extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this._setContainerWidth());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentGauge || nextProps.currentClassification) {
+      this._getSummaryData(nextProps);
+    }
   }
 
   _getSummaryData(nextProps) {
@@ -69,10 +70,15 @@ class HydroTabs extends React.Component {
             currentGauge={this.props.currentGauge}
             summaryData={this.state.summaryData}
             removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+            classifications={this.props.classifications}
+            updateHoveredGauge={gaugeId =>
+              this.props.updateHoveredGauge(gaugeId)
+            }
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
           />
         </Tab>
         <Tab
-          label="Plot"
+          label="Hydrograph"
           value="b"
           disabled={!this._disabledBtn()}
           style={this._disabledBtn() ? null : {cursor: 'not-allowed'}}
@@ -96,6 +102,9 @@ HydroTabs.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
+  classifications: PropTypes.array,
+  updateHoveredGauge: PropTypes.func,
+  fetchCurrentGauge: PropTypes.func,
 };
 
 export default HydroTabs;

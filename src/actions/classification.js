@@ -9,6 +9,13 @@ const fetchClassificationObject = classification => {
   };
 };
 
+const fetchClassificationObjects = classifications => {
+  return {
+    type: types.FETCH_CLASSIFICATION_OBJECTS,
+    classifications,
+  };
+};
+
 export function removeCurrentClass() {
   return async dispatch => {
     try {
@@ -27,6 +34,19 @@ export function fetchClassification(classId) {
       );
       dispatch(fetchClassificationObject(classification.body));
       dispatch(removeCurrentGauge());
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
+export function fetchClassifications() {
+  return async dispatch => {
+    try {
+      const classifications = await request.get(
+        `${process.env.SERVER_ADDRESS}/api/classes`
+      );
+      dispatch(fetchClassificationObjects(classifications.body));
     } catch (e) {
       throw e;
     }

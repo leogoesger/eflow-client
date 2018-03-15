@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
-import {debounce} from 'lodash';
+import {debounce, assign} from 'lodash';
+import {fromJS} from 'immutable';
+import Snackbar from 'material-ui/Snackbar';
 
-import {defaultMapStyle, gaugeLayer} from './map-style.js';
+import {defaultMapStyle, gaugeLayer, hoveredGaugeLayer} from './map-style.js';
 import {classification} from '../../constants/classification';
 import Control from './Control';
 import Loader from '../shared/loader/Loader';
@@ -13,6 +15,7 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       mapStyle: defaultMapStyle,
       data: {
         type: 'FeatureCollection',
@@ -30,7 +33,6 @@ export default class Map extends React.Component {
       y: null,
       hoveredFeature: null,
       loading: true,
-      gauges: null,
     };
     this.requestFeature = debounce(
       hoveredFeature => this._requestCurrentFeature(hoveredFeature),
@@ -48,15 +50,93 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.gauges) {
+    if (nextProps.gauges && this.props.gauges !== nextProps.gauges) {
       const mapStyle = getGaugeLayer(
         nextProps.gauges,
         defaultMapStyle,
         gaugeLayer
       );
-
       this.setState({mapStyle});
+    } else if (
+      nextProps.hoveredGauge &&
+      this.props.hoveredGauge !== nextProps.hoveredGauge
+    ) {
+      this._updateCurrentHoverGauge(nextProps);
+    } else {
+      return null;
     }
+  }
+
+  _updateCurrentHoverGauge(nextProps) {
+    if (nextProps.hoveredGauge && nextProps.hoveredGauge.geometry) {
+      const hoveredGauge = {
+        hoveredGauge: {
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [
+                    nextProps.hoveredGauge.geometry.coordinates[1],
+                    nextProps.hoveredGauge.geometry.coordinates[0],
+                  ],
+                },
+                properties: {classId: nextProps.hoveredGauge.classId},
+              },
+            ],
+          },
+          type: 'geojson',
+        },
+      };
+
+      //If the layer is not exist yet, this will create a new layer
+      if (
+        !this.state.mapStyle
+          .get('layers')
+          .toJS()
+          .find(e => e.id == 'hoveredGauge')
+      ) {
+        const newCombinedLayer = fromJS(
+          this.state.mapStyle
+            .get('layers')
+            .toJS()
+            .concat(hoveredGaugeLayer)
+        );
+        const newMapStyle = this.state.mapStyle
+          .set(
+            'sources',
+            fromJS(
+              assign(
+                {},
+                this.state.mapStyle.get('sources').toJS(),
+                hoveredGauge
+              )
+            )
+          )
+          .set('layers', newCombinedLayer);
+        return this.setState({mapStyle: newMapStyle});
+      }
+
+      const newMapStyle = this.state.mapStyle.set(
+        'sources',
+        fromJS(
+          assign({}, this.state.mapStyle.get('sources').toJS(), hoveredGauge)
+        )
+      );
+      this.setState({mapStyle: newMapStyle});
+    } else if (nextProps.hoveredGauge && !nextProps.hoveredGauge.geometry) {
+      this.setState({
+        open: true,
+      });
+    }
+  }
+
+  _handleRequestClose() {
+    this.setState({
+      open: false,
+    });
   }
 
   _requestCurrentFeature(hoveredFeature) {
@@ -100,6 +180,7 @@ export default class Map extends React.Component {
         features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
       if (
         hoveredFeature &&
+        this.state.hoveredFeature &&
         hoveredFeature.properties.gaugeId !==
           this.state.hoveredFeature.properties.gaugeId
       ) {
@@ -190,6 +271,14 @@ export default class Map extends React.Component {
           }
         />
         <Loader loading={this.state.loading} />
+        <Snackbar
+          open={this.state.open}
+          message={`Gauge ${
+            this.props.hoveredGauge.id
+          } do not have location Info.`}
+          autoHideDuration={4000}
+          onRequestClose={() => this._handleRequestClose()}
+        />
       </MapGL>
     );
   }
@@ -197,6 +286,7 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
+  hoveredGauge: PropTypes.object,
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
 };

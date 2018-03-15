@@ -47,7 +47,7 @@ export default class HydrologyCard extends React.Component {
             <RaisedButton
               label="Explore Hydrology"
               backgroundColor={Colors.gold}
-              labelColor="white"
+              labelColor={Colors.white}
               onClick={() => navigateTo('/hydrology')}
               labelStyle={{fontSize: '12px'}}
             />
