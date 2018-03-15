@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {
   fetchClassification,
   removeCurrentClass,
+  fetchClassifications,
 } from '../actions/classification';
 import {
   fetchGauges,
@@ -17,6 +18,7 @@ import Layout from '../components/hydrology/Layout';
 export class Hydrology extends React.Component {
   componentWillMount() {
     this.props.fetchGauges();
+    this.props.fetchClassifications();
   }
 
   removeClassGaugeProps() {
@@ -31,6 +33,7 @@ export class Hydrology extends React.Component {
         gauges={this.props.gauges}
         tabValue={this.props.tabValue}
         currentGauge={this.props.currentGauge}
+        classifications={this.props.classifications}
         fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
         currentClassification={this.props.currentClassification}
         fetchClassification={classId => this.props.fetchClassification(classId)}
@@ -45,6 +48,7 @@ Hydrology.propTypes = {
   fetchClassification: PropTypes.func,
   fetchGauges: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,
+  classifications: PropTypes.array,
   gauges: PropTypes.array,
   tabValue: PropTypes.string,
   updateTab: PropTypes.func,
@@ -52,12 +56,14 @@ Hydrology.propTypes = {
   currentClassification: PropTypes.object,
   removeCurrentGauge: PropTypes.func,
   removeCurrentClass: PropTypes.func,
+  fetchClassifications: PropTypes.func,
 };
 
 const mapStateToProps = state => {
   return {
     tabValue: state.hydrology.tabValue,
     gauges: state.gauge.gauges,
+    classifications: state.classification.classifications,
     currentGauge: state.gauge.currentGauge,
     currentClassification: state.classification.currentClassification,
   };
@@ -71,6 +77,7 @@ const mapDispatchToProps = dispatch => {
     updateTab: tabValue => dispatch(updateTab(tabValue)),
     removeCurrentGauge: () => dispatch(removeCurrentGauge()),
     removeCurrentClass: () => dispatch(removeCurrentClass()),
+    fetchClassifications: () => dispatch(fetchClassifications()),
   };
 };
 

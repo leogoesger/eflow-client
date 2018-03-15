@@ -16,7 +16,7 @@ const renderRow = summaryData => {
     return null;
   }
   return Object.keys(summaryData).map(key => {
-    if (summaryData[key].length === 3) {
+    if (summaryData[key].length === 3 && key !== 'abbreviation') {
       return (
         <TableRow
           key={key}

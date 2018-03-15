@@ -31,13 +31,7 @@ class Hydrograph extends React.Component {
     } else if (this.props.currentClassification) {
       return this._renderClassInfo();
     } else {
-      return (
-        <div>
-          {
-            'There are total 224 gauges, within 9 classes. Hover over them to see more...'
-          }
-        </div>
-      );
+      return null;
     }
   }
   _renderGaugeInfo() {
@@ -150,7 +144,7 @@ const styles = {
     marginTop: '20px',
     width: '100%',
     textAlign: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     fontSize: '18px',
   },
   btnContainer: {

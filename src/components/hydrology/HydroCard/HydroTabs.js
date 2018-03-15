@@ -69,10 +69,11 @@ class HydroTabs extends React.Component {
             currentGauge={this.props.currentGauge}
             summaryData={this.state.summaryData}
             removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+            classifications={this.props.classifications}
           />
         </Tab>
         <Tab
-          label="Plot"
+          label="Hydrograph"
           value="b"
           disabled={!this._disabledBtn()}
           style={this._disabledBtn() ? null : {cursor: 'not-allowed'}}
@@ -96,6 +97,7 @@ HydroTabs.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
+  classifications: PropTypes.array,
 };
 
 export default HydroTabs;

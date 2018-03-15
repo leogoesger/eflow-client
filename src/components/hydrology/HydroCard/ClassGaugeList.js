@@ -1,42 +1,99 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableRowColumn,
+  TableHeader,
+  TableHeaderColumn,
+} from 'material-ui/Table';
 
-import {classification, classInfo} from '../../../constants/classification';
+import {classInfo} from '../../../constants/classification';
 
 export default class ClassGaugeList extends React.Component {
-  _renderClassCard(classes) {
-    return classes.map((classification, index) => {
-      const abbre = classInfo[`class${index + 1}`].abbre;
-      const gaugeCount = classInfo[`class${index + 1}`].gaugeCount;
+  _renderRow(gauges) {
+    if (!gauges) {
+      return null;
+    }
+
+    return gauges.map(gauge => {
       return (
-        <Card key={classification}>
+        <TableRow
+          key={gauge.id}
+          style={{height: '40px', padding: '0px', cursor: 'pointer'}}
+        >
+          <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
+            {gauge.id}
+          </TableRowColumn>
+
+          <TableRowColumn style={{height: '15px'}}>
+            {gauge.stationName}
+          </TableRowColumn>
+        </TableRow>
+      );
+    });
+  }
+
+  _renderClassCard(classes) {
+    return classes.map(classification => {
+      const abbre = classInfo[`class${classification.id}`].abbre;
+      const gaugeCount = classification.gauges.length;
+      return (
+        <Card key={classification.id}>
           <CardHeader
-            title={`${classification} (${abbre})`}
+            title={`${classification.name} (${abbre})`}
             subtitle={`Gauge Count: ${gaugeCount}`}
             actAsExpander={true}
             showExpandableButton={true}
           />
           <CardText expandable={true}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            mattis pretium massa. Aliquam erat volutpat. Nulla facilisi. Donec
-            vulputate interdum sollicitudin. Nunc lacinia auctor quam sed
-            pellentesque. Aliquam dui mauris, mattis quis lacus id, pellentesque
-            lobortis odio.
+            <Table fixedHeader={true} selectable={true} multiSelectable={false}>
+              <TableHeader
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+                enableSelectAll={false}
+                style={{height: '40px', padding: '0px'}}
+              >
+                <TableRow style={{height: '20px'}}>
+                  <TableHeaderColumn style={{height: '20px'}}>
+                    {'ID'}
+                  </TableHeaderColumn>
+                  <TableHeaderColumn style={{height: '20px'}}>
+                    {'Station Name'}
+                  </TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayRowCheckbox={false}
+                deselectOnClickaway={true}
+                showRowHover={true}
+                stripedRows={false}
+              >
+                {this._renderRow(classification.gauges)}
+              </TableBody>
+            </Table>
           </CardText>
         </Card>
       );
     });
   }
   render() {
+    if (!this.props.classifications) {
+      return null;
+    }
     return (
       <div className="helloalsdkfjal" style={styles.container}>
-        {this._renderClassCard(classification)}
+        {this._renderClassCard(this.props.classifications)}
       </div>
     );
   }
 }
 
-ClassGaugeList.propTypes = {};
+ClassGaugeList.propTypes = {
+  classifications: PropTypes.array,
+};
 
 const styles = {
   container: {
