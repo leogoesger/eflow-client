@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
+import Divider from 'material-ui/Divider';
 
 import {
   classificationShort,
-  classificationColor,
+  classInfo,
 } from '../../constants/classification.js';
 import {Colors} from '../../styles';
 
@@ -21,25 +22,31 @@ export default class Control extends React.Component {
       class7: true,
       class8: true,
       class9: true,
+      cities: false,
+      gauges: true,
     };
   }
 
-  handleToggle(classNumber) {
-    this.setState({[classNumber]: !this.state[classNumber]}, () =>
-      this.props.hideLayer(classNumber, this.state[classNumber])
+  handleToggle(layerId) {
+    this.setState({[layerId]: !this.state[layerId]}, () =>
+      this.props.hideLayer(layerId, this.state[layerId])
     );
   }
 
-  _renderControllers() {
-    return classificationShort.map((classInfo, index) => {
+  _renderClassControllers() {
+    return classificationShort.map((currentClassData, index) => {
+      const currentClass = classInfo[`class${index + 1}`];
       return (
         <Toggle
           key={index}
-          label={classInfo}
+          label={currentClassData}
           labelStyle={styles.labelStyle}
           value={'empty'}
-          thumbSwitchedStyle={{backgroundColor: classificationColor[index][0]}}
-          trackSwitchedStyle={{backgroundColor: classificationColor[index][1]}}
+          thumbSwitchedStyle={{
+            size: '1',
+            backgroundColor: currentClass.colors[0],
+          }}
+          trackSwitchedStyle={{backgroundColor: currentClass.colors[1]}}
           onClick={() => this.handleToggle(`class${index + 1}`)}
           toggled={this.state[`class${index + 1}`]}
         />
@@ -48,7 +55,27 @@ export default class Control extends React.Component {
   }
 
   render() {
-    return <div style={styles.container}>{this._renderControllers()}</div>;
+    return (
+      <div style={styles.BLcontainer}>
+        {this._renderClassControllers()}
+        <Divider style={{marginTop: '2px', height: '2px'}} />
+        <Toggle
+          style={{marginTop: '5px'}}
+          label={'Gauge'}
+          labelStyle={styles.labelStyle}
+          value={'empty'}
+          onClick={() => this.handleToggle('gauges')}
+          toggled={this.state.gauges}
+        />
+        <Toggle
+          label={'City'}
+          labelStyle={styles.labelStyle}
+          value={'empty'}
+          onClick={() => this.handleToggle('cities')}
+          toggled={this.state.cities}
+        />
+      </div>
+    );
   }
 }
 
@@ -58,13 +85,13 @@ Control.propTypes = {
 };
 
 const styles = {
-  container: {
+  BLcontainer: {
     backgroundColor: '#fff',
     position: 'absolute',
     bottom: '40px',
     left: '20px',
     width: '140px',
-    height: '220px',
+    height: '270px',
     padding: '20px',
     boxShadow: '2px 2px 45px -5px rgba(110,110,110,1)',
   },

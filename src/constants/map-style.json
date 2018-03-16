@@ -34,7 +34,7 @@
       "id": "background",
       "type": "background",
       "paint": {
-        "background-color": "#f0e9d8"
+        "background-color": "#eeeeee"
       }
     },
     {
@@ -235,13 +235,36 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#C51162"
+        "line-color": "#C51162",
+        "line-width": {
+          "base": 0.5,
+          "stops": [[6, 1.2], [7, 2]]
+        }
+      }
+    },
+    {
+      "id": "cities",
+      "type": "symbol",
+      "metadata": {},
+      "source": "composite",
+      "source-layer": "place_label",
+      "layout": {
+        "visibility": "none",
+        "text-field": "{name}",
+        "text-offset": [0, 0.2],
+        "icon-image": "city-small",
+        "text-justify": "left",
+        "text-anchor": "top",
+        "text-size": 10
+      },
+      "paint": {
+        "text-color": "hsl(0, 0%, 0%)"
       }
     }
   ],
   "created": "2018-03-08T01:37:47.822Z",
   "id": "cjehuen2y6v842ssytpno39q8",
-  "modified": "2018-03-10T21:02:22.403Z",
+  "modified": "2018-03-16T19:13:58.064Z",
   "owner": "leogoesger",
   "visibility": "private",
   "draft": false

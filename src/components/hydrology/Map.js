@@ -197,11 +197,11 @@ export default class Map extends React.Component {
     }
   }
 
-  _hideLayer(className, condition) {
+  _hideLayer(layerId, condition) {
     const arrayIndex = this.state.mapStyle
       .get('layers')
       .toJS()
-      .findIndex(item => item.id === className);
+      .findIndex(item => item.id === layerId);
 
     if (condition) {
       const mapStyle = this.state.mapStyle.setIn(
@@ -274,8 +274,8 @@ export default class Map extends React.Component {
       >
         {this._renderTooltip()}
         <Control
-          hideLayer={(className, condition) =>
-            this._hideLayer(className, condition)
+          hideLayer={(layerId, condition) =>
+            this._hideLayer(layerId, condition)
           }
         />
         <Loader loading={this.state.loading} />

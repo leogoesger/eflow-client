@@ -38,7 +38,6 @@ class Hydrograph extends React.Component {
   _renderGaugeInfo() {
     const currentGaugeClass =
       classInfo[`class${this.props.currentGauge.classId}`];
-    console.log(currentGaugeClass);
     return (
       <div>
         <CardHeader
