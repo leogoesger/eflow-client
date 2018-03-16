@@ -55,10 +55,13 @@ class Hydrograph extends React.Component {
   }
 
   _renderClassInfo() {
+    const currentClass =
+      classInfo[`class${this.props.currentClassification.id}`];
     return (
       <div>
         <CardHeader
           title={this.props.currentClassification.name}
+          titleColor={currentClass.colors[0]}
           subtitle={`ID: ${this.props.currentClassification.id}`}
           actAsExpander={false}
           showExpandableButton={false}
@@ -125,7 +128,8 @@ class Hydrograph extends React.Component {
               label="Details"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
-              labelStyle={{fontSize: '12px'}}
+              disabled={true}
+              labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
             />
           </div>
         </div>
@@ -162,7 +166,7 @@ const styles = {
     width: '100%',
     textAlign: 'center',
     fontWeight: '500',
-    fontSize: '18px',
+    fontSize: '16px',
   },
   btnContainer: {
     width: '95%',
