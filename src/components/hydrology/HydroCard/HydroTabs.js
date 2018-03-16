@@ -75,6 +75,9 @@ class HydroTabs extends React.Component {
               this.props.updateHoveredGauge(gaugeId)
             }
             fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            fetchClassification={classId =>
+              this.props.fetchClassification(classId)
+            }
           />
         </Tab>
         <Tab
@@ -105,6 +108,7 @@ HydroTabs.propTypes = {
   classifications: PropTypes.array,
   updateHoveredGauge: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,
+  fetchClassification: PropTypes.func,
 };
 
 export default HydroTabs;

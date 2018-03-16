@@ -7,7 +7,7 @@ import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Reply from 'material-ui/svg-icons/content/reply';
 
-import {classification} from '../../../constants/classification';
+import {classInfo} from '../../../constants/classification';
 import {Colors} from '../../../styles';
 import Summary from './Summary';
 import ClassGaugeList from './ClassGaugeList';
@@ -24,18 +24,24 @@ class HydroInfo extends React.Component {
           classifications={this.props.classifications}
           updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
           fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+          fetchClassification={classId =>
+            this.props.fetchClassification(classId)
+          }
         />
       );
     }
   }
   _renderGaugeInfo() {
+    const currentGaugeClass =
+      classInfo[`class${this.props.currentGauge.classId}`];
     return (
       <div>
         <CardHeader
           title={this.props.currentGauge.stationName}
           subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
-            classification[this.props.currentGauge.classId - 1]
+            currentGaugeClass.fullName
           }`}
+          subtitleColor={currentGaugeClass.colors[0]}
           actAsExpander={false}
           showExpandableButton={false}
         />
@@ -47,10 +53,13 @@ class HydroInfo extends React.Component {
   }
 
   _renderClassInfo() {
+    const currentClass =
+      classInfo[`class${this.props.currentClassification.id}`];
     return (
       <div>
         <CardHeader
           title={this.props.currentClassification.name}
+          titleColor={currentClass.colors[0]}
           subtitle={`ID: ${this.props.currentClassification.id}`}
           actAsExpander={false}
           showExpandableButton={false}
@@ -77,7 +86,8 @@ class HydroInfo extends React.Component {
             label="Details"
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
-            labelStyle={{fontSize: '12px'}}
+            disabled={true}
+            labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
           />
         </div>
       );
@@ -88,7 +98,8 @@ class HydroInfo extends React.Component {
           label="Details"
           backgroundColor={Colors.gold}
           labelColor={Colors.white}
-          labelStyle={{fontSize: '12px'}}
+          disabled={true}
+          labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
         />
       </div>
     );
@@ -127,6 +138,7 @@ HydroInfo.propTypes = {
   classifications: PropTypes.array,
   updateHoveredGauge: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,
+  fetchClassification: PropTypes.func,
 };
 
 export default HydroInfo;

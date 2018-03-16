@@ -67,14 +67,20 @@ export default class ClassGaugeList extends React.Component {
   }
 
   _hoverRow(rowNumber, index) {
+    if (rowNumber === 0) {
+      return null;
+    }
     this.props.updateHoveredGauge(
-      this.state.classifications[index].gauges[rowNumber].id
+      this.state.classifications[index].gauges[rowNumber + 1].id
     );
   }
 
-  _selectRow(rowNumber, index) {
+  _selectRow(rowNumber, index, classId) {
+    if (rowNumber == 0) {
+      return this.props.fetchClassification(classId);
+    }
     this.props.fetchCurrentGauge(
-      this.state.classifications[index].gauges[rowNumber].id
+      this.state.classifications[index].gauges[rowNumber + 1].id
     );
   }
 
@@ -82,6 +88,8 @@ export default class ClassGaugeList extends React.Component {
     return classes.map((classification, index) => {
       const abbre = classInfo[`class${classification.id}`].abbre;
       const gaugeCount = classification.gauges.length;
+      const classId = classification.id;
+
       return (
         <Card key={classification.id}>
           <CardHeader
@@ -96,7 +104,9 @@ export default class ClassGaugeList extends React.Component {
               selectable={true}
               multiSelectable={false}
               onRowHover={rowNumber => this._hoverRow(rowNumber, index)}
-              onRowSelection={rowNumber => this._selectRow(rowNumber, index)}
+              onRowSelection={rowNumber =>
+                this._selectRow(rowNumber, index, classId)
+              }
             >
               <TableHeader
                 displaySelectAll={false}
@@ -119,6 +129,17 @@ export default class ClassGaugeList extends React.Component {
                 showRowHover={true}
                 stripedRows={false}
               >
+                <TableRow
+                  style={{height: '40px', padding: '0px', cursor: 'pointer'}}
+                >
+                  <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
+                    {`Class ${classification.id}`}
+                  </TableRowColumn>
+
+                  <TableRowColumn style={{height: '15px'}}>
+                    {classification.name}
+                  </TableRowColumn>
+                </TableRow>
                 {this._renderRow(classification.gauges)}
               </TableBody>
             </Table>
@@ -140,6 +161,7 @@ export default class ClassGaugeList extends React.Component {
 }
 
 ClassGaugeList.propTypes = {
+  fetchClassification: PropTypes.func,
   classifications: PropTypes.array,
   updateHoveredGauge: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,

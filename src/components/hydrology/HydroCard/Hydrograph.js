@@ -8,7 +8,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Reply from 'material-ui/svg-icons/content/reply';
 
 import {LinePlot} from '../../shared/plots';
-import {classification} from '../../../constants/classification';
+import {classInfo} from '../../../constants/classification';
+
 import {Colors} from '../../../styles';
 
 class Hydrograph extends React.Component {
@@ -35,13 +36,16 @@ class Hydrograph extends React.Component {
     }
   }
   _renderGaugeInfo() {
+    const currentGaugeClass =
+      classInfo[`class${this.props.currentGauge.classId}`];
     return (
       <div>
         <CardHeader
           title={this.props.currentGauge.stationName}
           subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
-            classification[this.props.currentGauge.classId - 1]
+            currentGaugeClass.fullName
           }`}
+          subtitleColor={currentGaugeClass.colors[0]}
           actAsExpander={false}
           showExpandableButton={false}
         />
@@ -51,10 +55,13 @@ class Hydrograph extends React.Component {
   }
 
   _renderClassInfo() {
+    const currentClass =
+      classInfo[`class${this.props.currentClassification.id}`];
     return (
       <div>
         <CardHeader
           title={this.props.currentClassification.name}
+          titleColor={currentClass.colors[0]}
           subtitle={`ID: ${this.props.currentClassification.id}`}
           actAsExpander={false}
           showExpandableButton={false}
@@ -63,21 +70,6 @@ class Hydrograph extends React.Component {
       </div>
     );
   }
-
-  // _getHydroData(nextProps) {
-  //   this._getHydroData2(nextProps);
-  //   let hydroData = [];
-  //   if (nextProps.currentGauge) {
-  //     nextProps.currentGauge.hydrographs[2].data.forEach((ele, index) =>
-  //       hydroData.push({date: index + 1, flow: ele})
-  //     );
-  //   } else {
-  //     nextProps.currentClassification.hydrographs[2].data.forEach(
-  //       (ele, index) => hydroData.push({date: index + 1, flow: ele})
-  //     );
-  //   }
-  //   this.setState({hydroData: hydroData});
-  // }
 
   _getHydroData(nextProps) {
     let hydroData = {
@@ -136,7 +128,8 @@ class Hydrograph extends React.Component {
               label="Details"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
-              labelStyle={{fontSize: '12px'}}
+              disabled={true}
+              labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
             />
           </div>
         </div>
@@ -173,7 +166,7 @@ const styles = {
     width: '100%',
     textAlign: 'center',
     fontWeight: '500',
-    fontSize: '18px',
+    fontSize: '16px',
   },
   btnContainer: {
     width: '95%',
