@@ -93,6 +93,8 @@ export default class LinePlot extends React.Component {
           </g>
         </svg>
       );
+    } else {
+      return null;
     }
   }
 }
