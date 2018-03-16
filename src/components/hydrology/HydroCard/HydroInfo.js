@@ -7,7 +7,7 @@ import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Reply from 'material-ui/svg-icons/content/reply';
 
-import {classification} from '../../../constants/classification';
+import {classInfo} from '../../../constants/classification';
 import {Colors} from '../../../styles';
 import Summary from './Summary';
 import ClassGaugeList from './ClassGaugeList';
@@ -29,13 +29,16 @@ class HydroInfo extends React.Component {
     }
   }
   _renderGaugeInfo() {
+    const currentGaugeClass =
+      classInfo[`class${this.props.currentGauge.classId}`];
     return (
       <div>
         <CardHeader
           title={this.props.currentGauge.stationName}
           subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
-            classification[this.props.currentGauge.classId - 1]
+            currentGaugeClass.fullName
           }`}
+          subtitleColor={currentGaugeClass.colors[0]}
           actAsExpander={false}
           showExpandableButton={false}
         />
