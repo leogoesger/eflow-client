@@ -15,6 +15,7 @@ import Hydrology from '../containers/Hydrology';
 // import Team from '../containers/Team';
 // import Paper from '../containers/Paper';
 import Construction from '../containers/Construction';
+import withTracker from '../utils/withTracker';
 
 class App extends React.Component {
   render() {
@@ -22,18 +23,35 @@ class App extends React.Component {
       palette: {},
       snackbar: {actionColor: Colors.orange},
     });
+
     return (
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <div style={{backgroundColor: '#f5f6f7'}}>
             <Header />
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/hydrology" component={Hydrology} />
-              <Route exact path="/morphology" component={Construction} />
-              <Route exact path="/function" component={Construction} />
-              <Route exact path="/team" component={Construction} />
-              <Route exact path="/paper" component={Construction} />
+              <Route exact path="/" component={withTracker(Home)} />
+              <Route
+                exact
+                path="/hydrology"
+                component={withTracker(Hydrology)}
+              />
+              <Route
+                exact
+                path="/morphology"
+                component={withTracker(Construction)}
+              />
+              <Route
+                exact
+                path="/function"
+                component={withTracker(Construction)}
+              />
+              <Route exact path="/team" component={withTracker(Construction)} />
+              <Route
+                exact
+                path="/paper"
+                component={withTracker(Construction)}
+              />
             </Switch>
             <Footer />
           </div>
@@ -45,6 +63,7 @@ class App extends React.Component {
 
 App.propTypes = {
   children: PropTypes.element,
+  location: PropTypes.object,
 };
 
 export default App;
