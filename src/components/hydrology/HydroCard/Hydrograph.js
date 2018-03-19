@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import {CardHeader} from 'material-ui/Card';
+import Chip from 'material-ui/Chip';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -98,6 +99,31 @@ class Hydrograph extends React.Component {
     this.setState({hydroData: hydroData});
   }
 
+  _renderPercentilleChips() {
+    return (
+      <div style={styles.labels}>
+        <div style={{...styles.label, backgroundColor: Colors.nintyPercent}} />
+        <div style={{fontSize: '14px'}}>{'90 Percentille'}</div>
+        <div
+          style={{...styles.label, backgroundColor: Colors.seventyFivePercent}}
+        />
+
+        <div style={{fontSize: '14px'}}>{'75 Percentille'}</div>
+        <div style={{...styles.label, backgroundColor: Colors.fiftyPercent}} />
+
+        <div style={{fontSize: '14px'}}>{'50 Percentille'}</div>
+        <div
+          style={{...styles.label, backgroundColor: Colors.seventyFivePercent}}
+        />
+
+        <div style={{fontSize: '14px'}}>{'25 Percentille'}</div>
+        <div style={{...styles.label, backgroundColor: Colors.nintyPercent}} />
+
+        <div style={{fontSize: '14px'}}>{'10 Percentille'}</div>
+      </div>
+    );
+  }
+
   _renderData(hydroData) {
     if (hydroData) {
       return (
@@ -107,6 +133,7 @@ class Hydrograph extends React.Component {
           <div style={styles.plotTitle}>
             {'Dimensionless Reference Hydrograph'}
           </div>
+          <div style={styles.yLabel}>{'Daily flow / Average annual Flow'} </div>
           <LinePlot
             x={this.props.containerWidth / 10}
             y={50}
@@ -116,6 +143,9 @@ class Hydrograph extends React.Component {
             xValue={value => value.date}
             yValue={value => value.flow}
           />
+
+          {this._renderPercentilleChips()}
+
           <div style={styles.btnContainer}>
             <FlatButton
               label="Go Back"
@@ -155,12 +185,32 @@ Hydrograph.propTypes = {
 };
 
 const styles = {
+  yLabel: {
+    position: 'absolute',
+    left: '20px',
+    top: '180px',
+    writingMode: 'vertical-rl',
+    transform: 'rotate(-180deg)',
+  },
+  labels: {
+    width: '90%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    position: 'absolute',
+    left: '50px',
+  },
+  label: {
+    height: '10px',
+    width: '10px',
+    marginTop: '1px',
+  },
   graph: {
     height: '750px',
     width: '100%',
     marginBottom: '20px',
     borderRadius: '0px',
   },
+
   plotTitle: {
     marginTop: '20px',
     width: '100%',
@@ -170,7 +220,7 @@ const styles = {
   },
   btnContainer: {
     width: '95%',
-    marginTop: '25px',
+    marginTop: '55px',
     display: 'flex',
     justifyContent: 'flex-end',
   },
