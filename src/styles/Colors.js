@@ -15,6 +15,10 @@ const Colors = {
   lightGreyActionsBar: '#F6F6F7',
   disabledButtonBackground: '#EEE',
   disabledButtonFonts: '#bdc0c4',
+
+  nintyPercent: '#2196f3',
+  seventyFivePercent: '#4fc3f7',
+  fiftyPercent: '#ef5350',
 };
 
 export default Colors;

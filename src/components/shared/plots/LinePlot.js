@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import Axis from './Axis';
+import {Colors} from '../../../styles';
 
 export default class LinePlot extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ export default class LinePlot extends React.Component {
               data={this.props.data.NINTY}
               x={this.props.x}
               gridLength={this.props.height}
-              y={this.props.y + this.props.height}
+              y={this.props.y + this.props.height + 0}
               orientation="bottom"
             />
             <Axis
@@ -60,35 +61,35 @@ export default class LinePlot extends React.Component {
               d={this.line(this.props.data.NINTY)}
               strokeLinecap="round"
               strokeWidth="3"
-              stroke="#2196f3"
+              stroke={Colors.nintyPercent}
             />
             <path
               transform={transform}
               d={this.line(this.props.data.SEVENTYFIVE)}
               strokeLinecap="round"
               strokeWidth="3"
-              stroke="#4fc3f7"
+              stroke={Colors.seventyFivePercent}
             />
             <path
               transform={transform}
               d={this.line(this.props.data.FIFTY)}
               strokeLinecap="round"
               strokeWidth="3"
-              stroke="#ef5350"
+              stroke={Colors.fiftyPercent}
             />
             <path
               transform={transform}
               d={this.line(this.props.data.TWENTYFIVE)}
               strokeLinecap="round"
               strokeWidth="3"
-              stroke="#4fc3f7"
+              stroke={Colors.seventyFivePercent}
             />
             <path
               transform={transform}
               d={this.line(this.props.data.TEN)}
               strokeLinecap="round"
               strokeWidth="3"
-              stroke="#2196f3"
+              stroke={Colors.nintyPercent}
             />
           </g>
         </svg>

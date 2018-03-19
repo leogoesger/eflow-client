@@ -70,8 +70,9 @@ export default class ClassGaugeList extends React.Component {
     if (rowNumber === 0) {
       return null;
     }
+
     this.props.updateHoveredGauge(
-      this.state.classifications[index].gauges[rowNumber + 1].id
+      this.state.classifications[index].gauges[rowNumber - 1].id
     );
   }
 
@@ -80,7 +81,7 @@ export default class ClassGaugeList extends React.Component {
       return this.props.fetchClassification(classId);
     }
     this.props.fetchCurrentGauge(
-      this.state.classifications[index].gauges[rowNumber + 1].id
+      this.state.classifications[index].gauges[rowNumber - 1].id
     );
   }
 
