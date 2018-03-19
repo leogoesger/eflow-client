@@ -44,7 +44,7 @@ export default class LinePlot extends React.Component {
               data={this.props.data.NINTY}
               x={this.props.x}
               gridLength={this.props.height}
-              y={this.props.y + this.props.height}
+              y={this.props.y + this.props.height + 0}
               orientation="bottom"
             />
             <Axis

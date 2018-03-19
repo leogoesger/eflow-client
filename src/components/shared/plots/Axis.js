@@ -33,6 +33,38 @@ const blackBox = D3render => {
   };
 };
 
+const dateFromDay = (year, day) => {
+  var date = new Date(year, 0); // initialize a date in `year-01-01`
+  return new Date(date.setDate(day)); // add the number of days
+};
+
+const MONTH_NAMES = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+const getCalenderDate = offsetJulianDate => {
+  let julianDate;
+  if (offsetJulianDate < 365 - 274) {
+    julianDate = 274 + offsetJulianDate;
+  } else {
+    julianDate = offsetJulianDate - 365 + 274;
+  }
+  const date = dateFromDay(2001, julianDate),
+    calenderDate = `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
+  return calenderDate;
+};
+
 const Axis = blackBox(function() {
   if (this.props.orientation === 'bottom') {
     const axis = d3
@@ -40,12 +72,12 @@ const Axis = blackBox(function() {
       .scale(this.props.scale)
       .tickSize(-this.props.gridLength, 0, 10)
       .tickSizeOuter(0)
-      .ticks(5)
+      .ticks(10)
       .tickFormat(d => {
         if (d == 1 || d == this.props.data.length) {
           return null;
         }
-        return `${d3.format('.2s')(d)}`;
+        return getCalenderDate(d);
       });
     d3.select(this.anchor).call(axis);
   } else {
