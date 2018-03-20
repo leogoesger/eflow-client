@@ -186,8 +186,9 @@ Hydrograph.propTypes = {
 const styles = {
   yLabel: {
     position: 'absolute',
+    fontSize: '14px',
     left: '20px',
-    top: '180px',
+    top: '200px',
     writingMode: 'vertical-rl',
     transform: 'rotate(-180deg)',
   },

@@ -157,10 +157,9 @@ body {
 }
 
 .tick text {
-  font: 14px sans-serif;
-  font-weight: 200;
+  font: 12px sans-serif;
+  font-weight: 100;
   stroke: #424242;
-  padding: 5px;
 }
 
 .homeContainer {
