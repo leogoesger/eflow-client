@@ -175,3 +175,8 @@ body {
   margin-right: 5px;
   cursor: pointer;
 }
+
+.footer-link {
+  color: rgb(158, 158, 158);
+  text-decoration: none;
+}

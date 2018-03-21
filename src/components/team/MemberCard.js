@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
+import Snackbar from 'material-ui/Snackbar';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Email from '../../constants/icons/email.svg';
 import Website from '../../constants/icons/website.png';
@@ -16,11 +18,20 @@ export default class Member extends React.Component {
     super(props);
     this.state = {
       fullDescription: false,
+      open: false,
     };
   }
 
   _handleMore() {
     this.setState({fullDescription: true});
+  }
+
+  _handleClick() {
+    this.setState({open: true});
+  }
+
+  _handleRequestClose() {
+    this.setState({open: false});
   }
 
   _renderDescription(description) {
@@ -44,7 +55,14 @@ export default class Member extends React.Component {
   _renderSocialLinks(member) {
     return (
       <div>
-        {member.email ? <img src={Email} width="20" className="icon" /> : null}
+        {member.email ? (
+          <CopyToClipboard
+            text={member.email}
+            onCopy={() => this._handleClick()}
+          >
+            <img src={Email} width="20" className="icon" />
+          </CopyToClipboard>
+        ) : null}
         {member.website ? (
           <a href={member.website} target="_blank">
             <img src={Website} width="20" className="icon" />
@@ -102,6 +120,12 @@ export default class Member extends React.Component {
           {this._renderSocialLinks(member)}
           {this._renderDescription(member.description)}
         </div>
+        <Snackbar
+          open={this.state.open}
+          message="Email copied to your Clipboard"
+          autoHideDuration={8000}
+          onRequestClose={() => this._handleRequestClose()}
+        />
       </div>
     );
   }

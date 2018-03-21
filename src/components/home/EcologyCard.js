@@ -2,9 +2,9 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 
-export default class FunctionCard extends React.Component {
+export default class EcologyCard extends React.Component {
   _handleMessageClose() {
-    this.setState({ showMessage: false, message: '' });
+    this.setState({showMessage: false, message: ''});
   }
 
   render() {

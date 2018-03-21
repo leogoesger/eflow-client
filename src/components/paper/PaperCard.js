@@ -1,70 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardMedia } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
-import { Colors } from '../../styles';
+import {Colors} from '../../styles';
 
 export default class PaperCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullDescription: false,
+    };
+  }
+
+  _handleMore() {
+    this.setState({fullDescription: true});
+  }
+
   _renderDescription(description) {
-    if (description.length > 100) {
-      return `${description.slice(0, 100)}...`;
+    if (this.state.fullDescription) {
+      return <div style={styles.description}>{description}</div>;
+    } else if (description.length > 600 && !this.state.fullDescription) {
+      return (
+        <div style={styles.description}>
+          {`${description.slice(0, 600)}...`}
+          <br />
+          <div style={styles.readMore} onClick={() => this._handleMore()}>
+            Read More
+          </div>
+        </div>
+      );
     } else {
-      return description;
+      return <div style={styles.description}>{description}</div>;
     }
   }
-  _renderPaper(papers) {
-    return papers.map((paper, index) => {
-      return (
-        <Card key={index} style={styles.card}>
-          <CardMedia>
-            <img src={paper.url} />
-          </CardMedia>
-          <div style={{ padding: '10px' }}>
-            <div style={styles.title}>{paper.title}</div>
-            <div style={styles.subtitle}>{`${paper.author}`}</div>
-            <div style={styles.description}>
-              {this._renderDescription(paper.description)}
-            </div>
-          </div>
-        </Card>
-      );
-    });
-  }
+
   render() {
     return (
-      <div style={styles.container} className="row col-lg-9 col-md-9 col-xs-12">
-        {this._renderPaper(this.props.papers)}
+      <div style={styles.infoContainer}>
+        <div style={styles.name}>{this.props.paper.title}</div>
+        <div style={styles.title}>{this.props.paper.authors.join(', ')}</div>
+        <div style={styles.description}>
+          {this._renderDescription(this.props.paper.description)}
+        </div>
+        <div style={styles.btnContainer}>
+          <a
+            href={this.props.paper.paperUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <RaisedButton
+              label="Request full-text"
+              backgroundColor={Colors.gold}
+              labelColor={Colors.white}
+              labelStyle={{fontSize: '12px'}}
+            />
+          </a>
+        </div>
       </div>
     );
   }
 }
 
 const styles = {
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: '120px auto',
-  },
-  title: {
-    fontWeight: '600',
-  },
-  subtitle: {
-    color: Colors.grey,
-    fontSize: '12px',
-    lineHeight: '1.5',
-  },
-  description: {
-    fontSize: '14px',
+  infoContainer: {lineHeight: '20px', marginTop: '20px', marginBottom: '20px'},
+  name: {fontSize: '20px', fontWeight: '600', lineHeight: '20px'},
+  title: {marginTop: '5px'},
+  description: {marginTop: '20px', fontSize: '14px'},
+  readMore: {
     marginTop: '10px',
-    lineHeight: '1.2',
-  },
-  card: {
-    margin: '10px',
     cursor: 'pointer',
-    width: '30%',
+    fontSize: '12px',
+    color: '#039be5',
+  },
+  btnContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '10px',
   },
 };
 
 PaperCard.propTypes = {
-  papers: PropTypes.array,
+  paper: PropTypes.object,
 };

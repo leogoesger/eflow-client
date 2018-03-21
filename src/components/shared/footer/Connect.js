@@ -11,10 +11,46 @@ export default class Connect extends React.Component {
       >
         <span>Connect</span>
         <ul style={styles.list}>
-          <li>Facebook</li>
-          <li>Youtube</li>
-          <li>Twitter</li>
-          <li>Github</li>
+          <li>
+            <a
+              className="footer-link"
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+          </li>
+          <li>
+            <a
+              className="footer-link"
+              href="https://www.youtube.com/channel/UCAZOB4DrcgfBmH3PtySSJew"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Youtube
+            </a>
+          </li>
+          <li>
+            <a
+              className="footer-link"
+              href="https://www.researchgate.net/institution/University_of_California_Davis/department/Department_of_Land_Air_and_Water_Resources"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ResearchGate
+            </a>
+          </li>
+          <li>
+            <a
+              className="footer-link"
+              href="https://github.com/leogoesger"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github
+            </a>
+          </li>
         </ul>
       </div>
     );
