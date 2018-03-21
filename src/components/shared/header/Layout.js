@@ -44,7 +44,7 @@ export default class Layout extends React.Component {
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}
               hoverColor={'white'}
-              onClick={() => navigateTo('/function')}
+              onClick={() => navigateTo('/ecology')}
             />
           </div>
           <NavRight />

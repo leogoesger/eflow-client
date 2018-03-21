@@ -32,13 +32,24 @@ export default class Layout extends React.Component {
             marginLeft: '0px',
             marginRight: '0px',
             marginBottom: '30px',
+            height: '100%',
           }}
         >
           <Card
             style={{cursor: 'pointer'}}
             onClick={() => this.handleOpen(members[index])}
           >
-            <CardMedia overlay={<CardTitle subtitle={member.name} />}>
+            <CardMedia
+              overlay={
+                <CardTitle
+                  style={{paddingTop: '0px', paddingBottom: '12px'}}
+                  title={member.name}
+                  subtitle={member.title}
+                  titleStyle={{fontSize: '14px', color: '#eeeeee'}}
+                  subtitleStyle={{fontSize: '12px', color: '#e0e0e0'}}
+                />
+              }
+            >
               <img src={member.image} alt="" />
             </CardMedia>
           </Card>
