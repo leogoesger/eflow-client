@@ -78,7 +78,8 @@ const Axis = blackBox(function() {
           return null;
         }
         return getCalenderDate(d);
-      });
+      })
+      .tickPadding(8);
     d3.select(this.anchor).call(axis);
   } else {
     const axis = d3
@@ -86,8 +87,8 @@ const Axis = blackBox(function() {
       .tickSize(-this.props.gridLength, 0, 10)
       .tickSizeOuter(0)
       .scale(this.props.scale)
-
-      .ticks(5);
+      .ticks(5)
+      .tickPadding(5);
     d3.select(this.anchor).call(axis);
   }
 });

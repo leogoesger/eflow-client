@@ -1,71 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardMedia, CardTitle} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 
-import BillGates from '../../constants/billgates.jpg';
+import MemberCard from './MemberCard';
 
 export default class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      selectedMember: null,
     };
   }
 
-  handleOpen() {
-    this.setState({open: true});
+  handleOpen(member) {
+    this.setState({open: true, selectedMember: member});
   }
 
   handleClose() {
-    this.setState({open: false});
+    this.setState({open: false, selectedMember: null});
   }
 
-  _renderMembers() {
-    const members = [
-      {
-        name: 'Noelle Patterson',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-      {
-        name: 'Noelle Patterson1',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-      {
-        name: 'Noelle Patterson2',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-      {
-        name: 'Noelle Patterson3',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-      {
-        name: 'Noelle Patterson4',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-      {
-        name: 'Noelle Patterson5',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-      {
-        name: 'Noelle Patterson6',
-        degree: 'Master In Progress',
-        specital: 'Something',
-        imgUrl: '',
-      },
-    ];
-    return members.map(member => {
+  _renderMembers(members) {
+    return members.map((member, index) => {
       return (
         <div
           key={member.name}
@@ -74,31 +32,51 @@ export default class Layout extends React.Component {
             marginLeft: '0px',
             marginRight: '0px',
             marginBottom: '30px',
+            height: '100%',
           }}
         >
-          <Card style={{cursor: 'pointer'}} onClick={() => this.handleOpen()}>
-            <CardMedia overlay={<CardTitle subtitle={member.name} />}>
-              <img src={BillGates} alt="" />
+          <Card
+            style={{cursor: 'pointer'}}
+            onClick={() => this.handleOpen(members[index])}
+          >
+            <CardMedia
+              overlay={
+                <CardTitle
+                  style={{paddingTop: '0px', paddingBottom: '12px'}}
+                  title={member.name}
+                  subtitle={member.title}
+                  titleStyle={{fontSize: '14px', color: '#eeeeee'}}
+                  subtitleStyle={{fontSize: '12px', color: '#e0e0e0'}}
+                />
+              }
+            >
+              <img src={member.image} alt="" />
             </CardMedia>
           </Card>
         </div>
       );
     });
   }
+
   render() {
+    if (!this.props.members) {
+      return <div style={{height: '600px'}} />;
+    }
     return (
-      <div className="row col-lg-10 col-md-10" style={{margin: '120px auto'}}>
-        {this._renderMembers()}
+      <div className="row col-lg-8 col-md-8" style={{margin: '120px auto'}}>
+        {this._renderMembers(this.props.members)}
         <Dialog
-          title="Dialog With Actions"
           modal={false}
           open={this.state.open}
           onRequestClose={() => this.handleClose()}
         >
-          The actions in this window were passed in as an array of React
-          objects.
+          <MemberCard member={this.state.selectedMember} />
         </Dialog>
       </div>
     );
   }
 }
+
+Layout.propTypes = {
+  members: PropTypes.array,
+};

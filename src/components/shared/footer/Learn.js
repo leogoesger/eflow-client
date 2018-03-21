@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Colors } from '../../../styles';
+import {Colors} from '../../../styles';
 
 export default class Learn extends React.Component {
   render() {
@@ -15,7 +15,7 @@ export default class Learn extends React.Component {
           <li>Reference</li>
           <li>Hydrology</li>
           <li>Morphology</li>
-          <li>Function</li>
+          <li>Ecology</li>
         </ul>
       </div>
     );

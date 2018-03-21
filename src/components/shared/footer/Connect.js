@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Colors } from '../../../styles';
+import {Colors} from '../../../styles';
 
 export default class Connect extends React.Component {
   render() {
@@ -11,10 +11,9 @@ export default class Connect extends React.Component {
       >
         <span>Connect</span>
         <ul style={styles.list}>
-          <li>Blog</li>
           <li>Facebook</li>
           <li>Youtube</li>
-          <li>Google+</li>
+          <li>Twitter</li>
           <li>Github</li>
         </ul>
       </div>
