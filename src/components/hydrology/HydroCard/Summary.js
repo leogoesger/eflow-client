@@ -162,7 +162,13 @@ Summary.propTypes = {
 };
 
 const styles = {
-  container: {width: '95%', margin: '0 auto', marginTop: '15px'},
+  container: {
+    width: '95%',
+    margin: '0 auto',
+    marginTop: '15px',
+    maxHeight: '580px',
+    overflow: 'scroll',
+  },
 };
 
 export default Summary;

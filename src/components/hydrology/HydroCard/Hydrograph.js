@@ -7,7 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Reply from 'material-ui/svg-icons/content/reply';
 
-import {LinePlot} from '../../shared/plots';
+import {LinePlot, BoxPlot} from '../../shared/plots';
 import {classInfo} from '../../../constants/classification';
 
 import {Colors} from '../../../styles';
@@ -170,6 +170,7 @@ class Hydrograph extends React.Component {
     return (
       <Paper style={styles.graph}>
         {this._renderData(this.state.hydroData)}
+        <BoxPlot />
       </Paper>
     );
   }
