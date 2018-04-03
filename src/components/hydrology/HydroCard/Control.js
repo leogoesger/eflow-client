@@ -12,8 +12,8 @@ export default class Control extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fallFlushTiming: false,
-      fallWetTiming: false,
+      fallTiming: false,
+      fallTimingWet: false,
       springTiming: false,
       summerTiming: false,
     };
@@ -21,72 +21,73 @@ export default class Control extends React.Component {
 
   _toggleCheckBox(boxName) {
     this.setState({[boxName]: !this.state[boxName]});
+    const {
+      fetchFallBoxPlotData,
+      fetchSpringBoxPlotData,
+      fetchSummerBoxPlotData,
+      removeFallBoxPlotData,
+      removeSpringBoxPlotData,
+      removeSummerBoxPlotData,
+    } = this.props.overLayBoxPlotMethods;
+
     const currentType = this.props.currentGauge
       ? {type: 'gaugeId', id: this.props.currentGauge.id}
       : {type: 'classId', id: this.props.currentClassification.id};
 
     if (!this.state[boxName]) {
       switch (boxName) {
-        case 'fallFlushTiming':
-          return this.props.fetchFallData({
-            fallData: this.props.fallData,
+        case 'fallTiming':
+          return fetchFallBoxPlotData({
             fetchData: {
               [currentType.type]: currentType.id,
               metric: 'timing',
             },
-            id: boxName,
+            type: boxName,
           });
-        case 'fallWetTiming':
-          return this.props.fetchFallData({
-            fallData: this.props.fallData,
+        case 'fallTimingWet':
+          return fetchFallBoxPlotData({
             fetchData: {
               [currentType.type]: currentType.id,
               metric: 'timingWet',
             },
-            id: boxName,
+            type: boxName,
           });
         case 'springTiming':
-          return this.props.fetchSpringData({
-            springData: this.props.springData,
+          return fetchSpringBoxPlotData({
             fetchData: {
               [currentType.type]: currentType.id,
               metric: 'timing',
             },
-            id: boxName,
+            type: boxName,
           });
         case 'summerTiming':
-          return this.props.fetchSummerData({
-            summerData: this.props.summerData,
+          return fetchSummerBoxPlotData({
             fetchData: {
               [currentType.type]: currentType.id,
               metric: 'timing',
             },
-            id: boxName,
+            type: boxName,
           });
         default:
           return null;
       }
     } else {
       switch (boxName) {
-        case 'fallFlushTiming':
-          return this.props.removeFallData({
-            id: boxName,
-            fallData: this.props.fallData,
+        case 'fallTiming':
+          return removeFallBoxPlotData({
+            type: boxName,
           });
-        case 'fallWetTiming':
-          return this.props.removeFallData({
-            id: boxName,
-            fallData: this.props.fallData,
+        case 'fallTimingWet':
+          return removeFallBoxPlotData({
+            type: boxName,
           });
         case 'springTiming':
-          return this.props.removeSpringData({
-            id: boxName,
-            springData: this.props.springData,
+          return removeSpringBoxPlotData({
+            type: boxName,
           });
         case 'summerTiming':
-          return this.props.removeSummerData({
-            id: boxName,
-            summerData: this.props.summerData,
+          return removeSummerBoxPlotData({
+            type: boxName,
           });
         default:
           return null;
@@ -105,20 +106,20 @@ export default class Control extends React.Component {
           />
 
           <Checkbox
-            checked={this.state.fallFlushTiming}
+            checked={this.state.fallTiming}
             label="Fall Flush Timing"
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
             iconStyle={{width: '16px', fill: Colors.gold}}
-            onClick={() => this._toggleCheckBox('fallFlushTiming')}
+            onClick={() => this._toggleCheckBox('fallTiming')}
           />
           <Checkbox
-            checked={this.state.fallWetTiming}
+            checked={this.state.fallTimingWet}
             label="Fall Timing Wet"
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
             iconStyle={{width: '16px', fill: Colors.gold}}
-            onClick={() => this._toggleCheckBox('fallWetTiming')}
+            onClick={() => this._toggleCheckBox('fallTimingWet')}
           />
           <Checkbox
             checked={this.state.springTiming}
@@ -162,15 +163,7 @@ Control.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
-  fetchFallData: PropTypes.func,
-  removeFallData: PropTypes.func,
-  fetchSpringData: PropTypes.func,
-  removeSpringData: PropTypes.func,
-  fetchSummerData: PropTypes.func,
-  removeSummerData: PropTypes.func,
-  fallData: PropTypes.array,
-  springData: PropTypes.array,
-  summerData: PropTypes.array,
+  overLayBoxPlotMethods: PropTypes.object,
 };
 
 const styles = {

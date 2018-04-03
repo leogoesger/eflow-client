@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import Axis from './Axis';
-import {Colors} from '../../../styles';
 
 export default class LinePlot extends React.Component {
   constructor(props) {
@@ -20,13 +19,15 @@ export default class LinePlot extends React.Component {
   }
 
   updateD3(props) {
-    let {data, width, height} = props;
+    let {data, width, height, highestKey} = props;
 
     this.xScale
-      .domain(d3.extent(data.NINTY, d => this.props.xValue(d)))
+      .domain(d3.extent(data[highestKey], d => this.props.xValue(d)))
       .range([0, width]);
 
-    this.yScale.domain([0, d3.max(data.NINTY, d => d.flow)]).range([height, 0]);
+    this.yScale
+      .domain([0, d3.max(data[highestKey], d => d.flow)])
+      .range([height, 0]);
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
@@ -34,15 +35,31 @@ export default class LinePlot extends React.Component {
       .curve(d3.curveCardinal);
   }
 
+  renderLines(transform) {
+    return Object.keys(this.props.data).map(key => {
+      return (
+        <path
+          key={key}
+          transform={transform}
+          d={this.line(this.props.data[key])}
+          strokeLinecap="round"
+          strokeWidth="3"
+          stroke={this.props.colors[key]}
+        />
+      );
+    });
+  }
+
   render() {
+    let {data, highestKey} = this.props;
     const transform = `translate(${this.props.x}, ${this.props.y})`;
-    if (this.line(this.props.data.NINTY)) {
+    if (this.line(data[highestKey])) {
       return (
         <svg width={this.props.width + 100} height={this.props.height + 100}>
           <g style={{fill: 'none'}}>
             <Axis
               scale={this.xScale}
-              data={this.props.data.NINTY}
+              data={data[highestKey]}
               x={this.props.x}
               gridLength={this.props.height}
               y={this.props.y + this.props.height + 0}
@@ -50,47 +67,13 @@ export default class LinePlot extends React.Component {
             />
             <Axis
               scale={this.yScale}
-              data={this.props.data.NINTY}
+              data={data[highestKey]}
               x={this.props.x}
               y={this.props.y}
               gridLength={this.props.width}
               orientation="left"
             />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.NINTY)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.nintyPercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.SEVENTYFIVE)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.seventyFivePercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.FIFTY)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.fiftyPercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.TWENTYFIVE)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.seventyFivePercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.TEN)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.nintyPercent}
-            />
+            {this.renderLines(transform)}
           </g>
         </svg>
       );
@@ -112,4 +95,6 @@ LinePlot.propTypes = {
   height: PropTypes.number,
   xValue: PropTypes.func,
   yValue: PropTypes.func,
+  highestKey: PropTypes.string,
+  colors: PropTypes.object,
 };

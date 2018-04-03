@@ -16,9 +16,11 @@ const Colors = {
   disabledButtonBackground: '#EEE',
   disabledButtonFonts: '#bdc0c4',
 
-  nintyPercent: '#2196f3',
-  seventyFivePercent: '#4fc3f7',
-  fiftyPercent: '#ef5350',
+  NINTY: '#2196f3',
+  SEVENTYFIVE: '#4fc3f7',
+  FIFTY: '#ef5350',
+  TWENTYFIVE: '#4fc3f7',
+  TEN: '#2196f3',
 };
 
 export default Colors;

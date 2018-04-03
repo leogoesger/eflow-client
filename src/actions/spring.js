@@ -1,37 +1,100 @@
 import request from 'superagent';
 import {SpringTypes as types} from '../action-types';
-import {cloneDeep} from 'lodash';
 
-const fetchSpringDataObject = springData => {
+const fetchSpringTimingObject = timing => {
   return {
-    type: types.FETCH_SPRING_DATA_OBJECT,
-    springData,
+    type: types.FETCH_SPRING_TIMING_OBJECT,
+    timing,
   };
 };
 
-const removeSpringDataObject = springData => {
+const removeSpringTimingObject = () => {
   return {
-    type: types.REMOVE_SPRING_DATA_OBJECT,
-    springData,
+    type: types.REMOVE_SPRING_TIMING_OBJECT,
   };
 };
 
-export function fetchSpringData(data) {
+const fetchSpringMagnitudeObject = magnitude => {
+  return {
+    type: types.FETCH_SPRING_MAGNITUDE_OBJECT,
+    magnitude,
+  };
+};
+
+const removeSpringMagnitudeObject = () => {
+  return {
+    type: types.REMOVE_SPRING_MAGNITUDE_OBJECT,
+  };
+};
+
+const fetchSpringRateOfChangeObject = rateOfChange => {
+  return {
+    type: types.FETCH_SPRING_TIMING_WET_OBJECT,
+    rateOfChange,
+  };
+};
+
+const removeSpringRateOfChangeObject = () => {
+  return {
+    type: types.REMOVE_SPRING_TIMING_WET_OBJECT,
+  };
+};
+
+const fetchSpringDurationObject = duration => {
+  return {
+    type: types.FETCH_SPRING_DURATION_OBJECT,
+    duration,
+  };
+};
+
+const removeSpringDurationObject = () => {
+  return {
+    type: types.REMOVE_SPRING_DURATION_OBJECT,
+  };
+};
+
+export function fetchSpringBoxPlotData(data) {
   return async dispatch => {
     const springData = await request
       .post(`${process.env.SERVER_ADDRESS}/api/springs/getBoxPlotAttributes`)
       .send(data.fetchData);
 
-    const newData = cloneDeep(data.springData);
-    newData.push({...springData.body, id: data.id});
+    switch (data.type) {
+      case 'springTiming':
+        return dispatch(fetchSpringTimingObject(springData.body));
 
-    dispatch(fetchSpringDataObject(newData));
+      case 'springMagnitude':
+        return dispatch(fetchSpringMagnitudeObject(springData.body));
+
+      case 'springRateOfChange':
+        return dispatch(fetchSpringRateOfChangeObject(springData.body));
+
+      case 'springDuration':
+        return dispatch(fetchSpringDurationObject(springData.body));
+
+      default:
+        return null;
+    }
   };
 }
 
-export function removeSpringData(data) {
-  return async dispatch => {
-    const newData = data.springData.filter(d => d.id != data.id);
-    dispatch(removeSpringDataObject(newData));
+export function removeSpringBoxPlotData(data) {
+  return dispatch => {
+    switch (data.type) {
+      case 'springTiming':
+        return dispatch(removeSpringTimingObject());
+
+      case 'springMagnitude':
+        return dispatch(removeSpringMagnitudeObject());
+
+      case 'springRateOfChange':
+        return dispatch(removeSpringRateOfChangeObject());
+
+      case 'springDuration':
+        return dispatch(removeSpringDurationObject());
+
+      default:
+        return null;
+    }
   };
 }

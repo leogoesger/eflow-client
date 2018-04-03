@@ -127,6 +127,13 @@ class Hydrograph extends React.Component {
 
   _renderData(hydroData) {
     if (hydroData) {
+      const colors = {
+        NINTY: Colors.NINTY,
+        SEVENTYFIVE: Colors.SEVENTYFIVE,
+        FIFTY: Colors.FIFTY,
+        TWENTYFIVE: Colors.TWENTYFIVE,
+        TEN: Colors.TEN,
+      };
       return (
         <div>
           {this._renderInfo()}
@@ -135,6 +142,7 @@ class Hydrograph extends React.Component {
             {'Dimensionless Reference Hydrograph'}
           </div>
           <div style={styles.yLabel}>{'Daily flow / Average annual Flow'} </div>
+
           <LinePlot
             x={this.props.containerWidth / 10}
             y={50}
@@ -143,6 +151,8 @@ class Hydrograph extends React.Component {
             data={this.state.hydroData}
             xValue={value => value.date}
             yValue={value => value.flow}
+            highestKey={'NINTY'}
+            colors={colors}
           />
         </div>
       );
@@ -158,15 +168,8 @@ class Hydrograph extends React.Component {
           currentGauge={this.props.currentGauge}
           currentClassification={this.props.currentClassification}
           removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
-          fetchFallData={data => this.props.fetchFallData(data)}
-          removeFallData={data => this.props.removeFallData(data)}
-          fetchSpringData={data => this.props.fetchSpringData(data)}
-          removeSpringData={data => this.props.removeSpringData(data)}
-          fetchSummerData={data => this.props.fetchSummerData(data)}
-          removeSummerData={data => this.props.removeSummerData(data)}
-          fallData={this.props.fallData}
-          springData={this.props.springData}
-          summerData={this.props.summerData}
+          overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
+          overLayBoxPlotData={this.props.overLayBoxPlotData}
         />
       </Paper>
     );
@@ -179,15 +182,8 @@ Hydrograph.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
-  fetchFallData: PropTypes.func,
-  removeFallData: PropTypes.func,
-  fetchSpringData: PropTypes.func,
-  removeSpringData: PropTypes.func,
-  fetchSummerData: PropTypes.func,
-  removeSummerData: PropTypes.func,
-  fallData: PropTypes.array,
-  springData: PropTypes.array,
-  summerData: PropTypes.array,
+  overLayBoxPlotMethods: PropTypes.object,
+  overLayBoxPlotData: PropTypes.array,
 };
 
 const styles = {

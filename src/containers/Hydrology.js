@@ -14,9 +14,15 @@ import {
   removeCurrentGauge,
 } from '../actions/gauge';
 import {updateTab, updateHoveredGauge} from '../actions/hydrology';
-import {fetchFallData, removeFallData} from '../actions/fall';
-import {fetchSpringData, removeSpringData} from '../actions/spring';
-import {fetchSummerData, removeSummerData} from '../actions/summer';
+import {fetchFallBoxPlotData, removeFallBoxPlotData} from '../actions/fall';
+import {
+  fetchSpringBoxPlotData,
+  removeSpringBoxPlotData,
+} from '../actions/spring';
+import {
+  fetchSummerBoxPlotData,
+  removeSummerBoxPlotData,
+} from '../actions/summer';
 
 export class Hydrology extends React.Component {
   componentWillMount() {
@@ -28,6 +34,26 @@ export class Hydrology extends React.Component {
     this.props.removeCurrentGauge();
     this.props.removeCurrentClass();
     this.props.updateTab('a');
+  }
+
+  getBoxPlotOverlayData() {
+    return [
+      this.props.fallTimingBoxPlot,
+      this.props.fallTimingWetBoxPlot,
+      this.props.springTimingBoxPlot,
+      this.props.summerTimingBoxPlot,
+    ].filter(d => d);
+  }
+
+  getBoxPlotOverlayMethods() {
+    return {
+      fetchFallBoxPlotData: data => this.props.fetchFallBoxPlotData(data),
+      removeFallBoxPlotData: data => this.props.removeFallBoxPlotData(data),
+      fetchSpringBoxPlotData: data => this.props.fetchSpringBoxPlotData(data),
+      removeSpringBoxPlotData: data => this.props.removeSpringBoxPlotData(data),
+      fetchSummerBoxPlotData: data => this.props.fetchSummerBoxPlotData(data),
+      removeSummerBoxPlotData: data => this.props.removeSummerBoxPlotData(data),
+    };
   }
 
   render() {
@@ -44,15 +70,8 @@ export class Hydrology extends React.Component {
         updateTab={tabValue => this.props.updateTab(tabValue)}
         removeClassGaugeProps={() => this.removeClassGaugeProps()}
         updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
-        fetchFallData={data => this.props.fetchFallData(data)}
-        removeFallData={data => this.props.removeFallData(data)}
-        fetchSpringData={data => this.props.fetchSpringData(data)}
-        removeSpringData={data => this.props.removeSpringData(data)}
-        fetchSummerData={data => this.props.fetchSummerData(data)}
-        removeSummerData={data => this.props.removeSummerData(data)}
-        fallData={this.props.fallData}
-        springData={this.props.springData}
-        summerData={this.props.summerData}
+        overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
+        overLayBoxPlotData={this.getBoxPlotOverlayData()}
       />
     );
   }
@@ -73,15 +92,16 @@ Hydrology.propTypes = {
   removeCurrentClass: PropTypes.func,
   fetchClassifications: PropTypes.func,
   updateHoveredGauge: PropTypes.func,
-  fetchFallData: PropTypes.func,
-  removeFallData: PropTypes.func,
-  fetchSpringData: PropTypes.func,
-  removeSpringData: PropTypes.func,
-  fetchSummerData: PropTypes.func,
-  removeSummerData: PropTypes.func,
-  fallData: PropTypes.array,
-  springData: PropTypes.array,
-  summerData: PropTypes.array,
+  fetchFallBoxPlotData: PropTypes.func,
+  removeFallBoxPlotData: PropTypes.func,
+  fetchSpringBoxPlotData: PropTypes.func,
+  removeSpringBoxPlotData: PropTypes.func,
+  fetchSummerBoxPlotData: PropTypes.func,
+  removeSummerBoxPlotData: PropTypes.func,
+  fallTimingBoxPlot: PropTypes.object,
+  fallTimingWetBoxPlot: PropTypes.object,
+  springTimingBoxPlot: PropTypes.object,
+  summerTimingBoxPlot: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -92,9 +112,10 @@ const mapStateToProps = state => {
     classifications: state.classification.classifications,
     currentGauge: state.gauge.currentGauge,
     currentClassification: state.classification.currentClassification,
-    fallData: state.fall.fallData,
-    springData: state.spring.springData,
-    summerData: state.summer.summerData,
+    fallTimingBoxPlot: state.fall.timingBoxPlot,
+    fallTimingWetBoxPlot: state.fall.timingWetBoxPlot,
+    springTimingBoxPlot: state.spring.timingBoxPlot,
+    summerTimingBoxPlot: state.summer.timingBoxPlot,
   };
 };
 
@@ -108,12 +129,12 @@ const mapDispatchToProps = dispatch => {
     removeCurrentClass: () => dispatch(removeCurrentClass()),
     fetchClassifications: () => dispatch(fetchClassifications()),
     updateHoveredGauge: gaugeId => dispatch(updateHoveredGauge(gaugeId)),
-    fetchFallData: data => dispatch(fetchFallData(data)),
-    removeFallData: data => dispatch(removeFallData(data)),
-    fetchSpringData: data => dispatch(fetchSpringData(data)),
-    removeSpringData: data => dispatch(removeSpringData(data)),
-    fetchSummerData: data => dispatch(fetchSummerData(data)),
-    removeSummerData: data => dispatch(removeSummerData(data)),
+    fetchFallBoxPlotData: data => dispatch(fetchFallBoxPlotData(data)),
+    removeFallBoxPlotData: data => dispatch(removeFallBoxPlotData(data)),
+    fetchSpringBoxPlotData: data => dispatch(fetchSpringBoxPlotData(data)),
+    removeSpringBoxPlotData: data => dispatch(removeSpringBoxPlotData(data)),
+    fetchSummerBoxPlotData: data => dispatch(fetchSummerBoxPlotData(data)),
+    removeSummerBoxPlotData: data => dispatch(removeSummerBoxPlotData(data)),
   };
 };
 

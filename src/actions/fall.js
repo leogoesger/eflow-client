@@ -1,37 +1,100 @@
 import request from 'superagent';
 import {FallTypes as types} from '../action-types';
-import {cloneDeep} from 'lodash';
 
-const fetchFallDataObject = fallData => {
+const fetchFallTimingObject = timing => {
   return {
-    type: types.FETCH_FALL_DATA_OBJECT,
-    fallData,
+    type: types.FETCH_FALL_TIMING_OBJECT,
+    timing,
   };
 };
 
-const removeFallDataObject = fallData => {
+const removeFallTimingObject = () => {
   return {
-    type: types.REMOVE_FALL_DATA_OBJECT,
-    fallData,
+    type: types.REMOVE_FALL_TIMING_OBJECT,
   };
 };
 
-export function fetchFallData(data) {
+const fetchFallMagnitudeObject = magnitude => {
+  return {
+    type: types.FETCH_FALL_MAGNITUDE_OBJECT,
+    magnitude,
+  };
+};
+
+const removeFallMagnitudeObject = () => {
+  return {
+    type: types.REMOVE_FALL_MAGNITUDE_OBJECT,
+  };
+};
+
+const fetchFallTimingWetObject = timing => {
+  return {
+    type: types.FETCH_FALL_TIMING_WET_OBJECT,
+    timing,
+  };
+};
+
+const removeFallTimingWetObject = () => {
+  return {
+    type: types.REMOVE_FALL_TIMING_WET_OBJECT,
+  };
+};
+
+const fetchFallDurationObject = duration => {
+  return {
+    type: types.FETCH_FALL_DURATION_OBJECT,
+    duration,
+  };
+};
+
+const removeFallDurationObject = () => {
+  return {
+    type: types.REMOVE_FALL_DURATION_OBJECT,
+  };
+};
+
+export function fetchFallBoxPlotData(data) {
   return async dispatch => {
     const fallData = await request
       .post(`${process.env.SERVER_ADDRESS}/api/falls/getBoxPlotAttributes`)
       .send(data.fetchData);
 
-    const newData = cloneDeep(data.fallData);
-    newData.push({...fallData.body, id: data.id});
+    switch (data.type) {
+      case 'fallTiming':
+        return dispatch(fetchFallTimingObject(fallData.body));
 
-    dispatch(fetchFallDataObject(newData));
+      case 'fallMagnitude':
+        return dispatch(fetchFallMagnitudeObject(fallData.body));
+
+      case 'fallTimingWet':
+        return dispatch(fetchFallTimingWetObject(fallData.body));
+
+      case 'fallDuration':
+        return dispatch(fetchFallDurationObject(fallData.body));
+
+      default:
+        return null;
+    }
   };
 }
 
-export function removeFallData(data) {
-  return async dispatch => {
-    const newData = data.fallData.filter(d => d.id != data.id);
-    dispatch(removeFallDataObject(newData));
+export function removeFallBoxPlotData(data) {
+  return dispatch => {
+    switch (data.type) {
+      case 'fallTiming':
+        return dispatch(removeFallTimingObject());
+
+      case 'fallMagnitude':
+        return dispatch(removeFallMagnitudeObject());
+
+      case 'fallTimingWet':
+        return dispatch(removeFallTimingWetObject());
+
+      case 'fallDuration':
+        return dispatch(removeFallDurationObject());
+
+      default:
+        return null;
+    }
   };
 }
