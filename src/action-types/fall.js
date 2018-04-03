@@ -1,0 +1,6 @@
+const FallTypes = {
+  FETCH_FALL_DATA_OBJECT: 'FETCH_FALL_DATA_OBJECT',
+  REMOVE_FALL_DATA_OBJECT: 'REMOVE_FALL_DATA_OBJECT',
+};
+
+export default FallTypes;

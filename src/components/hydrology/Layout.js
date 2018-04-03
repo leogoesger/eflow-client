@@ -43,6 +43,9 @@ export default class Layout extends React.Component {
               this.props.fetchClassification(classId)
             }
             updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
+            fetchFallData={data => this.props.fetchFallData(data)}
+            removeFallData={data => this.props.removeFallData(data)}
+            fallData={this.props.fallData}
           />
         </div>
       </div>
@@ -62,6 +65,9 @@ Layout.propTypes = {
   removeClassGaugeProps: PropTypes.func,
   classifications: PropTypes.array,
   updateHoveredGauge: PropTypes.func,
+  fetchFallData: PropTypes.func,
+  removeFallData: PropTypes.func,
+  fallData: PropTypes.array,
 };
 
 const styles = {

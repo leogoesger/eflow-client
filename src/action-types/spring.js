@@ -1,0 +1,6 @@
+const SpringTypes = {
+  FETCH_SPRING_DATA_OBJECT: 'FETCH_SPRING_DATA_OBJECT',
+  REMOVE_SPRING_DATA_OBJECT: 'REMOVE_SPRING_DATA_OBJECT',
+};
+
+export default SpringTypes;

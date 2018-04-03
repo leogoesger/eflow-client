@@ -1,0 +1,6 @@
+const SummerTypes = {
+  FETCH_SUMMER_DATA_OBJECT: 'FETCH_SUMMER_DATA_OBJECT',
+  REMOVE_SUMMER_DATA_OBJECT: 'REMOVE_SUMMER_DATA_OBJECT',
+};
+
+export default SummerTypes;

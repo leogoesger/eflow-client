@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 export default class BoxPlot extends React.Component {
@@ -11,7 +12,10 @@ export default class BoxPlot extends React.Component {
     this.colorScale = d3.scaleOrdinal(d3.schemeCategory20);
     this.xScale = d3.scalePoint();
     this.yScale = d3.scaleLinear();
-    this.updateD3(props);
+  }
+
+  componentDidMount() {
+    this.updateD3(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -83,7 +87,99 @@ export default class BoxPlot extends React.Component {
     this.setState({boxPlotData: boxPlotData});
   }
 
+  _drawVerticalLines(boxPlotData) {
+    if (!boxPlotData) {
+      return null;
+    }
+    return boxPlotData.map(data => {
+      return (
+        <line
+          key={data.key}
+          strokeWidth={1}
+          stroke={'#000'}
+          x1={this.xScale(data.key) + 15}
+          x2={this.xScale(data.key) + 15}
+          y1={this.yScale(data.whiskers[1])}
+          y2={this.yScale(data.whiskers[0])}
+        />
+      );
+    });
+  }
+  _drawBoxes(boxPlotData) {
+    if (!boxPlotData) {
+      return null;
+    }
+    return boxPlotData.map(data => {
+      return (
+        <rect
+          key={data.key}
+          width={30}
+          height={this.yScale(data.quartile[0]) - this.yScale(data.quartile[2])}
+          x={this.xScale(data.key)}
+          y={this.yScale(data.quartile[2])}
+          fill={data.color}
+          stroke={'#000'}
+          strokeWidth={1}
+        />
+      );
+    });
+  }
+  _drawHorizontalLines(boxPlotData) {
+    if (!boxPlotData) {
+      return null;
+    }
+    return boxPlotData.map(data => {
+      return (
+        <g key={data.key}>
+          <line
+            strokeWidth={1}
+            stroke={'#000'}
+            x1={this.xScale(data.key)}
+            x2={this.xScale(data.key) + 30}
+            y1={this.yScale(data.whiskers[0])}
+            y2={this.yScale(data.whiskers[0])}
+          />
+          <line
+            strokeWidth={1}
+            stroke={'#000'}
+            x1={this.xScale(data.key)}
+            x2={this.xScale(data.key) + 30}
+            y1={this.yScale(data.whiskers[1])}
+            y2={this.yScale(data.whiskers[1])}
+          />
+          <line
+            strokeWidth={1}
+            stroke={'#000'}
+            x1={this.xScale(data.key)}
+            x2={this.xScale(data.key) + 30}
+            y1={this.yScale(data.quartile[1])}
+            y2={this.yScale(data.quartile[1])}
+          />
+        </g>
+      );
+    });
+  }
+
   render() {
-    return null;
+    return (
+      <svg
+        width={this.props.width}
+        height={this.props.height}
+        transform={`translate(${this.props.x}, ${this.props.y})`}
+      >
+        <g>
+          {this._drawVerticalLines(this.state.boxPlotData)}
+          {this._drawBoxes(this.state.boxPlotData)}
+          {this._drawHorizontalLines(this.state.boxPlotData)}
+        </g>
+      </svg>
+    );
   }
 }
+
+BoxPlot.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+};

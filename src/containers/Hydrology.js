@@ -14,6 +14,7 @@ import {
   removeCurrentGauge,
 } from '../actions/gauge';
 import {updateTab, updateHoveredGauge} from '../actions/hydrology';
+import {fetchFallData, removeFallData} from '../actions/fall';
 
 export class Hydrology extends React.Component {
   componentWillMount() {
@@ -41,6 +42,9 @@ export class Hydrology extends React.Component {
         updateTab={tabValue => this.props.updateTab(tabValue)}
         removeClassGaugeProps={() => this.removeClassGaugeProps()}
         updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
+        fetchFallData={data => this.props.fetchFallData(data)}
+        removeFallData={data => this.props.removeFallData(data)}
+        fallData={this.props.fallData}
       />
     );
   }
@@ -61,6 +65,9 @@ Hydrology.propTypes = {
   removeCurrentClass: PropTypes.func,
   fetchClassifications: PropTypes.func,
   updateHoveredGauge: PropTypes.func,
+  fetchFallData: PropTypes.func,
+  removeFallData: PropTypes.func,
+  fallData: PropTypes.array,
 };
 
 const mapStateToProps = state => {
@@ -71,6 +78,7 @@ const mapStateToProps = state => {
     classifications: state.classification.classifications,
     currentGauge: state.gauge.currentGauge,
     currentClassification: state.classification.currentClassification,
+    fallData: state.fall.fallData,
   };
 };
 
@@ -84,6 +92,8 @@ const mapDispatchToProps = dispatch => {
     removeCurrentClass: () => dispatch(removeCurrentClass()),
     fetchClassifications: () => dispatch(fetchClassifications()),
     updateHoveredGauge: gaugeId => dispatch(updateHoveredGauge(gaugeId)),
+    fetchFallData: data => dispatch(fetchFallData(data)),
+    removeFallData: data => dispatch(removeFallData(data)),
   };
 };
 

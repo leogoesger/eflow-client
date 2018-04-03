@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card } from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
+import {BoxPlot} from '../shared/plots';
 
 export default class Layout extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export default class Layout extends React.Component {
         className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
         style={styles.card}
       >
-        heelo
+        <BoxPlot width={900} height={400} x={0} y={20} />
       </Card>
     );
   }

@@ -3,20 +3,22 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Reply from 'material-ui/svg-icons/content/reply';
 
-import {LinePlot, BoxPlot} from '../../shared/plots';
+import {LinePlot} from '../../shared/plots';
 import {classInfo} from '../../../constants/classification';
 
 import {Colors} from '../../../styles';
+import Control from './Control';
 
 class Hydrograph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       hydroData: null,
+      fallFlushTiming: false,
+      fallWetTiming: false,
+      springTiming: false,
+      summerTiming: false,
     };
   }
 
@@ -142,25 +144,6 @@ class Hydrograph extends React.Component {
             xValue={value => value.date}
             yValue={value => value.flow}
           />
-
-          {this._renderPercentilleChips()}
-
-          <div style={styles.btnContainer}>
-            <FlatButton
-              label="Go Back"
-              style={{marginRight: '20px'}}
-              labelStyle={{fontSize: '12px', color: Colors.gold}}
-              icon={<Reply color={Colors.gold} />}
-              onClick={() => this.props.removeClassGaugeProps()}
-            />
-            <RaisedButton
-              label="Details"
-              backgroundColor={Colors.gold}
-              labelColor={Colors.white}
-              disabled={true}
-              labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
-            />
-          </div>
         </div>
       );
     }
@@ -170,7 +153,15 @@ class Hydrograph extends React.Component {
     return (
       <Paper style={styles.graph}>
         {this._renderData(this.state.hydroData)}
-        <BoxPlot />
+        {this._renderPercentilleChips()}
+        <Control
+          currentGauge={this.props.currentGauge}
+          currentClassification={this.props.currentClassification}
+          fallData={this.props.fallData}
+          removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+          fetchFallData={data => this.props.fetchFallData(data)}
+          removeFallData={data => this.props.removeFallData(data)}
+        />
       </Paper>
     );
   }
@@ -182,6 +173,9 @@ Hydrograph.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
+  fetchFallData: PropTypes.func,
+  fallData: PropTypes.array,
+  removeFallData: PropTypes.func,
 };
 
 const styles = {
@@ -211,19 +205,12 @@ const styles = {
     marginBottom: '20px',
     borderRadius: '0px',
   },
-
   plotTitle: {
     marginTop: '20px',
     width: '100%',
     textAlign: 'center',
     fontWeight: '500',
     fontSize: '16px',
-  },
-  btnContainer: {
-    width: '95%',
-    marginTop: '55px',
-    display: 'flex',
-    justifyContent: 'flex-end',
   },
 };
 
