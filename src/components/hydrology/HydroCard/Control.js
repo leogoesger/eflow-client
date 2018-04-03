@@ -46,17 +46,51 @@ export default class Control extends React.Component {
             id: boxName,
           });
         case 'springTiming':
-          return null;
+          return this.props.fetchSpringData({
+            springData: this.props.springData,
+            fetchData: {
+              [currentType.type]: currentType.id,
+              metric: 'timing',
+            },
+            id: boxName,
+          });
         case 'summerTiming':
-          return null;
+          return this.props.fetchSummerData({
+            summerData: this.props.summerData,
+            fetchData: {
+              [currentType.type]: currentType.id,
+              metric: 'timing',
+            },
+            id: boxName,
+          });
         default:
           return null;
       }
     } else {
-      this.props.removeFallData({
-        id: boxName,
-        fallData: this.props.fallData,
-      });
+      switch (boxName) {
+        case 'fallFlushTiming':
+          return this.props.removeFallData({
+            id: boxName,
+            fallData: this.props.fallData,
+          });
+        case 'fallWetTiming':
+          return this.props.removeFallData({
+            id: boxName,
+            fallData: this.props.fallData,
+          });
+        case 'springTiming':
+          return this.props.removeSpringData({
+            id: boxName,
+            springData: this.props.springData,
+          });
+        case 'summerTiming':
+          return this.props.removeSummerData({
+            id: boxName,
+            summerData: this.props.summerData,
+          });
+        default:
+          return null;
+      }
     }
   }
 
@@ -129,8 +163,14 @@ Control.propTypes = {
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
   fetchFallData: PropTypes.func,
-  fallData: PropTypes.array,
   removeFallData: PropTypes.func,
+  fetchSpringData: PropTypes.func,
+  removeSpringData: PropTypes.func,
+  fetchSummerData: PropTypes.func,
+  removeSummerData: PropTypes.func,
+  fallData: PropTypes.array,
+  springData: PropTypes.array,
+  summerData: PropTypes.array,
 };
 
 const styles = {

@@ -157,10 +157,16 @@ class Hydrograph extends React.Component {
         <Control
           currentGauge={this.props.currentGauge}
           currentClassification={this.props.currentClassification}
-          fallData={this.props.fallData}
           removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
           fetchFallData={data => this.props.fetchFallData(data)}
           removeFallData={data => this.props.removeFallData(data)}
+          fetchSpringData={data => this.props.fetchSpringData(data)}
+          removeSpringData={data => this.props.removeSpringData(data)}
+          fetchSummerData={data => this.props.fetchSummerData(data)}
+          removeSummerData={data => this.props.removeSummerData(data)}
+          fallData={this.props.fallData}
+          springData={this.props.springData}
+          summerData={this.props.summerData}
         />
       </Paper>
     );
@@ -174,8 +180,14 @@ Hydrograph.propTypes = {
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
   fetchFallData: PropTypes.func,
-  fallData: PropTypes.array,
   removeFallData: PropTypes.func,
+  fetchSpringData: PropTypes.func,
+  removeSpringData: PropTypes.func,
+  fetchSummerData: PropTypes.func,
+  removeSummerData: PropTypes.func,
+  fallData: PropTypes.array,
+  springData: PropTypes.array,
+  summerData: PropTypes.array,
 };
 
 const styles = {
