@@ -6,6 +6,9 @@ import gauge from './gauge';
 import hydrology from './hydrology';
 import member from './member';
 import paper from './paper';
+import fall from './fall';
+import spring from './spring';
+import summer from './summer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -14,6 +17,9 @@ const rootReducer = combineReducers({
   gauge,
   member,
   paper,
+  fall,
+  spring,
+  summer,
 });
 
 export default rootReducer;

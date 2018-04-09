@@ -14,6 +14,15 @@ import {
   removeCurrentGauge,
 } from '../actions/gauge';
 import {updateTab, updateHoveredGauge} from '../actions/hydrology';
+import {fetchFallBoxPlotData, removeFallBoxPlotData} from '../actions/fall';
+import {
+  fetchSpringBoxPlotData,
+  removeSpringBoxPlotData,
+} from '../actions/spring';
+import {
+  fetchSummerBoxPlotData,
+  removeSummerBoxPlotData,
+} from '../actions/summer';
 
 export class Hydrology extends React.Component {
   componentWillMount() {
@@ -25,6 +34,26 @@ export class Hydrology extends React.Component {
     this.props.removeCurrentGauge();
     this.props.removeCurrentClass();
     this.props.updateTab('a');
+  }
+
+  getBoxPlotOverlayData() {
+    return [
+      this.props.fallTimingBoxPlot,
+      this.props.fallTimingWetBoxPlot,
+      this.props.springTimingBoxPlot,
+      this.props.summerTimingBoxPlot,
+    ].filter(d => d);
+  }
+
+  getBoxPlotOverlayMethods() {
+    return {
+      fetchFallBoxPlotData: data => this.props.fetchFallBoxPlotData(data),
+      removeFallBoxPlotData: data => this.props.removeFallBoxPlotData(data),
+      fetchSpringBoxPlotData: data => this.props.fetchSpringBoxPlotData(data),
+      removeSpringBoxPlotData: data => this.props.removeSpringBoxPlotData(data),
+      fetchSummerBoxPlotData: data => this.props.fetchSummerBoxPlotData(data),
+      removeSummerBoxPlotData: data => this.props.removeSummerBoxPlotData(data),
+    };
   }
 
   render() {
@@ -41,6 +70,8 @@ export class Hydrology extends React.Component {
         updateTab={tabValue => this.props.updateTab(tabValue)}
         removeClassGaugeProps={() => this.removeClassGaugeProps()}
         updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
+        overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
+        overLayBoxPlotData={this.getBoxPlotOverlayData()}
       />
     );
   }
@@ -61,6 +92,16 @@ Hydrology.propTypes = {
   removeCurrentClass: PropTypes.func,
   fetchClassifications: PropTypes.func,
   updateHoveredGauge: PropTypes.func,
+  fetchFallBoxPlotData: PropTypes.func,
+  removeFallBoxPlotData: PropTypes.func,
+  fetchSpringBoxPlotData: PropTypes.func,
+  removeSpringBoxPlotData: PropTypes.func,
+  fetchSummerBoxPlotData: PropTypes.func,
+  removeSummerBoxPlotData: PropTypes.func,
+  fallTimingBoxPlot: PropTypes.object,
+  fallTimingWetBoxPlot: PropTypes.object,
+  springTimingBoxPlot: PropTypes.object,
+  summerTimingBoxPlot: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -71,6 +112,10 @@ const mapStateToProps = state => {
     classifications: state.classification.classifications,
     currentGauge: state.gauge.currentGauge,
     currentClassification: state.classification.currentClassification,
+    fallTimingBoxPlot: state.fall.timingBoxPlot,
+    fallTimingWetBoxPlot: state.fall.timingWetBoxPlot,
+    springTimingBoxPlot: state.spring.timingBoxPlot,
+    summerTimingBoxPlot: state.summer.timingBoxPlot,
   };
 };
 
@@ -84,6 +129,12 @@ const mapDispatchToProps = dispatch => {
     removeCurrentClass: () => dispatch(removeCurrentClass()),
     fetchClassifications: () => dispatch(fetchClassifications()),
     updateHoveredGauge: gaugeId => dispatch(updateHoveredGauge(gaugeId)),
+    fetchFallBoxPlotData: data => dispatch(fetchFallBoxPlotData(data)),
+    removeFallBoxPlotData: data => dispatch(removeFallBoxPlotData(data)),
+    fetchSpringBoxPlotData: data => dispatch(fetchSpringBoxPlotData(data)),
+    removeSpringBoxPlotData: data => dispatch(removeSpringBoxPlotData(data)),
+    fetchSummerBoxPlotData: data => dispatch(fetchSummerBoxPlotData(data)),
+    removeSummerBoxPlotData: data => dispatch(removeSummerBoxPlotData(data)),
   };
 };
 

@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import Axis from './Axis';
-import {Colors} from '../../../styles';
+import BoxplotOverlay from './BoxplotOverlay';
 
 export default class LinePlot extends React.Component {
   constructor(props) {
     super(props);
-
     this.xScale = d3.scaleLinear();
     this.yScale = d3.scaleLinear();
     this.line = d3.line();
@@ -20,13 +19,15 @@ export default class LinePlot extends React.Component {
   }
 
   updateD3(props) {
-    let {data, width, height} = props;
+    let {data, width, height, highestKey} = props;
 
     this.xScale
-      .domain(d3.extent(data.NINTY, d => this.props.xValue(d)))
+      .domain(d3.extent(data[highestKey], d => this.props.xValue(d)))
       .range([0, width]);
 
-    this.yScale.domain([0, d3.max(data.NINTY, d => d.flow)]).range([height, 0]);
+    this.yScale
+      .domain([0, d3.max(data[highestKey], d => d.flow)])
+      .range([height, 0]);
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
@@ -34,63 +35,69 @@ export default class LinePlot extends React.Component {
       .curve(d3.curveCardinal);
   }
 
-  render() {
-    const transform = `translate(${this.props.x}, ${this.props.y})`;
-    if (this.line(this.props.data.NINTY)) {
+  renderLines(transform) {
+    return Object.keys(this.props.data).map(key => {
       return (
-        <svg width={this.props.width + 100} height={this.props.height + 100}>
+        <path
+          key={key}
+          transform={transform}
+          d={this.line(this.props.data[key])}
+          strokeLinecap="round"
+          strokeWidth="3"
+          stroke={this.props.colors[key]}
+        />
+      );
+    });
+  }
+
+  renderBoxplots(overLayBoxPlotData) {
+    return overLayBoxPlotData.map((d, i) => {
+      return (
+        <BoxplotOverlay
+          key={i}
+          boxplotData={d.fifty ? d.fifty : d}
+          xScale={this.xScale}
+          yScale={this.yScale}
+          transform={`translate(${this.props.x}, ${this.props.y})`}
+          data={this.props.data}
+        />
+      );
+    });
+  }
+
+  render() {
+    const {
+      data,
+      highestKey,
+      overLayBoxPlotData,
+      x,
+      y,
+      height,
+      width,
+    } = this.props;
+    const transform = `translate(${x}, ${y})`;
+    if (this.line(data[highestKey])) {
+      return (
+        <svg width={620} height={height + 100} style={{marginLeft: '10px'}}>
           <g style={{fill: 'none'}}>
             <Axis
               scale={this.xScale}
-              data={this.props.data.NINTY}
-              x={this.props.x}
-              gridLength={this.props.height}
-              y={this.props.y + this.props.height + 0}
+              data={data[highestKey]}
+              x={x}
+              gridLength={height}
+              y={y + height + 0}
               orientation="bottom"
             />
             <Axis
               scale={this.yScale}
-              data={this.props.data.NINTY}
-              x={this.props.x}
-              y={this.props.y}
-              gridLength={this.props.width}
+              data={data[highestKey]}
+              x={x}
+              y={y}
+              gridLength={width}
               orientation="left"
             />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.NINTY)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.nintyPercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.SEVENTYFIVE)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.seventyFivePercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.FIFTY)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.fiftyPercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.TWENTYFIVE)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.seventyFivePercent}
-            />
-            <path
-              transform={transform}
-              d={this.line(this.props.data.TEN)}
-              strokeLinecap="round"
-              strokeWidth="3"
-              stroke={Colors.nintyPercent}
-            />
+            {this.renderLines(transform)}
+            {this.renderBoxplots(overLayBoxPlotData)}
           </g>
         </svg>
       );
@@ -112,4 +119,7 @@ LinePlot.propTypes = {
   height: PropTypes.number,
   xValue: PropTypes.func,
   yValue: PropTypes.func,
+  highestKey: PropTypes.string,
+  colors: PropTypes.object,
+  overLayBoxPlotData: PropTypes.array,
 };

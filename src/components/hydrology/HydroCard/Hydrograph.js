@@ -3,20 +3,22 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Reply from 'material-ui/svg-icons/content/reply';
 
 import {LinePlot} from '../../shared/plots';
 import {classInfo} from '../../../constants/classification';
 
 import {Colors} from '../../../styles';
+import Control from './Control';
 
 class Hydrograph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       hydroData: null,
+      fallFlushTiming: false,
+      fallWetTiming: false,
+      springTiming: false,
+      summerTiming: false,
     };
   }
 
@@ -101,22 +103,18 @@ class Hydrograph extends React.Component {
   _renderPercentilleChips() {
     return (
       <div style={styles.labels}>
-        <div style={{...styles.label, backgroundColor: Colors.nintyPercent}} />
+        <div style={{...styles.label, backgroundColor: Colors.NINTY}} />
         <div style={{fontSize: '14px'}}>{'90 Percentille'}</div>
-        <div
-          style={{...styles.label, backgroundColor: Colors.seventyFivePercent}}
-        />
+        <div style={{...styles.label, backgroundColor: Colors.SEVENTYFIVE}} />
 
         <div style={{fontSize: '14px'}}>{'75 Percentille'}</div>
-        <div style={{...styles.label, backgroundColor: Colors.fiftyPercent}} />
+        <div style={{...styles.label, backgroundColor: Colors.FIFTY}} />
 
         <div style={{fontSize: '14px'}}>{'50 Percentille'}</div>
-        <div
-          style={{...styles.label, backgroundColor: Colors.seventyFivePercent}}
-        />
+        <div style={{...styles.label, backgroundColor: Colors.TWENTYFIVE}} />
 
         <div style={{fontSize: '14px'}}>{'25 Percentille'}</div>
-        <div style={{...styles.label, backgroundColor: Colors.nintyPercent}} />
+        <div style={{...styles.label, backgroundColor: Colors.TEN}} />
 
         <div style={{fontSize: '14px'}}>{'10 Percentille'}</div>
       </div>
@@ -125,6 +123,13 @@ class Hydrograph extends React.Component {
 
   _renderData(hydroData) {
     if (hydroData) {
+      const colors = {
+        NINTY: Colors.NINTY,
+        SEVENTYFIVE: Colors.SEVENTYFIVE,
+        FIFTY: Colors.FIFTY,
+        TWENTYFIVE: Colors.TWENTYFIVE,
+        TEN: Colors.TEN,
+      };
       return (
         <div>
           {this._renderInfo()}
@@ -133,34 +138,19 @@ class Hydrograph extends React.Component {
             {'Dimensionless Reference Hydrograph'}
           </div>
           <div style={styles.yLabel}>{'Daily flow / Average annual Flow'} </div>
+
           <LinePlot
             x={this.props.containerWidth / 10}
             y={50}
-            width={this.props.containerWidth}
+            width={550}
             height={300}
             data={this.state.hydroData}
             xValue={value => value.date}
             yValue={value => value.flow}
+            highestKey={'NINTY'}
+            colors={colors}
+            overLayBoxPlotData={this.props.overLayBoxPlotData}
           />
-
-          {this._renderPercentilleChips()}
-
-          <div style={styles.btnContainer}>
-            <FlatButton
-              label="Go Back"
-              style={{marginRight: '20px'}}
-              labelStyle={{fontSize: '12px', color: Colors.gold}}
-              icon={<Reply color={Colors.gold} />}
-              onClick={() => this.props.removeClassGaugeProps()}
-            />
-            <RaisedButton
-              label="Details"
-              backgroundColor={Colors.gold}
-              labelColor={Colors.white}
-              disabled={true}
-              labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
-            />
-          </div>
         </div>
       );
     }
@@ -170,6 +160,13 @@ class Hydrograph extends React.Component {
     return (
       <Paper style={styles.graph}>
         {this._renderData(this.state.hydroData)}
+        {this._renderPercentilleChips()}
+        <Control
+          currentGauge={this.props.currentGauge}
+          currentClassification={this.props.currentClassification}
+          removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+          overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
+        />
       </Paper>
     );
   }
@@ -181,6 +178,8 @@ Hydrograph.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
+  overLayBoxPlotMethods: PropTypes.object,
+  overLayBoxPlotData: PropTypes.array,
 };
 
 const styles = {
@@ -206,23 +205,16 @@ const styles = {
   },
   graph: {
     height: '750px',
-    width: '100%',
+    width: '650px',
     marginBottom: '20px',
     borderRadius: '0px',
   },
-
   plotTitle: {
     marginTop: '20px',
     width: '100%',
     textAlign: 'center',
     fontWeight: '500',
     fontSize: '16px',
-  },
-  btnContainer: {
-    width: '95%',
-    marginTop: '55px',
-    display: 'flex',
-    justifyContent: 'flex-end',
   },
 };
 

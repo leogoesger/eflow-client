@@ -1,5 +1,5 @@
 import React from 'react';
-import { Colors } from '../../../styles';
+import {Colors} from '../../../styles';
 
 import Learn from './Learn';
 import Connect from './Connect';
