@@ -13,13 +13,9 @@ export default class Layout extends React.Component {
 
   render() {
     return (
-      <div
-        className="col-lg-11 col-md-11 col-sm-11 col-xs-12"
-        style={styles.container}
-      >
+      <div style={styles.container}>
         <div style={styles.banner} />
         <Map
-          className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
           gauges={this.props.gauges}
           hoveredGauge={this.props.hoveredGauge}
           fetchClassification={classId =>
@@ -27,10 +23,7 @@ export default class Layout extends React.Component {
           }
           fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
         />
-        <div
-          className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-          style={{zIndex: '2'}}
-        >
+        <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}}>
           <HydroTabs
             tabValue={this.props.tabValue}
             updateTab={tabValue => this.props.updateTab(tabValue)}
@@ -72,9 +65,9 @@ const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-around',
-    flexWrap: 'wrap',
     margin: '150px auto',
     height: '100%',
+    width: '1200px',
   },
   banner: {
     backgroundColor: '#424242',

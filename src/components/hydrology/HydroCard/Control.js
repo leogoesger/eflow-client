@@ -19,6 +19,32 @@ export default class Control extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.currentGauge != this.props.currentGauge ||
+      nextProps.currentClassification != this.props.currentClassification
+    ) {
+      this.setState({
+        fallTiming: false,
+        fallTimingWet: false,
+        springTiming: false,
+        summerTiming: false,
+      });
+      this.props.overLayBoxPlotMethods.removeFallBoxPlotData({
+        type: 'fallTiming',
+      });
+      this.props.overLayBoxPlotMethods.removeFallBoxPlotData({
+        type: 'fallTimingWet',
+      });
+      this.props.overLayBoxPlotMethods.removeSpringBoxPlotData({
+        type: 'springTiming',
+      });
+      this.props.overLayBoxPlotMethods.removeSummerBoxPlotData({
+        type: 'summerTiming',
+      });
+    }
+  }
+
   _toggleCheckBox(boxName) {
     this.setState({[boxName]: !this.state[boxName]});
     const {
@@ -110,7 +136,7 @@ export default class Control extends React.Component {
             label="Fall Flush Timing"
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: Colors.gold}}
+            iconStyle={{width: '16px', fill: '#f9a825'}}
             onClick={() => this._toggleCheckBox('fallTiming')}
           />
           <Checkbox
@@ -118,7 +144,7 @@ export default class Control extends React.Component {
             label="Fall Timing Wet"
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: Colors.gold}}
+            iconStyle={{width: '16px', fill: '#558b2f'}}
             onClick={() => this._toggleCheckBox('fallTimingWet')}
           />
           <Checkbox
@@ -126,7 +152,7 @@ export default class Control extends React.Component {
             label="Spring Timing"
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: Colors.gold}}
+            iconStyle={{width: '16px', fill: '#6a1b9a'}}
             onClick={() => this._toggleCheckBox('springTiming')}
           />
           <Checkbox
@@ -134,7 +160,7 @@ export default class Control extends React.Component {
             label="Summer Timing"
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: Colors.gold}}
+            iconStyle={{width: '16px', fill: '#bf360c'}}
             onClick={() => this._toggleCheckBox('summerTiming')}
           />
         </div>

@@ -103,22 +103,18 @@ class Hydrograph extends React.Component {
   _renderPercentilleChips() {
     return (
       <div style={styles.labels}>
-        <div style={{...styles.label, backgroundColor: Colors.nintyPercent}} />
+        <div style={{...styles.label, backgroundColor: Colors.NINTY}} />
         <div style={{fontSize: '14px'}}>{'90 Percentille'}</div>
-        <div
-          style={{...styles.label, backgroundColor: Colors.seventyFivePercent}}
-        />
+        <div style={{...styles.label, backgroundColor: Colors.SEVENTYFIVE}} />
 
         <div style={{fontSize: '14px'}}>{'75 Percentille'}</div>
-        <div style={{...styles.label, backgroundColor: Colors.fiftyPercent}} />
+        <div style={{...styles.label, backgroundColor: Colors.FIFTY}} />
 
         <div style={{fontSize: '14px'}}>{'50 Percentille'}</div>
-        <div
-          style={{...styles.label, backgroundColor: Colors.seventyFivePercent}}
-        />
+        <div style={{...styles.label, backgroundColor: Colors.TWENTYFIVE}} />
 
         <div style={{fontSize: '14px'}}>{'25 Percentille'}</div>
-        <div style={{...styles.label, backgroundColor: Colors.nintyPercent}} />
+        <div style={{...styles.label, backgroundColor: Colors.TEN}} />
 
         <div style={{fontSize: '14px'}}>{'10 Percentille'}</div>
       </div>
@@ -146,13 +142,14 @@ class Hydrograph extends React.Component {
           <LinePlot
             x={this.props.containerWidth / 10}
             y={50}
-            width={this.props.containerWidth}
+            width={550}
             height={300}
             data={this.state.hydroData}
             xValue={value => value.date}
             yValue={value => value.flow}
             highestKey={'NINTY'}
             colors={colors}
+            overLayBoxPlotData={this.props.overLayBoxPlotData}
           />
         </div>
       );
@@ -169,7 +166,6 @@ class Hydrograph extends React.Component {
           currentClassification={this.props.currentClassification}
           removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
           overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
-          overLayBoxPlotData={this.props.overLayBoxPlotData}
         />
       </Paper>
     );
@@ -209,7 +205,7 @@ const styles = {
   },
   graph: {
     height: '750px',
-    width: '100%',
+    width: '650px',
     marginBottom: '20px',
     borderRadius: '0px',
   },

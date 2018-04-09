@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import Axis from './Axis';
+import BoxplotOverlay from './BoxplotOverlay';
 
 export default class LinePlot extends React.Component {
   constructor(props) {
     super(props);
-
     this.xScale = d3.scaleLinear();
     this.yScale = d3.scaleLinear();
     this.line = d3.line();
@@ -50,30 +50,54 @@ export default class LinePlot extends React.Component {
     });
   }
 
+  renderBoxplots(overLayBoxPlotData) {
+    return overLayBoxPlotData.map((d, i) => {
+      return (
+        <BoxplotOverlay
+          key={i}
+          boxplotData={d.fifty ? d.fifty : d}
+          xScale={this.xScale}
+          yScale={this.yScale}
+          transform={`translate(${this.props.x}, ${this.props.y})`}
+          data={this.props.data}
+        />
+      );
+    });
+  }
+
   render() {
-    let {data, highestKey} = this.props;
-    const transform = `translate(${this.props.x}, ${this.props.y})`;
+    const {
+      data,
+      highestKey,
+      overLayBoxPlotData,
+      x,
+      y,
+      height,
+      width,
+    } = this.props;
+    const transform = `translate(${x}, ${y})`;
     if (this.line(data[highestKey])) {
       return (
-        <svg width={this.props.width + 100} height={this.props.height + 100}>
+        <svg width={620} height={height + 100} style={{marginLeft: '10px'}}>
           <g style={{fill: 'none'}}>
             <Axis
               scale={this.xScale}
               data={data[highestKey]}
-              x={this.props.x}
-              gridLength={this.props.height}
-              y={this.props.y + this.props.height + 0}
+              x={x}
+              gridLength={height}
+              y={y + height + 0}
               orientation="bottom"
             />
             <Axis
               scale={this.yScale}
               data={data[highestKey]}
-              x={this.props.x}
-              y={this.props.y}
-              gridLength={this.props.width}
+              x={x}
+              y={y}
+              gridLength={width}
               orientation="left"
             />
             {this.renderLines(transform)}
+            {this.renderBoxplots(overLayBoxPlotData)}
           </g>
         </svg>
       );
@@ -97,4 +121,5 @@ LinePlot.propTypes = {
   yValue: PropTypes.func,
   highestKey: PropTypes.string,
   colors: PropTypes.object,
+  overLayBoxPlotData: PropTypes.array,
 };

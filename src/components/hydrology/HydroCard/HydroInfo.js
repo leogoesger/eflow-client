@@ -118,7 +118,7 @@ class HydroInfo extends React.Component {
 const styles = {
   graph: {
     height: '750px',
-    width: '100%',
+    width: '650px',
     marginBottom: '20px',
     borderRadius: '0px',
   },
