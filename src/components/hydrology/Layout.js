@@ -14,7 +14,6 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <div style={styles.banner} />
         <Map
           gauges={this.props.gauges}
           hoveredGauge={this.props.hoveredGauge}
@@ -65,17 +64,8 @@ const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-around',
-    margin: '150px auto',
+    margin: '-50px auto 150px auto',
     height: '100%',
-    width: '1200px',
-  },
-  banner: {
-    backgroundColor: '#424242',
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    right: '0px',
-    height: '220px',
-    zIndex: '0',
+    width: '1300px',
   },
 };

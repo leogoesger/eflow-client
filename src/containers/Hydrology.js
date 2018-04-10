@@ -58,21 +58,26 @@ export class Hydrology extends React.Component {
 
   render() {
     return (
-      <Layout
-        gauges={this.props.gauges}
-        hoveredGauge={this.props.hoveredGauge}
-        tabValue={this.props.tabValue}
-        currentGauge={this.props.currentGauge}
-        classifications={this.props.classifications}
-        fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-        currentClassification={this.props.currentClassification}
-        fetchClassification={classId => this.props.fetchClassification(classId)}
-        updateTab={tabValue => this.props.updateTab(tabValue)}
-        removeClassGaugeProps={() => this.removeClassGaugeProps()}
-        updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
-        overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
-        overLayBoxPlotData={this.getBoxPlotOverlayData()}
-      />
+      <div>
+        <div style={styles.banner} />
+        <Layout
+          gauges={this.props.gauges}
+          hoveredGauge={this.props.hoveredGauge}
+          tabValue={this.props.tabValue}
+          currentGauge={this.props.currentGauge}
+          classifications={this.props.classifications}
+          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+          currentClassification={this.props.currentClassification}
+          fetchClassification={classId =>
+            this.props.fetchClassification(classId)
+          }
+          updateTab={tabValue => this.props.updateTab(tabValue)}
+          removeClassGaugeProps={() => this.removeClassGaugeProps()}
+          updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
+          overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
+          overLayBoxPlotData={this.getBoxPlotOverlayData()}
+        />
+      </div>
     );
   }
 }
@@ -138,4 +143,11 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const styles = {
+  banner: {
+    backgroundColor: '#424242',
+    height: '230px',
+    zIndex: '0',
+  },
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Hydrology);

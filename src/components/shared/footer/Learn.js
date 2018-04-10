@@ -6,10 +6,7 @@ import {Colors} from '../../../styles';
 export default class Learn extends React.Component {
   render() {
     return (
-      <div
-        className="col-lg-3 col-md-3 col-sm-12 col-xs-12"
-        style={styles.container}
-      >
+      <div style={styles.container}>
         <span>Learn</span>
         <ul style={styles.list}>
           <li>

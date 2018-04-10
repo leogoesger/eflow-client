@@ -25,7 +25,7 @@ class App extends React.Component {
     });
 
     return (
-      <div>
+      <div style={{minWidth: '1300px'}}>
         <MuiThemeProvider muiTheme={muiTheme}>
           <div style={{backgroundColor: '#f5f6f7'}}>
             <Header />

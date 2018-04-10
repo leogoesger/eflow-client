@@ -27,12 +27,12 @@ export default class Layout extends React.Component {
       return (
         <div
           key={member.name}
-          className="row col-lg-3 col-md-3 col-sm-3 col-xs-12"
           style={{
-            marginLeft: '0px',
-            marginRight: '0px',
+            marginLeft: '15px',
+            marginRight: '15px',
             marginBottom: '30px',
             height: '100%',
+            width: '220px',
           }}
         >
           <Card
@@ -63,7 +63,7 @@ export default class Layout extends React.Component {
       return <div style={{height: '600px'}} />;
     }
     return (
-      <div className="row col-lg-8 col-md-8" style={{margin: '120px auto'}}>
+      <div className="row" style={{margin: '120px auto', width: '1000px'}}>
         {this._renderMembers(this.props.members)}
         <Dialog
           modal={false}

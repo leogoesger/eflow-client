@@ -23,8 +23,8 @@ export default class Map extends React.Component {
       },
       mapGL: null,
       viewport: {
-        width: 400,
-        height: 900,
+        width: 600,
+        height: 800,
         latitude: 36.7783,
         longitude: -119.4179,
         zoom: 5.3,
@@ -38,15 +38,6 @@ export default class Map extends React.Component {
       hoveredFeature => this._requestCurrentFeature(hoveredFeature),
       200
     );
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', () => this._resize());
-    this._resize();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this._resize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -145,16 +136,6 @@ export default class Map extends React.Component {
     } else {
       this.props.fetchCurrentGauge(hoveredFeature.properties.gaugeId);
     }
-  }
-
-  _resize() {
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        width: window.innerWidth * 0.4,
-        height: 800,
-      },
-    });
   }
 
   _shouldUpdate(features, offsetX, offsetY, x) {

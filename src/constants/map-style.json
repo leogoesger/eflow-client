@@ -5,7 +5,7 @@
     "mapbox:groups": {
       "1442872203304.4841": {
         "name": "admin boundaries",
-        "collapsed": false
+        "collapsed": true
       }
     },
     "mapbox:autocomposite": true,
@@ -23,7 +23,7 @@
   "sources": {
     "composite": {
       "url":
-        "mapbox://mapbox.mapbox-streets-v7,leogoesger.3d48e8up,leogoesger.5m9gjooo,leogoesger.bgou28ji,leogoesger.dxk7vbd0,leogoesger.6yk7jk4v,leogoesger.1qd17caw,leogoesger.6p3lfm0y,leogoesger.daucd12f,leogoesger.advo2mh6",
+        "mapbox://mapbox.mapbox-streets-v7,leogoesger.3d48e8up,leogoesger.5m9gjooo,leogoesger.bgou28ji,leogoesger.dxk7vbd0,leogoesger.1qd17caw,leogoesger.6p3lfm0y,leogoesger.daucd12f,leogoesger.advo2mh6,leogoesger.6yk7jk4v",
       "type": "vector"
     }
   },
@@ -38,17 +38,6 @@
       }
     },
     {
-      "id": "water underlay",
-      "type": "fill",
-      "source": "composite",
-      "source-layer": "water",
-      "layout": {},
-      "paint": {
-        "fill-color": "hsl(211, 33%, 80%)",
-        "fill-translate": [0, 0]
-      }
-    },
-    {
       "id": "water",
       "type": "fill",
       "source": "composite",
@@ -56,22 +45,6 @@
       "layout": {},
       "paint": {
         "fill-color": "hsl(212, 48%, 78%)"
-      }
-    },
-    {
-      "id": "waterway",
-      "type": "line",
-      "source": "composite",
-      "source-layer": "waterway",
-      "layout": {
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "#3c8de3",
-        "line-width": {
-          "base": 1.5,
-          "stops": [[0, 1], [1, 1], [18, 3]]
-        }
       }
     },
     {
@@ -258,12 +231,12 @@
       "source-layer": "place_label",
       "layout": {
         "visibility": "none",
+        "text-size": 10,
         "text-field": "{name}",
         "text-offset": [0, 0.2],
         "icon-image": "city-small",
         "text-justify": "left",
-        "text-anchor": "top",
-        "text-size": 10
+        "text-anchor": "top"
       },
       "paint": {
         "text-color": "hsl(0, 0%, 0%)"
@@ -272,7 +245,7 @@
   ],
   "created": "2018-03-08T01:37:47.822Z",
   "id": "cjehuen2y6v842ssytpno39q8",
-  "modified": "2018-03-16T19:33:59.403Z",
+  "modified": "2018-04-09T23:42:59.729Z",
   "owner": "leogoesger",
   "visibility": "private",
   "draft": false
