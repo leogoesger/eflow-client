@@ -58,6 +58,7 @@ export default class LinePlot extends React.Component {
           boxplotData={d.fifty ? d.fifty : d}
           xScale={this.xScale}
           yScale={this.yScale}
+          height={this.props.height}
           transform={`translate(${this.props.x}, ${this.props.y})`}
           data={this.props.data}
         />

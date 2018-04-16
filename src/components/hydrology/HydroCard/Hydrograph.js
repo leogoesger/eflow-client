@@ -100,23 +100,23 @@ class Hydrograph extends React.Component {
     this.setState({hydroData: hydroData});
   }
 
-  _renderPercentilleChips() {
+  _renderpercentilleChips() {
     return (
       <div style={styles.labels}>
         <div style={{...styles.label, backgroundColor: Colors.NINTY}} />
-        <div style={{fontSize: '14px'}}>{'90 Percentille'}</div>
+        <div style={{fontSize: '14px'}}>{'90 percentile'}</div>
         <div style={{...styles.label, backgroundColor: Colors.SEVENTYFIVE}} />
 
-        <div style={{fontSize: '14px'}}>{'75 Percentille'}</div>
+        <div style={{fontSize: '14px'}}>{'75 percentile'}</div>
         <div style={{...styles.label, backgroundColor: Colors.FIFTY}} />
 
-        <div style={{fontSize: '14px'}}>{'50 Percentille'}</div>
+        <div style={{fontSize: '14px'}}>{'50 percentile'}</div>
         <div style={{...styles.label, backgroundColor: Colors.TWENTYFIVE}} />
 
-        <div style={{fontSize: '14px'}}>{'25 Percentille'}</div>
+        <div style={{fontSize: '14px'}}>{'25 percentile'}</div>
         <div style={{...styles.label, backgroundColor: Colors.TEN}} />
 
-        <div style={{fontSize: '14px'}}>{'10 Percentille'}</div>
+        <div style={{fontSize: '14px'}}>{'10 percentile'}</div>
       </div>
     );
   }
@@ -160,7 +160,7 @@ class Hydrograph extends React.Component {
     return (
       <Paper style={styles.graph}>
         {this._renderData(this.state.hydroData)}
-        {this._renderPercentilleChips()}
+        {this._renderpercentilleChips()}
         <Control
           currentGauge={this.props.currentGauge}
           currentClassification={this.props.currentClassification}

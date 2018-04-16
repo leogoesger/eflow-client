@@ -18,7 +18,7 @@ export default class NavRight extends React.Component {
       <div style={styles.userDiv}>
         <FlatButton
           className="e2e-header-sign-up-btn"
-          label="Paper"
+          label="Papers"
           icon={<Book />}
           style={styles.headerButton}
           labelStyle={styles.headerWhiteButtonLabel}

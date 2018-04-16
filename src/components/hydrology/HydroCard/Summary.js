@@ -72,13 +72,13 @@ const renderMetrics = (summaryData, title, subtitle, pickedItems) => {
                 Metric
               </TableHeaderColumn>
               <TableHeaderColumn style={{height: '20px'}}>
-                20 Percentille
+                10 percentile
               </TableHeaderColumn>
               <TableHeaderColumn style={{height: '20px'}}>
-                50 Percentille
+                50 percentile
               </TableHeaderColumn>
               <TableHeaderColumn style={{height: '20px'}}>
-                90 Percentille
+                90 percentile
               </TableHeaderColumn>
             </TableRow>
           </TableHeader>

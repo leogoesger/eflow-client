@@ -64,7 +64,7 @@ const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-around',
-    margin: '-50px auto 150px auto',
+    margin: '-60px auto 100px auto',
     height: '100%',
     width: '1300px',
   },

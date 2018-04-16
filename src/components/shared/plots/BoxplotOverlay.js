@@ -57,8 +57,8 @@ const BoxplotOverlay = props => {
         stroke={getColor(props.boxplotData.metricName)[0]}
         x1={props.xScale(dataWithOffset.whiskers[0])}
         x2={props.xScale(dataWithOffset.quartile[0])}
-        y1={props.yScale(locateY(props.data, dataWithOffset.quartile[1]))}
-        y2={props.yScale(locateY(props.data, dataWithOffset.quartile[1]))}
+        y1={0}
+        y2={props.height}
         transform={props.transform}
       />
       <line
@@ -66,8 +66,8 @@ const BoxplotOverlay = props => {
         stroke={getColor(props.boxplotData.metricName)[0]}
         x1={props.xScale(dataWithOffset.quartile[2])}
         x2={props.xScale(dataWithOffset.whiskers[1])}
-        y1={props.yScale(locateY(props.data, dataWithOffset.quartile[1]))}
-        y2={props.yScale(locateY(props.data, dataWithOffset.quartile[1]))}
+        y1={0}
+        y2={props.height}
         transform={props.transform}
       />
       <rect
@@ -75,15 +75,13 @@ const BoxplotOverlay = props => {
           props.xScale(dataWithOffset.quartile[2]) -
           props.xScale(dataWithOffset.quartile[0])
         }
-        height={16}
+        height={props.height}
         x={props.xScale(dataWithOffset.quartile[0])}
-        y={props.yScale(locateY(props.data, dataWithOffset.quartile[1])) - 8}
+        y={0}
         fill={getColor(props.boxplotData.metricName)[1]}
-        stroke={getColor(props.boxplotData.metricName)[0]}
         fillOpacity={'0.8'}
         transform={props.transform}
       />
-
       <line
         strokeWidth={2}
         stroke={getColor(props.boxplotData.metricName)[0]}
@@ -121,6 +119,7 @@ BoxplotOverlay.propTypes = {
   transform: PropTypes.string,
   xScale: PropTypes.func,
   yScale: PropTypes.func,
+  height: PropTypes.number,
 };
 
 export default BoxplotOverlay;

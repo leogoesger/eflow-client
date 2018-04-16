@@ -14,6 +14,7 @@ import Hydrology from '../containers/Hydrology';
 // import Ecology from '../containers/Ecology';
 import Team from '../containers/Team';
 import Paper from '../containers/Paper';
+import MetricDetail from '../containers/MetricDetail';
 import Construction from '../containers/Construction';
 import withTracker from '../utils/withTracker';
 
@@ -48,6 +49,11 @@ class App extends React.Component {
               />
               <Route exact path="/team" component={withTracker(Team)} />
               <Route exact path="/paper" component={withTracker(Paper)} />
+              <Route
+                exact
+                path="/metricDetail"
+                component={withTracker(MetricDetail)}
+              />
             </Switch>
             <Footer />
           </div>
