@@ -130,39 +130,108 @@ export default class Control extends React.Component {
             style={{padding: '10px 0px', width: '200px'}}
             titleStyle={{width: '200px', color: Colors.blue}}
           />
-
-          <Checkbox
-            checked={this.state.fallTiming}
-            label="Fall Flush Timing"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#f9a825'}}
-            onClick={() => this._toggleCheckBox('fallTiming')}
-          />
-          <Checkbox
-            checked={this.state.fallTimingWet}
-            label="Fall Timing Wet"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#558b2f'}}
-            onClick={() => this._toggleCheckBox('fallTimingWet')}
-          />
-          <Checkbox
-            checked={this.state.springTiming}
-            label="Spring Timing"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#6a1b9a'}}
-            onClick={() => this._toggleCheckBox('springTiming')}
-          />
-          <Checkbox
-            checked={this.state.summerTiming}
-            label="Summer Timing"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#bf360c'}}
-            onClick={() => this._toggleCheckBox('summerTiming')}
-          />
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{width: '100%'}}>
+              <Checkbox
+                checked={this.state.fallTiming}
+                label="Fall Flush Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#f9a825'}}
+                onClick={() => this._toggleCheckBox('fallTiming')}
+              />
+              <Checkbox
+                checked={this.state.fallTimingWet}
+                label="Fall Timing Wet"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#558b2f'}}
+                onClick={() => this._toggleCheckBox('fallTimingWet')}
+              />
+              <Checkbox
+                checked={this.state.springTiming}
+                label="Spring Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#6a1b9a'}}
+                onClick={() => this._toggleCheckBox('springTiming')}
+              />
+              <Checkbox
+                checked={this.state.summerTiming}
+                label="Summer Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#bf360c'}}
+                onClick={() => this._toggleCheckBox('summerTiming')}
+              />
+              <Checkbox
+                checked={this.state.springTiming}
+                label="Spring Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#6a1b9a'}}
+                onClick={() => this._toggleCheckBox('springTiming')}
+              />
+              <Checkbox
+                checked={this.state.summerTiming}
+                label="Summer Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#bf360c'}}
+                onClick={() => this._toggleCheckBox('summerTiming')}
+              />
+            </div>
+            <div style={{width: '100%'}}>
+              <Checkbox
+                checked={this.state.fallTiming}
+                label="Fall Flush Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#f9a825'}}
+                onClick={() => this._toggleCheckBox('fallTiming')}
+              />
+              <Checkbox
+                checked={this.state.fallTimingWet}
+                label="Fall Timing Wet"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#558b2f'}}
+                onClick={() => this._toggleCheckBox('fallTimingWet')}
+              />
+              <Checkbox
+                checked={this.state.springTiming}
+                label="Spring Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#6a1b9a'}}
+                onClick={() => this._toggleCheckBox('springTiming')}
+              />
+              <Checkbox
+                checked={this.state.summerTiming}
+                label="Summer Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#bf360c'}}
+                onClick={() => this._toggleCheckBox('summerTiming')}
+              />
+              <Checkbox
+                checked={this.state.springTiming}
+                label="Spring Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#6a1b9a'}}
+                onClick={() => this._toggleCheckBox('springTiming')}
+              />
+              <Checkbox
+                checked={this.state.summerTiming}
+                label="Summer Timing"
+                style={styles.checkbox}
+                labelStyle={styles.labelStyle}
+                iconStyle={{width: '16px', fill: '#bf360c'}}
+                onClick={() => this._toggleCheckBox('summerTiming')}
+              />
+            </div>
+          </div>
         </div>
         <div style={styles.rightBtn}>
           <FlatButton
@@ -194,7 +263,7 @@ Control.propTypes = {
 
 const styles = {
   btnContainer: {
-    margin: '55px auto',
+    margin: '50px auto',
     width: '95%',
     display: 'flex',
     justifyContent: 'space-between',
@@ -204,7 +273,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   checkBoxContainer: {
-    width: '30%',
+    width: '60%',
     marginLeft: '20px',
   },
   labelStyle: {
