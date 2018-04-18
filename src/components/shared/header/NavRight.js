@@ -23,7 +23,7 @@ export default class NavRight extends React.Component {
           style={styles.headerButton}
           labelStyle={styles.headerWhiteButtonLabel}
           hoverColor={'white'}
-          onClick={() => navigateTo('/paper')}
+          onClick={() => navigateTo('/papers')}
         />
         <FlatButton
           label="Team"

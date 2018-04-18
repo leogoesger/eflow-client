@@ -1,5 +1,6 @@
 import {history} from '../store/configureStore';
 import {fromJS} from 'immutable';
+import {detect} from 'detect-browser';
 import _ from 'lodash';
 
 export function navigateTo(pathname, query) {
@@ -133,4 +134,56 @@ export const locateY = (data, x) => {
     return o.date == Math.floor(Number(x));
   });
   return locatedY.flow;
+};
+
+const _getBrowserMajorVersion = version => {
+  if (version) {
+    const versionNumbers = version.split('.');
+    if (versionNumbers.length) {
+      return parseInt(versionNumbers[0].replace(/[^0-9]/g, ''), 10);
+    }
+  }
+  return null;
+};
+
+export const isBrowserNotSupported = () => {
+  const browser = detect();
+  if (browser && browser.name && browser.version) {
+    const majorVersion = _getBrowserMajorVersion(browser.version);
+    if (majorVersion) {
+      switch (browser.name) {
+        case 'chrome':
+          if (majorVersion <= 60) {
+            return true;
+          }
+          return false;
+        case 'firefox':
+          if (majorVersion <= 55) {
+            return true;
+          }
+          return false;
+        case 'safari':
+          if (majorVersion <= 10) {
+            return true;
+          }
+          return false;
+        case 'ie':
+          if (majorVersion <= 11) {
+            return true;
+          }
+          return false;
+        case 'edge':
+          if (majorVersion <= 11) {
+            return true;
+          }
+          return false;
+        default:
+          return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
 };

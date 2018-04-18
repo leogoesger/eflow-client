@@ -6,10 +6,14 @@ export default class Group extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <span>UCD Water Management Lab</span>
-        <ul style={styles.list}>
-          <li>Projects</li>
-        </ul>
+        <a
+          className="footer-link"
+          href="https://watermanagement.ucdavis.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>UCD Water Management Lab</span>
+        </a>
       </div>
     );
   }

@@ -48,7 +48,7 @@ class App extends React.Component {
                 component={withTracker(Construction)}
               />
               <Route exact path="/team" component={withTracker(Team)} />
-              <Route exact path="/paper" component={withTracker(Paper)} />
+              <Route exact path="/papers" component={withTracker(Paper)} />
               <Route
                 exact
                 path="/metricDetail"

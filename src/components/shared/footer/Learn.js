@@ -25,8 +25,8 @@ export default class Learn extends React.Component {
             </Link>
           </li>
           <li>
-            <Link to="/paper" className="footer-link">
-              Paper
+            <Link to="/papers" className="footer-link">
+              Papers
             </Link>
           </li>
           <li>

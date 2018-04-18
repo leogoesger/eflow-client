@@ -32,13 +32,21 @@ const renderRow = summaryData => {
           </TableRowColumn>
 
           <TableRowColumn style={{height: '15px'}}>
-            {summaryData[key][0]}
+            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+              {summaryData[key][0]}
+            </Tooltip>
           </TableRowColumn>
+
           <TableRowColumn style={{height: '15px'}}>
-            {summaryData[key][1]}
+            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+              {summaryData[key][1]}
+            </Tooltip>
           </TableRowColumn>
+
           <TableRowColumn style={{height: '15px'}}>
-            {summaryData[key][2]}
+            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+              {summaryData[key][2]}
+            </Tooltip>
           </TableRowColumn>
         </TableRow>
       );
