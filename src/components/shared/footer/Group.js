@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { Colors } from '../../../styles';
+import {Colors} from '../../../styles';
 
 export default class Group extends React.Component {
   render() {
     return (
-      <div
-        className="col-lg-3 col-md-3 col-sm-12 col-xs-12"
-        style={styles.container}
-      >
+      <div style={styles.container}>
         <span>UCD Water Management Lab</span>
         <ul style={styles.list}>
           <li>Projects</li>
@@ -24,7 +21,9 @@ const styles = {
     lineHeight: '25px',
     height: '200px',
     paddingTop: '20px',
+    paddingLeft: '20px',
     fontSize: '16px',
+    width: '20%',
   },
   list: {
     color: Colors.lightGrey,

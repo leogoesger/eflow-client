@@ -3,53 +3,40 @@ import {FallTypes as types} from '../action-types';
 
 const fetchFallTimingObject = timing => {
   return {
-    type: types.FETCH_FALL_TIMING_OBJECT,
+    type: types.FETCH_FALL_TIMING_BP_OBJECT,
     timing,
   };
 };
 
 const removeFallTimingObject = () => {
   return {
-    type: types.REMOVE_FALL_TIMING_OBJECT,
+    type: types.REMOVE_FALL_TIMING_BP_OBJECT,
   };
 };
 
 const fetchFallMagnitudeObject = magnitude => {
   return {
-    type: types.FETCH_FALL_MAGNITUDE_OBJECT,
+    type: types.FETCH_FALL_MAGNITUDE_BP_OBJECT,
     magnitude,
   };
 };
 
 const removeFallMagnitudeObject = () => {
   return {
-    type: types.REMOVE_FALL_MAGNITUDE_OBJECT,
+    type: types.REMOVE_FALL_MAGNITUDE_BP_OBJECT,
   };
 };
 
 const fetchFallTimingWetObject = timing => {
   return {
-    type: types.FETCH_FALL_TIMING_WET_OBJECT,
+    type: types.FETCH_FALL_TIMING_WET_BP_OBJECT,
     timing,
   };
 };
 
 const removeFallTimingWetObject = () => {
   return {
-    type: types.REMOVE_FALL_TIMING_WET_OBJECT,
-  };
-};
-
-const fetchFallDurationObject = duration => {
-  return {
-    type: types.FETCH_FALL_DURATION_OBJECT,
-    duration,
-  };
-};
-
-const removeFallDurationObject = () => {
-  return {
-    type: types.REMOVE_FALL_DURATION_OBJECT,
+    type: types.REMOVE_FALL_TIMING_WET_BP_OBJECT,
   };
 };
 
@@ -69,9 +56,6 @@ export function fetchFallBoxPlotData(data) {
       case 'fallTimingWet':
         return dispatch(fetchFallTimingWetObject(fallData.body));
 
-      case 'fallDuration':
-        return dispatch(fetchFallDurationObject(fallData.body));
-
       default:
         return null;
     }
@@ -89,9 +73,6 @@ export function removeFallBoxPlotData(data) {
 
       case 'fallTimingWet':
         return dispatch(removeFallTimingWetObject());
-
-      case 'fallDuration':
-        return dispatch(removeFallDurationObject());
 
       default:
         return null;

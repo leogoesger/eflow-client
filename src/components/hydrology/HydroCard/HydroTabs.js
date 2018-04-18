@@ -94,6 +94,7 @@ class HydroTabs extends React.Component {
             removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
             overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
             overLayBoxPlotData={this.props.overLayBoxPlotData}
+            verticalOverlayBoxPlotData={this.props.verticalOverlayBoxPlotData}
           />
         </Tab>
       </Tabs>
@@ -113,6 +114,7 @@ HydroTabs.propTypes = {
   fetchClassification: PropTypes.func,
   overLayBoxPlotMethods: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
+  verticalOverlayBoxPlotData: PropTypes.array,
 };
 
 export default HydroTabs;

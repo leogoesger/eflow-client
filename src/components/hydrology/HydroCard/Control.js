@@ -5,18 +5,20 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import Reply from 'material-ui/svg-icons/content/reply';
+import {find} from 'lodash';
 
+import {metricReference} from '../../../constants/metrics';
 import {Colors} from '../../../styles';
 
 export default class Control extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      fallTiming: false,
-      fallTimingWet: false,
-      springTiming: false,
-      summerTiming: false,
-    };
+    this.state = {};
+    metricReference.forEach(metric => {
+      if (metric.isBoxplotOverlay) {
+        this.state[metric.name] = false; // eslint-disable-line
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,101 +26,61 @@ export default class Control extends React.Component {
       nextProps.currentGauge != this.props.currentGauge ||
       nextProps.currentClassification != this.props.currentClassification
     ) {
-      this.setState({
-        fallTiming: false,
-        fallTimingWet: false,
-        springTiming: false,
-        summerTiming: false,
-      });
-      this.props.overLayBoxPlotMethods.removeFallBoxPlotData({
-        type: 'fallTiming',
-      });
-      this.props.overLayBoxPlotMethods.removeFallBoxPlotData({
-        type: 'fallTimingWet',
-      });
-      this.props.overLayBoxPlotMethods.removeSpringBoxPlotData({
-        type: 'springTiming',
-      });
-      this.props.overLayBoxPlotMethods.removeSummerBoxPlotData({
-        type: 'summerTiming',
+      //Reset all boxplot data to null
+      Object.keys(this.state).forEach(key => {
+        const currentMetric = find(metricReference, m => m.name == key);
+        this.props.overLayBoxPlotMethods[
+          currentMetric.boxPlotOverLayMethods[1]
+        ]({
+          type: currentMetric.name,
+        });
+        this.setState({[key]: false});
       });
     }
   }
 
-  _toggleCheckBox(boxName) {
-    this.setState({[boxName]: !this.state[boxName]});
-    const {
-      fetchFallBoxPlotData,
-      fetchSpringBoxPlotData,
-      fetchSummerBoxPlotData,
-      removeFallBoxPlotData,
-      removeSpringBoxPlotData,
-      removeSummerBoxPlotData,
-    } = this.props.overLayBoxPlotMethods;
+  _toggleCheckBox(metricObject) {
+    this.setState({[metricObject.name]: !this.state[metricObject.name]});
 
     const currentType = this.props.currentGauge
       ? {type: 'gaugeId', id: this.props.currentGauge.id}
       : {type: 'classId', id: this.props.currentClassification.id};
 
-    if (!this.state[boxName]) {
-      switch (boxName) {
-        case 'fallTiming':
-          return fetchFallBoxPlotData({
-            fetchData: {
-              [currentType.type]: currentType.id,
-              metric: 'timing',
-            },
-            type: boxName,
-          });
-        case 'fallTimingWet':
-          return fetchFallBoxPlotData({
-            fetchData: {
-              [currentType.type]: currentType.id,
-              metric: 'timingWet',
-            },
-            type: boxName,
-          });
-        case 'springTiming':
-          return fetchSpringBoxPlotData({
-            fetchData: {
-              [currentType.type]: currentType.id,
-              metric: 'timing',
-            },
-            type: boxName,
-          });
-        case 'summerTiming':
-          return fetchSummerBoxPlotData({
-            fetchData: {
-              [currentType.type]: currentType.id,
-              metric: 'timing',
-            },
-            type: boxName,
-          });
-        default:
-          return null;
-      }
+    if (!this.state[metricObject.name]) {
+      return this.props.overLayBoxPlotMethods[
+        metricObject.boxPlotOverLayMethods[0]
+      ]({
+        fetchData: {
+          [currentType.type]: currentType.id,
+          metric: metricObject.columnName,
+        },
+        type: metricObject.name,
+      });
     } else {
-      switch (boxName) {
-        case 'fallTiming':
-          return removeFallBoxPlotData({
-            type: boxName,
-          });
-        case 'fallTimingWet':
-          return removeFallBoxPlotData({
-            type: boxName,
-          });
-        case 'springTiming':
-          return removeSpringBoxPlotData({
-            type: boxName,
-          });
-        case 'summerTiming':
-          return removeSummerBoxPlotData({
-            type: boxName,
-          });
-        default:
-          return null;
-      }
+      return this.props.overLayBoxPlotMethods[
+        metricObject.boxPlotOverLayMethods[1]
+      ]({
+        type: metricObject.name,
+      });
     }
+  }
+
+  _renderCheckBox() {
+    return metricReference.map(metricObject => {
+      if (metricObject.isBoxplotOverlay) {
+        return (
+          <Checkbox
+            key={metricObject.name}
+            checked={this.state[metricObject.name]}
+            label={metricObject.display}
+            style={styles.checkbox}
+            labelStyle={styles.labelStyle}
+            iconStyle={{width: '16px', fill: metricObject.colors[0]}}
+            onClick={() => this._toggleCheckBox(metricObject)}
+          />
+        );
+      }
+    });
   }
 
   render() {
@@ -130,39 +92,17 @@ export default class Control extends React.Component {
             style={{padding: '10px 0px', width: '200px'}}
             titleStyle={{width: '200px', color: Colors.blue}}
           />
-
-          <Checkbox
-            checked={this.state.fallTiming}
-            label="Fall Flush Timing"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#f9a825'}}
-            onClick={() => this._toggleCheckBox('fallTiming')}
-          />
-          <Checkbox
-            checked={this.state.fallTimingWet}
-            label="Fall Timing Wet"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#558b2f'}}
-            onClick={() => this._toggleCheckBox('fallTimingWet')}
-          />
-          <Checkbox
-            checked={this.state.springTiming}
-            label="Spring Timing"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#6a1b9a'}}
-            onClick={() => this._toggleCheckBox('springTiming')}
-          />
-          <Checkbox
-            checked={this.state.summerTiming}
-            label="Summer Timing"
-            style={styles.checkbox}
-            labelStyle={styles.labelStyle}
-            iconStyle={{width: '16px', fill: '#bf360c'}}
-            onClick={() => this._toggleCheckBox('summerTiming')}
-          />
+          <div
+            style={{
+              width: '55%',
+              height: '160px',
+              display: 'flex',
+              flexDirection: 'column',
+              flexWrap: 'wrap',
+            }}
+          >
+            {this._renderCheckBox()}
+          </div>
         </div>
         <div style={styles.rightBtn}>
           <FlatButton
@@ -194,7 +134,7 @@ Control.propTypes = {
 
 const styles = {
   btnContainer: {
-    margin: '55px auto',
+    margin: '50px auto',
     width: '95%',
     display: 'flex',
     justifyContent: 'space-between',
@@ -204,7 +144,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   checkBoxContainer: {
-    width: '30%',
+    width: '60%',
     marginLeft: '20px',
   },
   labelStyle: {

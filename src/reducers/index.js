@@ -9,6 +9,7 @@ import paper from './paper';
 import fall from './fall';
 import spring from './spring';
 import summer from './summer';
+import winter from './winter';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   fall,
   spring,
   summer,
+  winter,
 });
 
 export default rootReducer;

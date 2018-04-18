@@ -33,7 +33,8 @@ const styles = {
     backgroundColor: Colors.offBlack,
   },
   left: {
+    width: '100%',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 };

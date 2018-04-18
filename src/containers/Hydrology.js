@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Layout from '../components/hydrology/Layout';
+import {updateTab, updateHoveredGauge} from '../actions/hydrology';
 import {
   fetchClassification,
   removeCurrentClass,
@@ -13,7 +14,6 @@ import {
   fetchCurrentGauge,
   removeCurrentGauge,
 } from '../actions/gauge';
-import {updateTab, updateHoveredGauge} from '../actions/hydrology';
 import {fetchFallBoxPlotData, removeFallBoxPlotData} from '../actions/fall';
 import {
   fetchSpringBoxPlotData,
@@ -23,6 +23,10 @@ import {
   fetchSummerBoxPlotData,
   removeSummerBoxPlotData,
 } from '../actions/summer';
+import {
+  fetchWinterBoxPlotData,
+  removeWinterBoxPlotData,
+} from '../actions/winter';
 
 export class Hydrology extends React.Component {
   componentWillMount() {
@@ -45,34 +49,55 @@ export class Hydrology extends React.Component {
     ].filter(d => d);
   }
 
+  getVerticalBoxPlotOverlayData() {
+    return [
+      this.props.springMagnitudeBoxPlot,
+      this.props.winterMagnitude2BoxPlot,
+      this.props.winterMagnitude5BoxPlot,
+      this.props.winterMagnitude10BoxPlot,
+      this.props.winterMagnitude20BoxPlot,
+      this.props.summerMagnitude10BoxPlot,
+      this.props.summerMagnitude50BoxPlot,
+      this.props.fallMagnitudeBoxPlot,
+    ].filter(d => d);
+  }
+
   getBoxPlotOverlayMethods() {
     return {
-      fetchFallBoxPlotData: data => this.props.fetchFallBoxPlotData(data),
-      removeFallBoxPlotData: data => this.props.removeFallBoxPlotData(data),
-      fetchSpringBoxPlotData: data => this.props.fetchSpringBoxPlotData(data),
-      removeSpringBoxPlotData: data => this.props.removeSpringBoxPlotData(data),
-      fetchSummerBoxPlotData: data => this.props.fetchSummerBoxPlotData(data),
-      removeSummerBoxPlotData: data => this.props.removeSummerBoxPlotData(data),
+      fetchFallBoxPlotData: d => this.props.fetchFallBoxPlotData(d),
+      removeFallBoxPlotData: d => this.props.removeFallBoxPlotData(d),
+      fetchSpringBoxPlotData: d => this.props.fetchSpringBoxPlotData(d),
+      removeSpringBoxPlotData: d => this.props.removeSpringBoxPlotData(d),
+      fetchSummerBoxPlotData: d => this.props.fetchSummerBoxPlotData(d),
+      removeSummerBoxPlotData: d => this.props.removeSummerBoxPlotData(d),
+      fetchWinterBoxPlotData: d => this.props.fetchWinterBoxPlotData(d),
+      removeWinterBoxPlotData: d => this.props.removeWinterBoxPlotData(d),
     };
   }
 
   render() {
     return (
-      <Layout
-        gauges={this.props.gauges}
-        hoveredGauge={this.props.hoveredGauge}
-        tabValue={this.props.tabValue}
-        currentGauge={this.props.currentGauge}
-        classifications={this.props.classifications}
-        fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-        currentClassification={this.props.currentClassification}
-        fetchClassification={classId => this.props.fetchClassification(classId)}
-        updateTab={tabValue => this.props.updateTab(tabValue)}
-        removeClassGaugeProps={() => this.removeClassGaugeProps()}
-        updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
-        overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
-        overLayBoxPlotData={this.getBoxPlotOverlayData()}
-      />
+      <React.Fragment>
+        <div style={styles.banner} />
+        <Layout
+          gauges={this.props.gauges}
+          hoveredGauge={this.props.hoveredGauge}
+          tabValue={this.props.tabValue}
+          currentGauge={this.props.currentGauge}
+          classifications={this.props.classifications}
+          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+          currentClassification={this.props.currentClassification}
+          fetchClassification={classId =>
+            this.props.fetchClassification(classId)
+          }
+          updateTab={tabValue => this.props.updateTab(tabValue)}
+          removeClassGaugeProps={() => this.removeClassGaugeProps()}
+          updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
+          overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
+          overLayBoxPlotData={this.getBoxPlotOverlayData()}
+          verticalOverlayBoxPlotData={this.getVerticalBoxPlotOverlayData()}
+        />
+      </React.Fragment>
     );
   }
 }
@@ -98,10 +123,20 @@ Hydrology.propTypes = {
   removeSpringBoxPlotData: PropTypes.func,
   fetchSummerBoxPlotData: PropTypes.func,
   removeSummerBoxPlotData: PropTypes.func,
+  fetchWinterBoxPlotData: PropTypes.func,
+  removeWinterBoxPlotData: PropTypes.func,
   fallTimingBoxPlot: PropTypes.object,
   fallTimingWetBoxPlot: PropTypes.object,
   springTimingBoxPlot: PropTypes.object,
   summerTimingBoxPlot: PropTypes.object,
+  springMagnitudeBoxPlot: PropTypes.object,
+  winterMagnitude2BoxPlot: PropTypes.object,
+  winterMagnitude5BoxPlot: PropTypes.object,
+  winterMagnitude10BoxPlot: PropTypes.object,
+  winterMagnitude20BoxPlot: PropTypes.object,
+  summerMagnitude10BoxPlot: PropTypes.object,
+  summerMagnitude50BoxPlot: PropTypes.object,
+  fallMagnitudeBoxPlot: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -116,6 +151,14 @@ const mapStateToProps = state => {
     fallTimingWetBoxPlot: state.fall.timingWetBoxPlot,
     springTimingBoxPlot: state.spring.timingBoxPlot,
     summerTimingBoxPlot: state.summer.timingBoxPlot,
+    springMagnitudeBoxPlot: state.spring.magnitudeBoxPlot,
+    winterMagnitude2BoxPlot: state.winter.magnitude2BoxPlot,
+    winterMagnitude5BoxPlot: state.winter.magnitude5BoxPlot,
+    winterMagnitude10BoxPlot: state.winter.magnitude10BoxPlot,
+    winterMagnitude20BoxPlot: state.winter.magnitude20BoxPlot,
+    summerMagnitude10BoxPlot: state.summer.magnitude10BoxPlot,
+    summerMagnitude50BoxPlot: state.summer.magnitude50BoxPlot,
+    fallMagnitudeBoxPlot: state.fall.magnitudeBoxPlot,
   };
 };
 
@@ -135,7 +178,16 @@ const mapDispatchToProps = dispatch => {
     removeSpringBoxPlotData: data => dispatch(removeSpringBoxPlotData(data)),
     fetchSummerBoxPlotData: data => dispatch(fetchSummerBoxPlotData(data)),
     removeSummerBoxPlotData: data => dispatch(removeSummerBoxPlotData(data)),
+    fetchWinterBoxPlotData: data => dispatch(fetchWinterBoxPlotData(data)),
+    removeWinterBoxPlotData: data => dispatch(removeWinterBoxPlotData(data)),
   };
 };
 
+const styles = {
+  banner: {
+    backgroundColor: '#424242',
+    height: '230px',
+    zIndex: '0',
+  },
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Hydrology);

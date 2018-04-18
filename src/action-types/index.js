@@ -6,6 +6,7 @@ import PaperTypes from './paper';
 import FallTypes from './fall';
 import SpringTypes from './spring';
 import SummerTypes from './summer';
+import WinterTypes from './winter';
 
 export {ClassificationTypes};
 export {GaugeTypes};
@@ -15,6 +16,7 @@ export {PaperTypes};
 export {FallTypes};
 export {SpringTypes};
 export {SummerTypes};
+export {WinterTypes};
 
 export default {
   ClassificationTypes,
@@ -25,4 +27,5 @@ export default {
   FallTypes,
   SpringTypes,
   SummerTypes,
+  WinterTypes,
 };
