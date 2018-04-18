@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Map from './Map';
 import HydroTabs from './HydroCard/HydroTabs';
+import ErrorBoundary from '../shared/ErrorBoundary';
 
 export default class Layout extends React.Component {
   _updateHoverGauge(gaugeId) {
@@ -23,21 +24,25 @@ export default class Layout extends React.Component {
           fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
         />
         <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}}>
-          <HydroTabs
-            tabValue={this.props.tabValue}
-            updateTab={tabValue => this.props.updateTab(tabValue)}
-            currentGauge={this.props.currentGauge}
-            currentClassification={this.props.currentClassification}
-            removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
-            classifications={this.props.classifications}
-            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-            fetchClassification={classId =>
-              this.props.fetchClassification(classId)
-            }
-            updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
-            overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
-            overLayBoxPlotData={this.props.overLayBoxPlotData}
-          />
+          <ErrorBoundary>
+            <HydroTabs
+              tabValue={this.props.tabValue}
+              updateTab={tabValue => this.props.updateTab(tabValue)}
+              currentGauge={this.props.currentGauge}
+              currentClassification={this.props.currentClassification}
+              removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+              classifications={this.props.classifications}
+              fetchCurrentGauge={gaugeId =>
+                this.props.fetchCurrentGauge(gaugeId)
+              }
+              fetchClassification={classId =>
+                this.props.fetchClassification(classId)
+              }
+              updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
+              overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
+              overLayBoxPlotData={this.props.overLayBoxPlotData}
+            />
+          </ErrorBoundary>
         </div>
       </div>
     );

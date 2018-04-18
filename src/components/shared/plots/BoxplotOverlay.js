@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {find, cloneDeep} from 'lodash';
 
+import {metricReference} from '../../../constants/metrics';
+
 const locateY = (data, x) => {
   const locatedY = find(data.FIFTY, o => {
     return o.date == Math.floor(Number(x));
@@ -28,21 +30,11 @@ const getOffset = data => {
 };
 
 const getColor = metricName => {
-  switch (metricName) {
-    case 'fallTiming':
-      return ['#f9a825', '#fdd835'];
-    case 'fallTimingWet':
-      return ['#558b2f', '#4caf50'];
-
-    case 'springTiming':
-      return ['#6a1b9a', '#8e24aa'];
-
-    case 'summerTiming':
-      return ['#bf360c', '#f4511e'];
-
-    default:
-      return null;
-  }
+  const currentMetric = find(
+    metricReference,
+    metric => metric.name === metricName
+  );
+  return currentMetric.colors;
 };
 
 const BoxplotOverlay = props => {
@@ -79,8 +71,7 @@ const BoxplotOverlay = props => {
         x={props.xScale(dataWithOffset.quartile[0])}
         y={props.yScale(locateY(props.data, dataWithOffset.quartile[1])) - 8}
         fill={getColor(props.boxplotData.metricName)[1]}
-        stroke={getColor(props.boxplotData.metricName)[0]}
-        fillOpacity={'0.8'}
+        fillOpacity={'0.5'}
         transform={props.transform}
       />
 
