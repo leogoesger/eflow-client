@@ -41,6 +41,7 @@ export default class Layout extends React.Component {
               updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
               overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
               overLayBoxPlotData={this.props.overLayBoxPlotData}
+              verticalOverlayBoxPlotData={this.props.verticalOverlayBoxPlotData}
             />
           </ErrorBoundary>
         </div>
@@ -63,6 +64,7 @@ Layout.propTypes = {
   updateHoveredGauge: PropTypes.func,
   overLayBoxPlotMethods: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
+  verticalOverlayBoxPlotData: PropTypes.array,
 };
 
 const styles = {

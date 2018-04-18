@@ -55,10 +55,28 @@ export default class LinePlot extends React.Component {
       return (
         <BoxplotOverlay
           key={i}
-          boxplotData={d.fifty ? d.fifty : d}
+          boxplotData={d}
           xScale={this.xScale}
           yScale={this.yScale}
           height={this.props.height}
+          transform={`translate(${this.props.x}, ${this.props.y})`}
+          data={this.props.data}
+        />
+      );
+    });
+  }
+
+  renderVerticalBoxPlots(verticalOverlayBoxPlotData) {
+    return verticalOverlayBoxPlotData.map((d, i) => {
+      return (
+        <BoxplotOverlay
+          key={i}
+          boxplotData={d}
+          vertical={true}
+          xScale={this.xScale}
+          yScale={this.yScale}
+          height={this.props.height}
+          width={this.props.width}
           transform={`translate(${this.props.x}, ${this.props.y})`}
           data={this.props.data}
         />
@@ -71,6 +89,7 @@ export default class LinePlot extends React.Component {
       data,
       highestKey,
       overLayBoxPlotData,
+      verticalOverlayBoxPlotData,
       x,
       y,
       height,
@@ -97,8 +116,9 @@ export default class LinePlot extends React.Component {
               gridLength={width}
               orientation="left"
             />
-            {this.renderLines(transform)}
             {this.renderBoxplots(overLayBoxPlotData)}
+            {this.renderVerticalBoxPlots(verticalOverlayBoxPlotData)}
+            {this.renderLines(transform)}
           </g>
         </svg>
       );
@@ -123,4 +143,5 @@ LinePlot.propTypes = {
   highestKey: PropTypes.string,
   colors: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
+  verticalOverlayBoxPlotData: PropTypes.array,
 };

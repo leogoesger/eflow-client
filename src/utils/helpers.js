@@ -127,3 +127,10 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
 
   return mapStyle;
 }
+
+export const locateY = (data, x) => {
+  const locatedY = find(data.FIFTY, o => {
+    return o.date == Math.floor(Number(x));
+  });
+  return locatedY.flow;
+};

@@ -150,6 +150,7 @@ class Hydrograph extends React.Component {
             highestKey={'NINTY'}
             colors={colors}
             overLayBoxPlotData={this.props.overLayBoxPlotData}
+            verticalOverlayBoxPlotData={this.props.verticalOverlayBoxPlotData}
           />
         </div>
       );
@@ -180,6 +181,7 @@ Hydrograph.propTypes = {
   removeClassGaugeProps: PropTypes.func,
   overLayBoxPlotMethods: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
+  verticalOverlayBoxPlotData: PropTypes.array,
 };
 
 const styles = {
