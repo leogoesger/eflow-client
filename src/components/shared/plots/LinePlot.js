@@ -20,13 +20,13 @@ export default class LinePlot extends React.Component {
 
   updateD3(props) {
     let {data, width, height, highestKey} = props;
-
+    debugger; //eslint-disable-line
     this.xScale
       .domain(d3.extent(data[highestKey], d => this.props.xValue(d)))
       .range([0, width]);
 
     this.yScale
-      .domain([0, d3.max(data[highestKey], d => d.flow)])
+      .domain([0, d3.max(data[highestKey], d => Number(d.flow))])
       .range([height, 0]);
 
     this.line
