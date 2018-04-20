@@ -7,12 +7,18 @@ import FlatButton from 'material-ui/FlatButton';
 import Layout from '../components/shared/header/Layout';
 import {isBrowserNotSupported} from '../utils/helpers';
 
+import {fetchReleaseNotes} from '../actions/releaseNote';
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dialogOpen: false,
     };
+  }
+
+  componentWillMount() {
+    this.props.fetchReleaseNotes();
   }
 
   componentDidMount() {
@@ -63,8 +69,15 @@ const mapStateToProps = state => {
   };
 };
 
-Header.propTypes = {
-  releaseNotes: PropTypes.array,
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchReleaseNotes: () => dispatch(fetchReleaseNotes()),
+  };
 };
 
-export default connect(mapStateToProps, null)(Header);
+Header.propTypes = {
+  releaseNotes: PropTypes.array,
+  fetchReleaseNotes: PropTypes.func,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

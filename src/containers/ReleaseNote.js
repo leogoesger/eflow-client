@@ -2,15 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {fetchReleaseNotes} from '../actions/releaseNote';
-
 import Layout from '../components/releaseNote/Layout';
 
 export class ReleaseNote extends React.Component {
-  componentWillMount() {
-    this.props.fetchReleaseNotes();
-  }
-
   render() {
     return (
       <React.Fragment>
@@ -40,10 +34,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchReleaseNotes: () => dispatch(fetchReleaseNotes()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReleaseNote);
+export default connect(mapStateToProps, null)(ReleaseNote);
