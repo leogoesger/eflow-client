@@ -7,6 +7,8 @@ import FallTypes from './fall';
 import SpringTypes from './spring';
 import SummerTypes from './summer';
 import WinterTypes from './winter';
+import ReleaseNoteTypes from './releaseNote';
+import KnowIssueTypes from './knownIssue';
 
 export {ClassificationTypes};
 export {GaugeTypes};
@@ -17,6 +19,8 @@ export {FallTypes};
 export {SpringTypes};
 export {SummerTypes};
 export {WinterTypes};
+export {ReleaseNoteTypes};
+export {KnowIssueTypes};
 
 export default {
   ClassificationTypes,
@@ -28,4 +32,6 @@ export default {
   SpringTypes,
   SummerTypes,
   WinterTypes,
+  ReleaseNoteTypes,
+  KnowIssueTypes,
 };

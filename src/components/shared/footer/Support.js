@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import {Colors} from '../../../styles';
 
@@ -8,10 +9,21 @@ export default class Support extends React.Component {
       <div style={styles.container}>
         <span>Support</span>
         <ul style={styles.list}>
-          <li>Contact Support</li>
-          <li>Bug Report</li>
-          <li>Known Issues</li>
-          <li>Realease Notes</li>
+          <li>
+            <Link to="/issues" className="footer-link">
+              Known Issues
+            </Link>
+          </li>
+          <li>
+            <Link to="/releases" className="footer-link">
+              Realease Notes
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="footer-link">
+              Bug Report
+            </Link>
+          </li>
         </ul>
       </div>
     );

@@ -153,12 +153,12 @@ export const isBrowserNotSupported = () => {
     if (majorVersion) {
       switch (browser.name) {
         case 'chrome':
-          if (majorVersion <= 60) {
+          if (majorVersion <= 50) {
             return true;
           }
           return false;
         case 'firefox':
-          if (majorVersion <= 55) {
+          if (majorVersion <= 50) {
             return true;
           }
           return false;

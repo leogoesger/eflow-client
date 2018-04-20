@@ -6,6 +6,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import {Colors} from '../styles';
+import withTracker from '../utils/withTracker';
+import Construction from '../containers/Construction';
 import Home from '../containers/Home';
 import Header from '../containers/Header';
 import Footer from '../containers/Footer';
@@ -15,8 +17,8 @@ import Hydrology from '../containers/Hydrology';
 import Team from '../containers/Team';
 import Paper from '../containers/Paper';
 import MetricDetail from '../containers/MetricDetail';
-import Construction from '../containers/Construction';
-import withTracker from '../utils/withTracker';
+import KnownIssue from '../containers/KnownIssue';
+import ReleaseNote from '../containers/ReleaseNote';
 
 class App extends React.Component {
   render() {
@@ -53,6 +55,12 @@ class App extends React.Component {
                 exact
                 path="/metricDetail"
                 component={withTracker(MetricDetail)}
+              />
+              <Route exact path="/issues" component={withTracker(KnownIssue)} />
+              <Route
+                exact
+                path="/releases"
+                component={withTracker(ReleaseNote)}
               />
             </Switch>
             <Footer />

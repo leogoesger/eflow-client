@@ -180,3 +180,7 @@ body {
   color: rgb(158, 158, 158);
   text-decoration: none;
 }
+
+.betaIcon:hover {
+  text-decoration: underline;
+}
