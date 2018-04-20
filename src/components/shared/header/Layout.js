@@ -20,7 +20,7 @@ export default class Layout extends React.Component {
             color={'#ef5350'}
             style={{width: '14px', height: '14px', marginRight: '2px'}}
           />
-          <div>{this.props.releaseNoteVersion}</div>
+          <div>beta-{this.props.releaseNoteVersion}</div>
         </div>
       );
     }

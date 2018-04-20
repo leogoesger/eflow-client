@@ -10,13 +10,13 @@ export default class Support extends React.Component {
         <span>Support</span>
         <ul style={styles.list}>
           <li>
-            <Link to="/issues" className="footer-link">
-              Known Issues
+            <Link to="/releases" className="footer-link">
+              Realease Notes
             </Link>
           </li>
           <li>
-            <Link to="/releases" className="footer-link">
-              Realease Notes
+            <Link to="/issues" className="footer-link">
+              Known Issues
             </Link>
           </li>
           <li>

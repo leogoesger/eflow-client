@@ -46,7 +46,7 @@ export default class Layout extends React.Component {
     }
     return (
       <Card className="col-lg-9 col-md-9 col-xs-12" style={styles.card}>
-        <div style={styles.catagory}>Release Note</div>
+        <div style={styles.catagory}>Known Issues</div>
         {this._renderItems(this.props.knownIssues)}
       </Card>
     );
