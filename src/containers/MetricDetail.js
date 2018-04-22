@@ -7,22 +7,31 @@ import {
 } from '../actions/classification';
 import {fetchCurrentGauge} from '../actions/gauge';
 import Layout from '../components/metricDetail/Layout';
+import ErrorBoundary from '../components/shared/ErrorBoundary';
 
 export class MetricDetail extends React.Component {
+  componentWillMount() {
+    if (!this.props.classifications) {
+      this.props.fetchClassifications();
+    }
+  }
+
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div style={styles.banner} />
-        <Layout
-          currentGauge={this.props.currentGauge}
-          classifications={this.props.classifications}
-          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-          currentClassification={this.props.currentClassification}
-          fetchClassification={classId =>
-            this.props.fetchClassification(classId)
-          }
-        />
-      </div>
+        <ErrorBoundary>
+          <Layout
+            currentGauge={this.props.currentGauge}
+            classifications={this.props.classifications}
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            currentClassification={this.props.currentClassification}
+            fetchClassification={classId =>
+              this.props.fetchClassification(classId)
+            }
+          />
+        </ErrorBoundary>
+      </React.Fragment>
     );
   }
 }
