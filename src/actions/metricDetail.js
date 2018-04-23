@@ -8,9 +8,17 @@ const fetchAllClassesBoxPlotObjects = boxPlotData => {
   };
 };
 
+const updateLoadingObject = loading => {
+  return {
+    type: types.UPDATE_LOADING_OBJECT,
+    loading,
+  };
+};
+
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
     const allMetricBoxPlots = await getAllMetricBoxPlotClourse(0);
     dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots));
+    dispatch(updateLoadingObject(false));
   };
 }

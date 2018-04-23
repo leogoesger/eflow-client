@@ -12,7 +12,13 @@ export default class Layout extends React.Component {
     } else if (this.props.currentClassification) {
       return <MetricClassCard />;
     } else {
-      return <MetricOverviewCard />;
+      return (
+        <MetricOverviewCard
+          fetchAllClassesBoxPlots={() => this.props.fetchAllClassesBoxPlots()}
+          loading={this.props.loading}
+          allClassesBoxPlots={this.props.allClassesBoxPlots}
+        />
+      );
     }
   }
 
@@ -37,6 +43,9 @@ Layout.propTypes = {
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
   removeClassGaugeProps: PropTypes.func,
+  fetchAllClassesBoxPlots: PropTypes.func,
+  loading: PropTypes.bool,
+  allClassesBoxPlots: PropTypes.object,
 };
 
 const styles = {

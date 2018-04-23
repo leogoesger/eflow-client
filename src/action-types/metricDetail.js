@@ -1,5 +1,6 @@
 const MetricDetailTypes = {
   FETCH_ALL_CLASS_BOX_PLOT_OBJECTS: 'FETCH_ALL_CLASS_BOX_PLOT_OBJECTS',
+  UPDATE_LOADING_OBJECT: 'UPDATE_LOADING_OBJECT',
 };
 
 export default MetricDetailTypes;

@@ -15,7 +15,6 @@ export class MetricDetail extends React.Component {
   componentWillMount() {
     if (!this.props.classifications) {
       this.props.fetchClassifications();
-      this.props.fetchAllClassesBoxPlots();
     }
   }
 
@@ -37,7 +36,10 @@ export class MetricDetail extends React.Component {
             fetchClassification={classId =>
               this.props.fetchClassification(classId)
             }
+            fetchAllClassesBoxPlots={() => this.props.fetchAllClassesBoxPlots()}
             removeClassGaugeProps={() => this.removeClassGaugeProps()}
+            allClassesBoxPlots={this.props.allClassesBoxPlots}
+            loading={this.props.loading}
           />
         </ErrorBoundary>
       </React.Fragment>
@@ -55,6 +57,8 @@ MetricDetail.propTypes = {
   classifications: PropTypes.array,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
+  allClassesBoxPlots: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
@@ -62,6 +66,8 @@ const mapStateToProps = state => {
     classifications: state.classification.classifications,
     currentClassification: state.classification.currentClassification,
     currentGauge: state.gauge.currentGauge,
+    allClassesBoxPlots: state.metricDetail.boxPlotData,
+    loading: state.metricDetail.loading,
   };
 };
 

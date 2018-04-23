@@ -31,8 +31,8 @@ export default class Control extends React.Component {
   }
 
   _renderClassControllers() {
-    return Object.keys(classInfo).forEach((key, index) => {
-      const currentClass = classInfo[`class${index + 1}`];
+    return Object.keys(classInfo).map((key, index) => {
+      const currentClass = classInfo[key];
       return (
         <Toggle
           key={index}
