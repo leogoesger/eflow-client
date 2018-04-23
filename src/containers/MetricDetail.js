@@ -4,8 +4,10 @@ import {connect} from 'react-redux';
 import {
   fetchClassification,
   fetchClassifications,
+  removeCurrentClass,
 } from '../actions/classification';
-import {fetchCurrentGauge} from '../actions/gauge';
+import {fetchCurrentGauge, removeCurrentGauge} from '../actions/gauge';
+import {fetchAllClassesBoxPlots} from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
 import ErrorBoundary from '../components/shared/ErrorBoundary';
 
@@ -13,7 +15,13 @@ export class MetricDetail extends React.Component {
   componentWillMount() {
     if (!this.props.classifications) {
       this.props.fetchClassifications();
+      this.props.fetchAllClassesBoxPlots();
     }
+  }
+
+  removeClassGaugeProps() {
+    this.props.removeCurrentGauge();
+    this.props.removeCurrentClass();
   }
 
   render() {
@@ -29,6 +37,7 @@ export class MetricDetail extends React.Component {
             fetchClassification={classId =>
               this.props.fetchClassification(classId)
             }
+            removeClassGaugeProps={() => this.removeClassGaugeProps()}
           />
         </ErrorBoundary>
       </React.Fragment>
@@ -37,7 +46,10 @@ export class MetricDetail extends React.Component {
 }
 
 MetricDetail.propTypes = {
+  removeCurrentGauge: PropTypes.func,
+  removeCurrentClass: PropTypes.func,
   fetchClassifications: PropTypes.func,
+  fetchAllClassesBoxPlots: PropTypes.func,
   fetchClassification: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,
   classifications: PropTypes.array,
@@ -58,6 +70,9 @@ const mapDispatchToProps = dispatch => {
     fetchClassifications: () => dispatch(fetchClassifications()),
     fetchClassification: classId => dispatch(fetchClassification(classId)),
     fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
+    removeCurrentGauge: () => dispatch(removeCurrentGauge()),
+    removeCurrentClass: () => dispatch(removeCurrentClass()),
+    fetchAllClassesBoxPlots: () => dispatch(fetchAllClassesBoxPlots()),
   };
 };
 

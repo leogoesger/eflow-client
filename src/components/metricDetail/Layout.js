@@ -19,7 +19,10 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <MetricNavbar />
+        <MetricNavbar
+          classifications={this.props.classifications}
+          removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+        />
         {this._renderDetailCard()}
       </div>
     );
@@ -33,6 +36,7 @@ Layout.propTypes = {
   classifications: PropTypes.array,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
+  removeClassGaugeProps: PropTypes.func,
 };
 
 const styles = {
@@ -40,7 +44,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     margin: '-60px auto 100px auto',
-    height: '100%',
+    height: '600px',
+    overflow: 'scroll',
     width: '1200px',
   },
 };

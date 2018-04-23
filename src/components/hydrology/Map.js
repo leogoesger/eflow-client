@@ -131,6 +131,9 @@ export default class Map extends React.Component {
   }
 
   _requestCurrentFeature(hoveredFeature) {
+    if (!hoveredFeature) {
+      return null;
+    }
     if (hoveredFeature.layer.id.indexOf('class') >= 0) {
       this.props.fetchClassification(hoveredFeature.properties.CLASS);
     } else {
@@ -201,6 +204,9 @@ export default class Map extends React.Component {
 
   _renderTooltip() {
     const {hoveredFeature, x, y} = this.state;
+    if (!hoveredFeature) {
+      return null;
+    }
 
     if (!x || !y) {
       return;

@@ -3,7 +3,11 @@ import Card from 'material-ui/Card';
 
 class MetricGaugeCard extends React.Component {
   render() {
-    return <Card style={{width: '90%', height: '600px'}}>{'hello'}</Card>;
+    return (
+      <Card style={{width: '65%', height: '600px'}}>
+        <p>Hello Gauge!</p>
+      </Card>
+    );
   }
 }
 

@@ -22,7 +22,7 @@ export const metricReference = [
     display: 'All Year Coeffient Variance',
     isBoxplotOverlay: false,
     tableName: 'AllYears',
-    columnName: 'CoeffientVariance',
+    columnName: 'coeffientVariance',
     boxPlotOverLayMethods: ['#fdd835', '#c6a700'],
     colors: ['', ''],
   },
