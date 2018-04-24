@@ -19,6 +19,7 @@ class MetricOverviewCard extends React.Component {
       metricTableName: 'AllYears',
       metricColumnValue: 0,
       metricColumnName: 'average',
+      title: 'All Year Average (cfs)',
       logScale: false,
     };
   }
@@ -35,53 +36,59 @@ class MetricOverviewCard extends React.Component {
     });
   }
 
+  _getDisplayValue(key1, value1, key2, value2) {
+    let objectFound;
+    if (key2) {
+      objectFound = find(
+        metricReference,
+        e => e[key1] === value1 && e[key2] === value2
+      );
+    } else {
+      objectFound = find(metricReference, e => e[key1] === value1);
+    }
+    return objectFound;
+  }
+
   _toggleLogScale() {
     this.setState({logScale: !this.state.logScale});
   }
 
-  _handleTableChange(event, index, value) {
-    this.setState(
-      {
-        metricTableValue: value,
-        metricTableName: this._getDisplayValue(
-          'displayTableName',
-          event.target.innerText,
-          'tableName'
-        ),
-      },
-      () => {
-        this.setState({
-          metricColumnValue: 0,
-          metricColumnName: Object.keys(
-            this.props.allClassesBoxPlots[this.state.metricTableName]
-          )[0],
-        });
-      }
+  _handleTitleChange() {
+    const metric = this._getDisplayValue(
+      'tableName',
+      this.state.metricTableName,
+      'columnName',
+      this.state.metricColumnName
     );
-  }
-
-  _handleColumnChange(event, index, value) {
     this.setState({
-      metricColumnValue: value,
-      metricColumnName: this._getDisplayValue(
-        'display',
-        event.target.innerText,
-        'columnName'
-      ),
+      title: `${metric.display} (${metric.dimUnit})`,
     });
   }
 
-  _getDisplayValue(searchKey, searchValue, key, tableName, tableValue) {
-    let objectFound;
-    if (tableName) {
-      objectFound = find(
-        metricReference,
-        e => e[searchKey] === searchValue && e[tableName] === tableValue
-      );
-    } else {
-      objectFound = find(metricReference, e => e[searchKey] === searchValue);
-    }
-    return objectFound[key];
+  async _handleTableChange(event, index, value) {
+    await this.setState({
+      metricTableValue: value,
+      metricTableName: this._getDisplayValue(
+        'displayTableName',
+        event.target.innerText
+      ).tableName,
+    });
+    await this.setState({
+      metricColumnValue: 0,
+      metricColumnName: Object.keys(
+        this.props.allClassesBoxPlots[this.state.metricTableName]
+      )[0],
+    });
+    this._handleTitleChange();
+  }
+
+  async _handleColumnChange(event, index, value) {
+    await this.setState({
+      metricColumnValue: value,
+      metricColumnName: this._getDisplayValue('display', event.target.innerText)
+        .columnName,
+    });
+    this._handleTitleChange();
   }
 
   _renderTableItems() {
@@ -89,11 +96,7 @@ class MetricOverviewCard extends React.Component {
       <MenuItem
         value={index}
         key={index}
-        primaryText={this._getDisplayValue(
-          'tableName',
-          key,
-          'displayTableName'
-        )}
+        primaryText={this._getDisplayValue('tableName', key).displayTableName}
       />
     ));
   }
@@ -105,13 +108,14 @@ class MetricOverviewCard extends React.Component {
       <MenuItem
         value={index}
         key={index}
-        primaryText={this._getDisplayValue(
-          'columnName',
-          key,
-          'display',
-          'tableName',
-          this.state.metricTableName
-        )}
+        primaryText={
+          this._getDisplayValue(
+            'columnName',
+            key,
+            'tableName',
+            this.state.metricTableName
+          ).display
+        }
       />
     ));
   }
@@ -175,6 +179,7 @@ class MetricOverviewCard extends React.Component {
               ]
             }
             logScale={this.state.logScale}
+            title={this.state.title}
           />
         </Card>
         <Loader loading={this.props.loading} />
