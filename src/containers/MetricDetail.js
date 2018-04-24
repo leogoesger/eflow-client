@@ -4,36 +4,61 @@ import {connect} from 'react-redux';
 import {
   fetchClassification,
   fetchClassifications,
+  removeCurrentClass,
 } from '../actions/classification';
-import {fetchCurrentGauge} from '../actions/gauge';
+import {fetchCurrentGauge, removeCurrentGauge} from '../actions/gauge';
+import {fetchAllClassesBoxPlots} from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
+import ErrorBoundary from '../components/shared/ErrorBoundary';
 
 export class MetricDetail extends React.Component {
+  componentWillMount() {
+    if (!this.props.classifications) {
+      this.props.fetchClassifications();
+    }
+  }
+
+  removeClassGaugeProps() {
+    this.props.removeCurrentGauge();
+    this.props.removeCurrentClass();
+  }
+
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div style={styles.banner} />
-        <Layout
-          currentGauge={this.props.currentGauge}
-          classifications={this.props.classifications}
-          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-          currentClassification={this.props.currentClassification}
-          fetchClassification={classId =>
-            this.props.fetchClassification(classId)
-          }
-        />
-      </div>
+        <ErrorBoundary>
+          <Layout
+            currentGauge={this.props.currentGauge}
+            classifications={this.props.classifications}
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            currentClassification={this.props.currentClassification}
+            fetchClassification={classId =>
+              this.props.fetchClassification(classId)
+            }
+            fetchAllClassesBoxPlots={() => this.props.fetchAllClassesBoxPlots()}
+            removeClassGaugeProps={() => this.removeClassGaugeProps()}
+            allClassesBoxPlots={this.props.allClassesBoxPlots}
+            loading={this.props.loading}
+          />
+        </ErrorBoundary>
+      </React.Fragment>
     );
   }
 }
 
 MetricDetail.propTypes = {
+  removeCurrentGauge: PropTypes.func,
+  removeCurrentClass: PropTypes.func,
   fetchClassifications: PropTypes.func,
+  fetchAllClassesBoxPlots: PropTypes.func,
   fetchClassification: PropTypes.func,
   fetchCurrentGauge: PropTypes.func,
   classifications: PropTypes.array,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
+  allClassesBoxPlots: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
@@ -41,6 +66,8 @@ const mapStateToProps = state => {
     classifications: state.classification.classifications,
     currentClassification: state.classification.currentClassification,
     currentGauge: state.gauge.currentGauge,
+    allClassesBoxPlots: state.metricDetail.boxPlotData,
+    loading: state.metricDetail.loading,
   };
 };
 
@@ -49,6 +76,9 @@ const mapDispatchToProps = dispatch => {
     fetchClassifications: () => dispatch(fetchClassifications()),
     fetchClassification: classId => dispatch(fetchClassification(classId)),
     fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
+    removeCurrentGauge: () => dispatch(removeCurrentGauge()),
+    removeCurrentClass: () => dispatch(removeCurrentClass()),
+    fetchAllClassesBoxPlots: () => dispatch(fetchAllClassesBoxPlots()),
   };
 };
 

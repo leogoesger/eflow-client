@@ -7,6 +7,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Reply from 'material-ui/svg-icons/content/reply';
 import {find} from 'lodash';
 
+import {navigateTo} from '../../../utils/helpers';
 import {metricReference} from '../../../constants/metrics';
 import {Colors} from '../../../styles';
 
@@ -116,8 +117,9 @@ export default class Control extends React.Component {
             label="Details"
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
-            disabled={true}
-            labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
+            disabled={false}
+            labelStyle={{fontSize: '12px'}}
+            onClick={() => navigateTo('/metricDetail')}
           />
         </div>
       </div>
@@ -142,6 +144,7 @@ const styles = {
   rightBtn: {
     display: 'flex',
     justifyContent: 'space-between',
+    height: '36px',
   },
   checkBoxContainer: {
     width: '60%',

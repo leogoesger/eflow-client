@@ -14,6 +14,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'April 22th, 2018',
+            version: 'v0.04',
+            title: 'Metric Detail overview page',
+            tasks: [
+              'Added boxplots for each matrix for all the classes',
+              'Update detail page to have a list of classes with their gauges',
+              'Fix map not rendering when hover over selected gauges',
+            ],
+          },
+          {
             date: 'April 10th, 2018',
             version: 'v0.03',
             title: 'Boxplots for gauges and classes',

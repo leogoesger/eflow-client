@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
 
-import {
-  classificationShort,
-  classInfo,
-} from '../../constants/classification.js';
+import {classInfo} from '../../constants/classification.js';
 import {Colors} from '../../styles';
 
 export default class Control extends React.Component {
@@ -34,12 +31,12 @@ export default class Control extends React.Component {
   }
 
   _renderClassControllers() {
-    return classificationShort.map((currentClassData, index) => {
-      const currentClass = classInfo[`class${index + 1}`];
+    return Object.keys(classInfo).map((key, index) => {
+      const currentClass = classInfo[key];
       return (
         <Toggle
           key={index}
-          label={currentClassData}
+          label={classInfo[key].abbre}
           labelStyle={styles.labelStyle}
           value={'empty'}
           thumbSwitchedStyle={{

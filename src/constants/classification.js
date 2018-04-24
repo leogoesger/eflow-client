@@ -10,17 +10,6 @@ export const classification = [
   'High elevation low precipitation',
 ];
 
-export const classificationShort = [
-  'SM',
-  'HSR',
-  'LSR',
-  'WS',
-  'GW',
-  'PGR',
-  'FER',
-  'RSG',
-  'HLP',
-];
 export const classInfo = {
   class1: {
     abbre: 'SM',

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -17,14 +18,14 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.errorInfo) {
       return (
-        <div>
-          <h2>Something went wrong.</h2>
-          <details style={{whiteSpace: 'pre-wrap'}}>
+        <Paper style={{height: '600px', width: '80%', margin: '0 auto'}}>
+          <h2 style={{color: 'red'}}>Something went wrong.</h2>
+          <details style={{whiteSpace: 'pre-wrap', color: 'red'}}>
             {this.state.error && this.state.error.toString()}
             <br />
             {this.state.errorInfo.componentStack}
           </details>
-        </div>
+        </Paper>
       );
     }
     return this.props.children;

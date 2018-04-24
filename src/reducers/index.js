@@ -12,6 +12,7 @@ import summer from './summer';
 import winter from './winter';
 import knownIssue from './knownIssue';
 import releaseNote from './releaseNote';
+import metricDetail from './metricDetail';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   winter,
   knownIssue,
   releaseNote,
+  metricDetail,
 });
 
 export default rootReducer;

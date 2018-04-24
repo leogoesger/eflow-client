@@ -7,6 +7,7 @@ import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Reply from 'material-ui/svg-icons/content/reply';
 
+import {navigateTo} from '../../../utils/helpers';
 import {classInfo} from '../../../constants/classification';
 import {Colors} from '../../../styles';
 import Summary from './Summary';
@@ -86,8 +87,9 @@ class HydroInfo extends React.Component {
             label="Details"
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
-            disabled={true}
-            labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
+            disabled={false}
+            labelStyle={{fontSize: '12px'}}
+            onClick={() => navigateTo('/metricDetail')}
           />
         </div>
       );
@@ -98,8 +100,9 @@ class HydroInfo extends React.Component {
           label="Details"
           backgroundColor={Colors.gold}
           labelColor={Colors.white}
-          disabled={true}
-          labelStyle={{fontSize: '12px', cursor: 'not-allowed'}}
+          disabled={false}
+          labelStyle={{fontSize: '12px'}}
+          onClick={() => navigateTo('/metricDetail')}
         />
       </div>
     );

@@ -10,18 +10,8 @@ class HydroTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      containerWidth: 400,
       summaryData: null,
     };
-  }
-
-  componentDidMount() {
-    this._setContainerWidth();
-    window.addEventListener('resize', () => this._setContainerWidth());
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', () => this._setContainerWidth());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,10 +28,6 @@ class HydroTabs extends React.Component {
       summaryData = nextProps.currentClassification;
     }
     this.setState({summaryData: summaryData});
-  }
-
-  _setContainerWidth() {
-    this.setState({containerWidth: window.innerWidth / 2.7});
   }
 
   _handleChange(tabValue) {
@@ -87,7 +73,7 @@ class HydroTabs extends React.Component {
           style={this._disabledBtn() ? null : {cursor: 'not-allowed'}}
         >
           <Hydrograph
-            containerWidth={this.state.containerWidth}
+            containerWidth={410}
             currentClassification={this.props.currentClassification}
             currentGauge={this.props.currentGauge}
             summaryData={this.state.summaryData}
