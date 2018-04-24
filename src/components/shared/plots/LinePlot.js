@@ -19,7 +19,7 @@ export default class LinePlot extends React.Component {
   }
 
   updateD3(props) {
-    let {data, width, height, highestKey} = props;
+    let {data, width, height, highestKey, zoomTransform, zoomType} = props;
     this.xScale
       .domain(d3.extent(data[highestKey], d => this.props.xValue(d)))
       .range([0, width]);
@@ -32,6 +32,27 @@ export default class LinePlot extends React.Component {
       .x(d => this.xScale(this.props.xValue(d)))
       .y(d => this.yScale(this.props.yValue(d)))
       .curve(d3.curveCardinal);
+
+    if (zoomTransform && zoomType === 'detail') {
+      this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
+      this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
+    }
+  }
+
+  _transform() {
+    const {zoomTransform, zoomType} = this.props;
+    let x = 0,
+      y = 0;
+    let transform = '';
+
+    if (zoomTransform && zoomType === 'scale') {
+      transform = `translate(${x + zoomTransform.x}, ${y +
+        zoomTransform.y}) scale(${zoomTransform.k})`;
+    } else {
+      transform = `translate(${x}, ${y})`;
+    }
+
+    return transform;
   }
 
   renderLines(transform) {
@@ -97,29 +118,27 @@ export default class LinePlot extends React.Component {
     const transform = `translate(${x}, ${y})`;
     if (this.line(data[highestKey])) {
       return (
-        <svg width={620} height={height + 100} style={{marginLeft: '10px'}}>
-          <g style={{fill: 'none'}}>
-            <Axis
-              scale={this.xScale}
-              data={data[highestKey]}
-              x={x}
-              gridLength={height}
-              y={y + height + 0}
-              orientation="bottom"
-            />
-            <Axis
-              scale={this.yScale}
-              data={data[highestKey]}
-              x={x}
-              y={y}
-              gridLength={width}
-              orientation="left"
-            />
-            {this.renderBoxplots(overLayBoxPlotData)}
-            {this.renderVerticalBoxPlots(verticalOverlayBoxPlotData)}
-            {this.renderLines(transform)}
-          </g>
-        </svg>
+        <g style={{fill: 'none'}} transform={this._transform()}>
+          <Axis
+            scale={this.xScale}
+            data={data[highestKey]}
+            x={x}
+            gridLength={height}
+            y={y + height + 0}
+            orientation="bottom"
+          />
+          <Axis
+            scale={this.yScale}
+            data={data[highestKey]}
+            x={x}
+            y={y}
+            gridLength={width}
+            orientation="left"
+          />
+          {this.renderBoxplots(overLayBoxPlotData)}
+          {this.renderVerticalBoxPlots(verticalOverlayBoxPlotData)}
+          {this.renderLines(transform)}
+        </g>
       );
     } else {
       return null;
@@ -143,4 +162,6 @@ LinePlot.propTypes = {
   colors: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
   verticalOverlayBoxPlotData: PropTypes.array,
+  zoomTransform: PropTypes.object,
+  zoomType: PropTypes.string,
 };

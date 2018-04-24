@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as d3 from 'd3';
 import Paper from 'material-ui/Paper';
 import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
@@ -19,7 +20,28 @@ class Hydrograph extends React.Component {
       fallWetTiming: false,
       springTiming: false,
       summerTiming: false,
+      zoomTransform: null,
     };
+    this.zoom = d3
+      .zoom()
+      .scaleExtent([-10, 10])
+      .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
+      .extent([[-100, -100], [700 + 100, 420 + 100]])
+      .on('zoom', () => this.zoomed());
+  }
+
+  componentDidMount() {
+    d3.select(this.svg).call(this.zoom);
+  }
+
+  componentDidUpdate() {
+    d3.select(this.svg).call(this.zoom);
+  }
+
+  zoomed() {
+    this.setState({
+      zoomTransform: d3.event.transform,
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -138,20 +160,28 @@ class Hydrograph extends React.Component {
             {'Dimensionless Reference Hydrograph'}
           </div>
           <div style={styles.yLabel}>{'Daily flow / Average annual Flow'} </div>
-
-          <LinePlot
-            x={this.props.containerWidth / 10}
-            y={50}
-            width={550}
-            height={300}
-            data={this.state.hydroData}
-            xValue={value => value.date}
-            yValue={value => value.flow}
-            highestKey={'NINTY'}
-            colors={colors}
-            overLayBoxPlotData={this.props.overLayBoxPlotData}
-            verticalOverlayBoxPlotData={this.props.verticalOverlayBoxPlotData}
-          />
+          <svg
+            width={620}
+            height={400}
+            ref={el => (this.svg = el)}
+            style={{cursor: 'pointer', marginLeft: '10px'}}
+          >
+            <LinePlot
+              x={this.props.containerWidth / 10}
+              y={50}
+              width={550}
+              height={300}
+              data={this.state.hydroData}
+              xValue={value => value.date}
+              yValue={value => value.flow}
+              highestKey={'NINTY'}
+              colors={colors}
+              overLayBoxPlotData={this.props.overLayBoxPlotData}
+              verticalOverlayBoxPlotData={this.props.verticalOverlayBoxPlotData}
+              zoomTransform={this.state.zoomTransform}
+              zoomType="detail"
+            />
+          </svg>
         </div>
       );
     }

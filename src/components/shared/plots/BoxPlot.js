@@ -30,18 +30,46 @@ export default class BoxPlot extends React.Component {
   }
 
   updateD3(props) {
-    if (props.logScale) {
+    const {
+      boxPlotData,
+      logScale,
+      width,
+      height,
+      zoomTransform,
+      zoomType,
+    } = props;
+    if (logScale) {
       this.yScale = d3.scaleLog();
     } else {
       this.yScale = d3.scaleLinear();
     }
-    const boxPlotData = props.boxPlotData,
-      globalExtent = d3.extent(this.combineWiskers(props)),
-      groupCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const globalExtent = d3.extent(this.combineWiskers(props)),
+      groupCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    this.xScale.domain(groupCounts).rangeRound([0, props.width - 30]);
-    this.yScale.domain(globalExtent).range([props.height - 30, 0]);
+    this.xScale.domain(groupCounts).rangeRound([0, width - 120]);
+    this.yScale.domain(globalExtent).range([height - 30, 0]);
     this.setState({boxPlotData: boxPlotData});
+
+    if (zoomTransform && zoomType === 'detail') {
+      // this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
+      this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
+    }
+  }
+
+  _transform() {
+    const {zoomTransform, zoomType} = this.props;
+    let x = 0,
+      y = 0;
+    let transform = '';
+
+    if (zoomTransform && zoomType === 'scale') {
+      transform = `translate(${x + zoomTransform.x}, ${y +
+        zoomTransform.y}) scale(${zoomTransform.k})`;
+    } else {
+      transform = `translate(${x}, ${y})`;
+    }
+
+    return transform;
   }
 
   _drawVerticalLines(boxPlotData) {
@@ -113,12 +141,12 @@ export default class BoxPlot extends React.Component {
       return null;
     }
     return (
-      <svg width={this.props.width} height={this.props.height + 10}>
+      <g transform={this._transform()}>
         <Axis
           scale={this.yScale}
           x={60}
           y={this.props.y}
-          gridLength={this.props.width}
+          gridLength={this.props.width - 50}
           orientation="left"
         />
         <Axis
@@ -136,7 +164,7 @@ export default class BoxPlot extends React.Component {
           {this._drawBoxes(this.state.boxPlotData)}
           {this._drawHorizontalLines(this.state.boxPlotData)}
         </g>
-      </svg>
+      </g>
     );
   }
 }
@@ -147,4 +175,6 @@ BoxPlot.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   boxPlotData: PropTypes.array,
+  zoomTransform: PropTypes.object,
+  zoomType: PropTypes.string,
 };
