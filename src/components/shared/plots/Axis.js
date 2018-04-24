@@ -75,6 +75,9 @@ const Axis = blackBox(function() {
       .tickSizeOuter(0)
       .ticks(10)
       .tickFormat(d => {
+        if (d == 9.1) {
+          return null;
+        }
         if (this.props.format === 'className') {
           return classInfo[`class${d}`] ? classInfo[`class${d}`].abbre : d;
         }
