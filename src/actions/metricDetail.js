@@ -17,7 +17,7 @@ const updateLoadingObject = loading => {
 
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
-    const allMetricBoxPlots = await getAllMetricBoxPlotClourse(0);
+    const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
     dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots));
     dispatch(updateLoadingObject(false));
   };

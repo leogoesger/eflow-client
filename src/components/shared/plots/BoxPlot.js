@@ -40,7 +40,7 @@ export default class BoxPlot extends React.Component {
       groupCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     this.xScale.domain(groupCounts).rangeRound([0, props.width - 30]);
-    this.yScale.domain(globalExtent).range([props.height - 20, 0]);
+    this.yScale.domain(globalExtent).range([props.height - 30, 0]);
     this.setState({boxPlotData: boxPlotData});
   }
 

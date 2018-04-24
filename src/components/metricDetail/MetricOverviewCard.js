@@ -71,11 +71,16 @@ class MetricOverviewCard extends React.Component {
     });
   }
 
-  _getDisplayValue(searchKey, searchValue, key) {
-    const objectFound = find(
-      metricReference,
-      e => e[searchKey] === searchValue
-    );
+  _getDisplayValue(searchKey, searchValue, key, tableName, tableValue) {
+    let objectFound;
+    if (tableName) {
+      objectFound = find(
+        metricReference,
+        e => e[searchKey] === searchValue && e[tableName] === tableValue
+      );
+    } else {
+      objectFound = find(metricReference, e => e[searchKey] === searchValue);
+    }
     return objectFound[key];
   }
 
@@ -100,7 +105,13 @@ class MetricOverviewCard extends React.Component {
       <MenuItem
         value={index}
         key={index}
-        primaryText={this._getDisplayValue('columnName', key, 'display')}
+        primaryText={this._getDisplayValue(
+          'columnName',
+          key,
+          'display',
+          'tableName',
+          this.state.metricTableName
+        )}
       />
     ));
   }
