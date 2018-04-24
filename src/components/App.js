@@ -12,7 +12,7 @@ import Home from '../containers/Home';
 import Header from '../containers/Header';
 import Footer from '../containers/Footer';
 import Hydrology from '../containers/Hydrology';
-import Morphology from '../containers/Morphology';
+// import Morphology from '../containers/Morphology';
 // import Ecology from '../containers/Ecology';
 import Team from '../containers/Team';
 import Paper from '../containers/Paper';
@@ -42,7 +42,7 @@ class App extends React.Component {
               <Route
                 exact
                 path="/morphology"
-                component={withTracker(Morphology)}
+                component={withTracker(Construction)}
               />
               <Route
                 exact
