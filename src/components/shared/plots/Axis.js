@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, {Component} from 'react';
 import * as d3 from 'd3';
+import {classInfo} from '../../../constants/classification';
 
 const blackBox = D3render => {
   return class Blackbox extends Component {
@@ -74,6 +75,9 @@ const Axis = blackBox(function() {
       .tickSizeOuter(0)
       .ticks(10)
       .tickFormat(d => {
+        if (this.props.format === 'className') {
+          return classInfo[`class${d}`] ? classInfo[`class${d}`].abbre : d;
+        }
         if (d == 1 || d == this.props.data.length) {
           return null;
         }

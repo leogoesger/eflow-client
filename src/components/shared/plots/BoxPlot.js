@@ -37,7 +37,7 @@ export default class BoxPlot extends React.Component {
     }
     const boxPlotData = props.boxPlotData,
       globalExtent = d3.extent(this.combineWiskers(props)),
-      groupCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      groupCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     this.xScale.domain(groupCounts).rangeRound([0, props.width - 30]);
     this.yScale.domain(globalExtent).range([props.height - 30, 0]);
@@ -113,7 +113,7 @@ export default class BoxPlot extends React.Component {
       return null;
     }
     return (
-      <svg width={this.props.width} height={this.props.height}>
+      <svg width={this.props.width} height={this.props.height + 10}>
         <Axis
           scale={this.yScale}
           x={60}
@@ -121,6 +121,16 @@ export default class BoxPlot extends React.Component {
           gridLength={this.props.width}
           orientation="left"
         />
+        <Axis
+          scale={this.xScale}
+          data={this.state.boxPlotData}
+          x={85}
+          y={this.props.height - 10}
+          gridLength={0}
+          orientation="bottom"
+          format={'className'}
+        />
+
         <g transform={`translate(${this.props.x}, ${this.props.y})`}>
           {this._drawVerticalLines(this.state.boxPlotData)}
           {this._drawBoxes(this.state.boxPlotData)}
