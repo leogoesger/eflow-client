@@ -32,6 +32,7 @@ export class Hydrology extends React.Component {
   componentWillMount() {
     this.props.fetchGauges();
     this.props.fetchClassifications();
+    this.removeClassGaugeProps();
   }
 
   removeClassGaugeProps() {

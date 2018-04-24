@@ -51,27 +51,6 @@ export default class Control extends React.Component {
     });
   }
 
-  // _renderClassControllers() {
-  //   return classificationShort.map((currentClassData, index) => {
-  //     const currentClass = classInfo[`class${index + 1}`];
-  //     return (
-  //       <Toggle
-  //         key={index}
-  //         label={currentClassData}
-  //         labelStyle={styles.labelStyle}
-  //         value={'empty'}
-  //         thumbSwitchedStyle={{
-  //           size: '1',
-  //           backgroundColor: currentClass.colors[0],
-  //         }}
-  //         trackSwitchedStyle={{backgroundColor: currentClass.colors[1]}}
-  //         onClick={() => this.handleToggle(`class${index + 1}`)}
-  //         toggled={this.state[`class${index + 1}`]}
-  //       />
-  //     );
-  //   });
-  // }
-
   render() {
     return (
       <div style={styles.BLcontainer}>

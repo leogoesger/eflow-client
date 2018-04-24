@@ -135,7 +135,6 @@ const styles = {
     width: '35%',
     height: '600px',
     overflow: 'scroll',
-    padding: '10px',
   },
   tableRow: {
     height: '40px',
