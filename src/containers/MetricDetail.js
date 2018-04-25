@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {fetchClassifications} from '../actions/classification';
+import {removeCurrentGauge} from '../actions/gauge';
 import {
-  fetchClassification,
-  fetchClassifications,
-  removeCurrentClass,
-} from '../actions/classification';
-import {fetchCurrentGauge, removeCurrentGauge} from '../actions/gauge';
-import {fetchAllClassesBoxPlots} from '../actions/metricDetail';
+  fetchAllClassesBoxPlots,
+  fetchAnnualFlowData,
+} from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
 import ErrorBoundary from '../components/shared/ErrorBoundary';
 
@@ -16,11 +15,14 @@ export class MetricDetail extends React.Component {
     if (!this.props.classifications) {
       this.props.fetchClassifications();
     }
+    if (this.props.currentGauge) {
+      this.props.fetchAnnualFlowData({gaugeId: this.props.currentGauge.id});
+    }
+    this.removeClassGaugeProps();
   }
 
   removeClassGaugeProps() {
     this.props.removeCurrentGauge();
-    this.props.removeCurrentClass();
   }
 
   render() {
@@ -29,17 +31,12 @@ export class MetricDetail extends React.Component {
         <div style={styles.banner} />
         <ErrorBoundary>
           <Layout
-            currentGauge={this.props.currentGauge}
+            annualFlowData={this.props.annualFlowData}
             classifications={this.props.classifications}
-            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-            currentClassification={this.props.currentClassification}
-            fetchClassification={classId =>
-              this.props.fetchClassification(classId)
-            }
             fetchAllClassesBoxPlots={() => this.props.fetchAllClassesBoxPlots()}
-            removeClassGaugeProps={() => this.removeClassGaugeProps()}
             allClassesBoxPlots={this.props.allClassesBoxPlots}
             loading={this.props.loading}
+            fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
           />
         </ErrorBoundary>
       </React.Fragment>
@@ -49,14 +46,12 @@ export class MetricDetail extends React.Component {
 
 MetricDetail.propTypes = {
   removeCurrentGauge: PropTypes.func,
-  removeCurrentClass: PropTypes.func,
   fetchClassifications: PropTypes.func,
   fetchAllClassesBoxPlots: PropTypes.func,
-  fetchClassification: PropTypes.func,
-  fetchCurrentGauge: PropTypes.func,
+  fetchAnnualFlowData: PropTypes.func,
   classifications: PropTypes.array,
   currentGauge: PropTypes.object,
-  currentClassification: PropTypes.object,
+  annualFlowData: PropTypes.object,
   allClassesBoxPlots: PropTypes.object,
   loading: PropTypes.bool,
 };
@@ -64,8 +59,8 @@ MetricDetail.propTypes = {
 const mapStateToProps = state => {
   return {
     classifications: state.classification.classifications,
-    currentClassification: state.classification.currentClassification,
     currentGauge: state.gauge.currentGauge,
+    annualFlowData: state.metricDetail.annualFlowData,
     allClassesBoxPlots: state.metricDetail.boxPlotData,
     loading: state.metricDetail.loading,
   };
@@ -74,11 +69,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchClassifications: () => dispatch(fetchClassifications()),
-    fetchClassification: classId => dispatch(fetchClassification(classId)),
-    fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
     removeCurrentGauge: () => dispatch(removeCurrentGauge()),
-    removeCurrentClass: () => dispatch(removeCurrentClass()),
     fetchAllClassesBoxPlots: () => dispatch(fetchAllClassesBoxPlots()),
+    fetchAnnualFlowData: d => dispatch(fetchAnnualFlowData(d)),
   };
 };
 

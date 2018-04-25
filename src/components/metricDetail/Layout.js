@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MetricNavbar from './MetricNavbar';
 import MetricOverviewCard from './MetricOverviewCard';
-import MetricClassCard from './MetricClassCard';
 import MetricGaugeCard from './MetricGaugeCard';
 
 export default class Layout extends React.Component {
   _renderDetailCard() {
-    if (this.props.currentGauge) {
-      return <MetricGaugeCard />;
-    } else if (this.props.currentClassification) {
-      return <MetricClassCard />;
+    if (this.props.annualFlowData) {
+      return (
+        <MetricGaugeCard
+          annualFlowData={this.props.annualFlowData}
+          fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
+        />
+      );
     } else {
       return (
         <MetricOverviewCard
@@ -27,7 +29,7 @@ export default class Layout extends React.Component {
       <div style={styles.container}>
         <MetricNavbar
           classifications={this.props.classifications}
-          removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
+          fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
         />
         {this._renderDetailCard()}
       </div>
@@ -36,13 +38,9 @@ export default class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  fetchClassifications: PropTypes.func,
-  fetchClassification: PropTypes.func,
-  fetchCurrentGauge: PropTypes.func,
+  fetchAnnualFlowData: PropTypes.func,
   classifications: PropTypes.array,
-  currentGauge: PropTypes.object,
-  currentClassification: PropTypes.object,
-  removeClassGaugeProps: PropTypes.func,
+  annualFlowData: PropTypes.object,
   fetchAllClassesBoxPlots: PropTypes.func,
   loading: PropTypes.bool,
   allClassesBoxPlots: PropTypes.object,

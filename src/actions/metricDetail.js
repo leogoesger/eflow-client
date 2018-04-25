@@ -1,3 +1,4 @@
+import request from 'superagent';
 import {MetricDetailTypes as types} from '../action-types';
 import {getAllMetricBoxPlotClourse} from './helpers';
 
@@ -15,10 +16,26 @@ const updateLoadingObject = loading => {
   };
 };
 
+const fetchAnnualFlowDataObject = annualFlowData => {
+  return {
+    type: types.FETCH_ANNUAL_FLOW_OBJECT,
+    annualFlowData,
+  };
+};
+
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
     const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
     dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots));
     dispatch(updateLoadingObject(false));
+  };
+}
+
+export function fetchAnnualFlowData(gaugeInfo) {
+  return async dispatch => {
+    const annualFlowData = await request
+      .post(`${process.env.SERVER_ADDRESS}/api/annualflows`)
+      .send(gaugeInfo);
+    dispatch(fetchAnnualFlowDataObject(annualFlowData.body));
   };
 }
