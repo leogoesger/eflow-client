@@ -105,12 +105,13 @@ class MetricNavbar extends React.Component {
       return null;
     }
     return (
-      <Card style={styles.container}>
+      <Card style={styles.container} className="metric-navbar">
         <Card style={{cursor: 'pointer'}}>
           <CardHeader
             title={'Overview'}
             subtitle={'Boxplot Summary'}
             subtitleStyle={{paddingTop: '3px'}}
+            onClick={() => this.props.fetchAnnualFlowData()}
           />
         </Card>
         {this._renderClassCard(this.props.classifications)}

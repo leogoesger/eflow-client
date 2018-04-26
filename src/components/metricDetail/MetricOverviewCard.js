@@ -23,6 +23,7 @@ class MetricOverviewCard extends React.Component {
       logScale: false,
     };
   }
+
   componentWillMount() {
     if (!this.props.allClassesBoxPlots) {
       return this.props.fetchAllClassesBoxPlots();

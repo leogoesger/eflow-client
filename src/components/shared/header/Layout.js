@@ -137,4 +137,6 @@ const styles = {
   },
 };
 
-Layout.propTypes = {releaseNoteVersion: PropTypes.string};
+Layout.propTypes = {
+  releaseNoteVersion: PropTypes.string,
+};

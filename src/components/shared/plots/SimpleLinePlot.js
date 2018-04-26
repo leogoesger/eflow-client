@@ -28,7 +28,8 @@ export default class SimpleLinePlot extends React.Component {
         return !isNaN(d.flow);
       })
       .x(d => this.xScale(xValue(d)))
-      .y(d => this.yScale(yValue(d)));
+      .y(d => this.yScale(yValue(d)))
+      .curve(d3.curveCardinal);
 
     if (zoomTransform && zoomType === 'detail') {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());

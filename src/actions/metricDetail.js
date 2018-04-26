@@ -23,6 +23,13 @@ const fetchAnnualFlowDataObject = annualFlowData => {
   };
 };
 
+const toggleDrawerObject = status => {
+  return {
+    type: types.TOGGLE_DRAWER_OBJECT,
+    status,
+  };
+};
+
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
     const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
@@ -33,9 +40,18 @@ export function fetchAllClassesBoxPlots() {
 
 export function fetchAnnualFlowData(gaugeInfo) {
   return async dispatch => {
+    if (!gaugeInfo) {
+      return dispatch(fetchAnnualFlowDataObject(null));
+    }
     const annualFlowData = await request
       .post(`${process.env.SERVER_ADDRESS}/api/annualflows`)
       .send(gaugeInfo);
     dispatch(fetchAnnualFlowDataObject(annualFlowData.body));
+  };
+}
+
+export function toggleMetricGaugeDrawer(status) {
+  return async dispatch => {
+    dispatch(toggleDrawerObject(status));
   };
 }

@@ -6,6 +6,7 @@ import {removeCurrentGauge} from '../actions/gauge';
 import {
   fetchAllClassesBoxPlots,
   fetchAnnualFlowData,
+  toggleMetricGaugeDrawer,
 } from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
 import ErrorBoundary from '../components/shared/ErrorBoundary';
@@ -19,6 +20,10 @@ export class MetricDetail extends React.Component {
       this.props.fetchAnnualFlowData({gaugeId: this.props.currentGauge.id});
     }
     this.removeClassGaugeProps();
+  }
+
+  componentWillUnmount() {
+    this.props.fetchAnnualFlowData(null);
   }
 
   removeClassGaugeProps() {
@@ -37,6 +42,9 @@ export class MetricDetail extends React.Component {
             allClassesBoxPlots={this.props.allClassesBoxPlots}
             loading={this.props.loading}
             fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
+            toggleMetricGaugeDrawer={status =>
+              this.props.toggleMetricGaugeDrawer(status)
+            }
           />
         </ErrorBoundary>
       </React.Fragment>
@@ -54,6 +62,7 @@ MetricDetail.propTypes = {
   annualFlowData: PropTypes.object,
   allClassesBoxPlots: PropTypes.object,
   loading: PropTypes.bool,
+  toggleMetricGaugeDrawer: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -72,6 +81,8 @@ const mapDispatchToProps = dispatch => {
     removeCurrentGauge: () => dispatch(removeCurrentGauge()),
     fetchAllClassesBoxPlots: () => dispatch(fetchAllClassesBoxPlots()),
     fetchAnnualFlowData: d => dispatch(fetchAnnualFlowData(d)),
+    toggleMetricGaugeDrawer: status =>
+      dispatch(toggleMetricGaugeDrawer(status)),
   };
 };
 

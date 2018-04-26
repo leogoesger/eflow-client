@@ -6,8 +6,9 @@ import FlatButton from 'material-ui/FlatButton';
 
 import Layout from '../components/shared/header/Layout';
 import {isBrowserNotSupported} from '../utils/helpers';
-
+import MetricGaugeDrawer from '../components/metricDetail/MetricGaugeDrawer';
 import {fetchReleaseNotes} from '../actions/releaseNote';
+import {toggleMetricGaugeDrawer} from '../actions/metricDetail';
 
 class Header extends React.Component {
   constructor(props) {
@@ -38,7 +39,14 @@ class Header extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <MetricGaugeDrawer
+          isDrawerOpen={this.props.isDrawerOpen}
+          toggleMetricGaugeDrawer={status =>
+            this.props.toggleMetricGaugeDrawer(status)
+          }
+        />
         <Layout releaseNoteVersion={this.getVersion()} />
+
         <Dialog
           modal={false}
           open={this.state.dialogOpen}
@@ -66,18 +74,23 @@ class Header extends React.Component {
 const mapStateToProps = state => {
   return {
     releaseNotes: state.releaseNote.releaseNotes,
+    isDrawerOpen: state.metricDetail.isDrawerOpen,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchReleaseNotes: () => dispatch(fetchReleaseNotes()),
+    toggleMetricGaugeDrawer: status =>
+      dispatch(toggleMetricGaugeDrawer(status)),
   };
 };
 
 Header.propTypes = {
   releaseNotes: PropTypes.array,
   fetchReleaseNotes: PropTypes.func,
+  isDrawerOpen: PropTypes.bool,
+  toggleMetricGaugeDrawer: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

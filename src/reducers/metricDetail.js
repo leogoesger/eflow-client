@@ -7,6 +7,7 @@ const initialState: STATE = {
   annualFlowData: null,
   boxPlotData: null,
   loading: true,
+  isDrawerOpen: false,
   error: null,
 };
 
@@ -17,6 +18,9 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.FETCH_ANNUAL_FLOW_OBJECT:
       return objectAssign({}, state, {annualFlowData: action.annualFlowData});
+
+    case types.TOGGLE_DRAWER_OBJECT:
+      return objectAssign({}, state, {isDrawerOpen: action.status});
 
     case types.UPDATE_LOADING_OBJECT:
       return objectAssign({}, state, {loading: action.loading});

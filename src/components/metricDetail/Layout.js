@@ -11,6 +11,9 @@ export default class Layout extends React.Component {
         <MetricGaugeCard
           annualFlowData={this.props.annualFlowData}
           fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
+          toggleMetricGaugeDrawer={status =>
+            this.props.toggleMetricGaugeDrawer(status)
+          }
         />
       );
     } else {
@@ -44,6 +47,7 @@ Layout.propTypes = {
   fetchAllClassesBoxPlots: PropTypes.func,
   loading: PropTypes.bool,
   allClassesBoxPlots: PropTypes.object,
+  toggleMetricGaugeDrawer: PropTypes.func,
 };
 
 const styles = {
