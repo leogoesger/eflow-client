@@ -51,8 +51,8 @@ class MetricNavbar extends React.Component {
     });
   }
 
-  _selectRow() {
-    return null;
+  _selectRow(e) {
+    this.props.fetchAnnualFlowData({gaugeId: e.id});
   }
 
   _renderClassCard(classes) {
@@ -73,7 +73,7 @@ class MetricNavbar extends React.Component {
               fixedHeader={true}
               selectable={true}
               multiSelectable={false}
-              onRowSelection={() => this._selectRow()}
+              onRowSelection={e => this._selectRow(classification.gauges[e])}
             >
               {this._renderHeader()}
               <TableBody
@@ -82,15 +82,6 @@ class MetricNavbar extends React.Component {
                 showRowHover={true}
                 stripedRows={false}
               >
-                <TableRow style={styles.tableRow}>
-                  <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
-                    {`Class ${classification.id}`}
-                  </TableRowColumn>
-
-                  <TableRowColumn style={{height: '15px'}}>
-                    {classification.name}
-                  </TableRowColumn>
-                </TableRow>
                 {this._renderRow(classification.gauges)}
               </TableBody>
             </Table>
@@ -100,20 +91,27 @@ class MetricNavbar extends React.Component {
     });
   }
 
+  // <TableRow style={styles.tableRow}>
+  //   <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
+  //     {`Class ${classification.id}`}
+  //   </TableRowColumn>
+  //
+  //   <TableRowColumn style={{height: '15px'}}>
+  //     {classification.name}
+  //   </TableRowColumn>
+  // </TableRow>
   render() {
     if (!this.props.classifications) {
       return null;
     }
     return (
-      <Card style={styles.container}>
-        <Card
-          style={{cursor: 'pointer'}}
-          onClick={() => this.props.removeClassGaugeProps()}
-        >
+      <Card style={styles.container} className="metric-navbar">
+        <Card style={{cursor: 'pointer'}}>
           <CardHeader
             title={'Overview'}
             subtitle={'Boxplot Summary'}
             subtitleStyle={{paddingTop: '3px'}}
+            onClick={() => this.props.fetchAnnualFlowData()}
           />
         </Card>
         {this._renderClassCard(this.props.classifications)}
@@ -123,11 +121,8 @@ class MetricNavbar extends React.Component {
 }
 
 MetricNavbar.propTypes = {
-  fetchClassification: PropTypes.func,
   classifications: PropTypes.array,
-  updateHoveredGauge: PropTypes.func,
-  fetchCurrentGauge: PropTypes.func,
-  removeClassGaugeProps: PropTypes.func,
+  fetchAnnualFlowData: PropTypes.func,
 };
 
 const styles = {

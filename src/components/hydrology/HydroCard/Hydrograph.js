@@ -168,7 +168,7 @@ class Hydrograph extends React.Component {
           >
             <LinePlot
               x={this.props.containerWidth / 10}
-              y={50}
+              y={25}
               width={550}
               height={300}
               data={this.state.hydroData}
@@ -218,8 +218,8 @@ const styles = {
   yLabel: {
     position: 'absolute',
     fontSize: '14px',
-    left: '20px',
-    top: '200px',
+    left: '18px',
+    top: '180px',
     writingMode: 'vertical-rl',
     transform: 'rotate(-180deg)',
   },
@@ -228,7 +228,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     position: 'absolute',
-    left: '50px',
+    top: '460px',
+    left: '40px',
   },
   label: {
     height: '10px',

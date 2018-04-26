@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Reply from 'material-ui/svg-icons/content/reply';
+import TimeLine from 'material-ui/svg-icons/action/timeline';
+import ViewDay from 'material-ui/svg-icons/action/view-day';
 
 import {navigateTo} from '../../../utils/helpers';
 import {classInfo} from '../../../constants/classification';
@@ -77,17 +79,18 @@ class HydroInfo extends React.Component {
       return (
         <div style={styles.btnContainer}>
           <FlatButton
-            label="Go Back"
+            label="Gauge List"
             style={{marginRight: '20px'}}
             labelStyle={{fontSize: '12px', color: Colors.gold}}
             icon={<Reply color={Colors.gold} />}
             onClick={() => this.props.removeClassGaugeProps()}
           />
           <RaisedButton
-            label="Details"
+            label="Annual Flow Plot"
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
             disabled={false}
+            icon={<TimeLine />}
             labelStyle={{fontSize: '12px'}}
             onClick={() => navigateTo('/metricDetail')}
           />
@@ -97,10 +100,11 @@ class HydroInfo extends React.Component {
     return (
       <div style={styles.btnContainer}>
         <RaisedButton
-          label="Details"
+          label="Class Box Plot"
           backgroundColor={Colors.gold}
           labelColor={Colors.white}
           disabled={false}
+          icon={<ViewDay />}
           labelStyle={{fontSize: '12px'}}
           onClick={() => navigateTo('/metricDetail')}
         />

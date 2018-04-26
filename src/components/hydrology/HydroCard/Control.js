@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import Reply from 'material-ui/svg-icons/content/reply';
+import TimeLine from 'material-ui/svg-icons/action/timeline';
 import {find} from 'lodash';
 
 import {navigateTo} from '../../../utils/helpers';
@@ -96,7 +97,7 @@ export default class Control extends React.Component {
           <div
             style={{
               width: '55%',
-              height: '160px',
+              height: '110px',
               display: 'flex',
               flexDirection: 'column',
               flexWrap: 'wrap',
@@ -107,17 +108,18 @@ export default class Control extends React.Component {
         </div>
         <div style={styles.rightBtn}>
           <FlatButton
-            label="Go Back"
+            label="Gauge List"
             style={{marginRight: '20px'}}
             labelStyle={{fontSize: '12px', color: Colors.gold}}
             icon={<Reply color={Colors.gold} />}
             onClick={() => this.props.removeClassGaugeProps()}
           />
           <RaisedButton
-            label="Details"
+            label="Annual Flow Plot"
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
             disabled={false}
+            icon={<TimeLine />}
             labelStyle={{fontSize: '12px'}}
             onClick={() => navigateTo('/metricDetail')}
           />
@@ -136,14 +138,15 @@ Control.propTypes = {
 
 const styles = {
   btnContainer: {
-    margin: '50px auto',
+    margin: '0px auto',
     width: '95%',
-    display: 'flex',
-    justifyContent: 'space-between',
+    position: 'relative',
   },
   rightBtn: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    position: 'absolute',
+    right: '0px',
+    bottom: '-60px',
+    width: '350px',
     height: '36px',
   },
   checkBoxContainer: {
