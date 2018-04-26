@@ -93,13 +93,24 @@ class MetricGaugeCard extends React.Component {
   }
 
   _renderAnnualPlot() {
+    if (!this.props.annualFlowData.AnnualFlows) {
+      return (
+        <div style={{height: '399px', margin: '0 auto'}}>
+          <p style={{paddingTop: '160px', paddingLeft: '160px'}}>
+            {':( Sorry, could not get annual flow data for this gauge!'}
+          </p>
+        </div>
+      );
+    }
     const {flowData} = this.props.annualFlowData.AnnualFlows;
     const filteredData = flowData.filter(d => d === 'NaN');
 
     if (filteredData.length > 200) {
       return (
-        <div style={{height: '399px'}}>
-          {'Sorry, there are more than 200 NaN in the dataset!'}
+        <div style={{height: '399px', margin: '0 auto'}}>
+          <p style={{paddingTop: '160px', paddingLeft: '220px'}}>
+            {':( Sorry, too many NaN for the plot!'}
+          </p>
         </div>
       );
     }
