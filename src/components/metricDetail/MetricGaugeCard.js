@@ -163,7 +163,7 @@ class MetricGaugeCard extends React.Component {
               label="Toggle Metrics"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
-              disabled={false}
+              disabled={true}
               style={{marginTop: '10px', marginRight: '10px'}}
               icon={<Setting />}
               labelStyle={{fontSize: '12px'}}

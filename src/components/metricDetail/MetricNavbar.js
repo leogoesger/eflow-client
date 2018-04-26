@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableHeaderColumn,
 } from 'material-ui/Table';
+import {classInfo} from '../../constants/classification';
 
 class MetricNavbar extends React.Component {
   _renderHeader() {
@@ -58,6 +59,8 @@ class MetricNavbar extends React.Component {
   _renderClassCard(classes) {
     return classes.map(classification => {
       const gaugeCount = classification.gauges.length;
+      // const currentColor = classInfo[`class${classification.id}`].colors[0];
+      // titleStyle={{color: currentColor}}
 
       return (
         <Card key={classification.id}>
