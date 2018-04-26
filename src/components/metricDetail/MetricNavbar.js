@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableHeaderColumn,
 } from 'material-ui/Table';
-import {classInfo} from '../../constants/classification';
 
 class MetricNavbar extends React.Component {
   _renderHeader() {
