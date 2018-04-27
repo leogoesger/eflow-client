@@ -4,7 +4,9 @@ import * as d3 from 'd3';
 import Slider from 'material-ui/Slider';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Setting from 'material-ui/svg-icons/action/settings';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
 
 import Card, {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
@@ -165,26 +167,54 @@ class MetricGaugeCard extends React.Component {
         }}
       >
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <CardHeader
-            title={annualFlowData.Gauge.stationName}
-            subtitle={`ID: ${annualFlowData.Gauge.id}, Class: ${
-              classObject.fullName
-            }`}
-            subtitleStyle={{color: classObject.colors[0]}}
-            actAsExpander={false}
-            showExpandableButton={false}
-          />
-          <div>
-            <RaisedButton
-              label="Display"
-              backgroundColor={Colors.gold}
-              labelColor={Colors.white}
-              disabled={false}
-              style={{marginTop: '10px', marginRight: '10px'}}
-              icon={<Setting />}
-              labelStyle={{fontSize: '12px'}}
-              onClick={() => this.props.toggleMetricGaugeDrawer(true)}
+          <div style={{width: '60%'}}>
+            <CardHeader
+              style={{paddingRight: '0px'}}
+              title={annualFlowData.Gauge.stationName}
+              textStyle={{paddingRight: '0px'}}
+              subtitle={`ID: ${annualFlowData.Gauge.id}, Class: ${
+                classObject.fullName
+              }`}
+              subtitleStyle={{color: classObject.colors[0]}}
+              actAsExpander={false}
+              showExpandableButton={false}
             />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '35%',
+            }}
+          >
+            <FlatButton
+              onClick={() => {
+                const url1 = `${process.env.S3_BUCKET}annual_flow_result/${
+                    annualFlowData.Gauge.id
+                  }_annual_result_matrix.csv`,
+                  url2 = `${process.env.S3_BUCKET}annual_flow_matrix/${
+                    annualFlowData.Gauge.id
+                  }.csv`;
+                window.open(url1, '_blank');
+                window.open(url2, '_blank');
+              }}
+              label="Download"
+              style={{marginLeft: '20px', marginTop: '10px'}}
+              labelStyle={{fontSize: '12px', color: Colors.gold}}
+              icon={<FileDownload color={Colors.gold} />}
+            />
+            <div>
+              <RaisedButton
+                label="Display"
+                backgroundColor={Colors.gold}
+                labelColor={Colors.white}
+                disabled={false}
+                style={{marginTop: '10px', marginRight: '10px'}}
+                icon={<Setting />}
+                labelStyle={{fontSize: '12px'}}
+                onClick={() => this.props.toggleMetricGaugeDrawer(true)}
+              />
+            </div>
           </div>
         </div>
         <Divider />

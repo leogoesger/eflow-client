@@ -60,7 +60,7 @@ export default class Layout extends React.Component {
             />
             <FlatButton
               className="e2e-header-sign-up-btn"
-              label="Morphlogy"
+              label="Morphology"
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}
               hoverColor={'white'}
