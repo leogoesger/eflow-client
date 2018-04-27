@@ -49,9 +49,9 @@ class Header extends React.Component {
             this.props.toggleMetricGaugeDrawer(status)
           }
           toggledMetrics={this.props.toggledMetrics}
+          logScale={this.props.logScale}
           toggleAnnualFlowMetrics={d => this.props.toggleAnnualFlowMetrics(d)}
           handleToggleLogScale={d => this.props.handleToggleLogScale(d)}
-          logScale={this.props.logScale}
         />
         <Layout releaseNoteVersion={this.getVersion()} />
         <Dialog

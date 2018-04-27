@@ -18,6 +18,8 @@ class MetricGaugeDrawer extends React.Component {
     let filteredMetrics;
 
     // Filter all the metrics contain the display keyWord
+    // all params handle the case for FALL TIMING, FALL TIMING WET.
+    // includes will get both of them when used
     if (all) {
       filteredMetrics = metricReference.filter(metric =>
         metric.display.includes(keyWord)
@@ -87,17 +89,30 @@ class MetricGaugeDrawer extends React.Component {
         metric.dimUnit !== 'none' &&
         metric.dimUnit !== '%'
     );
-    return metrics.map(metric => (
-      <Toggle
-        key={metric.name}
-        label={metric.display}
-        labelStyle={styles.labelStyle}
-        value={'empty'}
-        style={{padding: '1px 5px 1px 5px'}}
-        onClick={() => this._handleToggle(metric.display)}
-        toggled={this._checkToggleStatus(metric.display)}
-      />
-    ));
+    return metrics.map(metric => {
+      if (
+        metric.dimUnit === 'cfs' ||
+        metric.dimUnit === 'julian date'
+        // metric.dimUnit === 'days'
+      ) {
+        return (
+          <Toggle
+            key={metric.name}
+            label={metric.display}
+            labelStyle={styles.labelStyle}
+            value={'empty'}
+            thumbSwitchedStyle={{
+              size: '1',
+              backgroundColor: metric.colors[0],
+            }}
+            trackSwitchedStyle={{backgroundColor: metric.colors[1]}}
+            style={{padding: '1px 5px 1px 5px'}}
+            onClick={() => this._handleToggle(metric.display)}
+            toggled={this._checkToggleStatus(metric.display)}
+          />
+        );
+      }
+    });
   }
 
   _renderGeneralToggleBtns() {

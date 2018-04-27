@@ -66,7 +66,9 @@ class MetricGaugeCard extends React.Component {
   _getAnnualFlowData() {
     const {flowData} = this.props.annualFlowData.AnnualFlows;
     const flowObjects = flowData.map((d, i) => {
-      return {date: i, flow: Number(d)};
+      if (d) {
+        return {date: i, flow: Number(d)};
+      }
     });
     return flowObjects;
   }
@@ -132,11 +134,14 @@ class MetricGaugeCard extends React.Component {
             width={600}
             height={300}
             data={this._getAnnualFlowData()}
-            xValue={value => value.date}
-            yValue={value => value.flow}
+            xValue={value => Number(value.date)}
+            yValue={value => Number(value.flow)}
             color={Colors.blue}
             zoomTransform={this.state.zoomTransform}
             zoomType="detail"
+            logScale={this.props.logScale}
+            toggledMetrics={this.props.toggledMetrics}
+            annualFlowData={this.props.annualFlowData}
           />
         </svg>
       </React.Fragment>
@@ -171,7 +176,7 @@ class MetricGaugeCard extends React.Component {
           />
           <div>
             <RaisedButton
-              label="Toggle Metrics"
+              label="Display"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
               disabled={false}
@@ -218,6 +223,8 @@ MetricGaugeCard.propTypes = {
   annualFlowData: PropTypes.object,
   fetchAnnualFlowData: PropTypes.func,
   toggleMetricGaugeDrawer: PropTypes.func,
+  logScale: PropTypes.bool,
+  toggledMetrics: PropTypes.array,
 };
 
 const styles = {

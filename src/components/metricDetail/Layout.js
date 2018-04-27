@@ -14,6 +14,8 @@ export default class Layout extends React.Component {
           toggleMetricGaugeDrawer={status =>
             this.props.toggleMetricGaugeDrawer(status)
           }
+          logScale={this.props.logScale}
+          toggledMetrics={this.props.toggledMetrics}
         />
       );
     } else {
@@ -48,6 +50,8 @@ Layout.propTypes = {
   loading: PropTypes.bool,
   allClassesBoxPlots: PropTypes.object,
   toggleMetricGaugeDrawer: PropTypes.func,
+  logScale: PropTypes.bool,
+  toggledMetrics: PropTypes.array,
 };
 
 const styles = {
