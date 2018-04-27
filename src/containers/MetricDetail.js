@@ -45,6 +45,8 @@ export class MetricDetail extends React.Component {
             toggleMetricGaugeDrawer={status =>
               this.props.toggleMetricGaugeDrawer(status)
             }
+            logScale={this.props.logScale}
+            toggledMetrics={this.props.toggledMetrics}
           />
         </ErrorBoundary>
       </React.Fragment>
@@ -62,6 +64,8 @@ MetricDetail.propTypes = {
   annualFlowData: PropTypes.object,
   allClassesBoxPlots: PropTypes.object,
   loading: PropTypes.bool,
+  logScale: PropTypes.bool,
+  toggledMetrics: PropTypes.array,
   toggleMetricGaugeDrawer: PropTypes.func,
 };
 
@@ -72,6 +76,8 @@ const mapStateToProps = state => {
     annualFlowData: state.metricDetail.annualFlowData,
     allClassesBoxPlots: state.metricDetail.boxPlotData,
     loading: state.metricDetail.loading,
+    toggledMetrics: state.metricDetail.toggledMetrics,
+    logScale: state.metricDetail.logScale,
   };
 };
 

@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import * as d3 from 'd3';
 import {classInfo} from '../../../constants/classification';
+import {getCalenderDate} from '../../../utils/helpers';
 
 const blackBox = D3render => {
   return class Blackbox extends Component {
@@ -32,38 +33,6 @@ const blackBox = D3render => {
       }
     }
   };
-};
-
-const dateFromDay = (year, day) => {
-  var date = new Date(year, 0); // initialize a date in `year-01-01`
-  return new Date(date.setDate(day)); // add the number of days
-};
-
-const MONTH_NAMES = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-const getCalenderDate = offsetJulianDate => {
-  let julianDate;
-  if (offsetJulianDate < 365 - 274) {
-    julianDate = 274 + offsetJulianDate;
-  } else {
-    julianDate = offsetJulianDate - 365 + 274;
-  }
-  const date = dateFromDay(2001, julianDate),
-    calenderDate = `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
-  return calenderDate;
 };
 
 const Axis = blackBox(function() {

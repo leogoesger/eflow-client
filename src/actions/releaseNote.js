@@ -14,6 +14,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'April 27th, 2018',
+            version: 'v0.06',
+            title: 'Metric Detail Overlay for Annual Flow Data',
+            tasks: [
+              'Annual flow plot with overlay',
+              'Added a drawer to toggle all avaiable metrics',
+              'Metrics include all timing and magnitude metrics',
+            ],
+          },
+          {
             date: 'April 25th, 2018',
             version: 'v0.05',
             title: 'Metric Detail Gauge Page',

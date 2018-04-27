@@ -7,6 +7,51 @@ export function navigateTo(pathname, query) {
   history.push({pathname, query});
 }
 
+const MONTH_NAMES = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+const dateFromDay = (year, day) => {
+  var date = new Date(year, 0); // initialize a date in `year-01-01`
+  return new Date(date.setDate(day)); // add the number of days
+};
+
+export function getJulianOffsetDate(julianDate) {
+  let offsetJulianDate;
+  if (julianDate < 365 - 274) {
+    offsetJulianDate = julianDate + 274;
+  } else {
+    offsetJulianDate = julianDate + 365 - 274;
+  }
+  if (offsetJulianDate > 365) {
+    offsetJulianDate = offsetJulianDate - 365;
+  }
+  return offsetJulianDate;
+}
+
+export function getCalenderDate(offsetJulianDate) {
+  let julianDate;
+  if (offsetJulianDate < 365 - 274) {
+    julianDate = 274 + offsetJulianDate;
+  } else {
+    julianDate = offsetJulianDate - 365 + 274;
+  }
+  const date = dateFromDay(2001, julianDate),
+    calenderDate = `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
+  return calenderDate;
+}
+
 export function getMapStyle(
   classifications,
   gauges,

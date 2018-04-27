@@ -5,9 +5,11 @@ type STATE = {};
 type ACTION = {};
 const initialState: STATE = {
   annualFlowData: null,
+  isDrawerOpen: false,
+  toggledMetrics: [],
   boxPlotData: null,
   loading: true,
-  isDrawerOpen: false,
+  logScale: false,
   error: null,
 };
 
@@ -25,6 +27,11 @@ export default function(state: STATE = initialState, action: ACTION) {
     case types.UPDATE_LOADING_OBJECT:
       return objectAssign({}, state, {loading: action.loading});
 
+    case types.TOGGLE_METRIC_OBJECT:
+      return objectAssign({}, state, {toggledMetrics: action.toggledMetrics});
+
+    case types.TOGGLE_LOG_SCALE_OBJECT:
+      return objectAssign({}, state, {logScale: action.status});
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-
+import {metricReference} from '../../../constants/metrics';
+import {getJulianOffsetDate} from '../../../utils/helpers';
 import Axis from './Axis';
 
 export default class SimpleLinePlot extends React.Component {
@@ -18,10 +19,25 @@ export default class SimpleLinePlot extends React.Component {
   }
 
   updateD3(props) {
-    let {xValue, yValue, data, width, height, zoomTransform, zoomType} = props;
-    this.xScale.domain(d3.extent(data, d => xValue(d))).range([0, width]);
+    let {
+      xValue,
+      yValue,
+      data,
+      width,
+      height,
+      zoomTransform,
+      zoomType,
+      logScale,
+    } = props;
 
-    this.yScale.domain([0, d3.max(data, d => yValue(d))]).range([height, 0]);
+    if (logScale) {
+      this.yScale = d3.scaleLog();
+    } else {
+      this.yScale = d3.scaleLinear();
+    }
+
+    this.xScale.domain(d3.extent(data, d => xValue(d))).range([0, width]);
+    this.yScale.domain(d3.extent(data, d => yValue(d))).range([height, 0]);
 
     this.line
       .defined(d => {
@@ -53,6 +69,61 @@ export default class SimpleLinePlot extends React.Component {
     return transform;
   }
 
+  _renderOverLay(transform) {
+    const {annualFlowData, toggledMetrics} = this.props;
+    return Object.keys(annualFlowData).map(tableName => {
+      return Object.keys(annualFlowData[tableName]).map(columnName => {
+        const currentMetric = metricReference.filter(
+          m =>
+            m.tableName === tableName &&
+            m.columnName === columnName &&
+            toggledMetrics.some(
+              metric =>
+                metric.tableName === tableName &&
+                metric.columnName === columnName
+            )
+        )[0];
+
+        if (!currentMetric || !currentMetric.dimUnit) {
+          return null;
+        }
+        const metricValue = Number(annualFlowData[tableName][columnName]);
+
+        if (currentMetric.dimUnit === 'cfs' && metricValue) {
+          return (
+            <line
+              transform={transform}
+              key={currentMetric.name}
+              strokeWidth={3}
+              stroke={currentMetric.colors[0]}
+              x1={0}
+              x2={this.props.width}
+              y1={this.yScale(metricValue)}
+              y2={this.yScale(metricValue)}
+            />
+          );
+        } else if (currentMetric.dimUnit === 'julian date' && metricValue) {
+          return (
+            <line
+              transform={transform}
+              key={currentMetric.name}
+              strokeWidth={3}
+              stroke={currentMetric.colors[0]}
+              x1={this.xScale(getJulianOffsetDate(metricValue))}
+              x2={this.xScale(getJulianOffsetDate(metricValue))}
+              y1={this.props.height}
+              y2={0}
+            />
+          );
+        } else if (currentMetric.dimUnit === 'days') {
+          return null;
+        } else {
+          return null;
+        }
+      });
+    });
+  }
+
   render() {
     const {data, x, y, height, width} = this.props;
     const transform = `translate(${x}, ${y})`;
@@ -81,6 +152,7 @@ export default class SimpleLinePlot extends React.Component {
           strokeWidth="3"
           stroke={this.props.color}
         />
+        {this._renderOverLay(transform)}
       </g>
     );
   }
@@ -101,4 +173,7 @@ SimpleLinePlot.propTypes = {
   color: PropTypes.string,
   zoomTransform: PropTypes.object,
   zoomType: PropTypes.string,
+  logScale: PropTypes.bool,
+  toggledMetrics: PropTypes.array,
+  annualFlowData: PropTypes.object,
 };

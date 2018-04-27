@@ -8,7 +8,11 @@ import Layout from '../components/shared/header/Layout';
 import {isBrowserNotSupported} from '../utils/helpers';
 import MetricGaugeDrawer from '../components/metricDetail/MetricGaugeDrawer';
 import {fetchReleaseNotes} from '../actions/releaseNote';
-import {toggleMetricGaugeDrawer} from '../actions/metricDetail';
+import {
+  toggleMetricGaugeDrawer,
+  toggleAnnualFlowMetrics,
+  handleToggleLogScale,
+} from '../actions/metricDetail';
 
 class Header extends React.Component {
   constructor(props) {
@@ -44,9 +48,12 @@ class Header extends React.Component {
           toggleMetricGaugeDrawer={status =>
             this.props.toggleMetricGaugeDrawer(status)
           }
+          toggledMetrics={this.props.toggledMetrics}
+          logScale={this.props.logScale}
+          toggleAnnualFlowMetrics={d => this.props.toggleAnnualFlowMetrics(d)}
+          handleToggleLogScale={d => this.props.handleToggleLogScale(d)}
         />
         <Layout releaseNoteVersion={this.getVersion()} />
-
         <Dialog
           modal={false}
           open={this.state.dialogOpen}
@@ -75,6 +82,8 @@ const mapStateToProps = state => {
   return {
     releaseNotes: state.releaseNote.releaseNotes,
     isDrawerOpen: state.metricDetail.isDrawerOpen,
+    toggledMetrics: state.metricDetail.toggledMetrics,
+    logScale: state.metricDetail.logScale,
   };
 };
 
@@ -83,6 +92,8 @@ const mapDispatchToProps = dispatch => {
     fetchReleaseNotes: () => dispatch(fetchReleaseNotes()),
     toggleMetricGaugeDrawer: status =>
       dispatch(toggleMetricGaugeDrawer(status)),
+    toggleAnnualFlowMetrics: d => dispatch(toggleAnnualFlowMetrics(d)),
+    handleToggleLogScale: d => dispatch(handleToggleLogScale(d)),
   };
 };
 
@@ -90,7 +101,11 @@ Header.propTypes = {
   releaseNotes: PropTypes.array,
   fetchReleaseNotes: PropTypes.func,
   isDrawerOpen: PropTypes.bool,
+  logScale: PropTypes.bool,
+  toggledMetrics: PropTypes.array,
   toggleMetricGaugeDrawer: PropTypes.func,
+  toggleAnnualFlowMetrics: PropTypes.func,
+  handleToggleLogScale: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
