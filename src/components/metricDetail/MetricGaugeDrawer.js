@@ -36,7 +36,7 @@ class MetricGaugeDrawer extends React.Component {
     );
   }
 
-  _handleToggle(keyWord, all) {
+  _handleToggle(keyWord, all, status) {
     let filteredMetrics;
     if (all) {
       filteredMetrics = metricReference.filter(metric =>
@@ -51,6 +51,9 @@ class MetricGaugeDrawer extends React.Component {
     const currentMetrics = cloneDeep(this.props.toggledMetrics);
     filteredMetrics.forEach(filteredMetric => {
       if (some(currentMetrics, filteredMetric)) {
+        if (status === false) {
+          return;
+        }
         const index = currentMetrics
           .map(d => d.display)
           .indexOf(filteredMetric.display);
@@ -118,7 +121,7 @@ class MetricGaugeDrawer extends React.Component {
   _renderGeneralToggleBtns() {
     const generalList = [
       {label: 'All Timing Metrics', keyWord: 'Timing'},
-      {label: 'All Duration Metrics', keyWord: 'Duration'},
+      // {label: 'All Duration Metrics', keyWord: 'Duration'},
       {label: 'All Magnitude Metrics', keyWord: 'Magnitude'},
     ];
     return (
@@ -130,7 +133,13 @@ class MetricGaugeDrawer extends React.Component {
               label={item.label}
               labelStyle={styles.labelStyle}
               value={'empty'}
-              onClick={() => this._handleToggle(item.keyWord, 'true')}
+              onClick={() =>
+                this._handleToggle(
+                  item.keyWord,
+                  'true',
+                  this._checkToggleStatus(item.keyWord, 'true')
+                )
+              }
               toggled={this._checkToggleStatus(item.keyWord, 'true')}
             />
           );
