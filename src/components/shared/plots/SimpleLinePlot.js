@@ -88,7 +88,6 @@ export default class SimpleLinePlot extends React.Component {
           return null;
         }
         const metricValue = Number(annualFlowData[tableName][columnName]);
-        console.log(metricValue, getJulianOffsetDate(metricValue));
 
         if (currentMetric.dimUnit === 'cfs' && metricValue) {
           return (
