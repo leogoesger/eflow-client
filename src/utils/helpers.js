@@ -29,10 +29,10 @@ const dateFromDay = (year, day) => {
 
 export function getJulianOffsetDate(julianDate) {
   let offsetJulianDate;
-  if (julianDate < 365 - 274) {
-    offsetJulianDate = julianDate + 274;
-  } else {
+  if (julianDate < 274) {
     offsetJulianDate = julianDate + 365 - 274;
+  } else {
+    offsetJulianDate = julianDate - 274;
   }
   if (offsetJulianDate > 365) {
     offsetJulianDate = offsetJulianDate - 365;

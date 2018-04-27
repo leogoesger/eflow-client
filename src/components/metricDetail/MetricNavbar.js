@@ -11,6 +11,12 @@ import {
 } from 'material-ui/Table';
 
 class MetricNavbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedGaugeId: null,
+    };
+  }
   _renderHeader() {
     return (
       <TableHeader
@@ -40,10 +46,22 @@ class MetricNavbar extends React.Component {
           key={gauge.id}
           style={{height: '40px', padding: '0px', cursor: 'pointer'}}
         >
-          <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
+          <TableRowColumn
+            style={
+              gauge.id == this.state.selectedGaugeId
+                ? {height: '15px', paddingTop: '15px', fontWeight: '800'}
+                : {height: '15px', paddingTop: '15px'}
+            }
+          >
             {gauge.id}
           </TableRowColumn>
-          <TableRowColumn style={{height: '15px'}}>
+          <TableRowColumn
+            style={
+              gauge.id == this.state.selectedGaugeId
+                ? {height: '15px', fontWeight: '800'}
+                : {height: '15px'}
+            }
+          >
             {gauge.stationName}
           </TableRowColumn>
         </TableRow>
@@ -52,6 +70,7 @@ class MetricNavbar extends React.Component {
   }
 
   _selectRow(e) {
+    this.setState({selectedGaugeId: e.id});
     this.props.fetchAnnualFlowData({gaugeId: e.id});
   }
 
@@ -74,13 +93,12 @@ class MetricNavbar extends React.Component {
             <Table
               fixedHeader={true}
               selectable={true}
-              multiSelectable={false}
               onRowSelection={e => this._selectRow(classification.gauges[e])}
             >
               {this._renderHeader()}
               <TableBody
                 displayRowCheckbox={false}
-                deselectOnClickaway={true}
+                deselectOnClickaway={false}
                 showRowHover={true}
                 stripedRows={false}
               >
