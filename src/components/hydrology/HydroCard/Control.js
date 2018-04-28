@@ -7,6 +7,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Reply from 'material-ui/svg-icons/content/reply';
 import TimeLine from 'material-ui/svg-icons/action/timeline';
 import {find} from 'lodash';
+import ViewDay from 'material-ui/svg-icons/action/view-day';
 
 import {navigateTo} from '../../../utils/helpers';
 import {metricReference} from '../../../constants/metrics';
@@ -86,6 +87,7 @@ export default class Control extends React.Component {
   }
 
   render() {
+    const {currentGauge, removeClassGaugeProps} = this.props;
     return (
       <div style={styles.btnContainer}>
         <div style={styles.checkBoxContainer}>
@@ -112,14 +114,14 @@ export default class Control extends React.Component {
             style={{marginRight: '20px'}}
             labelStyle={{fontSize: '12px', color: Colors.gold}}
             icon={<Reply color={Colors.gold} />}
-            onClick={() => this.props.removeClassGaugeProps()}
+            onClick={() => removeClassGaugeProps()}
           />
           <RaisedButton
-            label="Annual Flow Plot"
+            label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
             disabled={false}
-            icon={<TimeLine />}
+            icon={currentGauge ? <TimeLine /> : <ViewDay />}
             labelStyle={{fontSize: '12px'}}
             onClick={() => navigateTo('/metricDetail')}
           />

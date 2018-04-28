@@ -137,7 +137,13 @@ class MetricGaugeCard extends React.Component {
             height={300}
             data={this._getAnnualFlowData()}
             xValue={value => Number(value.date)}
-            yValue={value => Number(value.flow)}
+            yValue={value => {
+              if (!Number(value.flow)) {
+                return 0.001;
+              } else {
+                return Number(value.flow);
+              }
+            }}
             color={Colors.blue}
             zoomTransform={this.state.zoomTransform}
             zoomType="detail"

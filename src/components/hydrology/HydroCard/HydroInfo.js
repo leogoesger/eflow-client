@@ -75,7 +75,13 @@ class HydroInfo extends React.Component {
   }
 
   _renderButtons() {
-    if (this.props.currentGauge || this.props.currentClassification) {
+    //Render buttons in the data page
+    const {
+      currentGauge,
+      currentClassification,
+      removeClassGaugeProps,
+    } = this.props;
+    if (currentGauge || currentClassification) {
       return (
         <div style={styles.btnContainer}>
           <FlatButton
@@ -83,20 +89,21 @@ class HydroInfo extends React.Component {
             style={{marginRight: '20px'}}
             labelStyle={{fontSize: '12px', color: Colors.gold}}
             icon={<Reply color={Colors.gold} />}
-            onClick={() => this.props.removeClassGaugeProps()}
+            onClick={() => removeClassGaugeProps()}
           />
           <RaisedButton
-            label="Annual Flow Plot"
+            label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
             disabled={false}
-            icon={<TimeLine />}
+            icon={currentGauge ? <TimeLine /> : <ViewDay />}
             labelStyle={{fontSize: '12px'}}
             onClick={() => navigateTo('/metricDetail')}
           />
         </div>
       );
     }
+
     return (
       <div style={styles.btnContainer}>
         <RaisedButton
