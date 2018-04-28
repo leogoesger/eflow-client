@@ -21,6 +21,7 @@ export function fetchReleaseNotes() {
               'Annual flow plot with overlay',
               'Added a drawer to toggle all avaiable metrics',
               'Metrics include all timing and magnitude metrics',
+              'Support downloads',
             ],
           },
           {
