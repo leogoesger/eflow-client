@@ -54,6 +54,7 @@
     "react-tippy": "1.2.2",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
+    "socket.io-client": "2.1.0",
     "superagent": "3.8.1",
     "topojson": "3.0.2",
     "webpack-dotenv-plugin": "^2.0.2"
