@@ -14,6 +14,14 @@ export function fetchKnownIssues() {
       const knownIssues = {
         body: [
           {
+            date: 'May 1st, 2018',
+            version: 'v0.07',
+            title: 'Scroll bar in Firefox',
+            issues: [
+              'Firefox does not support webkit, so the scrollbar may appear at some plots',
+            ],
+          },
+          {
             date: 'April 10th, 2018',
             version: 'v0.03',
             title: 'Boxplots for gauges and classes',

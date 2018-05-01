@@ -141,8 +141,9 @@ body {
   z-index: 9;
   pointer-events: none;
 }
-
-html,
+html ::-webkit-scrollbar {
+  width: 0em;
+}
 body *::-webkit-scrollbar {
   width: 0em;
 }
