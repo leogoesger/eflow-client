@@ -6,14 +6,15 @@ export default class Group extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <a
+        <p
           className="footer-link"
-          href="https://watermanagement.ucdavis.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
+          style={{cursor: 'pointer'}}
+          onClick={() =>
+            (window.location.href = 'http://watermanagement.ucdavis.edu/')
+          }
         >
-          <span>UCD Water Management Lab</span>
-        </a>
+          UCD Water Management Lab
+        </p>
       </div>
     );
   }

@@ -14,6 +14,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'April 30th, 2018',
+            version: 'v0.07',
+            title: 'Citations',
+            tasks: ['Add citations and term of service', 'Minor css touch up'],
+          },
+          {
             date: 'April 27th, 2018',
             version: 'v0.06',
             title: 'Metric Detail Overlay for Annual Flow Data',

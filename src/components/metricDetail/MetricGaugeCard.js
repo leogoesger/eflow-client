@@ -4,6 +4,8 @@ import * as d3 from 'd3';
 import Slider from 'material-ui/Slider';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Setting from 'material-ui/svg-icons/action/settings';
 import FileDownload from 'material-ui/svg-icons/file/file-download';
@@ -183,26 +185,40 @@ class MetricGaugeCard extends React.Component {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
-              width: '35%',
+              justifyContent: 'space-around',
+              width: '40%',
             }}
           >
-            <FlatButton
-              onClick={() => {
-                const url1 = `${process.env.S3_BUCKET}annual_flow_result/${
-                    annualFlowData.Gauge.id
-                  }_annual_result_matrix.csv`,
-                  url2 = `${process.env.S3_BUCKET}annual_flow_matrix/${
+            <IconMenu
+              iconButtonElement={
+                <FlatButton
+                  label="Download"
+                  style={{marginLeft: '20px', marginTop: '10px'}}
+                  labelStyle={{fontSize: '12px', color: Colors.gold}}
+                  icon={<FileDownload color={Colors.gold} />}
+                />
+              }
+            >
+              <MenuItem
+                primaryText="Annual Flow Matrix"
+                onClick={() => {
+                  const url1 = `${process.env.S3_BUCKET}annual_flow_matrix/${
                     annualFlowData.Gauge.id
                   }.csv`;
-                window.open(url1, '_blank');
-                window.open(url2, '_blank');
-              }}
-              label="Download"
-              style={{marginLeft: '20px', marginTop: '10px'}}
-              labelStyle={{fontSize: '12px', color: Colors.gold}}
-              icon={<FileDownload color={Colors.gold} />}
-            />
+                  return window.open(url1);
+                }}
+              />
+              <MenuItem
+                primaryText="Annual Metric Result"
+                onClick={() => {
+                  const url2 = `${process.env.S3_BUCKET}annual_flow_result/${
+                    annualFlowData.Gauge.id
+                  }_annual_result_matrix.csv`;
+                  return window.open(url2);
+                }}
+              />
+            </IconMenu>
+
             <div>
               <RaisedButton
                 label="Display"

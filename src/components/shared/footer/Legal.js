@@ -1,10 +1,14 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import {Colors} from '../../../styles';
 
 export default class Legal extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <span style={{ paddingLeft: '40px' }}>{'Terms | Privacy'}</span>
+        <Link to="/terms" style={styles.term}>
+          {'Terms | Citation'}
+        </Link>
       </div>
     );
   }
@@ -22,4 +26,5 @@ const styles = {
     height: '30px',
     backgroundColor: '#313C42',
   },
+  term: {color: Colors.white, textDecoration: 'none', paddingLeft: '40px'},
 };

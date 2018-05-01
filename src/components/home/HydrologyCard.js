@@ -5,7 +5,6 @@ import FlatButton from 'material-ui/FlatButton';
 import Book from 'material-ui/svg-icons/action/book';
 import {Card, CardText} from 'material-ui/Card';
 
-import hydrology from '../../constants/hydrology.png';
 import {navigateTo} from '../../utils/helpers';
 import {Colors} from '../../styles';
 
@@ -23,7 +22,7 @@ export default class HydrologyCard extends React.Component {
       >
         <div style={styles.left}>
           <img
-            src={hydrology}
+            src="https://s3-us-west-1.amazonaws.com/funcflow/resources/hydrology.png"
             style={{
               flexShrink: 0,
               height: '100%',
@@ -100,7 +99,7 @@ const styles = {
   tabsCard: {
     margin: '0 auto',
     borderRadius: '2px',
-    minHeight: '565px',
+    minWidth: '800px',
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0',

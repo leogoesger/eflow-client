@@ -19,6 +19,7 @@ import Paper from '../containers/Paper';
 import MetricDetail from '../containers/MetricDetail';
 import KnownIssue from '../containers/KnownIssue';
 import ReleaseNote from '../containers/ReleaseNote';
+import TermCitation from '../containers/TermCitation';
 
 class App extends React.Component {
   render() {
@@ -61,6 +62,11 @@ class App extends React.Component {
                 exact
                 path="/releases"
                 component={withTracker(ReleaseNote)}
+              />
+              <Route
+                exact
+                path="/terms"
+                component={withTracker(TermCitation)}
               />
             </Switch>
             <Footer />
