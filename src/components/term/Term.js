@@ -1,5 +1,6 @@
 import React from 'react';
 
+/* eslint-disable */
 const Term = () => {
   return (
     <div style={{width: '96%', margin: '0 auto'}}>
@@ -13,5 +14,5 @@ const Term = () => {
     </div>
   );
 };
-
+/* eslint-enable */
 export default Term;

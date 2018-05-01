@@ -142,6 +142,7 @@ body {
   pointer-events: none;
 }
 
+html,
 body *::-webkit-scrollbar {
   width: 0em;
 }
