@@ -40,3 +40,6 @@ dist
 .DS_Store
 
 yarn.lock
+.env.prod
+.env.dev
+.env.default
