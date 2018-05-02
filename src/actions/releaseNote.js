@@ -14,6 +14,14 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 2nd, 2018',
+            version: 'v0.08',
+            title: 'Socket IO',
+            tasks: [
+              'Use Socket IO to inform current user the site will be down',
+            ],
+          },
+          {
             date: 'April 30th, 2018',
             version: 'v0.07',
             title: 'Citations',
