@@ -10,6 +10,7 @@ import WinterTypes from './winter';
 import ReleaseNoteTypes from './releaseNote';
 import KnowIssueTypes from './knownIssue';
 import MetricDetailTypes from './metricDetail';
+import UserTypes from './user';
 
 export {ClassificationTypes};
 export {GaugeTypes};
@@ -23,6 +24,7 @@ export {WinterTypes};
 export {ReleaseNoteTypes};
 export {KnowIssueTypes};
 export {MetricDetailTypes};
+export {UserTypes};
 
 export default {
   ClassificationTypes,
@@ -37,4 +39,5 @@ export default {
   ReleaseNoteTypes,
   KnowIssueTypes,
   MetricDetailTypes,
+  UserTypes,
 };

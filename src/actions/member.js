@@ -1,12 +1,5 @@
-import io from 'socket.io-client';
-
 import request from 'superagent';
 import {MemberTypes as types} from '../action-types';
-
-const socket = io('http://localhost:8080');
-socket.on('message', msg => {
-  console.log(msg); // 'G5p5...'
-});
 
 const fetchMemberObjects = members => {
   return {
