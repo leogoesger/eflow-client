@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import io from 'socket.io-client';
-const socket = io('http://localhost:8080');
+const socket = io(process.env.SERVER_ADDRESS);
 
 import Layout from '../components/shared/header/Layout';
 import {isBrowserNotSupported} from '../utils/helpers';
