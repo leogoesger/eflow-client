@@ -1,7 +1,7 @@
 export const classification = [
   'Snowmelt',
-  'Low-volume snowmelt and rain',
   'High-volume snowmelt and rain',
+  'Low-volume snowmelt and rain',
   'Winter Storms',
   'Groudwater',
   'Perenial Groundwater and Rain',
@@ -18,17 +18,18 @@ export const classInfo = {
     colors: ['#fbc02d', '#fff176'],
   },
   class2: {
-    abbre: 'LSR',
-    fullName: 'Low-volume snowmelt and rain',
-    gaugeCount: 65,
-    colors: ['#00bcd4', '#81d4fa'],
-  },
-  class3: {
     abbre: 'HSR',
     fullName: 'High-volume snowmelt and rain',
     gaugeCount: 7,
     colors: ['#0D47A1', '#64b5f6'],
   },
+  class3: {
+    abbre: 'LSR',
+    fullName: 'Low-volume snowmelt and rain',
+    gaugeCount: 65,
+    colors: ['#00bcd4', '#81d4fa'],
+  },
+
   class4: {
     abbre: 'WS',
     fullName: 'Winter Storms',
@@ -68,8 +69,8 @@ export const classInfo = {
 };
 export const classificationColor = [
   ['#fbc02d', '#fff176'], //yellow
-  ['#00bcd4', '#81d4fa'], //light blue
   ['#0D47A1', '#64b5f6'], //blue
+  ['#00bcd4', '#81d4fa'], //light blue
   ['#ff6f00', '#ffcc80'], //orange Winter storm
   ['#F44336', '#ef9a9a'], //red
   ['#087f23', '#a5d6a7'], //green

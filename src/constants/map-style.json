@@ -116,19 +116,6 @@
       "id": "class2",
       "type": "line",
       "source": "composite",
-      "source-layer": "Class3-7o2fmu",
-      "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#00bcd4"
-      }
-    },
-    {
-      "id": "class3",
-      "type": "line",
-      "source": "composite",
       "source-layer": "Class2-00uzq4",
       "interactive": true,
       "layout": {
@@ -138,6 +125,20 @@
         "line-color": "#0D47A1"
       }
     },
+    {
+      "id": "class3",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class3-7o2fmu",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#00bcd4"
+      }
+    },
+
     {
       "id": "class4",
       "type": "line",
