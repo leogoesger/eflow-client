@@ -52,6 +52,17 @@ export function getCalenderDate(offsetJulianDate) {
   return calenderDate;
 }
 
+export function validateEmail(email) {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return regex.test(email);
+}
+
+export function getEmailErrorMessage(email) {
+  if (email && !validateEmail(email)) {
+    return 'Invalid Email address';
+  }
+}
+
 export function getMapStyle(
   classifications,
   gauges,

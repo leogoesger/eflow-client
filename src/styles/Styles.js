@@ -1,15 +1,13 @@
-import Colors from './Colors';
-
 const Styles = {
   underlineFocusStyle: {
-    borderColor: Colors.orange,
+    borderColor: '#42a5f5',
   },
   floatingLabelStyle: {
-    color: Colors.darkBlueText,
+    color: '#42a5f5',
     lineHeight: '10px',
   },
   floatingLabelFocusStyle: {
-    color: Colors.orange,
+    color: '#42a5f5',
     lineHeight: '10px',
   },
 };

@@ -5,6 +5,7 @@ type STATE = {};
 type ACTION = {};
 const initialState: STATE = {
   message: null,
+  submitEmailMessage: '',
   error: null,
 };
 
@@ -13,6 +14,8 @@ export default function(state: STATE = initialState, action: ACTION) {
     case types.FETCH_BROADCAST_MESSAGE:
       return objectAssign({}, state, {message: action.message});
 
+    case types.SUBMIT_BUG_REPORT_OBJECT:
+      return objectAssign({}, state, {submitEmailMessage: action.bugReport});
     default:
       return state;
   }
