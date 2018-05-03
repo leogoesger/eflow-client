@@ -5,7 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import io from 'socket.io-client';
 
-const socket = io(process.env.SERVER_ADDRESS);
+const socket = io('https://eflows.ucdavis.edu');
 
 import Layout from '../components/shared/header/Layout';
 import {isBrowserNotSupported} from '../utils/helpers';
