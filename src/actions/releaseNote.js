@@ -1,4 +1,3 @@
-// import request from 'superagent';
 import {ReleaseNoteTypes as types} from '../action-types';
 
 const fetchReleaseObjects = releaseNotes => {
@@ -13,6 +12,13 @@ export function fetchReleaseNotes() {
     try {
       const releaseNotes = {
         body: [
+          {
+            date: 'May 3rd, 2018',
+            version: 'v0.09',
+            title: 'Bug Report Form',
+            tasks: ['Added Bug report form', 'Swap class 2 and class 3 data'],
+          },
+
           {
             date: 'May 2nd, 2018',
             version: 'v0.08',

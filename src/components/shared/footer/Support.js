@@ -20,7 +20,7 @@ export default class Support extends React.Component {
             </Link>
           </li>
           <li>
-            <Link to="/" className="footer-link">
+            <Link to="/bugReport" className="footer-link">
               Bug Report
             </Link>
           </li>

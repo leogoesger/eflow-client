@@ -20,6 +20,7 @@ import MetricDetail from '../containers/MetricDetail';
 import KnownIssue from '../containers/KnownIssue';
 import ReleaseNote from '../containers/ReleaseNote';
 import TermCitation from '../containers/TermCitation';
+import BugReport from '../containers/BugReport';
 
 class App extends React.Component {
   render() {
@@ -67,6 +68,11 @@ class App extends React.Component {
                 exact
                 path="/terms"
                 component={withTracker(TermCitation)}
+              />
+              <Route
+                exact
+                path="/bugReport"
+                component={withTracker(BugReport)}
               />
             </Switch>
             <Footer />
