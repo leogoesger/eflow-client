@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
-const socket = io('http://localhost:8080');
+// const socket = io('https://eflows.ucdavis.edu:8080');
 
 import Layout from '../components/shared/header/Layout';
 import {isBrowserNotSupported} from '../utils/helpers';
@@ -32,10 +32,10 @@ class Header extends React.Component {
 
   componentDidMount() {
     isBrowserNotSupported() ? this.setState({dialogOpen: true}) : null;
-    socket.on('message', msg => {
-      this.props.fetchBroadCastMessage(msg);
-      this.setState({dialogOpen: true});
-    });
+    // socket.on('message', msg => {
+    //   this.props.fetchBroadCastMessage(msg);
+    //   this.setState({dialogOpen: true});
+    // });
   }
 
   handleClose() {
