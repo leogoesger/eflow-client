@@ -28,6 +28,11 @@ import {
   removeWinterBoxPlotData,
 } from '../actions/winter';
 
+import {
+  fetchFallWinterBoxPlotData,
+  removeFallWinterBoxPlotData,
+} from '../actions/fallWinter';
+
 export class Hydrology extends React.Component {
   componentWillMount() {
     this.props.fetchGauges();
@@ -60,6 +65,7 @@ export class Hydrology extends React.Component {
       this.props.summerMagnitude10BoxPlot,
       this.props.summerMagnitude50BoxPlot,
       this.props.fallMagnitudeBoxPlot,
+      this.props.fallWinterMagnitudeBoxPlot,
     ].filter(d => d);
   }
 
@@ -73,6 +79,9 @@ export class Hydrology extends React.Component {
       removeSummerBoxPlotData: d => this.props.removeSummerBoxPlotData(d),
       fetchWinterBoxPlotData: d => this.props.fetchWinterBoxPlotData(d),
       removeWinterBoxPlotData: d => this.props.removeWinterBoxPlotData(d),
+      fetchFallWinterBoxPlotData: d => this.props.fetchFallWinterBoxPlotData(d),
+      removeFallWinterBoxPlotData: d =>
+        this.props.removeFallWinterBoxPlotData(d),
     };
   }
 
@@ -126,6 +135,8 @@ Hydrology.propTypes = {
   removeSummerBoxPlotData: PropTypes.func,
   fetchWinterBoxPlotData: PropTypes.func,
   removeWinterBoxPlotData: PropTypes.func,
+  fetchFallWinterBoxPlotData: PropTypes.func,
+  removeFallWinterBoxPlotData: PropTypes.func,
   fallTimingBoxPlot: PropTypes.object,
   fallTimingWetBoxPlot: PropTypes.object,
   springTimingBoxPlot: PropTypes.object,
@@ -138,6 +149,7 @@ Hydrology.propTypes = {
   summerMagnitude10BoxPlot: PropTypes.object,
   summerMagnitude50BoxPlot: PropTypes.object,
   fallMagnitudeBoxPlot: PropTypes.object,
+  fallWinterMagnitudeBoxPlot: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -160,6 +172,7 @@ const mapStateToProps = state => {
     summerMagnitude10BoxPlot: state.summer.magnitude10BoxPlot,
     summerMagnitude50BoxPlot: state.summer.magnitude50BoxPlot,
     fallMagnitudeBoxPlot: state.fall.magnitudeBoxPlot,
+    fallWinterMagnitudeBoxPlot: state.fallWinter.magnitudeBoxPlot,
   };
 };
 
@@ -181,6 +194,10 @@ const mapDispatchToProps = dispatch => {
     removeSummerBoxPlotData: data => dispatch(removeSummerBoxPlotData(data)),
     fetchWinterBoxPlotData: data => dispatch(fetchWinterBoxPlotData(data)),
     removeWinterBoxPlotData: data => dispatch(removeWinterBoxPlotData(data)),
+    fetchFallWinterBoxPlotData: data =>
+      dispatch(fetchFallWinterBoxPlotData(data)),
+    removeFallWinterBoxPlotData: data =>
+      dispatch(removeFallWinterBoxPlotData(data)),
   };
 };
 

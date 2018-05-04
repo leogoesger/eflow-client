@@ -7,6 +7,7 @@ import FallTypes from './fall';
 import SpringTypes from './spring';
 import SummerTypes from './summer';
 import WinterTypes from './winter';
+import FallWinterTypes from './fallWinter';
 import ReleaseNoteTypes from './releaseNote';
 import KnowIssueTypes from './knownIssue';
 import MetricDetailTypes from './metricDetail';
@@ -25,6 +26,7 @@ export {ReleaseNoteTypes};
 export {KnowIssueTypes};
 export {MetricDetailTypes};
 export {UserTypes};
+export {FallWinterTypes};
 
 export default {
   ClassificationTypes,
@@ -40,4 +42,5 @@ export default {
   KnowIssueTypes,
   MetricDetailTypes,
   UserTypes,
+  FallWinterTypes,
 };

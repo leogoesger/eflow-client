@@ -125,20 +125,21 @@ class Hydrograph extends React.Component {
   _renderpercentilleChips() {
     return (
       <div style={styles.labels}>
+        <div style={styles.labelName}>{'Percentiles:'}</div>
         <div style={{...styles.label, backgroundColor: Colors.NINTY}} />
-        <div style={{fontSize: '14px'}}>{'90 percentile'}</div>
+        <div style={styles.labelName}>{'10th'}</div>
         <div style={{...styles.label, backgroundColor: Colors.SEVENTYFIVE}} />
 
-        <div style={{fontSize: '14px'}}>{'75 percentile'}</div>
+        <div style={styles.labelName}>{'25th'}</div>
         <div style={{...styles.label, backgroundColor: Colors.FIFTY}} />
 
-        <div style={{fontSize: '14px'}}>{'50 percentile'}</div>
+        <div style={styles.labelName}>{'50th'}</div>
         <div style={{...styles.label, backgroundColor: Colors.TWENTYFIVE}} />
 
-        <div style={{fontSize: '14px'}}>{'25 percentile'}</div>
+        <div style={styles.labelName}>{'75th'}</div>
         <div style={{...styles.label, backgroundColor: Colors.TEN}} />
 
-        <div style={{fontSize: '14px'}}>{'10 percentile'}</div>
+        <div style={styles.labelName}>{'90th'}</div>
       </div>
     );
   }
@@ -234,7 +235,7 @@ const styles = {
   label: {
     height: '10px',
     width: '10px',
-    marginTop: '1px',
+    marginTop: '0px',
   },
   graph: {
     height: '750px',
@@ -249,6 +250,7 @@ const styles = {
     fontWeight: '500',
     fontSize: '16px',
   },
+  labelName: {fontSize: '14px', marginLeft: '-35px', marginTop: '-2px'},
 };
 
 export default Hydrograph;

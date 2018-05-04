@@ -10,6 +10,7 @@ import fall from './fall';
 import spring from './spring';
 import summer from './summer';
 import winter from './winter';
+import fallWinter from './fallWinter';
 import knownIssue from './knownIssue';
 import releaseNote from './releaseNote';
 import metricDetail from './metricDetail';
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   spring,
   summer,
   winter,
+  fallWinter,
   knownIssue,
   releaseNote,
   metricDetail,

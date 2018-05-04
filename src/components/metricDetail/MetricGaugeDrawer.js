@@ -4,6 +4,10 @@ import {uniqBy, some, cloneDeep} from 'lodash';
 import Drawer from 'material-ui/Drawer';
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import Clear from 'material-ui/svg-icons/content/clear';
+
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {metricReference} from '../../constants/metrics';
 
@@ -68,20 +72,22 @@ class MetricGaugeDrawer extends React.Component {
   _renderTables() {
     const tableNames = this._getTableNames(metricReference);
     return tableNames.map(table => {
-      return (
-        <Card key={table.displayTableName}>
-          <CardHeader
-            title={table.displayTableName}
-            actAsExpander={true}
-            showExpandableButton={true}
-            subtitleStyle={{paddingTop: '3px'}}
-          />
+      if (table.displayTableName !== 'All Year') {
+        return (
+          <Card key={table.displayTableName}>
+            <CardHeader
+              title={table.displayTableName}
+              actAsExpander={true}
+              showExpandableButton={true}
+              subtitleStyle={{paddingTop: '3px'}}
+            />
 
-          <CardText expandable={true}>
-            {this._renderTableItems(table.displayTableName)}
-          </CardText>
-        </Card>
-      );
+            <CardText expandable={true}>
+              {this._renderTableItems(table.displayTableName)}
+            </CardText>
+          </Card>
+        );
+      }
     });
   }
 
@@ -94,7 +100,7 @@ class MetricGaugeDrawer extends React.Component {
     );
     return metrics.map(metric => {
       if (
-        metric.dimUnit === 'cfs' ||
+        (!metric.hidden && metric.dimUnit === 'cfs') ||
         metric.dimUnit === 'julian date'
         // metric.dimUnit === 'days'
       ) {
@@ -154,6 +160,16 @@ class MetricGaugeDrawer extends React.Component {
           toggled={this.props.logScale}
           style={{marginTop: '10px'}}
         />
+
+        <RaisedButton
+          label="Close"
+          backgroundColor={Colors.gold}
+          labelColor={Colors.white}
+          labelStyle={{fontSize: '12px'}}
+          icon={<Clear color={Colors.white} />}
+          onClick={() => this.props.toggleMetricGaugeDrawer(false)}
+          style={{margin: '20px auto 5px 50px'}}
+        />
       </div>
     );
   }
@@ -162,8 +178,8 @@ class MetricGaugeDrawer extends React.Component {
     return (
       <Drawer
         containerStyle={styles.container}
-        docked={false}
-        width={300}
+        docked={true}
+        width={230}
         overlayStyle={styles.overlay}
         openSecondary={true}
         open={this.props.isDrawerOpen}

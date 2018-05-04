@@ -160,14 +160,7 @@ class MetricGaugeCard extends React.Component {
       classObject = classInfo[`class${annualFlowData.Gauge.classId}`];
 
     return (
-      <Card
-        style={{
-          width: '65%',
-          height: '600px',
-          overflow: 'scroll',
-          margin: '0 auto',
-        }}
-      >
+      <Card style={styles.container}>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <div style={{width: '60%'}}>
             <CardHeader
@@ -274,6 +267,12 @@ MetricGaugeCard.propTypes = {
 };
 
 const styles = {
+  container: {
+    width: '70%',
+    height: '600px',
+    overflow: 'scroll',
+    margin: '0 auto',
+  },
   yLabel: {
     position: 'absolute',
     fontSize: '16px',
