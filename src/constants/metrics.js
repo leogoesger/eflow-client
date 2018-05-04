@@ -10,6 +10,7 @@ export const metricReference = [
     columnName: 'average',
     boxPlotOverLayMethods: ['', ''],
     colors: ['#f9a825', '#c17900'],
+    hidden: true,
   },
   {
     name: 'allYearStandardDeviation',
@@ -22,6 +23,7 @@ export const metricReference = [
     colors: ['#fbc02d', '#c49000'],
     nonDimUnit: 'none',
     dimUnit: 'cfs',
+    hidden: true,
   },
   {
     name: 'allYearCoeffientVariance',
@@ -34,6 +36,7 @@ export const metricReference = [
     colors: ['#fbc02d', '#c49000'],
     nonDimUnit: 'none',
     dimUnit: 'none',
+    hidden: true,
   },
   {
     name: 'springTiming',
@@ -106,7 +109,7 @@ export const metricReference = [
   },
   {
     name: 'summerMagnitude10',
-    display: 'Summer Magnitude 10P',
+    display: 'Summer Baseflow Magnitude',
     isBoxplotOverlay: true,
     tableName: 'Summers',
     displayTableName: 'Summer',
@@ -122,7 +125,7 @@ export const metricReference = [
   {
     name: 'summerMagnitude50',
     display: 'Summer Magnitude 50P',
-    isBoxplotOverlay: true,
+    isBoxplotOverlay: false,
     tableName: 'Summers',
     displayTableName: 'Summer',
     columnName: 'magnitude50',
@@ -133,6 +136,7 @@ export const metricReference = [
     colors: ['#f4511e', '#b91400'],
     nonDimUnit: 'none',
     dimUnit: 'cfs',
+    hidden: true,
   },
   {
     name: 'summerDurationFlush',
@@ -219,13 +223,16 @@ export const metricReference = [
     dimUnit: 'days',
   },
   {
-    name: 'fallWinterMagnitude',
-    display: 'Fall Winter Magnitude',
-    isBoxplotOverlay: false,
+    name: 'fallwinterMagWet',
+    display: 'Winter Baseflow Magnitude',
+    isBoxplotOverlay: true,
     tableName: 'FallWinters',
-    displayTableName: 'Fall Winter',
+    displayTableName: 'Winter',
     columnName: 'magWet',
-    boxPlotOverLayMethods: ['', ''],
+    boxPlotOverLayMethods: [
+      'fetchFallWinterBoxPlotData',
+      'removeFallWinterBoxPlotData',
+    ],
     colors: ['#00695c', '#003d33'],
     nonDimUnit: 'none',
     dimUnit: 'cfs',

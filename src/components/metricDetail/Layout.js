@@ -59,7 +59,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     margin: '-60px auto 100px auto',
-    height: '600px',
+    height: '100%',
     overflow: 'scroll',
     width: '1200px',
   },

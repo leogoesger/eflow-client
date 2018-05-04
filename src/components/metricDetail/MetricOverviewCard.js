@@ -133,14 +133,7 @@ class MetricOverviewCard extends React.Component {
 
     return (
       <React.Fragment>
-        <Card
-          style={{
-            width: '65%',
-            height: '600px',
-            overflow: 'scroll',
-            margin: '0 auto',
-          }}
-        >
+        <Card style={styles.container}>
           <div style={styles.selectionContainer}>
             <SelectField
               floatingLabelText="Metric Category"
@@ -196,6 +189,12 @@ MetricOverviewCard.propTypes = {
 };
 
 const styles = {
+  container: {
+    width: '70%',
+    height: '600px',
+    overflow: 'scroll',
+    margin: '0 auto',
+  },
   selectionContainer: {
     display: 'flex',
     justifyContent: 'space-around',

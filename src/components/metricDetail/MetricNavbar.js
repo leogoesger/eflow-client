@@ -147,7 +147,7 @@ MetricNavbar.propTypes = {
 
 const styles = {
   container: {
-    width: '35%',
+    width: '30%',
     height: '600px',
     overflow: 'scroll',
   },
