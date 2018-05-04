@@ -109,7 +109,7 @@ export const metricReference = [
   },
   {
     name: 'summerMagnitude10',
-    display: 'Summer Baseflow',
+    display: 'Summer Baseflow Magnitude',
     isBoxplotOverlay: true,
     tableName: 'Summers',
     displayTableName: 'Summer',
@@ -224,7 +224,7 @@ export const metricReference = [
   },
   {
     name: 'fallwinterMagWet',
-    display: 'Winter Baseflow',
+    display: 'Winter Baseflow Magnitude',
     isBoxplotOverlay: true,
     tableName: 'FallWinters',
     displayTableName: 'Winter',

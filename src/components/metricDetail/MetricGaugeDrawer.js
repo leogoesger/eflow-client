@@ -25,12 +25,12 @@ class MetricGaugeDrawer extends React.Component {
     // all params handle the case for FALL TIMING, FALL TIMING WET.
     // includes will get both of them when used
     if (all) {
-      filteredMetrics = metricReference.filter(metric =>
-        metric.display.includes(keyWord)
+      filteredMetrics = metricReference.filter(
+        metric => metric.display.includes(keyWord) && !metric.hidden
       );
     } else {
       filteredMetrics = metricReference.filter(
-        metric => metric.display === keyWord
+        metric => metric.display === keyWord && !metric.hidden
       );
     }
 
@@ -43,12 +43,12 @@ class MetricGaugeDrawer extends React.Component {
   _handleToggle(keyWord, all, status) {
     let filteredMetrics;
     if (all) {
-      filteredMetrics = metricReference.filter(metric =>
-        metric.display.includes(keyWord)
+      filteredMetrics = metricReference.filter(
+        metric => metric.display.includes(keyWord) && !metric.hidden
       );
     } else {
       filteredMetrics = metricReference.filter(
-        metric => metric.display === keyWord
+        metric => metric.display === keyWord && !metric.hidden
       );
     }
 
@@ -67,6 +67,13 @@ class MetricGaugeDrawer extends React.Component {
       }
     });
     this.props.toggleAnnualFlowMetrics(currentMetrics);
+  }
+
+  _getDisplay(name) {
+    if (name.length > 20) {
+      return name.slice(0, 15);
+    }
+    return name;
   }
 
   _renderTables() {
@@ -107,7 +114,7 @@ class MetricGaugeDrawer extends React.Component {
         return (
           <Toggle
             key={metric.name}
-            label={metric.display}
+            label={this._getDisplay(metric.display)}
             labelStyle={styles.labelStyle}
             value={'empty'}
             thumbSwitchedStyle={{
