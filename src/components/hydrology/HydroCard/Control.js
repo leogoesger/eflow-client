@@ -68,6 +68,13 @@ export default class Control extends React.Component {
     }
   }
 
+  _getDisplay(name) {
+    if (name.length > 20) {
+      return name.slice(0, 15);
+    }
+    return name;
+  }
+
   _renderCheckBox() {
     return metricReference.map(metricObject => {
       if (metricObject.isBoxplotOverlay) {
@@ -75,7 +82,7 @@ export default class Control extends React.Component {
           <Checkbox
             key={metricObject.name}
             checked={this.state[metricObject.name]}
-            label={metricObject.display}
+            label={this._getDisplay(metricObject.display)}
             style={styles.checkbox}
             labelStyle={styles.labelStyle}
             iconStyle={{width: '16px', fill: metricObject.colors[0]}}
