@@ -145,8 +145,8 @@ export default class Map extends React.Component {
     return Boolean(
       features.length &&
         (offsetX !== 0 && offsetX !== -1 && offsetY !== 0 && offsetY !== -1) &&
-        (Math.abs(this.state.x - offsetX) > 50 ||
-          Math.abs(this.state.y - offsetY) > 50 ||
+        (Math.abs(this.state.x - offsetX) > 10 ||
+          Math.abs(this.state.y - offsetY) > 10 ||
           !x)
     );
   }
@@ -159,25 +159,32 @@ export default class Map extends React.Component {
 
   _onHover(event) {
     const {features, srcEvent: {offsetX, offsetY}} = event;
+
     if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
-      if (
-        hoveredFeature &&
-        this.state.hoveredFeature &&
-        hoveredFeature.properties.gaugeId !==
-          this.state.hoveredFeature.properties.gaugeId
-      ) {
-        this.requestFeature(hoveredFeature);
-        return this.setState({hoveredFeature, x: offsetX, y: offsetY});
-      }
-    } else {
+      return this.setState({hoveredFeature, x: offsetX, y: offsetY});
+    } else if (features.find(f => f.layer.id.indexOf('class') >= 0)) {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('class') >= 0);
       if (this._shouldUpdate(features, offsetX, offsetY, this.state.x)) {
-        this.requestFeature(hoveredFeature);
         this.setState({hoveredFeature, x: offsetX, y: offsetY});
       }
+    } else {
+      return this.setState({hoveredFeature: null, x: null, y: null});
+    }
+  }
+
+  _onClick(event) {
+    const {features} = event;
+    if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
+      const hoveredFeature =
+        features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
+      return this._requestCurrentFeature(hoveredFeature);
+    } else {
+      const hoveredFeature =
+        features && features.find(f => f.layer.id.indexOf('class') >= 0);
+      return this._requestCurrentFeature(hoveredFeature);
     }
   }
 
@@ -256,6 +263,7 @@ export default class Map extends React.Component {
         onLoad={() => this.setState({loading: false})}
         icon-allow-overlap={false}
         onHover={e => this._onHover(e)}
+        onClick={e => this._onClick(e)}
         onViewportChange={viewport => this._onViewportChange(viewport)}
         mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
       >
