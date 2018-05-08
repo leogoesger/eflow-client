@@ -8,6 +8,7 @@ import {
   fetchAllClassesBoxPlots,
   fetchAnnualFlowData,
   toggleMetricGaugeDrawer,
+  fetchHydrographOverlay,
 } from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
 import ErrorBoundary from '../components/shared/ErrorBoundary';
@@ -19,6 +20,7 @@ export class MetricDetail extends React.Component {
     }
     if (this.props.currentGauge) {
       this.props.fetchAnnualFlowData({gaugeId: this.props.currentGauge.id});
+      this.props.fetchHydrographOverlay(this.props.currentGauge.id);
     }
     this.removeClassGaugeProps();
   }
@@ -48,6 +50,9 @@ export class MetricDetail extends React.Component {
             }
             logScale={this.props.logScale}
             toggledMetrics={this.props.toggledMetrics}
+            isHydrographOverlay={this.props.isHydrographOverlay}
+            hydrograph={this.props.hydrograph}
+            fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
           />
         </ErrorBoundary>
       </React.Fragment>
@@ -68,6 +73,9 @@ MetricDetail.propTypes = {
   logScale: PropTypes.bool,
   toggledMetrics: PropTypes.array,
   toggleMetricGaugeDrawer: PropTypes.func,
+  isHydrographOverlay: PropTypes.bool,
+  fetchHydrographOverlay: PropTypes.func,
+  hydrograph: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -79,6 +87,8 @@ const mapStateToProps = state => {
     loading: state.metricDetail.loading,
     toggledMetrics: state.metricDetail.toggledMetrics,
     logScale: state.metricDetail.logScale,
+    isHydrographOverlay: state.metricDetail.isHydrographOverlay,
+    hydrograph: state.metricDetail.hydrograph,
   };
 };
 
@@ -90,6 +100,7 @@ const mapDispatchToProps = dispatch => {
     fetchAnnualFlowData: d => dispatch(fetchAnnualFlowData(d)),
     toggleMetricGaugeDrawer: status =>
       dispatch(toggleMetricGaugeDrawer(status)),
+    fetchHydrographOverlay: d => dispatch(fetchHydrographOverlay(d)),
   };
 };
 

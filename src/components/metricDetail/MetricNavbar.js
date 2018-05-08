@@ -72,14 +72,12 @@ class MetricNavbar extends React.Component {
   _selectRow(e) {
     this.setState({selectedGaugeId: e.id});
     this.props.fetchAnnualFlowData({gaugeId: e.id});
+    this.props.fetchHydrographOverlay(e.id);
   }
 
   _renderClassCard(classes) {
     return classes.map(classification => {
       const gaugeCount = classification.gauges.length;
-      // const currentColor = classInfo[`class${classification.id}`].colors[0];
-      // titleStyle={{color: currentColor}}
-
       return (
         <Card key={classification.id}>
           <CardHeader
@@ -111,15 +109,6 @@ class MetricNavbar extends React.Component {
     });
   }
 
-  // <TableRow style={styles.tableRow}>
-  //   <TableRowColumn style={{height: '15px', paddingTop: '15px'}}>
-  //     {`Class ${classification.id}`}
-  //   </TableRowColumn>
-  //
-  //   <TableRowColumn style={{height: '15px'}}>
-  //     {classification.name}
-  //   </TableRowColumn>
-  // </TableRow>
   render() {
     if (!this.props.classifications) {
       return null;
@@ -143,6 +132,8 @@ class MetricNavbar extends React.Component {
 MetricNavbar.propTypes = {
   classifications: PropTypes.array,
   fetchAnnualFlowData: PropTypes.func,
+  fetchHydrographOverlay: PropTypes.func,
+  isHydrographOverlay: PropTypes.bool,
 };
 
 const styles = {
