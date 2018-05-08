@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
+
 import {metricReference} from '../../../constants/metrics';
 import {getJulianOffsetDate} from '../../../utils/helpers';
 import Axis from './Axis';
+import {Colors} from '../../../styles';
 
 export default class SimpleLinePlot extends React.Component {
   constructor(props) {
@@ -115,12 +117,30 @@ export default class SimpleLinePlot extends React.Component {
               y2={0}
             />
           );
-        } else if (currentMetric.dimUnit === 'days') {
-          return null;
         } else {
           return null;
         }
       });
+    });
+  }
+
+  _renderHydrograph(transform) {
+    if (!this.props.isHydrographOverlay || !this.props.hydrograph) {
+      return null;
+    }
+
+    return Object.keys(this.props.hydrograph).map(key => {
+      return (
+        <path
+          key={key}
+          transform={transform}
+          d={this.line(this.props.hydrograph[key])}
+          strokeLinecap="round"
+          strokeWidth="3"
+          stroke={Colors[key]}
+          opacity="0.25"
+        />
+      );
     });
   }
 
@@ -145,6 +165,7 @@ export default class SimpleLinePlot extends React.Component {
           gridLength={width}
           orientation="left"
         />
+        {this._renderHydrograph(transform)}
         <path
           transform={transform}
           d={this.line(this.props.data)}
@@ -176,4 +197,6 @@ SimpleLinePlot.propTypes = {
   logScale: PropTypes.bool,
   toggledMetrics: PropTypes.array,
   annualFlowData: PropTypes.object,
+  isHydrographOverlay: PropTypes.bool,
+  hydrograph: PropTypes.object,
 };

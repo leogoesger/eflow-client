@@ -10,6 +10,8 @@ const initialState: STATE = {
   boxPlotData: null,
   loading: true,
   logScale: false,
+  isHydrographOverlay: false,
+  hydrograph: null,
   error: null,
 };
 
@@ -32,6 +34,13 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.TOGGLE_LOG_SCALE_OBJECT:
       return objectAssign({}, state, {logScale: action.status});
+
+    case types.TOGGLE_HYDROGRAPH_OVERLAY_OBJECT:
+      return objectAssign({}, state, {isHydrographOverlay: action.status});
+
+    case types.FETCH_HYDROGRAPH_OVERLAY_OBJECT:
+      return objectAssign({}, state, {hydrograph: action.hydrograph});
+
     default:
       return state;
   }

@@ -144,6 +144,8 @@ class MetricGaugeCard extends React.Component {
             zoomTransform={this.state.zoomTransform}
             zoomType="detail"
             logScale={this.props.logScale}
+            isHydrographOverlay={this.props.isHydrographOverlay}
+            hydrograph={this.props.hydrograph}
             toggledMetrics={this.props.toggledMetrics}
             annualFlowData={this.props.annualFlowData}
           />
@@ -264,6 +266,8 @@ MetricGaugeCard.propTypes = {
   toggleMetricGaugeDrawer: PropTypes.func,
   logScale: PropTypes.bool,
   toggledMetrics: PropTypes.array,
+  isHydrographOverlay: PropTypes.bool,
+  hydrograph: PropTypes.object,
 };
 
 const styles = {

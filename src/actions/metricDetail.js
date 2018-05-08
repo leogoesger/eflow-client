@@ -44,6 +44,20 @@ const handleToggleLogScaleObject = status => {
   };
 };
 
+const handleHydrographOverlayObject = status => {
+  return {
+    type: types.TOGGLE_HYDROGRAPH_OVERLAY_OBJECT,
+    status,
+  };
+};
+
+const fetchHydrographOverlayObject = hydrograph => {
+  return {
+    type: types.FETCH_HYDROGRAPH_OVERLAY_OBJECT,
+    hydrograph,
+  };
+};
+
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
     const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
@@ -64,6 +78,15 @@ export function fetchAnnualFlowData(gaugeInfo) {
   };
 }
 
+export function fetchHydrographOverlay(gaugeInfo) {
+  return async dispatch => {
+    const hydrograph = await request.get(
+      `${process.env.SERVER_ADDRESS}/api/dimHydrographs/${gaugeInfo}`
+    );
+    dispatch(fetchHydrographOverlayObject(hydrograph.body));
+  };
+}
+
 export function toggleMetricGaugeDrawer(status) {
   return async dispatch => {
     dispatch(toggleDrawerObject(status));
@@ -79,5 +102,11 @@ export function toggleAnnualFlowMetrics(toggledMetrics) {
 export function handleToggleLogScale(status) {
   return async dispatch => {
     dispatch(handleToggleLogScaleObject(status));
+  };
+}
+
+export function handleHydrographOverlay(status) {
+  return async dispatch => {
+    dispatch(handleHydrographOverlayObject(status));
   };
 }

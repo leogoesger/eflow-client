@@ -11,7 +11,7 @@ export default class Connect extends React.Component {
           <li>
             <a
               className="footer-link"
-              href="/"
+              href="https://twitter.com/watermgmt_ucd"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -41,7 +41,7 @@ export default class Connect extends React.Component {
           <li>
             <a
               className="footer-link"
-              href="https://github.com/leogoesger"
+              href="https://github.com/hrvg/ucd-eflow"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -167,6 +167,15 @@ class MetricGaugeDrawer extends React.Component {
           toggled={this.props.logScale}
           style={{marginTop: '10px'}}
         />
+        <Toggle
+          label={'Hydrograph Overlay'}
+          labelStyle={styles.labelStyle}
+          value={'empty'}
+          onClick={() =>
+            this.props.handleHydrographOverlay(!this.props.isHydrographOverlay)
+          }
+          toggled={this.props.isHydrographOverlay}
+        />
 
         <RaisedButton
           label="Close"
@@ -215,6 +224,8 @@ MetricGaugeDrawer.propTypes = {
   logScale: PropTypes.bool,
   toggleAnnualFlowMetrics: PropTypes.func,
   handleToggleLogScale: PropTypes.func,
+  handleHydrographOverlay: PropTypes.func,
+  isHydrographOverlay: PropTypes.bool,
 };
 
 MetricGaugeDrawer.defaultProps = {

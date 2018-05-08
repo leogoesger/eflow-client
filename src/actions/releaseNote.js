@@ -13,12 +13,21 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 8th, 2018',
+            version: 'v0.10',
+            title: 'Annual Flow Hydrograph Overlay',
+            tasks: [
+              'Overlay dimension hydrograph on annual flow data',
+              'Disable hover to fetch gauge info',
+              'Lock in selected gauge on map page',
+            ],
+          },
+          {
             date: 'May 3rd, 2018',
             version: 'v0.09',
             title: 'Bug Report Form',
             tasks: ['Added Bug report form', 'Swap class 2 and class 3 data'],
           },
-
           {
             date: 'May 2nd, 2018',
             version: 'v0.08',

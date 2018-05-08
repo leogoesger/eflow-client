@@ -16,6 +16,8 @@ export default class Layout extends React.Component {
           }
           logScale={this.props.logScale}
           toggledMetrics={this.props.toggledMetrics}
+          isHydrographOverlay={this.props.isHydrographOverlay}
+          hydrograph={this.props.hydrograph}
         />
       );
     } else {
@@ -35,6 +37,8 @@ export default class Layout extends React.Component {
         <MetricNavbar
           classifications={this.props.classifications}
           fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
+          fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
+          isHydrographOverlay={this.props.isHydrographOverlay}
         />
         {this._renderDetailCard()}
       </div>
@@ -52,6 +56,9 @@ Layout.propTypes = {
   toggleMetricGaugeDrawer: PropTypes.func,
   logScale: PropTypes.bool,
   toggledMetrics: PropTypes.array,
+  isHydrographOverlay: PropTypes.bool,
+  fetchHydrographOverlay: PropTypes.func,
+  hydrograph: PropTypes.object,
 };
 
 const styles = {
