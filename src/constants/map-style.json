@@ -109,7 +109,10 @@
       },
       "paint": {
         "line-color": "#fbc02d",
-        "line-width": 1.3
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
       }
     },
     {
@@ -123,7 +126,10 @@
       },
       "paint": {
         "line-color": "#0D47A1",
-        "line-width": 1.3
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
       }
     },
     {
@@ -137,7 +143,10 @@
       },
       "paint": {
         "line-color": "#00bcd4",
-        "line-width": 1.3
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
       }
     },
 
@@ -152,63 +161,10 @@
       },
       "paint": {
         "line-color": "#ff6f00",
-        "line-width": 1.3
-      }
-    },
-    {
-      "id": "class6",
-      "type": "line",
-      "source": "composite",
-      "source-layer": "Class6-4osdj8",
-      "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#087f23",
-        "line-width": 1.3
-      }
-    },
-    {
-      "id": "class7",
-      "type": "line",
-      "source": "composite",
-      "source-layer": "Class7-9pkku2",
-      "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#f06292",
-        "line-width": 1.3
-      }
-    },
-    {
-      "id": "class8",
-      "type": "line",
-      "source": "composite",
-      "source-layer": "Class8-0ztc53",
-      "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#7E57C2",
-        "line-width": 1.3
-      }
-    },
-    {
-      "id": "class9",
-      "type": "line",
-      "source": "composite",
-      "source-layer": "Class9-3j4gme",
-      "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "hsl(333, 82%, 45%)",
-        "line-width": 1.3
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
       }
     },
     {
@@ -222,9 +178,81 @@
       },
       "paint": {
         "line-color": "hsl(1, 91%, 52%)",
-        "line-width": 1.3
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
       }
     },
+    {
+      "id": "class6",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class6-4osdj8",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#087f23",
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
+      }
+    },
+    {
+      "id": "class7",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class7-9pkku2",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#f06292",
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
+      }
+    },
+    {
+      "id": "class8",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class8-0ztc53",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "#7E57C2",
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
+      }
+    },
+    {
+      "id": "class9",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Class9-3j4gme",
+      "interactive": true,
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "hsl(333, 82%, 45%)",
+        "line-width": {
+          "base": 1,
+          "stops": [[5, 1.2], [10, 3.5]]
+        }
+      }
+    },
+
     {
       "id": "cities",
       "type": "symbol",
