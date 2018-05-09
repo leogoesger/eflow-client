@@ -191,3 +191,7 @@ body *::-webkit-scrollbar {
 .betaIcon:hover {
   text-decoration: underline;
 }
+
+.highlight {
+  background-color: pink;
+}

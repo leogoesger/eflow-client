@@ -17,6 +17,13 @@ const fetchCurrentGaugeObject = gauge => {
   };
 };
 
+const searchGaugeObject = gauges => {
+  return {
+    type: types.SEARCH_GAUGE_OBJECT,
+    gauges,
+  };
+};
+
 export function removeCurrentGauge() {
   return dispatch => {
     dispatch(fetchCurrentGaugeObject(null));
@@ -45,6 +52,22 @@ export function fetchCurrentGauge(gaugeId) {
       dispatch(fetchCurrentGaugeObject(gauge.body));
       dispatch(updateTab('b'));
       dispatch(removeCurrentClass());
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
+export function searchGauge(keyWord) {
+  return async dispatch => {
+    try {
+      if (!keyWord) {
+        return dispatch(searchGaugeObject([]));
+      }
+      const gauges = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/gauges/search`)
+        .send({keyWord});
+      dispatch(searchGaugeObject(gauges.body));
     } catch (e) {
       throw e;
     }
