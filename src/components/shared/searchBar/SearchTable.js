@@ -73,7 +73,7 @@ export default class SearchTable extends React.Component {
             enableSelectAll={false}
           >
             <TableRow style={{height: '35px'}}>
-              <TableHeaderColumn style={{height: '35px', width: '30px'}}>
+              <TableHeaderColumn style={{height: '35px', width: '32px'}}>
                 <div style={styles.column}>{'ID'}</div>
               </TableHeaderColumn>
               <TableHeaderColumn style={{height: '35px', width: '28px'}}>

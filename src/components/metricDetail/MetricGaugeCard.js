@@ -78,8 +78,7 @@ class MetricGaugeCard extends React.Component {
   }
 
   _renderSliderHelper() {
-    const {year} = this.props.annualFlowData.Years;
-
+    const {allYears} = this.props.annualFlowData.Years;
     return (
       <div
         style={{
@@ -91,9 +90,39 @@ class MetricGaugeCard extends React.Component {
           color: Colors.lightGrey,
         }}
       >
-        <div>{year[0]}</div>
+        <div>{allYears[0]}</div>
         <div>{'Slide the bar to change the water year!'}</div>
-        <div>{year[year.length - 1]}</div>
+        <div>{Number(allYears[allYears.length - 1])}</div>
+      </div>
+    );
+  }
+
+  _renderYearStatus() {
+    return (
+      <div
+        style={{
+          marginTop: '-15px',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginRight: '20px',
+        }}
+      >
+        {this.state.currentYear >
+          this.props.annualFlowData.Gauge.unimpairedEndYear ||
+        this.state.currentYear <
+          this.props.annualFlowData.Gauge.unimpairedStartYear ? (
+          <span
+            style={{color: Colors.red, fontSize: '14px', fontWeight: '700'}}
+          >
+            {'Impaired'}
+          </span>
+        ) : (
+          <span
+            style={{color: Colors.blue, fontSize: '14px', fontWeight: '700'}}
+          >
+            {'Unimpaired'}
+          </span>
+        )}
       </div>
     );
   }
@@ -126,30 +155,33 @@ class MetricGaugeCard extends React.Component {
         <div style={styles.xLabel}>{`Water year hydrograph for ${
           this.state.currentYear
         }`}</div>
-        <svg
-          width={700}
-          height={360}
-          ref={el => (this.svg = el)}
-          style={{cursor: 'pointer'}}
-        >
-          <SimpleLinePlot
-            x={70}
-            y={20}
-            width={600}
-            height={300}
-            data={this._getAnnualFlowData()}
-            xValue={value => Number(value.date)}
-            yValue={value => Number(value.flow)}
-            color={Colors.blue}
-            zoomTransform={this.state.zoomTransform}
-            zoomType="detail"
-            logScale={this.props.logScale}
-            isHydrographOverlay={this.props.isHydrographOverlay}
-            hydrograph={this.props.hydrograph}
-            toggledMetrics={this.props.toggledMetrics}
-            annualFlowData={this.props.annualFlowData}
-          />
-        </svg>
+        {this._renderYearStatus()}
+        <div style={{marginLeft: '20px'}}>
+          <svg
+            width={700}
+            height={360}
+            ref={el => (this.svg = el)}
+            style={{cursor: 'pointer'}}
+          >
+            <SimpleLinePlot
+              x={70}
+              y={20}
+              width={600}
+              height={300}
+              data={this._getAnnualFlowData()}
+              xValue={value => Number(value.date)}
+              yValue={value => Number(value.flow)}
+              color={Colors.blue}
+              zoomTransform={this.state.zoomTransform}
+              zoomType="detail"
+              logScale={this.props.logScale}
+              isHydrographOverlay={this.props.isHydrographOverlay}
+              hydrograph={this.props.hydrograph}
+              toggledMetrics={this.props.toggledMetrics}
+              annualFlowData={this.props.annualFlowData}
+            />
+          </svg>
+        </div>
       </React.Fragment>
     );
   }
@@ -242,10 +274,10 @@ class MetricGaugeCard extends React.Component {
         </Paper>
 
         <Slider
-          min={this.props.annualFlowData.Years.year[0]}
+          min={this.props.annualFlowData.Years.allYears[0]}
           max={
-            this.props.annualFlowData.Years.year[
-              this.props.annualFlowData.Years.year.length - 1
+            this.props.annualFlowData.Years.allYears[
+              this.props.annualFlowData.Years.allYears.length - 1
             ]
           }
           sliderStyle={{marginBottom: '10px'}}
