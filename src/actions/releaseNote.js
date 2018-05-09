@@ -13,6 +13,25 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 9th, 2018',
+            version: 'v0.12',
+            title: 'Display Unimpaired Gauge',
+            tasks: [
+              'Import unimpaired and impaired gauges',
+              'Display gauge tag for impaired and unimpaired',
+            ],
+          },
+          {
+            date: 'May 9th, 2018',
+            version: 'v0.11',
+            title: 'Search and Recommendation',
+            tasks: [
+              'Search in metric detail page',
+              'Search by station name',
+              'Search by gauge Id',
+            ],
+          },
+          {
             date: 'May 8th, 2018',
             version: 'v0.10',
             title: 'Annual Flow Hydrograph Overlay',
