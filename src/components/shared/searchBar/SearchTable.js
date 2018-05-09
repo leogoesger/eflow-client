@@ -11,11 +11,12 @@ import {
   TableHeaderColumn,
 } from 'material-ui/Table';
 import {Card} from 'material-ui/Card';
+import {classInfo} from '../../../constants/classification';
 
 export default class SearchTable extends React.Component {
   getColumnName(name) {
-    if (name.length > 20) {
-      return `${name.slice(0, 20)} ...`;
+    if (name.length > 16) {
+      return `${name.slice(0, 16)} ...`;
     }
     return name;
   }
@@ -31,11 +32,16 @@ export default class SearchTable extends React.Component {
     return gauges.map(gauge => {
       return (
         <TableRow key={gauge.id} style={{cursor: 'pointer', height: '35px'}}>
-          <TableRowColumn style={{height: '35px', width: '60px'}}>
+          <TableRowColumn style={{height: '35px', width: '35px'}}>
             <div style={styles.column}>
               <Highlight matchElement={'span'} search={this.props.keyWord}>
                 {gauge.id.toString()}
               </Highlight>
+            </div>
+          </TableRowColumn>
+          <TableRowColumn style={{height: '35px', width: '10px'}}>
+            <div style={styles.column}>
+              {classInfo[`class${gauge.classId}`].abbre}
             </div>
           </TableRowColumn>
           <TableRowColumn style={{height: '35px'}}>
@@ -67,8 +73,11 @@ export default class SearchTable extends React.Component {
             enableSelectAll={false}
           >
             <TableRow style={{height: '35px'}}>
-              <TableHeaderColumn style={{height: '35px'}}>
+              <TableHeaderColumn style={{height: '35px', width: '30px'}}>
                 <div style={styles.column}>{'ID'}</div>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{height: '35px', width: '28px'}}>
+                <div style={styles.column}>{'Class'}</div>
               </TableHeaderColumn>
               <TableHeaderColumn style={{height: '35px'}}>
                 <div style={styles.column}>{'Station Name'}</div>
