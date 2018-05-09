@@ -24,6 +24,7 @@ export default class SearchTable extends React.Component {
     const gauge = this.props.searchedGauges[e];
     this.props.fetchAnnualFlowData({gaugeId: gauge.id});
     this.props.fetchHydrographOverlay(gauge.id);
+    this.props.handleChange('');
   }
 
   _renderRow(gauges) {
@@ -94,6 +95,7 @@ SearchTable.propTypes = {
   fetchAnnualFlowData: PropTypes.func,
   fetchHydrographOverlay: PropTypes.func,
   keyWord: PropTypes.string,
+  handleChange: PropTypes.func,
 };
 
 const styles = {

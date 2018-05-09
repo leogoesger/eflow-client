@@ -50,6 +50,7 @@ export default class Layout extends React.Component {
           fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
           fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
           keyWord={this.state.keyWord}
+          handleChange={d => this._handleChange(d)}
         />
       </React.Fragment>
     );

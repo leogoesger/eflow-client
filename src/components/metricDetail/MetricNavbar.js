@@ -132,7 +132,7 @@ MetricNavbar.propTypes = {
   fetchAnnualFlowData: PropTypes.func,
   fetchHydrographOverlay: PropTypes.func,
   isHydrographOverlay: PropTypes.bool,
-  currentGaugeId: PropTypes.object,
+  currentGaugeId: PropTypes.number,
 };
 
 const styles = {
