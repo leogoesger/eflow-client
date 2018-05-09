@@ -39,6 +39,11 @@ export default class Layout extends React.Component {
           fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
           fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
           isHydrographOverlay={this.props.isHydrographOverlay}
+          currentGaugeId={
+            this.props.annualFlowData
+              ? this.props.annualFlowData.Gauge.id
+              : null
+          }
         />
         {this._renderDetailCard()}
       </div>

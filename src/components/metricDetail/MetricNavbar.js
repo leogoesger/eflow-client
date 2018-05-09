@@ -10,13 +10,14 @@ import {
   TableHeaderColumn,
 } from 'material-ui/Table';
 
+import SearchBar from '../../containers/SearchBar';
+
 class MetricNavbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedGaugeId: null,
-    };
+  _selectRow(e) {
+    this.props.fetchAnnualFlowData({gaugeId: e.id});
+    this.props.fetchHydrographOverlay(e.id);
   }
+
   _renderHeader() {
     return (
       <TableHeader
@@ -48,7 +49,7 @@ class MetricNavbar extends React.Component {
         >
           <TableRowColumn
             style={
-              gauge.id == this.state.selectedGaugeId
+              gauge.id == this.props.currentGaugeId
                 ? {height: '15px', paddingTop: '15px', fontWeight: '800'}
                 : {height: '15px', paddingTop: '15px'}
             }
@@ -57,7 +58,7 @@ class MetricNavbar extends React.Component {
           </TableRowColumn>
           <TableRowColumn
             style={
-              gauge.id == this.state.selectedGaugeId
+              gauge.id == this.props.currentGaugeId
                 ? {height: '15px', fontWeight: '800'}
                 : {height: '15px'}
             }
@@ -67,12 +68,6 @@ class MetricNavbar extends React.Component {
         </TableRow>
       );
     });
-  }
-
-  _selectRow(e) {
-    this.setState({selectedGaugeId: e.id});
-    this.props.fetchAnnualFlowData({gaugeId: e.id});
-    this.props.fetchHydrographOverlay(e.id);
   }
 
   _renderClassCard(classes) {
@@ -115,6 +110,9 @@ class MetricNavbar extends React.Component {
     }
     return (
       <Card style={styles.container} className="metric-navbar">
+        <div style={{padding: '0px 15px 5px 15px'}}>
+          <SearchBar />
+        </div>
         <Card style={{cursor: 'pointer'}}>
           <CardHeader
             title={'Overview'}
@@ -134,6 +132,7 @@ MetricNavbar.propTypes = {
   fetchAnnualFlowData: PropTypes.func,
   fetchHydrographOverlay: PropTypes.func,
   isHydrographOverlay: PropTypes.bool,
+  currentGaugeId: PropTypes.object,
 };
 
 const styles = {

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Styles from '../../styles/Styles';
+
 import {getEmailErrorMessage} from '../../utils/helpers';
 import TextField from 'material-ui/TextField';
 import {CardHeader} from 'material-ui/Card';
-import {Colors} from '../../styles';
 import RaisedButton from 'material-ui/RaisedButton';
+import Styles from '../../styles/Styles';
+import {Colors} from '../../styles';
 
 export default class Layout extends React.Component {
   constructor(props) {

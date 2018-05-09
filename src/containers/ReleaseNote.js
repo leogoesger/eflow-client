@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import Layout from '../components/releaseNote/Layout';
 
-export class ReleaseNote extends React.Component {
+class ReleaseNote extends React.Component {
   render() {
     return (
       <React.Fragment>

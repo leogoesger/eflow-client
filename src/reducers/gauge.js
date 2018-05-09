@@ -6,6 +6,7 @@ type ACTION = {};
 const initialState: STATE = {
   gauges: null,
   currentGauge: null,
+  searchedGauges: [],
   error: null,
 };
 
@@ -16,6 +17,9 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.FETCH_CURRENT_GAUGE_OBJECT:
       return objectAssign({}, state, {currentGauge: action.gauge});
+
+    case types.SEARCH_GAUGE_OBJECT:
+      return objectAssign({}, state, {searchedGauges: action.gauges});
 
     default:
       return state;
