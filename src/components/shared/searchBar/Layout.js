@@ -38,6 +38,7 @@ export default class Layout extends React.Component {
             floatingLabelStyle={Styles.floatingLabelStyle}
             floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
             onChange={(_event, value) => this._handleChange(value)}
+            onBlur={() => this._handleChange('')}
           />
           <Search
             style={{height: '40px', width: '40px', marginTop: '24px'}}
