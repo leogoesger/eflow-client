@@ -323,6 +323,7 @@ export const metricReference = [
     colors: ['#6a1b9a', '#38006b'],
     nonDimUnit: 'julian date',
     dimUnit: 'julian date',
+    hidden: true,
   },
   {
     name: 'winterTiming5',
@@ -335,6 +336,7 @@ export const metricReference = [
     colors: ['#8e24aa', '#5c007a'],
     nonDimUnit: 'julian date',
     dimUnit: 'julian date',
+    hidden: true,
   },
   {
     name: 'winterTiming10',
@@ -347,6 +349,7 @@ export const metricReference = [
     colors: ['#9c27b0', '#6a0080'],
     nonDimUnit: 'julian date',
     dimUnit: 'julian date',
+    hidden: true,
   },
   {
     name: 'winterTiming20',
@@ -359,6 +362,7 @@ export const metricReference = [
     colors: ['#ab47bc', '#790e8b'],
     nonDimUnit: 'julian date',
     dimUnit: 'julian date',
+    hidden: true,
   },
   {
     name: 'winterTiming50',
@@ -371,6 +375,7 @@ export const metricReference = [
     colors: ['#ba68c8', '#883997'],
     nonDimUnit: 'julian date',
     dimUnit: 'julian date',
+    hidden: true,
   },
   {
     name: 'winterDuration2',
