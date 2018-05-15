@@ -39,6 +39,19 @@ export default class PaperCard extends React.Component {
       <div style={styles.infoContainer}>
         <div style={styles.name}>{this.props.paper.title}</div>
         <div style={styles.title}>{this.props.paper.authors.join(', ')}</div>
+        <div
+          style={{
+            color: 'grey',
+            fontSize: '13px',
+            fontWeight: 400,
+            marginTop: '12px',
+          }}
+        >
+          <span style={{fontWeight: 600, color: 'black'}}>
+            First Published:
+          </span>{' '}
+          {this.props.paper.publishedDate}, {this.props.paper.journal}
+        </div>
         <div style={styles.description}>
           {this._renderDescription(this.props.paper.description)}
         </div>
