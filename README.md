@@ -58,33 +58,8 @@ For more information on all the things you can do with Sequelize CLI visit [sequ
 "test-coverage": "nyc report --reporter=text-lcov | coveralls",              # Generate test coverage and send it to Coveralls
 ```
 
-## Deployment
-
-```
-location / {
-try_files $uri $uri/ /index.html;
-}
-
-location /api {
-proxy_pass http://localhost:8080;
-proxy_http_version 1.1;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection 'upgrade';
-proxy_set_header Host $host;
-proxy_cache_bypass $http_upgrade;
-}
-
-sudo nano /etc/nginx/sites-available/default
-sudo nginx -t
-sudo systemctl restart nginx
-```
-
-## Options
-
-[Postico](https://eggerapps.at/postico/): A Modern PostgreSQL Client for the Mac
-
 ## License
 
-Copyright (c) 2017
+Copyright (c) 2018
 
 Licensed under the [MIT license](LICENSE).
