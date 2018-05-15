@@ -5,4 +5,5 @@ node_js:
 script: yarn run test:CI
 after_success:
   # Send coverage data to coveralls.
+  - yarn run lint
   - yarn run test:cover:CI
