@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Layout /> Render Layout 1`] = `
+<Card
+  expandable={false}
+  expanded={null}
+  initiallyExpanded={false}
+  style={
+    Object {
+      "height": "600px",
+    }
+  }
+/>
+`;

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Layout /> Render Layout 1`] = `
+<div
+  className="homeContainer"
+>
+  <Loader
+    loading={false}
+  />
+  <div
+    className="animated fadeInUp"
+  >
+    <HydrologyCard />
+    <MorphologyCard />
+    <EcologyCard />
+  </div>
+</div>
+`;

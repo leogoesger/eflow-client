@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Layout /> Render Layout 1`] = `
+<Card
+  className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
+  expandable={false}
+  expanded={null}
+  initiallyExpanded={false}
+  style={
+    Object {
+      "borderRadius": "2px",
+      "margin": "0 auto",
+      "marginTop": "120px",
+      "minHeight": "500px",
+    }
+  }
+>
+  heelo
+</Card>
+`;
