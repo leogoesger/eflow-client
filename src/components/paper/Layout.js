@@ -44,6 +44,19 @@ export default class Layout extends React.Component {
             <div style={{padding: '10px'}}>
               <div style={styles.title}>{paper.title}</div>
               <div style={styles.subtitle}>{paper.authors.join(', ')}</div>
+              <div
+                style={{
+                  color: 'grey',
+                  fontSize: '13px',
+                  fontWeight: 400,
+                  marginTop: '12px',
+                }}
+              >
+                <span style={{fontWeight: 600, color: 'black'}}>
+                  First Published:
+                </span>{' '}
+                {paper.publishedDate}, {paper.journal}
+              </div>
               <div style={styles.description}>
                 {this._renderDescription(paper.description)}
               </div>
