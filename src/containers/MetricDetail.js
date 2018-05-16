@@ -27,6 +27,7 @@ export class MetricDetail extends React.Component {
 
   componentWillUnmount() {
     this.props.fetchAnnualFlowData(null);
+    this.props.toggleMetricGaugeDrawer(false);
   }
 
   removeClassGaugeProps() {

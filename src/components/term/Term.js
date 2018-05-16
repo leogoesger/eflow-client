@@ -25,8 +25,8 @@ const Term = () => {
         the following conditions:
       </p>
       <p style={{marginTop: '20px'}}>
-        The above copyright notice and this permission notice shall be included
-        in all copies or substantial portions of the Software.
+        The above copyright notice, citation and this permission notice shall be
+        included in all copies or substantial portions of the Software.
       </p>
       <p style={{marginTop: '20px'}}>
         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS

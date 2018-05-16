@@ -17,6 +17,7 @@ export default class Layout extends React.Component {
       open: false,
     };
   }
+
   getText() {
     const text = `Belize Lane, Noelle Patterson, Leo Qiu, Samuel Sandoval, Sarah Yarnell,
     Robert Lusardi, Julie Zimmerman, Eric Stein, Larry Brown, Theodore
