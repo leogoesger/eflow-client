@@ -1,26 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {find, cloneDeep} from 'lodash';
+import {find} from 'lodash';
 
 import {metricReference} from '../../../constants/metrics';
-
-const getOffset = data => {
-  const offsetData = cloneDeep(data);
-  offsetData.quartile = offsetData.quartile.map(
-    d => (d > 274 ? d - 274 : d + 91)
-  );
-  offsetData.whiskers = offsetData.whiskers.map(
-    d => (d > 274 ? d - 274 : d + 91)
-  );
-  if (offsetData.whiskers[1] < offsetData.whiskers[0]) {
-    if (offsetData.whiskers[0] > offsetData.quartile[0]) {
-      offsetData.whiskers[0] = 2;
-    } else {
-      offsetData.whiskers[1] = 365;
-    }
-  }
-  return offsetData;
-};
 
 const getColor = metricName => {
   const currentMetric = find(
@@ -74,16 +56,15 @@ const BoxplotOverlay = props => {
       </g>
     );
   }
-  const dataWithOffset = getOffset(props.boxplotData);
   return (
     <g>
       <rect
         width={
-          props.xScale(dataWithOffset.whiskers[1]) -
-          props.xScale(dataWithOffset.whiskers[0])
+          props.xScale(props.boxplotData.whiskers[1]) -
+          props.xScale(props.boxplotData.whiskers[0])
         }
         height={props.height}
-        x={props.xScale(dataWithOffset.whiskers[0])}
+        x={props.xScale(props.boxplotData.whiskers[0])}
         y={0}
         fill={getColor(props.boxplotData.metricName)[0]}
         fillOpacity={'0.4'}
@@ -91,11 +72,11 @@ const BoxplotOverlay = props => {
       />
       <rect
         width={
-          props.xScale(dataWithOffset.quartile[2]) -
-          props.xScale(dataWithOffset.quartile[0])
+          props.xScale(props.boxplotData.quartile[2]) -
+          props.xScale(props.boxplotData.quartile[0])
         }
         height={props.height}
-        x={props.xScale(dataWithOffset.quartile[0])}
+        x={props.xScale(props.boxplotData.quartile[0])}
         y={0}
         fill={getColor(props.boxplotData.metricName)[1]}
         fillOpacity={'0.3'}
@@ -104,8 +85,8 @@ const BoxplotOverlay = props => {
       <line
         strokeWidth={3}
         stroke={getColor(props.boxplotData.metricName)[0]}
-        x1={props.xScale(dataWithOffset.quartile[1])}
-        x2={props.xScale(dataWithOffset.quartile[1])}
+        x1={props.xScale(props.boxplotData.quartile[1])}
+        x2={props.xScale(props.boxplotData.quartile[1])}
         y1={0}
         y2={props.height}
         transform={props.transform}

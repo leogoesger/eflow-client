@@ -55,6 +55,11 @@ class MetricOverviewCard extends React.Component {
   }
 
   _handleTitleChange() {
+    if (this.state.metricColumnName === 'magWet') {
+      return this.setState({
+        title: 'Winter Magnitude (cfs)',
+      });
+    }
     const metric = this._getDisplayValue(
       'tableName',
       this.state.metricTableName,
@@ -74,6 +79,9 @@ class MetricOverviewCard extends React.Component {
         event.target.innerText
       ).tableName,
     });
+    if (this.state.metricTableName == 'FallWinters') {
+      this.setState({metricTableName: 'Winters'});
+    }
     await this.setState({
       metricColumnValue: 0,
       metricColumnName: Object.keys(
@@ -84,41 +92,77 @@ class MetricOverviewCard extends React.Component {
   }
 
   async _handleColumnChange(event, index, value) {
+    let winterBaseflow;
+    if (event.target.innerText === 'Winter Baseflow') {
+      winterBaseflow = 'magWet';
+    }
     await this.setState({
       metricColumnValue: value,
-      metricColumnName: this._getDisplayValue('display', event.target.innerText)
-        .columnName,
+      metricColumnName: winterBaseflow
+        ? 'magWet'
+        : this._getDisplayValue('display', event.target.innerText).columnName,
     });
     this._handleTitleChange();
   }
 
   _renderTableItems() {
-    return Object.keys(this.props.allClassesBoxPlots).map((key, index) => (
-      <MenuItem
-        value={index}
-        key={index}
-        primaryText={this._getDisplayValue('tableName', key).displayTableName}
-      />
-    ));
+    return Object.keys(this.props.allClassesBoxPlots).map((key, index) => {
+      return (
+        <MenuItem
+          value={index}
+          key={index}
+          primaryText={this._getDisplayValue('tableName', key).displayTableName}
+        />
+      );
+    });
   }
 
   _renderColumnItems() {
+    if (!this.props.allClassesBoxPlots[this.state.metricTableName]) {
+      return null;
+    }
     return Object.keys(
       this.props.allClassesBoxPlots[this.state.metricTableName]
-    ).map((key, index) => (
-      <MenuItem
-        value={index}
-        key={index}
-        primaryText={
-          this._getDisplayValue(
-            'columnName',
-            key,
-            'tableName',
-            this.state.metricTableName
-          ).display
+    ).map((key, index) => {
+      if (key !== 'magWet') {
+        return (
+          <MenuItem
+            value={index}
+            key={key}
+            primaryText={
+              this._getDisplayValue(
+                'columnName',
+                key,
+                'tableName',
+                this.state.metricTableName
+              ).display
+            }
+          />
+        );
+      } else {
+        return (
+          <MenuItem value={index} key={key} primaryText={'Winter Baseflow'} />
+        );
+      }
+    });
+  }
+
+  _renderBoxplots() {
+    if (!this.props.allClassesBoxPlots[this.state.metricTableName]) {
+      return null;
+    }
+
+    return (
+      <MetricOverviewBoxPlot
+        boxPlotData={
+          this.props.allClassesBoxPlots[this.state.metricTableName][
+            this.state.metricColumnName
+          ]
         }
+        logScale={this.state.logScale}
+        title={this.state.title}
       />
-    ));
+    );
   }
 
   render() {
@@ -166,15 +210,7 @@ class MetricOverviewCard extends React.Component {
               toggled={this.state.logScale}
             />
           </div>
-          <MetricOverviewBoxPlot
-            boxPlotData={
-              this.props.allClassesBoxPlots[this.state.metricTableName][
-                this.state.metricColumnName
-              ]
-            }
-            logScale={this.state.logScale}
-            title={this.state.title}
-          />
+          {this._renderBoxplots()}
         </Card>
         <Loader loading={this.props.loading} />
       </React.Fragment>

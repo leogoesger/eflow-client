@@ -24,6 +24,10 @@ export default class Layout extends React.Component {
     this.setState({keyWord: value}, () => this._debouncedSearch());
   }
 
+  _onBlur() {
+    setTimeout(() => this._handleChange(''), 500);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -38,7 +42,7 @@ export default class Layout extends React.Component {
             floatingLabelStyle={Styles.floatingLabelStyle}
             floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
             onChange={(_event, value) => this._handleChange(value)}
-            onBlur={() => this._handleChange('')}
+            onBlur={() => this._onBlur()}
           />
           <Search
             style={{height: '40px', width: '40px', marginTop: '24px'}}

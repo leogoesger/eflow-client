@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {cloneDeep} from 'lodash';
+
 import MetricNavbar from './MetricNavbar';
 import MetricOverviewCard from './MetricOverviewCard';
 import MetricGaugeCard from './MetricGaugeCard';
 
 export default class Layout extends React.Component {
+  _getAllClassesBoxPlots() {
+    if (this.props.allClassesBoxPlots) {
+      const newBoxPlots = cloneDeep(this.props.allClassesBoxPlots);
+      newBoxPlots.Winters.magWet = this.props.allClassesBoxPlots.FallWinters.magWet;
+      delete newBoxPlots.FallWinters;
+      return newBoxPlots;
+    }
+  }
+
   _renderDetailCard() {
     if (this.props.annualFlowData) {
       return (
@@ -25,7 +36,7 @@ export default class Layout extends React.Component {
         <MetricOverviewCard
           fetchAllClassesBoxPlots={() => this.props.fetchAllClassesBoxPlots()}
           loading={this.props.loading}
-          allClassesBoxPlots={this.props.allClassesBoxPlots}
+          allClassesBoxPlots={this._getAllClassesBoxPlots()}
         />
       );
     }

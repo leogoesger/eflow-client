@@ -87,6 +87,7 @@ export default class BoxPlot extends React.Component {
       );
     });
   }
+
   _drawBoxes(boxPlotData) {
     return boxPlotData.map(data => {
       return (
