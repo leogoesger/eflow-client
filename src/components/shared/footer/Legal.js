@@ -23,7 +23,7 @@ const styles = {
     bottom: '0px',
     color: '#fff',
     width: '100%',
-    height: '30px',
+    height: '34px',
     backgroundColor: '#313C42',
   },
   term: {color: Colors.white, textDecoration: 'none', paddingLeft: '40px'},

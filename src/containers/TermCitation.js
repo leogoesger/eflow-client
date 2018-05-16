@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
 import Layout from '../components/term/Layout';
 
 class TermCitation extends React.Component {
@@ -6,11 +9,21 @@ class TermCitation extends React.Component {
     return (
       <React.Fragment>
         <div style={styles.banner} />
-        <Layout />
+        <Layout version={this.props.releaseNotes[0].version} />
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    releaseNotes: state.releaseNote.releaseNotes,
+  };
+};
+
+TermCitation.propTypes = {
+  releaseNotes: PropTypes.array,
+};
 
 const styles = {
   banner: {
@@ -20,4 +33,4 @@ const styles = {
   },
 };
 
-export default TermCitation;
+export default connect(mapStateToProps, null)(TermCitation);
