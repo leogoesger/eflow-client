@@ -8,6 +8,13 @@ import NavRight from './NavRight';
 import Build from 'material-ui/svg-icons/action/build';
 
 export default class Layout extends React.Component {
+  _navigateTo(url) {
+    if (this.props.annualFlowData.Gauge) {
+      this.props.fetchCurrentGauge(this.props.annualFlowData.Gauge.id);
+    }
+    navigateTo(url);
+  }
+
   _renderBeta() {
     if (this.props.releaseNoteVersion) {
       return (
@@ -56,7 +63,7 @@ export default class Layout extends React.Component {
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}
               hoverColor={'white'}
-              onClick={() => navigateTo('/hydrology')}
+              onClick={() => this._navigateTo('/hydrology')}
             />
             <FlatButton
               className="e2e-header-sign-up-btn"
@@ -139,4 +146,6 @@ const styles = {
 
 Layout.propTypes = {
   releaseNoteVersion: PropTypes.string,
+  fetchCurrentGauge: PropTypes.func,
+  annualFlowData: PropTypes.object,
 };

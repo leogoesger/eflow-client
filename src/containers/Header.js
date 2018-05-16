@@ -17,6 +17,7 @@ import {
   handleToggleLogScale,
   handleHydrographOverlay,
 } from '../actions/metricDetail';
+import {fetchCurrentGauge} from '../actions/gauge';
 import {fetchBroadCastMessage} from '../actions/user';
 
 class Header extends React.Component {
@@ -80,7 +81,11 @@ class Header extends React.Component {
           }
           isHydrographOverlay={this.props.isHydrographOverlay}
         />
-        <Layout releaseNoteVersion={this.getVersion()} />
+        <Layout
+          releaseNoteVersion={this.getVersion()}
+          annualFlowData={this.props.annualFlowData}
+          fetchCurrentGauge={d => this.props.fetchCurrentGauge(d)}
+        />
         <Dialog
           modal={false}
           open={this.state.dialogOpen}
@@ -103,6 +108,7 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    annualFlowData: state.metricDetail.annualFlowData,
     releaseNotes: state.releaseNote.releaseNotes,
     isDrawerOpen: state.metricDetail.isDrawerOpen,
     toggledMetrics: state.metricDetail.toggledMetrics,
@@ -115,6 +121,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchReleaseNotes: () => dispatch(fetchReleaseNotes()),
+    fetchCurrentGauge: gaugeId => dispatch(fetchCurrentGauge(gaugeId)),
     toggleMetricGaugeDrawer: status =>
       dispatch(toggleMetricGaugeDrawer(status)),
     toggleAnnualFlowMetrics: d => dispatch(toggleAnnualFlowMetrics(d)),
@@ -138,6 +145,8 @@ Header.propTypes = {
   fetchBroadCastMessage: PropTypes.func,
   handleHydrographOverlay: PropTypes.func,
   isHydrographOverlay: PropTypes.bool,
+  annualFlowData: PropTypes.object,
+  fetchCurrentGauge: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
