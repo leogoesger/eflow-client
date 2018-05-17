@@ -92,7 +92,7 @@ const styles = {
     height: '270px',
     padding: '20px',
     boxShadow: '2px 2px 45px -5px rgba(110,110,110,1)',
-    zIndex: '10',
+    zIndex: '8',
   },
   labelStyle: {
     color: Colors.grey,

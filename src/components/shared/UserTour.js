@@ -35,13 +35,19 @@ export default class UserTour extends Component {
     }
   }
 
+  changeTourStatus() {
+    this.setState({isTourActive: !this.state.isTourActive});
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
       <div>
         <div style={styles.actionBtn}>
           <FloatingActionButton
             backgroundColor={Colors.gold}
-            onClick={() => this.setState({isTourActive: true})}
+            onClick={() => this.changeTourStatus()}
+            mini={true}
           >
             <SvgIcon>
               <QuestionIcon
