@@ -91,6 +91,7 @@ export default class ClassGaugeList extends React.Component {
       return (
         <Card key={classification.id}>
           <CardHeader
+            className="tour-metricDetail-class"
             title={`${classification.name} (${abbre})`}
             subtitle={`Gauge Count: ${gaugeCount}`}
             actAsExpander={true}

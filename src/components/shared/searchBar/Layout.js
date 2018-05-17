@@ -31,7 +31,10 @@ export default class Layout extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{display: 'flex', position: 'relative'}}>
+        <div
+          style={{display: 'flex', position: 'relative'}}
+          className="tour-searchBar"
+        >
           <TextField
             className="requiredField"
             value={this.state.keyWord}
