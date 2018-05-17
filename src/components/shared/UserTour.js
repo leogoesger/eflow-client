@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Tour from 'react-user-tour';
 import SvgIcon from 'material-ui/SvgIcon';
+import scrollTo from 'scroll-to';
 
 import {QuestionIcon} from '../shared/QuestionIcon';
 import {Colors} from '../../styles';
@@ -36,8 +37,14 @@ export default class UserTour extends Component {
   }
 
   changeTourStatus() {
-    this.setState({isTourActive: !this.state.isTourActive});
-    window.scrollTo(0, 0);
+    scrollTo(0, 0, {
+      ease: 'linear',
+      duration: 200,
+    });
+    setTimeout(
+      () => this.setState({isTourActive: !this.state.isTourActive}),
+      300
+    );
   }
 
   render() {
