@@ -13,6 +13,22 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 17th, 2018',
+            version: 'v0.14',
+            title: 'User Tour',
+            tasks: [
+              'Implement user tour',
+              'Fix bug for calender date to offset date issue',
+              'Add new team member',
+            ],
+          },
+          {
+            date: 'May 16th, 2018',
+            version: 'v0.13',
+            title: 'Citation Bar',
+            tasks: ['Add citation bar'],
+          },
+          {
             date: 'May 9th, 2018',
             version: 'v0.12',
             title: 'Display Unimpaired Gauge',

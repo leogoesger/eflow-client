@@ -3,7 +3,6 @@ import React from 'react';
 import HydrologyCard from './HydrologyCard';
 import MorphologyCard from './MorphologyCard';
 import EcologyCard from './EcologyCard';
-
 import Loader from '../shared/loader/Loader';
 
 export default class Layout extends React.Component {
@@ -11,7 +10,12 @@ export default class Layout extends React.Component {
     super(props);
     this.state = {
       loading: true,
+      isTourActive: false,
     };
+  }
+
+  updateTourStatus() {
+    this.setState({isTourActive: false});
   }
 
   componentDidMount() {

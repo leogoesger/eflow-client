@@ -50,7 +50,7 @@ class HydroTabs extends React.Component {
         }}
         inkBarStyle={{backgroundColor: Colors.gold}}
       >
-        <Tab label="Data" value="a">
+        <Tab label="Data" value="a" className="tour-tab-1">
           <HydroInfo
             currentClassification={this.props.currentClassification}
             currentGauge={this.props.currentGauge}
@@ -68,6 +68,7 @@ class HydroTabs extends React.Component {
         </Tab>
         <Tab
           label="Hydrograph"
+          className="tour-tab-2"
           value="b"
           disabled={!this._disabledBtn()}
           style={this._disabledBtn() ? null : {cursor: 'not-allowed'}}

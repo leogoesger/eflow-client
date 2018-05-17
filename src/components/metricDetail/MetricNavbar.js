@@ -115,6 +115,7 @@ class MetricNavbar extends React.Component {
         </div>
         <Card style={{cursor: 'pointer'}}>
           <CardHeader
+            className="tour-metricDetail-navbar"
             title={'Overview'}
             subtitle={'Boxplot Summary'}
             subtitleStyle={{paddingTop: '3px'}}

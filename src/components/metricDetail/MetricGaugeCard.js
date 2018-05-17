@@ -113,12 +113,14 @@ class MetricGaugeCard extends React.Component {
           this.props.annualFlowData.Gauge.unimpairedStartYear ? (
           <span
             style={{color: Colors.red, fontSize: '14px', fontWeight: '700'}}
+            className="tour-metricDetail-impairedStatus"
           >
             {'Impaired'}
           </span>
         ) : (
           <span
             style={{color: Colors.blue, fontSize: '14px', fontWeight: '700'}}
+            className="tour-metricDetail-impairedStatus"
           >
             {'Unimpaired'}
           </span>
@@ -219,6 +221,7 @@ class MetricGaugeCard extends React.Component {
             <IconMenu
               iconButtonElement={
                 <FlatButton
+                  className="tour-metricDetail-download"
                   label="Download"
                   style={{marginLeft: '20px', marginTop: '10px'}}
                   labelStyle={{fontSize: '12px', color: Colors.gold}}
@@ -248,6 +251,7 @@ class MetricGaugeCard extends React.Component {
 
             <div>
               <RaisedButton
+                className="tour-metricDetail-display"
                 label="Display"
                 backgroundColor={Colors.gold}
                 labelColor={Colors.white}
@@ -274,6 +278,7 @@ class MetricGaugeCard extends React.Component {
         </Paper>
 
         <Slider
+          className="tour-metricDetail-slider"
           min={this.props.annualFlowData.Years.allYears[0]}
           max={
             this.props.annualFlowData.Years.allYears[

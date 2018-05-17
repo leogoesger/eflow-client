@@ -124,6 +124,7 @@ export default class Control extends React.Component {
             onClick={() => removeClassGaugeProps()}
           />
           <RaisedButton
+            className="tour-hydro-metricDetail"
             label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
             backgroundColor={Colors.gold}
             labelColor={Colors.white}

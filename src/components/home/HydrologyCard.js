@@ -44,6 +44,7 @@ export default class HydrologyCard extends React.Component {
             }}
           >
             <RaisedButton
+              className="tour-explore-hydrology"
               label="Explore Hydrology"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
@@ -53,6 +54,7 @@ export default class HydrologyCard extends React.Component {
             <FlatButton
               href="https://leogoesger.gitbooks.io/funflow/content/"
               target="_blank"
+              className="tour-how-hydrology"
               label="How does it work?"
               style={{marginLeft: '20px'}}
               labelStyle={{fontSize: '12px', color: Colors.gold}}
