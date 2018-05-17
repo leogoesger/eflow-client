@@ -157,6 +157,7 @@ body *::-webkit-scrollbar {
   line-height: 50px;
   color: #757575;
   font: Roboto, sans-serif;
+  padding-right: 15px;
 }
 
 .tick line,
