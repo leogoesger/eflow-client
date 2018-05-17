@@ -36,6 +36,7 @@ export default class Control extends React.Component {
       return (
         <Toggle
           key={index}
+          className={`tour-map-toggle-${index}`}
           label={classInfo[key].abbre}
           labelStyle={styles.labelStyle}
           value={'empty'}

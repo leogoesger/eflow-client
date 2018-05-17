@@ -33,6 +33,63 @@ import {
   removeFallWinterBoxPlotData,
 } from '../actions/fallWinter';
 
+import UserTour from '../components/shared/UserTour';
+
+const hydrologyTourSteps = [
+  {
+    step: 1,
+    selector: '.mapboxgl-map',
+    title: <div className="tour-title">Map</div>,
+    body: (
+      <div className="tour-body">
+        {'Hover over the map will display different gauge or class name.'}
+        <div className="tour-warning">
+          {'Try zoom (scroll), pan (drag), and tilt (ctrl + mouse)!'}
+        </div>
+      </div>
+    ),
+    position: 'top',
+  },
+  {
+    step: 2,
+    selector: '.tour-map-toggle-1',
+    title: <div className="tour-title">Map Layer Control</div>,
+    body: (
+      <div className="tour-body">
+        {'Click on the slider will hide/display different map layers.'}
+      </div>
+    ),
+    position: 'bottom',
+  },
+  {
+    step: 3,
+    selector: '.tour-hydro-general-display',
+    title: <div className="tour-title">General Display</div>,
+    body: (
+      <div className="tour-body">
+        {'This area will display DRHs, gauges and metric data.'}
+      </div>
+    ),
+    position: 'bottom',
+  },
+  {
+    step: 4,
+    selector: '.tour-tab-2',
+    title: <div className="tour-title">Tabs</div>,
+    body: (
+      <div className="tour-body">
+        {
+          'You can click on either DATA or HYDROGRAPH tab to switch between DRH or data value.'
+        }
+        <div className="tour-warning">
+          {'You can only do this once you have selected a gauge or class'}
+        </div>
+      </div>
+    ),
+    position: 'bottom',
+  },
+];
+
 export class Hydrology extends React.Component {
   componentWillMount() {
     this.props.fetchGauges();
@@ -88,25 +145,30 @@ export class Hydrology extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={styles.banner} />
-        <Layout
-          gauges={this.props.gauges}
-          hoveredGauge={this.props.hoveredGauge}
-          tabValue={this.props.tabValue}
-          currentGauge={this.props.currentGauge}
-          classifications={this.props.classifications}
-          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-          currentClassification={this.props.currentClassification}
-          fetchClassification={classId =>
-            this.props.fetchClassification(classId)
-          }
-          updateTab={tabValue => this.props.updateTab(tabValue)}
-          removeClassGaugeProps={() => this.removeClassGaugeProps()}
-          updateHoveredGauge={gaugeId => this.props.updateHoveredGauge(gaugeId)}
-          overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
-          overLayBoxPlotData={this.getBoxPlotOverlayData()}
-          verticalOverlayBoxPlotData={this.getVerticalBoxPlotOverlayData()}
-        />
+        <UserTour tourSteps={hydrologyTourSteps} />
+        <div>
+          <div style={styles.banner} />
+          <Layout
+            gauges={this.props.gauges}
+            hoveredGauge={this.props.hoveredGauge}
+            tabValue={this.props.tabValue}
+            currentGauge={this.props.currentGauge}
+            classifications={this.props.classifications}
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            currentClassification={this.props.currentClassification}
+            fetchClassification={classId =>
+              this.props.fetchClassification(classId)
+            }
+            updateTab={tabValue => this.props.updateTab(tabValue)}
+            removeClassGaugeProps={() => this.removeClassGaugeProps()}
+            updateHoveredGauge={gaugeId =>
+              this.props.updateHoveredGauge(gaugeId)
+            }
+            overLayBoxPlotMethods={this.getBoxPlotOverlayMethods()}
+            overLayBoxPlotData={this.getBoxPlotOverlayData()}
+            verticalOverlayBoxPlotData={this.getVerticalBoxPlotOverlayData()}
+          />
+        </div>
       </React.Fragment>
     );
   }

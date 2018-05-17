@@ -38,9 +38,11 @@ export default class Layout extends React.Component {
     return (
       <div style={styles.container}>
         <div style={styles.citation} onClick={() => this.getText()}>
-          {
-            'Click to get the citation needed when using this website and database!'
-          }
+          <span className="tour-citation">
+            {
+              'Click to get the citation needed when using this website and database!'
+            }
+          </span>
         </div>
         <div style={styles.general}>
           <Learn />

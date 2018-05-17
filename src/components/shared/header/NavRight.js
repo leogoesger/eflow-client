@@ -17,7 +17,7 @@ export default class NavRight extends React.Component {
     return (
       <div style={styles.userDiv}>
         <FlatButton
-          className="e2e-header-sign-up-btn"
+          className="tour-paper"
           label="Papers"
           icon={<Book />}
           style={styles.headerButton}
@@ -27,7 +27,7 @@ export default class NavRight extends React.Component {
         />
         <FlatButton
           label="Team"
-          className="e2e-header-login-btn"
+          className="tour-team"
           labelPosition="after"
           icon={<Person />}
           hoverColor={'white'}

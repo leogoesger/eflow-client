@@ -190,7 +190,7 @@ class Hydrograph extends React.Component {
 
   render() {
     return (
-      <Paper style={styles.graph}>
+      <Paper style={styles.graph} className="tour-hydro-general-display">
         {this._renderData(this.state.hydroData)}
         {this._renderpercentilleChips()}
         <Control

@@ -9,7 +9,7 @@ import Build from 'material-ui/svg-icons/action/build';
 
 export default class Layout extends React.Component {
   _navigateTo(url) {
-    if (this.props.annualFlowData.Gauge) {
+    if (this.props.annualFlowData && this.props.annualFlowData.Gauge) {
       this.props.fetchCurrentGauge(this.props.annualFlowData.Gauge.id);
     }
     navigateTo(url);
@@ -37,7 +37,7 @@ export default class Layout extends React.Component {
     return (
       <div style={styles.nav}>
         <div style={styles.container}>
-          <div style={styles.logo}>
+          <div style={styles.logo} className="tour-logo">
             <span
               style={{
                 lineHeight: '55px',
@@ -58,7 +58,7 @@ export default class Layout extends React.Component {
             }}
           >
             <FlatButton
-              className="e2e-header-sign-up-btn"
+              className="tour-hydrology"
               label="Hydrology"
               style={styles.headerButton}
               labelStyle={styles.headerWhiteButtonLabel}

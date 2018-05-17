@@ -21,6 +21,8 @@ import KnownIssue from '../containers/KnownIssue';
 import ReleaseNote from '../containers/ReleaseNote';
 import TermCitation from '../containers/TermCitation';
 import BugReport from '../containers/BugReport';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 class App extends React.Component {
   render() {

@@ -92,6 +92,7 @@ class HydroInfo extends React.Component {
             onClick={() => removeClassGaugeProps()}
           />
           <RaisedButton
+            className="tour-hydro-metricDetail"
             label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
@@ -107,6 +108,7 @@ class HydroInfo extends React.Component {
     return (
       <div style={styles.btnContainer}>
         <RaisedButton
+          className="tour-hydro-metricDetail"
           label="Class Box Plot"
           backgroundColor={Colors.gold}
           labelColor={Colors.white}
@@ -121,7 +123,7 @@ class HydroInfo extends React.Component {
 
   render() {
     return (
-      <Paper style={styles.graph}>
+      <Paper style={styles.graph} className="tour-hydro-general-display">
         {this._renderInfo()}
         {this._renderButtons()}
       </Paper>

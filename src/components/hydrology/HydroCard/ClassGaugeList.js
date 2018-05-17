@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import {cloneDeep, sortBy} from 'lodash';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {
   Table,
@@ -33,12 +33,9 @@ export default class ClassGaugeList extends React.Component {
     if (!props.classifications) {
       return null;
     }
-    const classifications = _.cloneDeep(props.classifications);
+    const classifications = cloneDeep(props.classifications);
     classifications.forEach((classification, index) => {
-      classifications[index].gauges = _.sortBy(
-        classification.gauges,
-        e => e.id
-      );
+      classifications[index].gauges = sortBy(classification.gauges, e => e.id);
     });
     this.setState({classifications});
   }
