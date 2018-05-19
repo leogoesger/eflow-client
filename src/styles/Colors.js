@@ -22,6 +22,8 @@ const Colors = {
   FIFTY: '#ef5350',
   TWENTYFIVE: '#4fc3f7',
   TEN: '#2196f3',
+  MIN: '#c7c7c7',
+  MAX: '#c7c7c7',
 };
 
 export default Colors;
