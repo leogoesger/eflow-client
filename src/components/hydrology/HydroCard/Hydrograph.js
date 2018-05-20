@@ -85,7 +85,7 @@ class Hydrograph extends React.Component {
           showExpandableButton={false}
         />
         <Toggle
-          label="Show Min and Max"
+          label="Show Min/Max"
           toggled={this.state.minMax}
           style={styles.minMax}
           labelStyle={styles.labelStyle}
