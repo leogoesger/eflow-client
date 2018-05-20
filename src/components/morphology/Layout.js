@@ -1,25 +1,24 @@
 import React from 'react';
-import {Card} from 'material-ui/Card';
-import {BoxPlot} from '../shared/plots';
+
+import Map from './Map';
 
 export default class Layout extends React.Component {
   render() {
     return (
-      <Card
-        className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
-        style={styles.card}
-      >
-        <BoxPlot width={900} height={400} x={0} y={20} />
-      </Card>
+      <div style={styles.container}>
+        <Map />
+        <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
+      </div>
     );
   }
 }
 
 const styles = {
-  card: {
-    margin: '0 auto',
-    marginTop: '120px',
-    borderRadius: '2px',
-    minHeight: '500px',
+  container: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    margin: '-60px auto 100px auto',
+    height: '100%',
+    width: '1300px',
   },
 };

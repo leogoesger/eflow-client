@@ -4,12 +4,21 @@ import * as d3 from 'd3';
 import Paper from 'material-ui/Paper';
 import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
+import Toggle from 'material-ui/Toggle';
 
 import {LinePlot} from '../../shared/plots';
 import {classInfo} from '../../../constants/classification';
 
 import {Colors} from '../../../styles';
 import Control from './Control';
+
+const colors = {
+  NINTY: Colors.NINTY,
+  SEVENTYFIVE: Colors.SEVENTYFIVE,
+  FIFTY: Colors.FIFTY,
+  TWENTYFIVE: Colors.TWENTYFIVE,
+  TEN: Colors.TEN,
+};
 
 class Hydrograph extends React.Component {
   constructor(props) {
@@ -21,6 +30,7 @@ class Hydrograph extends React.Component {
       springTiming: false,
       summerTiming: false,
       zoomTransform: null,
+      minMax: false,
     };
     this.zoom = d3
       .zoom()
@@ -46,11 +56,11 @@ class Hydrograph extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentGauge || nextProps.currentClassification) {
-      this._getHydroData(nextProps);
+      this._setHydrographData(nextProps);
     }
   }
 
-  _renderInfo() {
+  _renderTitleInfo() {
     if (this.props.currentGauge) {
       return this._renderGaugeInfo();
     } else if (this.props.currentClassification) {
@@ -59,6 +69,7 @@ class Hydrograph extends React.Component {
       return null;
     }
   }
+
   _renderGaugeInfo() {
     const currentGaugeClass =
       classInfo[`class${this.props.currentGauge.classId}`];
@@ -72,6 +83,14 @@ class Hydrograph extends React.Component {
           subtitleColor={currentGaugeClass.colors[0]}
           actAsExpander={false}
           showExpandableButton={false}
+        />
+        <Toggle
+          label="Show Min and Max"
+          toggled={this.state.minMax}
+          style={styles.minMax}
+          labelStyle={styles.labelStyle}
+          labelPosition="right"
+          onClick={() => this.setState({minMax: !this.state.minMax})}
         />
         <Divider />
       </div>
@@ -90,72 +109,86 @@ class Hydrograph extends React.Component {
           actAsExpander={false}
           showExpandableButton={false}
         />
+        <Toggle
+          label="Show Min/Max"
+          toggled={this.state.minMax}
+          labelStyle={styles.labelStyle}
+          style={styles.minMax}
+          labelPosition="right"
+          onClick={() => this.setState({minMax: !this.state.minMax})}
+        />
         <Divider />
       </div>
     );
   }
 
-  _getHydroData(nextProps) {
+  _setHydrographData(nextProps) {
     let hydroData = {
       TEN: [],
       TWENTYFIVE: [],
       FIFTY: [],
       SEVENTYFIVE: [],
       NINTY: [],
+      MIN: [],
+      MAX: [],
     };
-    if (nextProps.currentGauge) {
-      nextProps.currentGauge.hydrographs.forEach(hydrograph => {
-        hydrograph.data.forEach((ele, index) => {
-          hydroData[hydrograph.percentille].push({date: index + 1, flow: ele});
-        });
+    let hydrographs;
+    hydrographs = nextProps.currentGauge
+      ? nextProps.currentGauge.hydrographs
+      : nextProps.currentClassification.hydrographs;
+
+    hydrographs.forEach(hydrograph => {
+      hydrograph.data.forEach((ele, index) => {
+        hydroData[hydrograph.percentille].push({date: index + 1, flow: ele});
       });
-    } else {
-      nextProps.currentClassification.hydrographs.forEach(classification => {
-        classification.data.forEach((ele, index) => {
-          hydroData[classification.percentille].push({
-            date: index + 1,
-            flow: ele,
-          });
-        });
-      });
-    }
+    });
+
     this.setState({hydroData: hydroData});
   }
 
-  _renderpercentilleChips() {
+  _renderPercentilleChips() {
     return (
       <div style={styles.labels}>
         <div style={styles.labelName}>{'Percentiles:'}</div>
+
         <div style={{...styles.label, backgroundColor: Colors.NINTY}} />
         <div style={styles.labelName}>{'10th'}</div>
+
         <div style={{...styles.label, backgroundColor: Colors.SEVENTYFIVE}} />
-
         <div style={styles.labelName}>{'25th'}</div>
+
         <div style={{...styles.label, backgroundColor: Colors.FIFTY}} />
-
         <div style={styles.labelName}>{'50th'}</div>
+
         <div style={{...styles.label, backgroundColor: Colors.TWENTYFIVE}} />
-
         <div style={styles.labelName}>{'75th'}</div>
-        <div style={{...styles.label, backgroundColor: Colors.TEN}} />
 
+        <div style={{...styles.label, backgroundColor: Colors.TEN}} />
         <div style={styles.labelName}>{'90th'}</div>
+
+        {this.state.minMax ? (
+          <React.Fragment>
+            <div style={{...styles.label, backgroundColor: Colors.MIN}} />
+            <div style={styles.labelName}>{'min/max'}</div>
+          </React.Fragment>
+        ) : null}
       </div>
     );
   }
 
-  _renderData(hydroData) {
+  _renderDRHs(hydroData) {
+    if (this.state.minMax) {
+      colors.MIN = Colors.MIN;
+      colors.MAX = Colors.MAX;
+    } else {
+      colors.MIN = 'rgba(0, 0, 0, 0)';
+      colors.MAX = 'rgba(0, 0, 0, 0)';
+    }
+
     if (hydroData) {
-      const colors = {
-        NINTY: Colors.NINTY,
-        SEVENTYFIVE: Colors.SEVENTYFIVE,
-        FIFTY: Colors.FIFTY,
-        TWENTYFIVE: Colors.TWENTYFIVE,
-        TEN: Colors.TEN,
-      };
       return (
         <div>
-          {this._renderInfo()}
+          {this._renderTitleInfo()}
 
           <div style={styles.plotTitle}>
             {'Dimensionless Reference Hydrograph'}
@@ -191,8 +224,8 @@ class Hydrograph extends React.Component {
   render() {
     return (
       <Paper style={styles.graph} className="tour-hydro-general-display">
-        {this._renderData(this.state.hydroData)}
-        {this._renderpercentilleChips()}
+        {this._renderDRHs(this.state.hydroData)}
+        {this._renderPercentilleChips()}
         <Control
           currentGauge={this.props.currentGauge}
           currentClassification={this.props.currentClassification}
@@ -251,6 +284,16 @@ const styles = {
     fontSize: '16px',
   },
   labelName: {fontSize: '14px', marginLeft: '-35px', marginTop: '-2px'},
+  minMax: {
+    width: '180px',
+    position: 'absolute',
+    right: '0px',
+    top: '20px',
+  },
+  labelStyle: {
+    fontSize: '16px',
+    color: '#757575',
+  },
 };
 
 export default Hydrograph;

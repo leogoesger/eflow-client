@@ -55,7 +55,7 @@ export const classInfo = {
     colors: ['#f06292', '#f8bbd0'],
   },
   class8: {
-    abbre: 'RSG',
+    abbre: 'RGW',
     fullName: 'Rain and seasonal groundwater',
     gaugeCount: 23,
     colors: ['#7E57C2', '#e1bee7'],

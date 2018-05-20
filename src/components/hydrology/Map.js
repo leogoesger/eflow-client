@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapGL from 'react-map-gl';
-import {debounce, assign} from 'lodash';
+import {assign} from 'lodash';
 import {fromJS} from 'immutable';
 import Snackbar from 'material-ui/Snackbar';
 
@@ -21,7 +21,6 @@ export default class Map extends React.Component {
         type: 'FeatureCollection',
         features: [],
       },
-      mapGL: null,
       viewport: {
         width: 600,
         height: 800,
@@ -34,10 +33,6 @@ export default class Map extends React.Component {
       hoveredFeature: null,
       loading: true,
     };
-    this.requestFeature = debounce(
-      hoveredFeature => this._requestCurrentFeature(hoveredFeature),
-      200
-    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -265,7 +260,7 @@ export default class Map extends React.Component {
         onHover={e => this._onHover(e)}
         onClick={e => this._onClick(e)}
         onViewportChange={viewport => this._onViewportChange(viewport)}
-        mapboxApiAccessToken="pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA"
+        mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
         {this._renderTooltip()}
         <Control

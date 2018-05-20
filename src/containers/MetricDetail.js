@@ -21,10 +21,7 @@ const metricDetailTourSteps = [
     title: <div className="tour-title">Search Bar</div>,
     body: (
       <div className="tour-body">
-        {'Search by site ID or station name!'}
-        <div className="tour-warning">
-          {'If site ID is 12345, you can search with 45 or 23!'}
-        </div>
+        {'Search gauges by Site ID or Station Name.'}
       </div>
     ),
     position: 'bottom',
@@ -32,12 +29,12 @@ const metricDetailTourSteps = [
   {
     step: 2,
     selector: '.tour-metricDetail-navbar',
-    title: <div className="tour-title">Navigation bar</div>,
+    title: <div className="tour-title">Navigation Bar</div>,
     body: (
       <div className="tour-body">
-        {'All the gauges are listed within their class in the navigation bar!'}
+        {'All gauges are listed within their class in the navigation bar.'}
         <div className="tour-warning">
-          {'Overview will take you to all the boxplots'}
+          {'Overview will take you to the box plot summary for all classes.'}
         </div>
       </div>
     ),
@@ -46,11 +43,12 @@ const metricDetailTourSteps = [
   {
     step: 3,
     selector: '.tour-metricDetail-navbar',
-    title: <div className="tour-title">Click on a gauge!</div>,
+    title: <div className="tour-title">Click on a Gauge!</div>,
     body: (
       <div className="tour-body">
-        {'Click on a gauge from the dropdown menu to proceed to next step!'}
-        <div className="tour-warning">{'Important!'}</div>
+        {
+          'Make sure to click on a gauge from the dropdown menu to see instructions for the next step.'
+        }
       </div>
     ),
     position: 'top',
@@ -58,12 +56,14 @@ const metricDetailTourSteps = [
   {
     step: 4,
     selector: '.tour-metricDetail-slider',
-    title: <div className="tour-title">Annual Flow Slider</div>,
+    title: <div className="tour-title">Annual Hydrograph Slider</div>,
     body: (
       <div className="tour-body">
-        {'Drag the ball around to see annual flow data at different year!'}
+        {
+          'Drag the circle back and forth to see annual hydrographs for each water year.'
+        }
         <div className="tour-warning">
-          {'Once you click the ball, use arrow key to change the year!'}
+          {'Once you click the circle, use the arrow keys to change the year!'}
         </div>
       </div>
     ),
@@ -75,7 +75,12 @@ const metricDetailTourSteps = [
     title: <div className="tour-title">Flow Status</div>,
     body: (
       <div className="tour-body">
-        {'This shows whether current year is impaired or un-impaired!'}
+        {
+          'Check here to see whether the current water year is impaired or unimpaired.'
+        }
+        <div className="tour-warning">
+          {'Only unimpaired water years have calculated metrics!'}
+        </div>
       </div>
     ),
     position: 'left',
@@ -86,7 +91,7 @@ const metricDetailTourSteps = [
     title: <div className="tour-title">Download</div>,
     body: (
       <div className="tour-body">
-        {'Click to download either flow data for the gauge or metric result!'}
+        {'Click here to download flow data for the gauge or metric results.'}
       </div>
     ),
     position: 'bottom',
@@ -98,10 +103,10 @@ const metricDetailTourSteps = [
     body: (
       <div className="tour-body">
         {
-          'Click this will open a bar to the right which will allow you to toggle layers on top of the gauge.'
+          'Clicking here will open a bar which allows you to toggle metric results over the hydrograph.'
         }
         <div className="tour-warning">
-          {'Toggle DRHs, metric results, and change to log scale!'}
+          {'Toggle DRHs, metric results, or change to log scale!'}
         </div>
       </div>
     ),
@@ -110,13 +115,13 @@ const metricDetailTourSteps = [
   {
     step: 8,
     selector: '.tour-hydrology',
-    title: <div className="tour-title">Back to Hydrology</div>,
+    title: <div className="tour-title">Back to Hydrology Home Page</div>,
     body: (
       <div className="tour-body">
-        {'Back to hydrology page with current selected gauge!'}
+        {'Return to the hydrology home page with the currently selected gauge.'}
         <div className="tour-warning">
           {
-            'If there is a gauge displayed, its DRH will show up in hydrology page!'
+            'If there is a gauge currently displayed, its DRH will show up on the hydrology page!'
           }
         </div>
       </div>

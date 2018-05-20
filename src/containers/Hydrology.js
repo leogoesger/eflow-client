@@ -42,7 +42,7 @@ const hydrologyTourSteps = [
     title: <div className="tour-title">Map</div>,
     body: (
       <div className="tour-body">
-        {'Hover over the map will display different gauge or class name.'}
+        {'Hovering over the map will display different gauge or class names.'}
         <div className="tour-warning">
           {'Try zoom (scroll), pan (drag), and tilt (ctrl + mouse)!'}
         </div>
@@ -56,7 +56,7 @@ const hydrologyTourSteps = [
     title: <div className="tour-title">Map Layer Control</div>,
     body: (
       <div className="tour-body">
-        {'Click on the slider will hide/display different map layers.'}
+        {'Clicking on the slider will hide/display different map layers.'}
       </div>
     ),
     position: 'bottom',
@@ -67,7 +67,7 @@ const hydrologyTourSteps = [
     title: <div className="tour-title">General Display</div>,
     body: (
       <div className="tour-body">
-        {'This area will display DRHs, gauges and metric data.'}
+        {'This window will display hydrographs, gauges, and metrics data.'}
       </div>
     ),
     position: 'bottom',
@@ -79,7 +79,7 @@ const hydrologyTourSteps = [
     body: (
       <div className="tour-body">
         {
-          'You can click on either DATA or HYDROGRAPH tab to switch between DRH or data value.'
+          'You can click on either the DATA or HYDROGRAPH tab to switch between metric values or the DRH for individual gauges or classes.'
         }
         <div className="tour-warning">
           {'You can only do this once you have selected a gauge or class'}

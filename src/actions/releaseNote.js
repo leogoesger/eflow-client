@@ -10,8 +10,21 @@ const fetchReleaseObjects = releaseNotes => {
 export function fetchReleaseNotes() {
   return async dispatch => {
     try {
+      // const releases = await request.get(
+      //   `${process.env.SERVER_ADDRESS}/api/releases`
+      // );
       const releaseNotes = {
         body: [
+          {
+            date: 'May 19th, 2018',
+            version: 'v0.15',
+            title: 'Min and Max DRHs',
+            tasks: [
+              'Min and Max DRHs',
+              'Toggle DRHs for min and max',
+              'Map for morphology',
+            ],
+          },
           {
             date: 'May 17th, 2018',
             version: 'v0.14',

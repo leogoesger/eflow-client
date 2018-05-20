@@ -11,7 +11,7 @@ const homeTourSteps = [
     body: (
       <div className="tour-body">
         {
-          'Click on the Eflow logo will direct you to home page anywhere in the app!'
+          'Clicking on the eFlows logo will direct you to the home page from anywhere on the website!'
         }
       </div>
     ),
@@ -20,11 +20,11 @@ const homeTourSteps = [
   {
     step: 2,
     selector: '.tour-hydrology',
-    title: <div className="tour-title">Navigation Bar Items</div>,
+    title: <div className="tour-title">Navigation Bar</div>,
     body: (
       <div className="tour-body">
         {
-          'Click on any item belongs to navigation bar will take you to its home page!'
+          'Clicking on any item in the navigation bar will take you to its home page.'
         }
       </div>
     ),
@@ -35,7 +35,7 @@ const homeTourSteps = [
     title: <div className="tour-title">Explore Hydrology</div>,
     body: (
       <div className="tour-body">
-        This is the same as Hydrology tab on Navigation bar!
+        {'This is the same as the Hydrology tab on the Navigation bar.'}
       </div>
     ),
     position: 'bottom',
@@ -46,7 +46,7 @@ const homeTourSteps = [
     title: <div className="tour-title">How does it work?</div>,
     body: (
       <div className="tour-body">
-        This will direct you to metric summary page!
+        {'This will direct you to the Functional Flows summary page.'}
       </div>
     ),
     position: 'bottom',
@@ -58,7 +58,7 @@ const homeTourSteps = [
     body: (
       <div className="tour-body">
         {
-          'Click on this yellow band will copy citation information into your clipboard, so you can paste (Cmd + v or Ctrl + v) in your document!'
+          'Clicking on this yellow band will copy citation information onto your clipboard, so you can paste (Cmd + v or Ctrl + v) it into your document.'
         }
       </div>
     ),
