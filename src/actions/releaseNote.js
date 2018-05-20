@@ -19,7 +19,11 @@ export function fetchReleaseNotes() {
             date: 'May 19th, 2018',
             version: 'v0.15',
             title: 'Min and Max DRHs',
-            tasks: ['Min and Max DRHs', 'Toggle DRHs for min and max'],
+            tasks: [
+              'Min and Max DRHs',
+              'Toggle DRHs for min and max',
+              'Map for morphology',
+            ],
           },
           {
             date: 'May 17th, 2018',

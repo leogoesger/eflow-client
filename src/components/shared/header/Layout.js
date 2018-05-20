@@ -95,6 +95,7 @@ const styles = {
     position: 'fixed',
     top: '0',
     width: '100%',
+    minWidth: '1300px',
     height: '60px',
     zIndex: '9',
     boxShadow: '-2px 9px 6px -6px #bdbdbd',

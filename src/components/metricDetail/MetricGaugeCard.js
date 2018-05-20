@@ -78,7 +78,7 @@ class MetricGaugeCard extends React.Component {
   }
 
   _renderSliderHelper() {
-    const {allYears} = this.props.annualFlowData.Years;
+    const {year} = this.props.annualFlowData.Years;
     return (
       <div
         style={{
@@ -90,9 +90,9 @@ class MetricGaugeCard extends React.Component {
           color: Colors.lightGrey,
         }}
       >
-        <div>{allYears[0]}</div>
+        <div>{year[0]}</div>
         <div>{'Slide the bar to change the water year!'}</div>
-        <div>{Number(allYears[allYears.length - 1])}</div>
+        <div>{Number(year[year.length - 1])}</div>
       </div>
     );
   }
@@ -279,7 +279,7 @@ class MetricGaugeCard extends React.Component {
 
         <Slider
           className="tour-metricDetail-slider"
-          min={this.props.annualFlowData.Years.allYears[0]}
+          min={this.props.annualFlowData.Years.year[0]}
           max={
             this.props.annualFlowData.Years.allYears[
               this.props.annualFlowData.Years.allYears.length - 1
