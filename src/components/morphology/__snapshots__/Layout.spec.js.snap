@@ -1,25 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Layout /> Render Layout 1`] = `
-<Card
-  className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
-  expandable={false}
-  expanded={null}
-  initiallyExpanded={false}
+<div
   style={
     Object {
-      "borderRadius": "2px",
-      "margin": "0 auto",
-      "marginTop": "120px",
-      "minHeight": "500px",
+      "display": "flex",
+      "height": "100%",
+      "justifyContent": "space-around",
+      "margin": "-60px auto 100px auto",
+      "width": "1300px",
     }
   }
 >
-  <BoxPlot
-    height={400}
-    width={900}
-    x={0}
-    y={20}
+  <Map />
+  <div
+    style={
+      Object {
+        "marginLeft": "30px",
+        "minWidth": "650px",
+        "zIndex": "2",
+      }
+    }
   />
-</Card>
+</div>
 `;
