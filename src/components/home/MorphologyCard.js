@@ -1,17 +1,13 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import scrollTo from 'scroll-to';
 
 import {navigateTo} from '../../utils/helpers';
 import {Colors} from '../../styles';
 
 export default class MorphologyCard extends React.Component {
   _navigateTo(location) {
-    scrollTo(0, 0, {
-      ease: 'linear',
-      duration: 200,
-    });
+    window.scrollTo(0, 0);
     navigateTo(location);
   }
 
