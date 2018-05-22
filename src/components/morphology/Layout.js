@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Map from './Map';
-import {MapHoC} from './MapHoC';
+import MapHoC from './MapHoC';
 
 const NewMap = MapHoC(Map);
 
-export default class Layout extends React.Component {
+class Layout extends React.Component {
   render() {
     return (
       <div style={styles.container}>
@@ -30,3 +30,5 @@ const styles = {
 Layout.propTypes = {
   geoSites: PropTypes.array,
 };
+
+export default Layout;
