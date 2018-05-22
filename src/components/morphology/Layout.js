@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Map from './Map';
 
@@ -6,7 +7,7 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <Map />
+        <Map geoSites={this.props.geoSites} />
         <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
       </div>
     );
@@ -21,4 +22,8 @@ const styles = {
     height: '100%',
     width: '1300px',
   },
+};
+
+Layout.propTypes = {
+  geoSites: PropTypes.array,
 };
