@@ -6,7 +6,7 @@ import {classification} from '../../constants/classification';
 import {getCombinedLayer} from '../../utils/helpers';
 import MapControl from './MapControl';
 
-export const MapHoC = WrappedComponent => {
+export const MapHOC = WrappedComponent => {
   class EnhancedComponent extends React.Component {
     constructor(props) {
       super(props);

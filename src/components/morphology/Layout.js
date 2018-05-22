@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Map from './Map';
-const MapHoC = require('./MapHoC').MapHoC;
+import {MapHOC} from './MapHOC';
 
-const NewMap = MapHoC(Map);
+const NewMap = MapHOC(Map);
 
 const Layout = props => {
   return (
