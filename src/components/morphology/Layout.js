@@ -1,12 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Map from './Map';
+const MapHoC = require('./MapHoC').MapHoC;
 
-export default class Layout extends React.Component {
+const NewMap = MapHoC(Map);
+
+class Layout extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <Map />
+        <NewMap geoSites={this.props.geoSites} />
         <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
       </div>
     );
@@ -22,3 +26,9 @@ const styles = {
     width: '1300px',
   },
 };
+
+Layout.propTypes = {
+  geoSites: PropTypes.array,
+};
+
+export default Layout;

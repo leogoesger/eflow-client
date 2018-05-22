@@ -1,3 +1,41 @@
+export const morphologyRegions = {
+  klamath: {
+    displayName: 'Klamath',
+    searchKeys: ['klamath'],
+    colors: ['#66bb6a', '#98ee99'],
+  },
+  sacramento: {
+    displayName: 'Sacramento',
+    searchKeys: ['sacramento'],
+    colors: ['#7986cb', '#9fa8da'],
+  },
+  southCoast: {
+    displayName: 'South Coast',
+    searchKeys: ['southCoast'],
+    colors: ['#ef9a9a', '#f8bbd0'],
+  },
+  southCentralCoast: {
+    displayName: 'South Central Coast',
+    searchKeys: ['southCentralCoast'],
+    colors: ['#9ccc65', '#c5e1a5'],
+  },
+  northCentralCoast: {
+    displayName: 'North Central Coast',
+    searchKeys: ['northCentralCoast'],
+    colors: ['#b39ddb', '#d1c4e9'],
+  },
+  northCoast: {
+    displayName: 'North Coast',
+    searchKeys: ['northCoast'],
+    colors: ['#80cbc4', '#80deea'],
+  },
+  southForkEel: {
+    displayName: 'South Fork Eel',
+    searchKeys: ['southForkEel'],
+    colors: ['#fdd835', '#fff59d'],
+  },
+};
+
 export const classification = [
   'Snowmelt',
   'High-volume snowmelt and rain',
