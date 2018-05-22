@@ -6,16 +6,14 @@ const MapHoC = require('./MapHoC').MapHoC;
 
 const NewMap = MapHoC(Map);
 
-class Layout extends React.Component {
-  render() {
-    return (
-      <div style={styles.container}>
-        <NewMap geoSites={this.props.geoSites} />
-        <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
-      </div>
-    );
-  }
-}
+const Layout = props => {
+  return (
+    <div style={styles.container}>
+      <NewMap geoSites={props.geoSites} />
+      <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
+    </div>
+  );
+};
 
 const styles = {
   container: {
