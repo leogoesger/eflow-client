@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Map from './Map';
-import MapHoC from './MapHoC';
+const MapHoC = require('./MapHoC').MapHoC;
 
 const NewMap = MapHoC(Map);
 
