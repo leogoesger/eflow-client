@@ -1,8 +1,7 @@
 import React from 'react';
 import MapGL from 'react-map-gl';
+import PropTypes from 'prop-types';
 
-import {defaultMapStyle} from './MapStyle.js';
-import {classification} from '../../constants/classification';
 import Loader from '../shared/loader/Loader';
 
 export default class Map extends React.Component {
@@ -17,9 +16,6 @@ export default class Map extends React.Component {
         longitude: -119.4179,
         zoom: 5.3,
       },
-      x: null,
-      y: null,
-      hoveredFeature: null,
     };
   }
 
@@ -29,19 +25,8 @@ export default class Map extends React.Component {
     }
   }
 
-  _onHover(event) {
-    if (event.features.length === 0) {
-      return null;
-    }
-    const {features, srcEvent: {offsetX, offsetY}} = event,
-      hoveredFeature = features[0].properties.CLASS
-        ? classification[features[0].properties.CLASS - 1]
-        : features[0].properties.Region;
-    this.setState({hoveredFeature, x: offsetX, y: offsetY});
-  }
-
   _renderTooltip() {
-    const {hoveredFeature, x, y} = this.state;
+    const {hoveredFeature, x, y} = this.props;
     if (!hoveredFeature || !x || !y) {
       return null;
     }
@@ -57,19 +42,29 @@ export default class Map extends React.Component {
     return (
       <MapGL
         {...this.state.viewport}
-        mapStyle={defaultMapStyle}
+        mapStyle={this.props.mapStyle}
         minZoom={5}
-        maxZoom={8}
+        maxZoom={10}
         buffer={0}
         onLoad={() => this.setState({loading: false})}
         onViewportChange={viewport => this._onViewportChange(viewport)}
         icon-allow-overlap={false}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
-        onHover={e => this._onHover(e)}
+        onHover={e => this.props.onHover(e)}
       >
         <Loader loading={this.state.loading} />
         {this._renderTooltip()}
+        {this.props.children}
       </MapGL>
     );
   }
 }
+
+Map.propTypes = {
+  children: PropTypes.object,
+  onHover: PropTypes.func,
+  hoveredFeature: PropTypes.string,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  mapStyle: PropTypes.object,
+};

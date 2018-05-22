@@ -248,6 +248,7 @@ export default class Map extends React.Component {
   }
 
   render() {
+    console.log(this.state.mapStyle.toJS());
     return (
       <MapGL
         {...this.state.viewport}

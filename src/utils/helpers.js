@@ -1,7 +1,48 @@
 import {history} from '../store/configureStore';
 import {fromJS} from 'immutable';
 import {detect} from 'detect-browser';
-import _ from 'lodash';
+import {assign} from 'lodash';
+
+export function getCombinedLayer(geoSites, defaultMapStyle, siteLayer) {
+  const newCombinedLayer = fromJS(
+      defaultMapStyle
+        .get('layers')
+        .toJS()
+        .concat(siteLayer)
+    ),
+    sitesData = {
+      sites: {
+        data: {type: 'FeatureCollection', features: []},
+        type: 'geojson',
+      },
+    };
+  geoSites.forEach(site => {
+    const siteObj = {
+      properties: {
+        geoClassId: Number(site.geoClass.name[site.geoClass.name.length - 1]),
+        siteIdentity: site.identity,
+        siteId: site.id,
+        geoClassName: site.geoClass.name,
+      },
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [
+          site.geometry.coordinates[1],
+          site.geometry.coordinates[0],
+        ],
+      },
+    };
+    sitesData.sites.data.features.push(siteObj);
+  });
+
+  return defaultMapStyle
+    .set(
+      'sources',
+      fromJS(assign({}, defaultMapStyle.get('sources').toJS(), sitesData))
+    )
+    .set('layers', newCombinedLayer);
+}
 
 export function navigateTo(pathname, query) {
   history.push({pathname, query});
@@ -132,7 +173,7 @@ export function getMapStyle(
     .set(
       'sources',
       fromJS(
-        _.assign({}, defaultMapStyle.get('sources').toJS(), combinedMapStyle)
+        assign({}, defaultMapStyle.get('sources').toJS(), combinedMapStyle)
       )
     )
     .set('layers', newCombinedLayer);
@@ -159,13 +200,13 @@ export function getMapStyle(
         },
       };
       combinedGauges.gauges.data.features.push(
-        _.assign({}, geometry, properties)
+        assign({}, geometry, properties)
       );
     }
   });
   const mapStyle_gauge = mapStyle.set(
     'sources',
-    fromJS(_.assign({}, mapStyle.get('sources').toJS(), combinedGauges))
+    fromJS(assign({}, mapStyle.get('sources').toJS(), combinedGauges))
   );
 
   return mapStyle_gauge;
@@ -205,16 +246,14 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
         },
       };
       combinedGauges.gauges.data.features.push(
-        _.assign({}, geometry, properties)
+        assign({}, geometry, properties)
       );
     }
   });
   const mapStyle = defaultMapStyle
     .set(
       'sources',
-      fromJS(
-        _.assign({}, defaultMapStyle.get('sources').toJS(), combinedGauges)
-      )
+      fromJS(assign({}, defaultMapStyle.get('sources').toJS(), combinedGauges))
     )
     .set('layers', newCombinedLayer);
 
