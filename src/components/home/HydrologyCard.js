@@ -15,11 +15,7 @@ export default class HydrologyCard extends React.Component {
 
   render() {
     return (
-      <Paper
-        className="col-lg-9 col-md-9 col-xs-12 "
-        style={styles.tabsCard}
-        zDepth={2}
-      >
+      <Paper style={styles.tabsCard} zDepth={2}>
         <div style={styles.left}>
           <img
             src="https://s3-us-west-1.amazonaws.com/funcflow/resources/hydrology.png"
@@ -101,10 +97,11 @@ const styles = {
   tabsCard: {
     margin: '0 auto',
     borderRadius: '2px',
-    minWidth: '800px',
+    width: '1050px',
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0',
+    height: '500px',
   },
 
   subContainer: {

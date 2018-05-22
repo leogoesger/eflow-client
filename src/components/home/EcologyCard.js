@@ -9,11 +9,7 @@ export default class EcologyCard extends React.Component {
 
   render() {
     return (
-      <Paper
-        className="col-lg-9 col-md-9 col-xs-12"
-        style={styles.tabsCard}
-        zDepth={2}
-      >
+      <Paper style={styles.tabsCard} zDepth={2}>
         <div className="col-lg-4 col-md-4 col-xs-12">
           <FlatButton label="Function" />
         </div>
@@ -24,9 +20,12 @@ export default class EcologyCard extends React.Component {
 
 const styles = {
   tabsCard: {
-    margin: '0 auto',
-    marginTop: '15px',
+    margin: '40px auto',
     borderRadius: '2px',
-    minHeight: '500px',
+    width: '1050px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0',
+    height: '500px',
   },
 };

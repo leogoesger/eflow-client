@@ -1,21 +1,58 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import scrollTo from 'scroll-to';
+
+import {navigateTo} from '../../utils/helpers';
+import {Colors} from '../../styles';
 
 export default class MorphologyCard extends React.Component {
+  _navigateTo(location) {
+    scrollTo(0, 0, {
+      ease: 'linear',
+      duration: 200,
+    });
+    navigateTo(location);
+  }
+
   _handleMessageClose() {
-    this.setState({ showMessage: false, message: '' });
+    this.setState({showMessage: false, message: ''});
   }
 
   render() {
     return (
-      <Paper
-        className="col-lg-9 col-md-9 col-xs-12"
-        style={styles.tabsCard}
-        zDepth={2}
-      >
-        <div className="col-lg-4 col-md-4 col-xs-12">
-          <FlatButton label="Morphology" />
+      <Paper style={styles.tabsCard} zDepth={2}>
+        <div style={styles.right}>
+          <div className="title">
+            {
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            }
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <RaisedButton
+              className="tour-explore-hydrology"
+              label="Explore Morphology"
+              backgroundColor={Colors.gold}
+              labelColor={Colors.white}
+              onClick={() => this._navigateTo('/morphology')}
+              labelStyle={{fontSize: '12px'}}
+            />
+          </div>
+        </div>
+        <div style={styles.left}>
+          <img
+            src="https://s3-us-west-1.amazonaws.com/funcflow/resources/morphology.png"
+            style={{
+              flexShrink: 0,
+              height: '100%',
+              width: '100%',
+            }}
+          />
         </div>
       </Paper>
     );
@@ -24,9 +61,53 @@ export default class MorphologyCard extends React.Component {
 
 const styles = {
   tabsCard: {
-    margin: '0 auto',
-    marginTop: '15px',
+    margin: '40px auto',
     borderRadius: '2px',
-    minHeight: '500px',
+    width: '1050px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0',
+    height: '500px',
+  },
+
+  subContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+
+  subContainerCard: {
+    boxShadow: 'none',
+    width: '30%',
+  },
+
+  right: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    width: '58%',
+  },
+
+  left: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '40%',
+  },
+
+  title: {
+    color: '#424242',
+    width: '70%',
+    fontWeight: '600',
+    lineHeight: '20px',
+    paddingLeft: '15px',
+    paddingRight: '0px',
+    paddingBottom: '0px',
+    fontSize: '14px',
+    height: '35px',
+  },
+
+  text: {
+    lineHeight: '20px',
+    color: '#757575',
   },
 };
