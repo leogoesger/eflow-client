@@ -12,7 +12,7 @@ exports[`<Layout /> Render Layout 1`] = `
     }
   }
 >
-  <Map />
+  <EnhancedComponent />
   <div
     style={
       Object {
