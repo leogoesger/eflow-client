@@ -16,6 +16,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 22th, 2018',
+            version: 'v0.16',
+            title: 'Map Control for Morphology',
+            tasks: [
+              'Add site layer',
+              'Add region layer',
+              'Add map control for each layer',
+            ],
+          },
+          {
             date: 'May 19th, 2018',
             version: 'v0.15',
             title: 'Min and Max DRHs',
