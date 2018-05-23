@@ -3,7 +3,7 @@ import {fromJS} from 'immutable';
 import {detect} from 'detect-browser';
 import {assign} from 'lodash';
 
-export function getCombinedLayer(geoSites, defaultMapStyle, siteLayer) {
+export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
   let siteLayers = defaultMapStyle.get('layers').toJS();
   const sitesData = {};
   geoSites.forEach(site => {
@@ -24,12 +24,7 @@ export function getCombinedLayer(geoSites, defaultMapStyle, siteLayer) {
     };
     const currentGeoClass = site.geoClass.name.split('-')[0];
     if (!sitesData[currentGeoClass]) {
-      siteLayers = siteLayers.concat(
-        siteLayer
-          .set('id', currentGeoClass)
-          .set('source', currentGeoClass)
-          .toJS()
-      );
+      siteLayers = siteLayers.concat(getSiteLayer(currentGeoClass).toJS());
       sitesData[currentGeoClass] = {
         data: {type: 'FeatureCollection', features: []},
         type: 'geojson',

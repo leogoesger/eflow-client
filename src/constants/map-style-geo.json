@@ -245,7 +245,9 @@
       "source": "composite",
       "source-layer": "SouthCoast-ab5zhj",
       "interactive": true,
-      "layout": {},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "fill-color": "#ef9a9a",
         "fill-opacity": 0.6,
@@ -258,7 +260,9 @@
       "source": "composite",
       "source-layer": "SouthCentralCoast-a2a0ol",
       "interactive": true,
-      "layout": {},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "fill-color": "#9ccc65",
         "fill-outline-color": "#6e6e6e",
@@ -271,7 +275,9 @@
       "source": "composite",
       "source-layer": "NorthCentralCoast-8rfe9a",
       "interactive": true,
-      "layout": {},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "fill-color": "#b39ddb",
         "fill-outline-color": "#6e6e6e",
@@ -284,7 +290,9 @@
       "source": "composite",
       "source-layer": "NorthCoast-2jvh51",
       "interactive": true,
-      "layout": {},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "fill-color": "#80cbc4",
         "fill-outline-color": "#6e6e6e",
@@ -297,7 +305,9 @@
       "source": "composite",
       "source-layer": "SouthForkEel-8ckmdn",
       "interactive": true,
-      "layout": {},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "fill-color": "#fdd835",
         "fill-opacity": 0.6,
@@ -307,7 +317,7 @@
   ],
   "created": "2018-05-17T18:30:17.427Z",
   "id": "cjhavecle00tt2rn8oiaa2eyf",
-  "modified": "2018-05-23T16:09:08.172Z",
+  "modified": "2018-05-23T22:13:35.131Z",
   "owner": "leogoesger",
   "visibility": "private",
   "draft": false

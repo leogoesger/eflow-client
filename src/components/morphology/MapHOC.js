@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {defaultMapStyle, siteLayer} from './MapStyle.js';
+import {defaultMapStyle, getSiteLayer} from './MapStyle.js';
 import {classification} from '../../constants/classification';
 import {getCombinedLayer} from '../../utils/helpers';
 import MapControl from './MapControl';
@@ -26,7 +26,7 @@ export const MapHOC = WrappedComponent => {
         mapStyle: getCombinedLayer(
           nextProps.geoSites,
           defaultMapStyle,
-          siteLayer
+          getSiteLayer
         ),
       });
     }
