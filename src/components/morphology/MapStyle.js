@@ -22,12 +22,12 @@ export const siteLayer = fromJS({
     'circle-color': {
       property: 'geoClassId',
       stops: [
-        [1, '#f9a825'], //yellow #f9a825
-        [2, '#0D47A1'], //blue #1a237e
-        [3, '#03a9f4'], //light blue
-        [4, '#ff6f00'], //orange Winter storm
-        [5, '#F44336'],
-        [6, '#087f23'], //green
+        [1, '#e57373'], //red
+        [2, '#ba68c8'], //purple
+        [3, '#64b5f6'], //blue
+        [4, '#81c784'], //green
+        [5, '#ffb74d'], //deep orange
+        [6, '#90a4ae'], //blue grey
       ],
     },
   },

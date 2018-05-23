@@ -67,7 +67,6 @@ export const classInfo = {
     gaugeCount: 65,
     colors: ['#00bcd4', '#81d4fa'],
   },
-
   class4: {
     abbre: 'WS',
     fullName: 'Winter Storms',

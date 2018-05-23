@@ -4,25 +4,14 @@ import {detect} from 'detect-browser';
 import {assign} from 'lodash';
 
 export function getCombinedLayer(geoSites, defaultMapStyle, siteLayer) {
-  const newCombinedLayer = fromJS(
-      defaultMapStyle
-        .get('layers')
-        .toJS()
-        .concat(siteLayer)
-    ),
-    sitesData = {
-      sites: {
-        data: {type: 'FeatureCollection', features: []},
-        type: 'geojson',
-      },
-    };
+  let siteLayers = defaultMapStyle.get('layers').toJS();
+  const sitesData = {};
   geoSites.forEach(site => {
     const siteObj = {
       properties: {
-        geoClassId: Number(site.geoClass.name[site.geoClass.name.length - 1]),
-        siteIdentity: site.identity,
-        siteId: site.id,
-        geoClassName: site.geoClass.name,
+        geoClassId: Number(site.geoClass.name[site.geoClass.name.length - 1]), //use for color
+        siteIdentity: site.identity, //for hover
+        geoClassName: site.geoClass.name, //for hover
       },
       type: 'Feature',
       geometry: {
@@ -33,15 +22,29 @@ export function getCombinedLayer(geoSites, defaultMapStyle, siteLayer) {
         ],
       },
     };
-    sitesData.sites.data.features.push(siteObj);
+    const currentGeoClass = site.geoClass.name.split('-')[0];
+    if (!sitesData[currentGeoClass]) {
+      siteLayers = siteLayers.concat(
+        siteLayer
+          .set('id', currentGeoClass)
+          .set('source', currentGeoClass)
+          .toJS()
+      );
+      sitesData[currentGeoClass] = {
+        data: {type: 'FeatureCollection', features: []},
+        type: 'geojson',
+      };
+    }
+    sitesData[currentGeoClass].data.features.push(siteObj);
   });
 
-  return defaultMapStyle
+  const newStyle = defaultMapStyle
     .set(
       'sources',
       fromJS(assign({}, defaultMapStyle.get('sources').toJS(), sitesData))
     )
-    .set('layers', newCombinedLayer);
+    .set('layers', fromJS(siteLayers));
+  return newStyle;
 }
 
 export function navigateTo(pathname, query) {
@@ -187,7 +190,10 @@ export function getMapStyle(
   gauges.forEach(gauge => {
     if (gauge.geometry) {
       const properties = {
-        properties: {stationName: gauge.stationName, classId: gauge.classId},
+        properties: {
+          stationName: gauge.stationName,
+          classId: gauge.classId,
+        },
       };
       const geometry = {
         type: 'Feature',
