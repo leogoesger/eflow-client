@@ -112,7 +112,7 @@
       },
       "paint": {
         "line-color": "hsl(187, 100%, 42%)",
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
@@ -126,7 +126,7 @@
       },
       "paint": {
         "line-color": "hsl(26, 100%, 50%)",
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
@@ -140,7 +140,7 @@
       },
       "paint": {
         "line-color": "hsl(134, 88%, 26%)",
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
@@ -154,7 +154,7 @@
       },
       "paint": {
         "line-color": "hsl(340, 83%, 66%)",
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
@@ -168,7 +168,7 @@
       },
       "paint": {
         "line-color": "hsl(262, 47%, 55%)",
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
@@ -182,18 +182,18 @@
       },
       "paint": {
         "line-color": "hsl(333, 82%, 45%)",
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
-      "id": "sm-hsr-gw-merge-505fc1",
+      "id": "class125",
       "type": "line",
       "source": "composite",
       "source-layer": "SM_HSR_GW_merge-505fc1",
+      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
-      "interactive": true,
       "paint": {
         "line-color": [
           "match",
@@ -206,11 +206,11 @@
           "#f41915",
           "hsl(0, 0%, 0%)"
         ],
-        "line-width": 0.8
+        "line-width": 0.5
       }
     },
     {
-      "id": "klamath",
+      "id": "region-klamath",
       "type": "fill",
       "source": "composite",
       "source-layer": "Klamath-4uuk98",
@@ -225,7 +225,7 @@
       }
     },
     {
-      "id": "sacramento",
+      "id": "region-sacramento",
       "type": "fill",
       "source": "composite",
       "source-layer": "Sacramento-4u9o02",
@@ -240,7 +240,7 @@
       }
     },
     {
-      "id": "southCoast",
+      "id": "region-southCoast",
       "type": "fill",
       "source": "composite",
       "source-layer": "SouthCoast-ab5zhj",
@@ -255,7 +255,7 @@
       }
     },
     {
-      "id": "southCentralCoast",
+      "id": "region-southCentralCoast",
       "type": "fill",
       "source": "composite",
       "source-layer": "SouthCentralCoast-a2a0ol",
@@ -270,7 +270,7 @@
       }
     },
     {
-      "id": "northCentralCoast",
+      "id": "region-northCentralCoast",
       "type": "fill",
       "source": "composite",
       "source-layer": "NorthCentralCoast-8rfe9a",
@@ -285,7 +285,7 @@
       }
     },
     {
-      "id": "northCoast",
+      "id": "region-northCoast",
       "type": "fill",
       "source": "composite",
       "source-layer": "NorthCoast-2jvh51",
@@ -300,7 +300,7 @@
       }
     },
     {
-      "id": "southForkEel",
+      "id": "region-southForkEel",
       "type": "fill",
       "source": "composite",
       "source-layer": "SouthForkEel-8ckmdn",
@@ -317,7 +317,7 @@
   ],
   "created": "2018-05-17T18:30:17.427Z",
   "id": "cjhavecle00tt2rn8oiaa2eyf",
-  "modified": "2018-05-18T16:44:51.553Z",
+  "modified": "2018-05-23T22:13:35.131Z",
   "owner": "leogoesger",
   "visibility": "private",
   "draft": false

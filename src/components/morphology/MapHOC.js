@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {defaultMapStyle, siteLayer} from './MapStyle.js';
+import {defaultMapStyle, getSiteLayer} from './MapStyle.js';
 import {classification} from '../../constants/classification';
 import {getCombinedLayer} from '../../utils/helpers';
 import MapControl from './MapControl';
@@ -26,7 +26,7 @@ export const MapHOC = WrappedComponent => {
         mapStyle: getCombinedLayer(
           nextProps.geoSites,
           defaultMapStyle,
-          siteLayer
+          getSiteLayer
         ),
       });
     }
@@ -37,7 +37,7 @@ export const MapHOC = WrappedComponent => {
         .get('layers')
         .toJS()
         .map((layer, index) => {
-          if (layerKeys.some(e => layer.id.includes(e))) {
+          if (layer.id.includes(layerKeys)) {
             mapStyle = mapStyle.setIn(
               ['layers', index, 'layout', 'visibility'],
               status
@@ -66,6 +66,10 @@ export const MapHOC = WrappedComponent => {
         hoveredFeature = properties.Region;
       }
 
+      //Only setState if the state is changed!
+      if (hoveredFeature === this.state.hoveredFeature) {
+        return;
+      }
       this.setState({hoveredFeature, x: offsetX, y: offsetY});
     }
 
