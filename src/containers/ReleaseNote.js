@@ -5,6 +5,10 @@ import {connect} from 'react-redux';
 import Layout from '../components/releaseNote/Layout';
 
 class ReleaseNote extends React.Component {
+  componentDidMount() {
+    document.title = 'Eflows | Releases';
+  }
+
   render() {
     return (
       <React.Fragment>

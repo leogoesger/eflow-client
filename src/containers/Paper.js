@@ -7,7 +7,8 @@ import {fetchPapers} from '../actions/paper';
 import Layout from '../components/paper/Layout';
 
 export class Paper extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
+    document.title = 'Eflows | Papers';
     this.props.fetchPapers();
   }
 

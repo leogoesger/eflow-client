@@ -14,6 +14,10 @@ class BugReport extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = 'Eflows | Bugs';
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.submitEmailMessage) {
       this.setState({snackOpen: true});

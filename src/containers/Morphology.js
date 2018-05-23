@@ -7,6 +7,7 @@ import Layout from '../components/morphology/Layout';
 
 export class Morphology extends React.Component {
   componentDidMount() {
+    document.title = 'Eflows | Morphology';
     this.props.fetchGeoSites();
   }
 

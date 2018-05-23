@@ -67,6 +67,10 @@ const homeTourSteps = [
 ];
 
 export class Home extends React.Component {
+  componentDidMount() {
+    document.title = 'Eflows | Home';
+  }
+
   render() {
     return (
       <React.Fragment>

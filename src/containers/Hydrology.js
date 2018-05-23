@@ -91,7 +91,8 @@ const hydrologyTourSteps = [
 ];
 
 export class Hydrology extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
+    document.title = 'Eflows | Hydrology';
     this.props.fetchGauges();
     this.props.fetchClassifications();
     this.removeClassGaugeProps();

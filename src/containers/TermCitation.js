@@ -5,6 +5,10 @@ import {connect} from 'react-redux';
 import Layout from '../components/term/Layout';
 
 class TermCitation extends React.Component {
+  componentDidMount() {
+    document.title = 'Eflows | Terms';
+  }
+
   render() {
     return (
       <React.Fragment>

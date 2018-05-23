@@ -7,7 +7,8 @@ import {fetchMembers} from '../actions/member';
 import Layout from '../components/team/Layout';
 
 class Team extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
+    document.title = 'Eflows | Team';
     this.props.fetchMembers();
   }
 

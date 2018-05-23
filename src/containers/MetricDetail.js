@@ -131,7 +131,8 @@ const metricDetailTourSteps = [
 ];
 
 export class MetricDetail extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
+    document.title = 'Eflows | Detail';
     if (!this.props.classifications) {
       this.props.fetchClassifications();
     }
