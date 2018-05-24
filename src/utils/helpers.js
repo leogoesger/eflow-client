@@ -28,6 +28,7 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
       sitesData[currentGeoClass] = {
         data: {type: 'FeatureCollection', features: []},
         type: 'geojson',
+        cluster: false,
       };
     }
     sitesData[currentGeoClass].data.features.push(siteObj);

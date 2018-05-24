@@ -22,6 +22,7 @@ export const getSiteLayer = source => {
         ],
       },
       'icon-allow-overlap': true,
+      'symbol-avoid-edges': true,
       'text-field': {
         property: 'geoClassId',
         stops: [
@@ -34,10 +35,13 @@ export const getSiteLayer = source => {
         ],
       },
       'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-      'text-size': 8,
+      'text-size': {
+        stops: [[0, 0], [7, 0], [9, 12]],
+      },
       'text-transform': 'uppercase',
       'text-letter-spacing': 0.05,
       'text-offset': [0, 1.3],
+      'text-allow-overlap': true,
     },
     paint: {
       'text-color': '#ffffff',
