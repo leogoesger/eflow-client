@@ -16,6 +16,7 @@ import releaseNote from './releaseNote';
 import metricDetail from './metricDetail';
 import user from './user';
 import geoSite from './geoSite';
+import geoRegion from './geoRegion';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   metricDetail,
   user,
   geoSite,
+  geoRegion,
 });
 
 export default rootReducer;

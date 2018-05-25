@@ -1,16 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Card} from 'material-ui/Card';
 
-import Map from './Map';
-import {MapHOC} from './MapHOC';
-
-const NewMap = MapHOC(Map);
+import Map from '../../containers/Map';
+import Overview from './Overview';
 
 const Layout = props => {
   return (
     <div style={styles.container}>
-      <NewMap geoSites={props.geoSites} />
-      <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
+      <Map path="/morphology" />
+      <Card
+        style={{
+          zIndex: '2',
+          width: '650px',
+          marginLeft: '30px',
+          height: '800px',
+          overflow: 'scroll',
+        }}
+      >
+        <Overview geoRegions={props.geoRegions} />
+      </Card>
     </div>
   );
 };
@@ -26,7 +35,7 @@ const styles = {
 };
 
 Layout.propTypes = {
-  geoSites: PropTypes.array,
+  geoRegions: PropTypes.array,
 };
 
 export default Layout;

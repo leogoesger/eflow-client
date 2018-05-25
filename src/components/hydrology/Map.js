@@ -37,12 +37,9 @@ export default class Map extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.gauges && this.props.gauges !== nextProps.gauges) {
-      const mapStyle = getGaugeLayer(
-        nextProps.gauges,
-        defaultMapStyle,
-        gaugeLayer
-      );
-      this.setState({mapStyle});
+      this.setState({
+        mapStyle: getGaugeLayer(nextProps.gauges, defaultMapStyle, gaugeLayer),
+      });
     } else if (
       nextProps.hoveredGauge &&
       this.props.hoveredGauge !== nextProps.hoveredGauge
@@ -249,19 +246,20 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <MapGL
-        {...this.state.viewport}
-        mapStyle={this.state.mapStyle}
-        minZoom={5}
-        maxZoom={8}
-        buffer={0}
-        onLoad={() => this.setState({loading: false})}
-        icon-allow-overlap={false}
-        onHover={e => this._onHover(e)}
-        onClick={e => this._onClick(e)}
-        onViewportChange={viewport => this._onViewportChange(viewport)}
-        mapboxApiAccessToken={process.env.MAPBOX_KEY}
-      >
+      <div style={{position: 'relative'}}>
+        <MapGL
+          {...this.state.viewport}
+          mapStyle={this.state.mapStyle}
+          minZoom={5}
+          maxZoom={8}
+          buffer={0}
+          onLoad={() => this.setState({loading: false})}
+          icon-allow-overlap={false}
+          onHover={e => this._onHover(e)}
+          onClick={e => this._onClick(e)}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
+          mapboxApiAccessToken={process.env.MAPBOX_KEY}
+        />
         {this._renderTooltip()}
         <Control
           hideLayer={(layerId, condition) =>
@@ -276,7 +274,7 @@ export default class Map extends React.Component {
           autoHideDuration={4000}
           onRequestClose={() => this._handleRequestClose()}
         />
-      </MapGL>
+      </div>
     );
   }
 }

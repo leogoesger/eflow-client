@@ -3,7 +3,7 @@ import MAP_STYLE from '../../constants/map-style-geo.json';
 
 export const defaultMapStyle = fromJS(MAP_STYLE);
 
-export const getSiteLayer = source => {
+export const getSiteLayer = (source, regionName) => {
   return fromJS({
     id: source,
     source: source,
@@ -26,12 +26,12 @@ export const getSiteLayer = source => {
       'text-field': {
         property: 'geoClassId',
         stops: [
-          [1, `${source}-1`],
-          [2, `${source}-2`],
-          [3, `${source}-3`],
-          [4, `${source}-4`],
-          [5, `${source}-5`],
-          [6, `${source}-6`],
+          [1, `${regionName}-${source}-1`],
+          [2, `${regionName}-${source}-2`],
+          [3, `${regionName}-${source}-3`],
+          [4, `${regionName}-${source}-4`],
+          [5, `${regionName}-${source}-5`],
+          [6, `${regionName}-${source}-6`],
         ],
       },
       'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],

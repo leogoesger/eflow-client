@@ -13,6 +13,7 @@ import KnowIssueTypes from './knownIssue';
 import MetricDetailTypes from './metricDetail';
 import UserTypes from './user';
 import GeoSiteTypes from './geoSite';
+import GeoRegionTypes from './geoRegion';
 
 export {ClassificationTypes};
 export {GaugeTypes};
@@ -29,6 +30,7 @@ export {MetricDetailTypes};
 export {UserTypes};
 export {FallWinterTypes};
 export {GeoSiteTypes};
+export {GeoRegionTypes};
 
 export default {
   ClassificationTypes,
@@ -46,4 +48,5 @@ export default {
   UserTypes,
   FallWinterTypes,
   GeoSiteTypes,
+  GeoRegionTypes,
 };
