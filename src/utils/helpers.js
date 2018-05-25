@@ -43,6 +43,17 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
   return newStyle;
 }
 
+const toCamelWord = (word, idx) =>
+  idx === 0
+    ? word.toLowerCase()
+    : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
+export const toCamelCase = text =>
+  text
+    .split(/[_-\s]+/)
+    .map(toCamelWord)
+    .join('');
+
 export function navigateTo(pathname, query) {
   history.push({pathname, query});
 }

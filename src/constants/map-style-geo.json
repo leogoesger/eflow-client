@@ -106,7 +106,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "Class3-7o2fmu",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -120,7 +119,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "Class4-1sxwkn",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -134,7 +132,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "Class6-4osdj8",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -148,7 +145,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "Class7-9pkku2",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -162,7 +158,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "Class8-0ztc53",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -176,7 +171,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "Class9-3j4gme",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -190,7 +184,6 @@
       "type": "line",
       "source": "composite",
       "source-layer": "SM_HSR_GW_merge-505fc1",
-      "interactive": true,
       "layout": {
         "visibility": "visible"
       },
@@ -219,9 +212,20 @@
         "visibility": "visible"
       },
       "paint": {
-        "fill-color": "#66bb6a",
-        "fill-opacity": 0.6,
-        "fill-outline-color": "#6e6e6e"
+        "fill-color": "hsla(0, 0%, 0%, 0.07)",
+        "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "region-klamath-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Klamath-4uuk98",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     },
     {
@@ -230,13 +234,22 @@
       "source": "composite",
       "source-layer": "Sacramento-4u9o02",
       "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "#7986cb",
-        "fill-opacity": 0.6,
-        "fill-outline-color": "#6e6e6e"
+        "fill-color": "hsla(0, 0%, 0%, 0.07)",
+        "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "region-sacramento-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "Sacramento-4u9o02",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     },
     {
@@ -245,13 +258,22 @@
       "source": "composite",
       "source-layer": "SouthCoast-ab5zhj",
       "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "#ef9a9a",
-        "fill-opacity": 0.6,
-        "fill-outline-color": "#6e6e6e"
+        "fill-color": "hsla(0, 0%, 0%, 0.07)",
+        "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "region-southCoast-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "SouthCoast-ab5zhj",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     },
     {
@@ -260,13 +282,22 @@
       "source": "composite",
       "source-layer": "SouthCentralCoast-a2a0ol",
       "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "#9ccc65",
-        "fill-outline-color": "#6e6e6e",
+        "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "region-southCentralCoast-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "SouthCentralCoast-a2a0ol",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     },
     {
@@ -275,13 +306,22 @@
       "source": "composite",
       "source-layer": "NorthCentralCoast-8rfe9a",
       "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "#b39ddb",
-        "fill-outline-color": "#6e6e6e",
+        "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "region-northCentralCoast-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "NorthCentralCoast-8rfe9a",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     },
     {
@@ -290,13 +330,22 @@
       "source": "composite",
       "source-layer": "NorthCoast-2jvh51",
       "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "#80cbc4",
-        "fill-outline-color": "#6e6e6e",
+        "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "region-northCoast-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "NorthCoast-2jvh51",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     },
     {
@@ -305,13 +354,22 @@
       "source": "composite",
       "source-layer": "SouthForkEel-8ckmdn",
       "interactive": true,
-      "layout": {
-        "visibility": "visible"
-      },
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "#fdd835",
         "fill-opacity": 0.6,
-        "fill-outline-color": "#6e6e6e"
+        "fill-color": "hsla(0, 0%, 0%, 0.2)"
+      }
+    },
+    {
+      "id": "region-southForkEel-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "SouthForkEel-8ckmdn",
+      "interactive": true,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": 1,
+        "line-color": "#424242"
       }
     }
   ],

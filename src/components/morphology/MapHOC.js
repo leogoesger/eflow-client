@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {defaultMapStyle, getSiteLayer} from './MapStyle.js';
-import {classification} from '../../constants/classification';
-import {getCombinedLayer} from '../../utils/helpers';
+import {getCombinedLayer, toCamelCase} from '../../utils/helpers';
 import MapControl from './MapControl';
+import MapLegend from './MapLegend';
 
 export const MapHOC = WrappedComponent => {
   class EnhancedComponent extends React.Component {
@@ -12,9 +12,10 @@ export const MapHOC = WrappedComponent => {
       super(props);
       this.state = {
         hoveredFeature: null,
-        x: null,
-        y: null,
+        clickedFeature: null,
         mapStyle: defaultMapStyle,
+        reserveMapStyle: defaultMapStyle,
+        hoverMode: true,
       };
     }
 
@@ -22,12 +23,38 @@ export const MapHOC = WrappedComponent => {
       if (!nextProps.geoSites) {
         return null;
       }
+      const mapStyle = getCombinedLayer(
+        nextProps.geoSites,
+        defaultMapStyle,
+        getSiteLayer
+      );
       this.setState({
-        mapStyle: getCombinedLayer(
-          nextProps.geoSites,
-          defaultMapStyle,
-          getSiteLayer
-        ),
+        mapStyle,
+        reserveMapStyle: mapStyle,
+      });
+    }
+
+    setHoverEffect(event) {
+      const regionLayer = event.features.find(el => el.properties.Region);
+      const regionIndex = this.state.reserveMapStyle
+        .get('layers')
+        .toJS()
+        .findIndex(
+          e => e.id === `region-${toCamelCase(regionLayer.properties.Region)}`
+        );
+
+      const mapStyle = this.state.reserveMapStyle.setIn(
+        ['layers', regionIndex, 'paint', 'fill-color'],
+        'hsla(0, 0%, 0%, 0.4)'
+      );
+      this.setState({mapStyle});
+    }
+
+    removeSelection() {
+      this.setState({
+        mapStyle: this.state.reserveMapStyle,
+        hoverMode: true,
+        clickedFeature: null,
       });
     }
 
@@ -44,33 +71,30 @@ export const MapHOC = WrappedComponent => {
             );
           }
         });
-      this.setState({mapStyle});
+      this.setState({mapStyle, reserveMapStyle: mapStyle});
     }
 
     onHover(event) {
-      if (event.features.length === 0) {
+      if (event.features.length === 0 || !this.state.hoverMode) {
         return null;
       }
-      const {features, srcEvent: {offsetX, offsetY}} = event,
-        properties = features[0].properties;
 
-      let hoveredFeature;
-
-      if (properties.siteIdentity) {
-        hoveredFeature = `${properties.geoClassName}: ${
-          properties.siteIdentity
-        }`;
-      } else if (properties.CLASS) {
-        hoveredFeature = classification[properties.CLASS - 1];
+      if (event.features.some(el => el.properties.Region)) {
+        this.setHoverEffect(event);
       } else {
-        hoveredFeature = properties.Region;
+        this.setState({mapStyle: this.state.reserveMapStyle});
       }
+    }
 
-      //Only setState if the state is changed!
-      if (hoveredFeature === this.state.hoveredFeature) {
-        return;
+    onClick(event) {
+      if (event.features.length === 0) {
+        return null;
+      } else if (event.features.some(el => el.properties.Region)) {
+        const clickedFeature = event.features.find(el => el.properties.Region)
+          .properties.Region;
+        this.setState({clickedFeature, hoverMode: false});
+        this.setHoverEffect(event);
       }
-      this.setState({hoveredFeature, x: offsetX, y: offsetY});
     }
 
     render() {
@@ -78,13 +102,15 @@ export const MapHOC = WrappedComponent => {
         <WrappedComponent
           mapStyle={this.state.mapStyle}
           {...this.props}
+          onClick={e => this.onClick(e)}
           onHover={e => this.onHover(e)}
-          hoveredFeature={this.state.hoveredFeature}
-          x={this.state.x}
-          y={this.state.y}
         >
           <MapControl
             toggleLayer={(keys, status) => this.toggleLayer(keys, status)}
+          />
+          <MapLegend
+            region={this.state.clickedFeature}
+            removeSelection={() => this.removeSelection()}
           />
         </WrappedComponent>
       );

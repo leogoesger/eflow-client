@@ -37,12 +37,9 @@ export default class Map extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.gauges && this.props.gauges !== nextProps.gauges) {
-      const mapStyle = getGaugeLayer(
-        nextProps.gauges,
-        defaultMapStyle,
-        gaugeLayer
-      );
-      this.setState({mapStyle});
+      this.setState({
+        mapStyle: getGaugeLayer(nextProps.gauges, defaultMapStyle, gaugeLayer),
+      });
     } else if (
       nextProps.hoveredGauge &&
       this.props.hoveredGauge !== nextProps.hoveredGauge

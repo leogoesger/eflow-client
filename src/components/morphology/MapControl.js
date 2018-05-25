@@ -28,15 +28,31 @@ export default class MapControl extends React.Component {
     return (
       <div style={styles.BLcontainer}>
         {[
-          {name: 'SFE', colors: ['#fdd835', '#ffee58']},
-          {name: 'WS', colors: ['#ff6f00', '#ffcc80']},
-          {name: 'PGR', colors: ['#087f23', '#a5d6a7']},
-          {name: 'RGW', colors: ['#7E57C2', '#e1bee7']},
+          {
+            name: 'SFE',
+            display: 'South Fork Eel',
+            colors: ['#fdd835', '#ffee58'],
+          },
+          {
+            name: 'WS',
+            display: 'Sacramento WS',
+            colors: ['#ff6f00', '#ffcc80'],
+          },
+          {
+            name: 'PGR',
+            display: 'Sacramento PGR',
+            colors: ['#087f23', '#a5d6a7'],
+          },
+          {
+            name: 'RGW',
+            display: 'Sacramento RGW',
+            colors: ['#7E57C2', '#e1bee7'],
+          },
         ].map(geoClass => {
           return (
             <Toggle
               key={geoClass.name}
-              label={geoClass.name}
+              label={geoClass.display}
               labelStyle={styles.labelStyle}
               value={'empty'}
               onClick={() => this.handleToggle(geoClass.name)}
@@ -50,14 +66,7 @@ export default class MapControl extends React.Component {
           style={{marginTop: '4px', marginBottom: '4px', height: '2px'}}
         />
         <Toggle
-          label={'Regions'}
-          labelStyle={styles.labelStyle}
-          value={'empty'}
-          onClick={() => this.handleToggle('region')}
-          toggled={this.state.region}
-        />
-        <Toggle
-          label={'Hydrology Map'}
+          label={'Hydrologic Classifications'}
           labelStyle={styles.labelStyle}
           value={'empty'}
           onClick={() => this.handleToggle('class')}
@@ -74,8 +83,8 @@ const styles = {
     position: 'absolute',
     bottom: '40px',
     left: '20px',
-    width: '170px',
-    height: '154px',
+    width: '190px',
+    height: '124px',
     padding: '20px',
     boxShadow: '2px 2px 45px -5px rgba(110,110,110,1)',
     zIndex: '8',

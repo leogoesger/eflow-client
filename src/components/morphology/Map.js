@@ -21,21 +21,8 @@ export default class Map extends React.Component {
 
   _onViewportChange(viewport) {
     if (!this.state.loading) {
-      this.setState({viewport, hoveredFeature: null, x: null, y: null});
+      this.setState({viewport, x: null, y: null});
     }
-  }
-
-  _renderTooltip() {
-    const {hoveredFeature, x, y} = this.props;
-    if (!hoveredFeature || !x || !y) {
-      return null;
-    }
-
-    return (
-      <div className="tooltip" style={{position: 'absolute', left: x, top: y}}>
-        <div>{hoveredFeature}</div>
-      </div>
-    );
   }
 
   render() {
@@ -51,9 +38,9 @@ export default class Map extends React.Component {
         icon-allow-overlap={false}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
         onHover={e => this.props.onHover(e)}
+        onClick={e => this.props.onClick(e)}
       >
         <Loader loading={this.state.loading} />
-        {this._renderTooltip()}
         {this.props.children}
       </MapGL>
     );
@@ -61,10 +48,8 @@ export default class Map extends React.Component {
 }
 
 Map.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.array,
   onHover: PropTypes.func,
-  hoveredFeature: PropTypes.string,
-  x: PropTypes.number,
-  y: PropTypes.number,
+  onClick: PropTypes.func,
   mapStyle: PropTypes.object,
 };
