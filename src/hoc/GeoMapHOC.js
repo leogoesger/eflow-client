@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Dialog from 'material-ui/Dialog';
+import {Card, CardHeader, CardMedia} from 'material-ui/Card';
 
-import {defaultMapStyle, getSiteLayer} from './MapStyle.js';
-import {getCombinedLayer, toCamelCase} from '../../utils/helpers';
-import MapControl from './MapControl';
-import MapLegend from './MapLegend';
+import {getCombinedLayer, toCamelCase} from '../utils/helpers';
 
-export const MapHOC = WrappedComponent => {
+export const GeoMapHOC = (
+  WrappedComponent,
+  MapControl,
+  MapLegend,
+  defaultMapStyle,
+  getSiteLayer
+) => {
   class EnhancedComponent extends React.Component {
     constructor(props) {
       super(props);
@@ -16,6 +21,7 @@ export const MapHOC = WrappedComponent => {
         mapStyle: defaultMapStyle,
         reserveMapStyle: defaultMapStyle,
         hoverMode: true,
+        dialogFeature: null,
       };
     }
 
@@ -32,6 +38,10 @@ export const MapHOC = WrappedComponent => {
         mapStyle,
         reserveMapStyle: mapStyle,
       });
+    }
+
+    handleClose() {
+      this.setState({dialogFeature: null});
     }
 
     setHoverEffect(event) {
@@ -87,24 +97,58 @@ export const MapHOC = WrappedComponent => {
     }
 
     onClick(event) {
-      if (event.features.length === 0) {
+      if (event.features.length === 0 || !this.state.hoverMode) {
         return null;
-      } else if (event.features.some(el => el.properties.Region)) {
-        const clickedFeature = event.features.find(el => el.properties.Region)
-          .properties.Region;
-        this.setState({clickedFeature, hoverMode: false});
+      } else if (event.features.some(el => el.properties.siteId)) {
+        this.setState({
+          dialogFeature: event.features.find(e => e.properties.siteId)
+            .properties,
+        });
+      } else if (event.features[0].properties.Region) {
+        const clickedFeature = event.features[0].properties.Region;
+        this.setState({
+          clickedFeature,
+          hoverMode: false,
+        });
         this.setHoverEffect(event);
       }
     }
 
+    renderDialog() {
+      if (!this.state.dialogFeature) {
+        return null;
+      }
+      const {imageUrl, geoClassName, geoRegionName} = this.state.dialogFeature;
+      return (
+        <Dialog
+          modal={false}
+          open={Boolean(this.state.dialogFeature)}
+          onRequestClose={() => this.handleClose()}
+          bodyStyle={{padding: '0px'}}
+        >
+          <Card style={{height: '500px', padding: '0px'}}>
+            <CardHeader title={geoRegionName} subtitle={geoClassName} />
+            {imageUrl ? (
+              <CardMedia>
+                <img src={imageUrl} alt="image" />
+              </CardMedia>
+            ) : (
+              <div style={styles.sorry}>{'Sorry, no image avaiable :('}</div>
+            )}
+          </Card>
+        </Dialog>
+      );
+    }
+
     render() {
       return (
-        <WrappedComponent
-          mapStyle={this.state.mapStyle}
-          {...this.props}
-          onClick={e => this.onClick(e)}
-          onHover={e => this.onHover(e)}
-        >
+        <div style={{position: 'relative'}}>
+          <WrappedComponent
+            mapStyle={this.state.mapStyle}
+            {...this.props}
+            onClick={e => this.onClick(e)}
+            onHover={e => this.onHover(e)}
+          />
           <MapControl
             toggleLayer={(keys, status) => this.toggleLayer(keys, status)}
           />
@@ -112,10 +156,19 @@ export const MapHOC = WrappedComponent => {
             region={this.state.clickedFeature}
             removeSelection={() => this.removeSelection()}
           />
-        </WrappedComponent>
+          {this.renderDialog()}
+        </div>
       );
     }
   }
+  const styles = {
+    sorry: {
+      height: '300px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  };
   EnhancedComponent.propTypes = {
     geoSites: PropTypes.array,
   };

@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Map from './Map';
-import {MapHOC} from './MapHOC';
+import Map from '../../containers/Map';
 
-const NewMap = MapHOC(Map);
-
-const Layout = props => {
+const Layout = () => {
   return (
     <div style={styles.container}>
-      <NewMap geoSites={props.geoSites} />
+      <Map path="/morphology" />
       <div style={{zIndex: '2', minWidth: '650px', marginLeft: '30px'}} />
     </div>
   );

@@ -12,6 +12,9 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
         geoClassId: Number(site.geoClass.name[site.geoClass.name.length - 1]), //use for color
         siteIdentity: site.identity, //for hover
         geoClassName: site.geoClass.name, //for hover
+        siteId: site.id,
+        imageUrl: site.imageUrl,
+        geoRegionName: site.geoClass.geoRegion.name,
       },
       type: 'Feature',
       geometry: {
@@ -24,7 +27,12 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
     };
     const currentGeoClass = site.geoClass.name.split('-')[0];
     if (!sitesData[currentGeoClass]) {
-      siteLayers = siteLayers.concat(getSiteLayer(currentGeoClass).toJS());
+      siteLayers = siteLayers.concat(
+        getSiteLayer(
+          currentGeoClass,
+          site.geoClass.geoRegion.abbreviation
+        ).toJS()
+      );
       sitesData[currentGeoClass] = {
         data: {type: 'FeatureCollection', features: []},
         type: 'geojson',

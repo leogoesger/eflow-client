@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Loader from '../shared/loader/Loader';
 
-export default class Map extends React.Component {
+export default class BaseMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +47,7 @@ export default class Map extends React.Component {
   }
 }
 
-Map.propTypes = {
+BaseMap.propTypes = {
   children: PropTypes.array,
   onHover: PropTypes.func,
   onClick: PropTypes.func,
