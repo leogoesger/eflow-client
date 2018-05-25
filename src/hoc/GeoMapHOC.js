@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog from 'material-ui/Dialog';
-import {Card, CardHeader, CardMedia} from 'material-ui/Card';
 
 import {getCombinedLayer, toCamelCase} from '../utils/helpers';
 
@@ -10,7 +8,8 @@ export const GeoMapHOC = (
   MapControl,
   MapLegend,
   defaultMapStyle,
-  getSiteLayer
+  getSiteLayer,
+  MapDialog
 ) => {
   class EnhancedComponent extends React.Component {
     constructor(props) {
@@ -120,23 +119,13 @@ export const GeoMapHOC = (
       }
       const {imageUrl, geoClassName, geoRegionName} = this.state.dialogFeature;
       return (
-        <Dialog
-          modal={false}
-          open={Boolean(this.state.dialogFeature)}
-          onRequestClose={() => this.handleClose()}
-          bodyStyle={{padding: '0px'}}
-        >
-          <Card style={{height: '500px', padding: '0px'}}>
-            <CardHeader title={geoRegionName} subtitle={geoClassName} />
-            {imageUrl ? (
-              <CardMedia>
-                <img src={imageUrl} alt="image" />
-              </CardMedia>
-            ) : (
-              <div style={styles.sorry}>{'Sorry, no image avaiable :('}</div>
-            )}
-          </Card>
-        </Dialog>
+        <MapDialog
+          title={geoRegionName}
+          subtitle={geoClassName}
+          imageUrl={imageUrl}
+          dialogFeature={this.state.dialogFeature}
+          handleClose={() => this.setState({dialogFeature: null})}
+        />
       );
     }
 
@@ -161,14 +150,7 @@ export const GeoMapHOC = (
       );
     }
   }
-  const styles = {
-    sorry: {
-      height: '300px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  };
+
   EnhancedComponent.propTypes = {
     geoSites: PropTypes.array,
   };

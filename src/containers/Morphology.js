@@ -2,39 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {fetchGeoSites} from '../actions/geoSite';
+import {fetchGeoRegions} from '../actions/geoRegion';
 import Layout from '../components/morphology/Layout';
 
 export class Morphology extends React.Component {
   componentDidMount() {
     document.title = 'Eflows | Morphology';
-    this.props.fetchGeoSites();
+    this.props.fetchGeoRegions();
   }
 
   render() {
     return (
       <div>
         <div style={styles.banner} />
-        <Layout geoSites={this.props.geoSites} />
+        <Layout geoRegions={this.props.geoRegions} />
       </div>
     );
   }
 }
 
 Morphology.propTypes = {
-  fetchGeoSites: PropTypes.func,
-  geoSites: PropTypes.array,
+  fetchGeoRegions: PropTypes.func,
+  geoRegions: PropTypes.array,
 };
 
 const mapStateToProps = state => {
   return {
-    geoSites: state.geoSite.geoSites,
+    geoRegions: state.geoRegion.geoRegions,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchGeoSites: () => dispatch(fetchGeoSites()),
+    fetchGeoRegions: () => dispatch(fetchGeoRegions()),
   };
 };
 

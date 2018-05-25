@@ -2,6 +2,7 @@ import React from 'react';
 import MapGL from 'react-map-gl';
 import PropTypes from 'prop-types';
 
+import ErrorBoundary from '../shared/ErrorBoundary';
 import Loader from '../shared/loader/Loader';
 
 export default class BaseMap extends React.Component {
@@ -27,22 +28,24 @@ export default class BaseMap extends React.Component {
 
   render() {
     return (
-      <MapGL
-        {...this.state.viewport}
-        mapStyle={this.props.mapStyle}
-        minZoom={5}
-        maxZoom={10}
-        buffer={0}
-        onLoad={() => this.setState({loading: false})}
-        onViewportChange={viewport => this._onViewportChange(viewport)}
-        icon-allow-overlap={false}
-        mapboxApiAccessToken={process.env.MAPBOX_KEY}
-        onHover={e => this.props.onHover(e)}
-        onClick={e => this.props.onClick(e)}
-      >
-        <Loader loading={this.state.loading} />
-        {this.props.children}
-      </MapGL>
+      <ErrorBoundary>
+        <MapGL
+          {...this.state.viewport}
+          mapStyle={this.props.mapStyle}
+          minZoom={5}
+          maxZoom={10}
+          buffer={0}
+          onLoad={() => this.setState({loading: false})}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
+          icon-allow-overlap={false}
+          mapboxApiAccessToken={process.env.MAPBOX_KEY}
+          onHover={e => this.props.onHover(e)}
+          onClick={e => this.props.onClick(e)}
+        >
+          <Loader loading={this.state.loading} />
+          {this.props.children}
+        </MapGL>
+      </ErrorBoundary>
     );
   }
 }

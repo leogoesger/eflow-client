@@ -11,13 +11,15 @@ import BaseMap from '../components/map/BaseMap';
 import {GeoMapHOC} from '../hoc/GeoMapHOC';
 import MapControl from '../components/morphology/MapControl';
 import MapLegend from '../components/morphology/MapLegend';
+import MapDialog from '../components/morphology/MapDialog';
 
 const MorphologyMap = GeoMapHOC(
   BaseMap,
   MapControl,
   MapLegend,
   defaultMapStyle,
-  getSiteLayer
+  getSiteLayer,
+  MapDialog
 );
 
 class Map extends React.Component {
