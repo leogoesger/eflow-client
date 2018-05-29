@@ -94,9 +94,9 @@ export function fetchAnnualFlowData(gaugeInfo) {
 
 export function fetchHydrographOverlay(gaugeInfo) {
   return async dispatch => {
-    const hydrograph = await request.get(
-      `${process.env.SERVER_ADDRESS}/api/dimHydrographs/${gaugeInfo}`
-    );
+    const hydrograph = await request
+      .post(`${process.env.SERVER_ADDRESS}/api/dimHydrographs/`)
+      .send({gaugeId: gaugeInfo});
     dispatch(fetchHydrographOverlayObject(hydrograph.body));
   };
 }
