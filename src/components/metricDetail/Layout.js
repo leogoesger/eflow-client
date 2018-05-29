@@ -29,6 +29,8 @@ export default class Layout extends React.Component {
           toggledMetrics={this.props.toggledMetrics}
           isHydrographOverlay={this.props.isHydrographOverlay}
           hydrograph={this.props.hydrograph}
+          fixedYaxisPercentile={this.props.fixedYaxisPercentile}
+          yMax={this.props.yMax}
         />
       );
     } else {
@@ -55,6 +57,10 @@ export default class Layout extends React.Component {
               ? this.props.annualFlowData.Gauge.id
               : null
           }
+          fixedYaxisPercentile={this.props.fixedYaxisPercentile}
+          getYaxisMax={(id, percentile) =>
+            this.props.getYaxisMax(id, percentile)
+          }
         />
         {this._renderDetailCard()}
       </div>
@@ -75,6 +81,9 @@ Layout.propTypes = {
   isHydrographOverlay: PropTypes.bool,
   fetchHydrographOverlay: PropTypes.func,
   hydrograph: PropTypes.object,
+  yMax: PropTypes.number,
+  getYaxisMax: PropTypes.func,
+  fixedYaxisPercentile: PropTypes.number,
 };
 
 const styles = {

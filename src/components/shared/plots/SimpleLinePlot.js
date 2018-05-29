@@ -30,6 +30,8 @@ export default class SimpleLinePlot extends React.Component {
       zoomTransform,
       zoomType,
       logScale,
+      yMax,
+      fixedYaxisPercentile,
     } = props;
 
     if (logScale) {
@@ -39,7 +41,11 @@ export default class SimpleLinePlot extends React.Component {
     }
 
     this.xScale.domain(d3.extent(data, d => xValue(d))).range([0, width]);
-    this.yScale.domain(d3.extent(data, d => yValue(d))).range([height, 0]);
+    let yExtent = d3.extent(data, d => yValue(d));
+    if (fixedYaxisPercentile) {
+      yExtent[1] = yMax;
+    }
+    this.yScale.domain(yExtent).range([height, 0]);
 
     this.line
       .defined(d => {
@@ -199,4 +205,6 @@ SimpleLinePlot.propTypes = {
   annualFlowData: PropTypes.object,
   isHydrographOverlay: PropTypes.bool,
   hydrograph: PropTypes.object,
+  yMax: PropTypes.number,
+  fixedYaxisPercentile: PropTypes.number,
 };

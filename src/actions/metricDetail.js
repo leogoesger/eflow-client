@@ -58,6 +58,20 @@ const fetchHydrographOverlayObject = hydrograph => {
   };
 };
 
+const handleFixedYaxisObject = percentile => {
+  return {
+    type: types.TOGGLE_FIXED_YAXIS_OBJECT,
+    percentile,
+  };
+};
+
+const getFixedYaxisValueObject = yMax => {
+  return {
+    type: types.GET_FIXED_YAXIS_VALUE_OBJECT,
+    yMax,
+  };
+};
+
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
     const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
@@ -108,5 +122,20 @@ export function handleToggleLogScale(status) {
 export function handleHydrographOverlay(status) {
   return async dispatch => {
     dispatch(handleHydrographOverlayObject(status));
+  };
+}
+
+export function handleFixedYaxis(percentile) {
+  return async dispatch => {
+    dispatch(handleFixedYaxisObject(Number(percentile)));
+  };
+}
+
+export function getYaxisMax(gaugeId, percentile) {
+  return async dispatch => {
+    const yMax = await request
+      .post(`${process.env.SERVER_ADDRESS}/api/annualFlowPOR`)
+      .send({gaugeId, percentile});
+    dispatch(getFixedYaxisValueObject(yMax.body.percentilePOR));
   };
 }

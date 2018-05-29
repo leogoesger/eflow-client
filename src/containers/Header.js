@@ -16,6 +16,8 @@ import {
   toggleAnnualFlowMetrics,
   handleToggleLogScale,
   handleHydrographOverlay,
+  handleFixedYaxis,
+  getYaxisMax,
 } from '../actions/metricDetail';
 import {fetchCurrentGauge} from '../actions/gauge';
 import {fetchBroadCastMessage} from '../actions/user';
@@ -80,6 +82,16 @@ class Header extends React.Component {
             this.props.handleHydrographOverlay(status)
           }
           isHydrographOverlay={this.props.isHydrographOverlay}
+          fixedYaxis={this.props.fixedYaxis}
+          handleFixedYaxis={d => this.props.handleFixedYaxis(d)}
+          currentGaugeId={
+            this.props.annualFlowData
+              ? this.props.annualFlowData.Gauge.id
+              : null
+          }
+          getYaxisMax={(id, percentile) =>
+            this.props.getYaxisMax(id, percentile)
+          }
         />
         <Layout
           releaseNoteVersion={this.getVersion()}
@@ -115,6 +127,7 @@ const mapStateToProps = state => {
     logScale: state.metricDetail.logScale,
     message: state.user.message,
     isHydrographOverlay: state.metricDetail.isHydrographOverlay,
+    fixedYaxis: state.metricDetail.fixedYaxis,
   };
 };
 
@@ -129,6 +142,8 @@ const mapDispatchToProps = dispatch => {
     fetchBroadCastMessage: d => dispatch(fetchBroadCastMessage(d)),
     handleHydrographOverlay: status =>
       dispatch(handleHydrographOverlay(status)),
+    handleFixedYaxis: d => dispatch(handleFixedYaxis(d)),
+    getYaxisMax: (id, percentile) => dispatch(getYaxisMax(id, percentile)),
   };
 };
 
@@ -138,6 +153,7 @@ Header.propTypes = {
   fetchReleaseNotes: PropTypes.func,
   isDrawerOpen: PropTypes.bool,
   logScale: PropTypes.bool,
+  fixedYaxis: PropTypes.number,
   toggledMetrics: PropTypes.array,
   toggleMetricGaugeDrawer: PropTypes.func,
   toggleAnnualFlowMetrics: PropTypes.func,
@@ -147,6 +163,8 @@ Header.propTypes = {
   isHydrographOverlay: PropTypes.bool,
   annualFlowData: PropTypes.object,
   fetchCurrentGauge: PropTypes.func,
+  handleFixedYaxis: PropTypes.func,
+  getYaxisMax: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

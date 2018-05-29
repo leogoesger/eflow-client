@@ -59,6 +59,10 @@ export default class Layout extends React.Component {
           fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
           keyWord={this.state.keyWord}
           handleChange={d => this._handleChange(d)}
+          fixedYaxisPercentile={this.props.fixedYaxisPercentile}
+          getYaxisMax={(id, percentile) =>
+            this.props.getYaxisMax(id, percentile)
+          }
         />
       </React.Fragment>
     );
@@ -70,4 +74,6 @@ Layout.propTypes = {
   searchGauge: PropTypes.func,
   fetchHydrographOverlay: PropTypes.func,
   fetchAnnualFlowData: PropTypes.func,
+  getYaxisMax: PropTypes.func,
+  fixedYaxisPercentile: PropTypes.number,
 };

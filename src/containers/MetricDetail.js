@@ -9,6 +9,7 @@ import {
   fetchAnnualFlowData,
   toggleMetricGaugeDrawer,
   fetchHydrographOverlay,
+  getYaxisMax,
 } from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
 import ErrorBoundary from '../components/shared/ErrorBoundary';
@@ -139,6 +140,12 @@ export class MetricDetail extends React.Component {
     if (this.props.currentGauge) {
       this.props.fetchAnnualFlowData({gaugeId: this.props.currentGauge.id});
       this.props.fetchHydrographOverlay(this.props.currentGauge.id);
+      if (this.props.fixedYaxisPercentile) {
+        this.props.getYaxisMax(
+          this.props.currentGauge.id,
+          this.props.fixedYaxisPercentile
+        );
+      }
     }
     this.removeClassGaugeProps();
   }
@@ -175,6 +182,11 @@ export class MetricDetail extends React.Component {
               toggledMetrics={this.props.toggledMetrics}
               isHydrographOverlay={this.props.isHydrographOverlay}
               hydrograph={this.props.hydrograph}
+              yMax={this.props.yMax}
+              getYaxisMax={(id, percentile) =>
+                this.props.getYaxisMax(id, percentile)
+              }
+              fixedYaxisPercentile={this.props.fixedYaxisPercentile}
               fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
             />
           </ErrorBoundary>
@@ -200,6 +212,9 @@ MetricDetail.propTypes = {
   isHydrographOverlay: PropTypes.bool,
   fetchHydrographOverlay: PropTypes.func,
   hydrograph: PropTypes.object,
+  yMax: PropTypes.number,
+  getYaxisMax: PropTypes.func,
+  fixedYaxisPercentile: PropTypes.number,
 };
 
 const mapStateToProps = state => {
@@ -213,6 +228,8 @@ const mapStateToProps = state => {
     logScale: state.metricDetail.logScale,
     isHydrographOverlay: state.metricDetail.isHydrographOverlay,
     hydrograph: state.metricDetail.hydrograph,
+    yMax: state.metricDetail.yMax,
+    fixedYaxisPercentile: state.metricDetail.fixedYaxis,
   };
 };
 
@@ -225,6 +242,7 @@ const mapDispatchToProps = dispatch => {
     toggleMetricGaugeDrawer: status =>
       dispatch(toggleMetricGaugeDrawer(status)),
     fetchHydrographOverlay: d => dispatch(fetchHydrographOverlay(d)),
+    getYaxisMax: (id, percentile) => dispatch(getYaxisMax(id, percentile)),
   };
 };
 
