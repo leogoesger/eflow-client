@@ -18,6 +18,28 @@ const BoxplotOverlay = props => {
   }
   if (props.vertical) {
     const {boxplotData, width} = props;
+    if (
+      [
+        'winterMagnitude2',
+        'winterMagnitude5',
+        'winterMagnitude10',
+        'winterMagnitude20',
+      ].indexOf(boxplotData.metricName) !== -1
+    ) {
+      return (
+        <g>
+          <line
+            strokeWidth={3}
+            stroke={getColor(props.boxplotData.metricName)[0]}
+            x1={0}
+            x2={width}
+            y1={props.yScale(boxplotData.quartile[1])}
+            y2={props.yScale(boxplotData.quartile[1])}
+            transform={props.transform}
+          />
+        </g>
+      );
+    }
     return (
       <g>
         <rect
