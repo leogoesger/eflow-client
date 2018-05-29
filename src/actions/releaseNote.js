@@ -16,6 +16,24 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 29th, 2018',
+            version: 'v0.18',
+            title: 'Fixed y-axis for annual hydrograph',
+            tasks: [
+              'Option to fix y-axis for annual hydrograph',
+              'Winter Magnitude now is a line instead of boxplots',
+            ],
+          },
+          {
+            date: 'May 25th, 2018',
+            version: 'v0.17',
+            title: 'Map interface for morphology',
+            tasks: [
+              'Display image on click the map',
+              'Display image dialog when click the list',
+            ],
+          },
+          {
             date: 'May 22th, 2018',
             version: 'v0.16',
             title: 'Map Control for Morphology',

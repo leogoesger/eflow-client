@@ -1,19 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {uniqBy, some, cloneDeep} from 'lodash';
+import TextField from 'material-ui/TextField';
 import Drawer from 'material-ui/Drawer';
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Clear from 'material-ui/svg-icons/content/clear';
+import Save from 'material-ui/svg-icons/content/save';
 
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {metricReference} from '../../constants/metrics';
 
+import Styles from '../../styles/Styles';
 import {Colors} from '../../styles';
 
 class MetricGaugeDrawer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      percentile: 0.9,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.fixedYaxis) {
+      this.setState({percentile: nextProps.fixedYaxis});
+    }
+  }
+
   _getTableNames(data) {
     return uniqBy(data, d => d.displayTableName);
   }
@@ -130,6 +146,24 @@ class MetricGaugeDrawer extends React.Component {
     });
   }
 
+  getErrorMessage(percentile) {
+    if (
+      isNaN(percentile) ||
+      percentile >= 1 ||
+      percentile <= 0 ||
+      !percentile
+    ) {
+      return 'Value needs to be between 0 to 1';
+    }
+  }
+
+  _handleFixedYaxis(value) {
+    this.props.handleFixedYaxis(value);
+    if (value) {
+      this.props.getYaxisMax(this.props.currentGaugeId, value);
+    }
+  }
+
   _renderGeneralToggleBtns() {
     const generalList = [
       {label: 'All Timing Metrics', keyWord: 'Timing'},
@@ -166,6 +200,54 @@ class MetricGaugeDrawer extends React.Component {
           toggled={this.props.logScale}
           style={{marginTop: '10px'}}
         />
+        <Toggle
+          label={'Fixed Y-axis'}
+          labelStyle={styles.labelStyle}
+          value={'empty'}
+          onClick={() =>
+            this._handleFixedYaxis(this.props.fixedYaxis ? null : 0.9)
+          }
+          toggled={Boolean(this.props.fixedYaxis)}
+        />
+        {this.props.fixedYaxis ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '14px',
+            }}
+          >
+            <TextField
+              className="requiredField"
+              onFocus={() => this.setState({focused: true})}
+              value={this.state.percentile}
+              fullWidth={true}
+              errorText={this.getErrorMessage(this.state.percentile)}
+              errorStyle={{textAlign: 'left'}}
+              floatingLabelText="Y-axis Percentile"
+              underlineFocusStyle={Styles.underlineFocusStyle}
+              floatingLabelStyle={Styles.floatingLabelStyle}
+              floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
+              onChange={(_event, value) => this.setState({percentile: value})}
+            />
+            <Save
+              onClick={() => this._handleFixedYaxis(this.state.percentile)}
+              style={{
+                marginTop: '40px',
+                cursor: this.getErrorMessage(this.state.percentile)
+                  ? 'not-allowed'
+                  : 'pointer',
+              }}
+              disabled={this.getErrorMessage(this.state.percentile)}
+              color={
+                this.getErrorMessage(this.state.percentile)
+                  ? Colors.grey
+                  : Colors.blue
+              }
+            />
+          </div>
+        ) : null}
+
         <Toggle
           label={'Hydrograph Overlay'}
           labelStyle={styles.labelStyle}
@@ -224,7 +306,11 @@ MetricGaugeDrawer.propTypes = {
   toggleAnnualFlowMetrics: PropTypes.func,
   handleToggleLogScale: PropTypes.func,
   handleHydrographOverlay: PropTypes.func,
+  handleFixedYaxis: PropTypes.func,
   isHydrographOverlay: PropTypes.bool,
+  fixedYaxis: PropTypes.number,
+  currentGaugeId: PropTypes.number,
+  getYaxisMax: PropTypes.func,
 };
 
 MetricGaugeDrawer.defaultProps = {

@@ -181,6 +181,8 @@ class MetricGaugeCard extends React.Component {
               hydrograph={this.props.hydrograph}
               toggledMetrics={this.props.toggledMetrics}
               annualFlowData={this.props.annualFlowData}
+              yMax={this.props.yMax}
+              fixedYaxisPercentile={this.props.fixedYaxisPercentile}
             />
           </svg>
         </div>
@@ -305,6 +307,8 @@ MetricGaugeCard.propTypes = {
   toggledMetrics: PropTypes.array,
   isHydrographOverlay: PropTypes.bool,
   hydrograph: PropTypes.object,
+  yMax: PropTypes.number,
+  fixedYaxisPercentile: PropTypes.number,
 };
 
 const styles = {

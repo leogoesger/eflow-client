@@ -25,6 +25,10 @@ export default class SearchTable extends React.Component {
     const gauge = this.props.searchedGauges[e];
     this.props.fetchAnnualFlowData({gaugeId: gauge.id});
     this.props.fetchHydrographOverlay(gauge.id);
+
+    if (this.props.fixedYaxisPercentile) {
+      this.props.getYaxisMax(gauge.id, this.props.fixedYaxisPercentile);
+    }
   }
 
   _renderRow(gauges) {
@@ -104,6 +108,8 @@ SearchTable.propTypes = {
   fetchHydrographOverlay: PropTypes.func,
   keyWord: PropTypes.string,
   handleChange: PropTypes.func,
+  getYaxisMax: PropTypes.func,
+  fixedYaxisPercentile: PropTypes.number,
 };
 
 const styles = {

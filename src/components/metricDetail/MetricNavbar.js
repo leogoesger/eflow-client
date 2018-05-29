@@ -16,6 +16,9 @@ class MetricNavbar extends React.Component {
   _selectRow(e) {
     this.props.fetchAnnualFlowData({gaugeId: e.id});
     this.props.fetchHydrographOverlay(e.id);
+    if (this.props.fixedYaxisPercentile) {
+      this.props.getYaxisMax(e.id, this.props.fixedYaxisPercentile);
+    }
   }
 
   _renderHeader() {
@@ -134,6 +137,8 @@ MetricNavbar.propTypes = {
   fetchHydrographOverlay: PropTypes.func,
   isHydrographOverlay: PropTypes.bool,
   currentGaugeId: PropTypes.number,
+  getYaxisMax: PropTypes.func,
+  fixedYaxisPercentile: PropTypes.number,
 };
 
 const styles = {

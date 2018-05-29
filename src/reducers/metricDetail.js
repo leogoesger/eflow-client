@@ -11,7 +11,9 @@ const initialState: STATE = {
   loading: true,
   logScale: false,
   isHydrographOverlay: false,
+  fixedYaxis: null,
   hydrograph: null,
+  yMax: null,
   error: null,
 };
 
@@ -40,6 +42,12 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.FETCH_HYDROGRAPH_OVERLAY_OBJECT:
       return objectAssign({}, state, {hydrograph: action.hydrograph});
+
+    case types.TOGGLE_FIXED_YAXIS_OBJECT:
+      return objectAssign({}, state, {fixedYaxis: action.percentile});
+
+    case types.GET_FIXED_YAXIS_VALUE_OBJECT:
+      return objectAssign({}, state, {yMax: action.yMax});
 
     default:
       return state;
