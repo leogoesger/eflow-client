@@ -311,6 +311,7 @@ export const metricReference = [
     colors: ['#ba68c8', '#883997'],
     nonDimUnit: 'none',
     dimUnit: 'cfs',
+    hidden: true,
   },
   {
     name: 'winterTiming2',

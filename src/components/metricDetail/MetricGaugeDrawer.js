@@ -20,7 +20,7 @@ class MetricGaugeDrawer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      percentile: 0.9,
+      percentile: 0.98,
     };
   }
 
@@ -205,7 +205,7 @@ class MetricGaugeDrawer extends React.Component {
           labelStyle={styles.labelStyle}
           value={'empty'}
           onClick={() =>
-            this._handleFixedYaxis(this.props.fixedYaxis ? null : 0.9)
+            this._handleFixedYaxis(this.props.fixedYaxis ? null : 0.98)
           }
           toggled={Boolean(this.props.fixedYaxis)}
         />
@@ -229,6 +229,7 @@ class MetricGaugeDrawer extends React.Component {
               floatingLabelStyle={Styles.floatingLabelStyle}
               floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
               onChange={(_event, value) => this.setState({percentile: value})}
+              onBlur={() => this._handleFixedYaxis(this.state.percentile)}
             />
             <Save
               onClick={() => this._handleFixedYaxis(this.state.percentile)}
