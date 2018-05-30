@@ -23,11 +23,13 @@ export default class SearchTable extends React.Component {
 
   _selectRow(e) {
     const gauge = this.props.searchedGauges[e];
-    this.props.fetchAnnualFlowData({gaugeId: gauge.id});
-    this.props.fetchHydrographOverlay(gauge.id);
+    this.props.selectRowHandler(gauge);
+    this.props.onSelect('');
+  }
 
-    if (this.props.fixedYaxisPercentile) {
-      this.props.getYaxisMax(gauge.id, this.props.fixedYaxisPercentile);
+  _hoverRow(rowNumber) {
+    if (this.props.onRowHover) {
+      this.props.onRowHover(this.props.searchedGauges[rowNumber].id);
     }
   }
 
@@ -35,19 +37,19 @@ export default class SearchTable extends React.Component {
     return gauges.map(gauge => {
       return (
         <TableRow key={gauge.id} style={{cursor: 'pointer', height: '35px'}}>
-          <TableRowColumn style={{height: '35px', width: '35px'}}>
+          <TableRowColumn style={{height: '35px', width: '25%'}}>
             <div style={styles.column}>
               <Highlight matchElement={'span'} search={this.props.keyWord}>
                 {gauge.id.toString()}
               </Highlight>
             </div>
           </TableRowColumn>
-          <TableRowColumn style={{height: '35px', width: '10px'}}>
+          <TableRowColumn style={{height: '35px', width: '15%'}}>
             <div style={styles.column}>
               {classInfo[`class${gauge.classId}`].abbre}
             </div>
           </TableRowColumn>
-          <TableRowColumn style={{height: '35px'}}>
+          <TableRowColumn style={{height: '35px', width: '50%'}}>
             <div style={styles.column}>
               <Highlight matchElement={'span'} search={this.props.keyWord}>
                 {this.getColumnName(gauge.stationName)}
@@ -69,6 +71,7 @@ export default class SearchTable extends React.Component {
           fixedHeader={true}
           selectable={true}
           onRowSelection={e => this._selectRow(e)}
+          onRowHover={rowNumber => this._hoverRow(rowNumber)}
         >
           <TableHeader
             displaySelectAll={false}
@@ -76,13 +79,13 @@ export default class SearchTable extends React.Component {
             enableSelectAll={false}
           >
             <TableRow style={{height: '35px'}}>
-              <TableHeaderColumn style={{height: '35px', width: '32px'}}>
+              <TableHeaderColumn style={{height: '35px', width: '25%'}}>
                 <div style={styles.column}>{'ID'}</div>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '35px', width: '28px'}}>
+              <TableHeaderColumn style={{height: '35px', width: '15%'}}>
                 <div style={styles.column}>{'Class'}</div>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '35px'}}>
+              <TableHeaderColumn style={{height: '35px', width: '50%'}}>
                 <div style={styles.column}>{'Station Name'}</div>
               </TableHeaderColumn>
             </TableRow>
@@ -103,13 +106,10 @@ export default class SearchTable extends React.Component {
 
 SearchTable.propTypes = {
   searchedGauges: PropTypes.array,
-  searchGauge: PropTypes.func,
-  fetchAnnualFlowData: PropTypes.func,
-  fetchHydrographOverlay: PropTypes.func,
   keyWord: PropTypes.string,
-  handleChange: PropTypes.func,
-  getYaxisMax: PropTypes.func,
-  fixedYaxisPercentile: PropTypes.number,
+  selectRowHandler: PropTypes.func,
+  onSelect: PropTypes.func,
+  onRowHover: PropTypes.func,
 };
 
 const styles = {

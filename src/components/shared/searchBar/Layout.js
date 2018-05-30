@@ -25,7 +25,7 @@ export default class Layout extends React.Component {
   }
 
   _onBlur() {
-    setTimeout(() => this._handleChange(''), 500);
+    setTimeout(() => this._handleChange(''), 100);
   }
 
   render() {
@@ -54,15 +54,10 @@ export default class Layout extends React.Component {
         </div>
         <SearchTable
           searchedGauges={this.props.searchedGauges}
-          searchGauge={d => this.props.searchGauge(d)}
-          fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
-          fetchAnnualFlowData={d => this.props.fetchAnnualFlowData(d)}
           keyWord={this.state.keyWord}
-          handleChange={d => this._handleChange(d)}
-          fixedYaxisPercentile={this.props.fixedYaxisPercentile}
-          getYaxisMax={(id, percentile) =>
-            this.props.getYaxisMax(id, percentile)
-          }
+          onSelect={d => this._handleChange(d)}
+          selectRowHandler={gauge => this.props.selectRowHandler(gauge)}
+          onRowHover={id => this.props.onRowHover(id)}
         />
       </React.Fragment>
     );
@@ -72,8 +67,6 @@ export default class Layout extends React.Component {
 Layout.propTypes = {
   searchedGauges: PropTypes.array,
   searchGauge: PropTypes.func,
-  fetchHydrographOverlay: PropTypes.func,
-  fetchAnnualFlowData: PropTypes.func,
-  getYaxisMax: PropTypes.func,
-  fixedYaxisPercentile: PropTypes.number,
+  selectRowHandler: PropTypes.func,
+  onRowHover: PropTypes.func,
 };
