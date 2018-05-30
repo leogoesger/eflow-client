@@ -15,6 +15,13 @@ export default class Group extends React.Component {
         >
           UCD Water Management Lab
         </p>
+        <p
+          className="footer-link"
+          style={{cursor: 'pointer', marginTop: '10px'}}
+          onClick={() => (window.location.href = 'https://www.usuwetlab.org/')}
+        >
+          Utah State WET Lab
+        </p>
       </div>
     );
   }

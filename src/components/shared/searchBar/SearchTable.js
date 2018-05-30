@@ -28,9 +28,7 @@ export default class SearchTable extends React.Component {
   }
 
   _hoverRow(rowNumber) {
-    if (this.props.onRowHover) {
-      this.props.onRowHover(this.props.searchedGauges[rowNumber].id);
-    }
+    this.props.onRowHover(this.props.searchedGauges[rowNumber].id);
   }
 
   _renderRow(gauges) {

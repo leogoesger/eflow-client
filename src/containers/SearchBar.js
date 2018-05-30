@@ -6,13 +6,19 @@ import {searchGauge} from '../actions/gauge';
 import Layout from '../components/shared/searchBar/Layout';
 
 class SearchBar extends React.Component {
+  _onRowHover(id) {
+    if (this.props.onRowHover) {
+      this.props.onRowHover(id);
+    }
+  }
+
   render() {
     return (
       <Layout
         searchedGauges={this.props.searchedGauges}
         searchGauge={d => this.props.searchGauge(d)}
         selectRowHandler={gauge => this.props.selectRowHandler(gauge)}
-        onRowHover={id => this.props.onRowHover(id)}
+        onRowHover={id => this._onRowHover(id)}
       />
     );
   }
