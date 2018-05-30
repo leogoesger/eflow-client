@@ -16,6 +16,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 30th, 2018',
+            version: 'v0.19',
+            title: 'Search Bar for hydrology summary list',
+            tasks: [
+              'Added search bar for hydrology summary list',
+              'Allow onHover and onSelect handler',
+              'Edit the meta description for the website',
+            ],
+          },
+          {
             date: 'May 29th, 2018',
             version: 'v0.18',
             title: 'Fixed y-axis for annual hydrograph',

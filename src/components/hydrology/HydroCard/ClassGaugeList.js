@@ -11,6 +11,7 @@ import {
   TableHeaderColumn,
 } from 'material-ui/Table';
 
+import SearchBar from '../../../containers/SearchBar';
 import {classInfo} from '../../../constants/classification';
 
 export default class ClassGaugeList extends React.Component {
@@ -38,6 +39,10 @@ export default class ClassGaugeList extends React.Component {
       classifications[index].gauges = sortBy(classification.gauges, e => e.id);
     });
     this.setState({classifications});
+  }
+
+  selectSearchedRowHandler(gauge) {
+    this.props.fetchCurrentGauge(gauge.id);
   }
 
   _renderRow(gauges) {
@@ -147,12 +152,19 @@ export default class ClassGaugeList extends React.Component {
       );
     });
   }
+
   render() {
     if (!this.state.classifications) {
       return null;
     }
     return (
-      <div className="helloalsdkfjal" style={styles.container}>
+      <div style={styles.container}>
+        <div style={{padding: '0px 15px 5px 15px'}}>
+          <SearchBar
+            selectRowHandler={d => this.selectSearchedRowHandler(d)}
+            onRowHover={d => this.props.updateHoveredGauge(d)}
+          />
+        </div>
         {this._renderClassCard(this.state.classifications)}
       </div>
     );

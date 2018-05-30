@@ -107,14 +107,24 @@ class MetricNavbar extends React.Component {
     });
   }
 
+  selectRowHandler(gauge) {
+    this.props.fetchAnnualFlowData({gaugeId: gauge.id});
+    this.props.fetchHydrographOverlay(gauge.id);
+
+    if (this.props.fixedYaxisPercentile) {
+      this.props.getYaxisMax(gauge.id, this.props.fixedYaxisPercentile);
+    }
+  }
+
   render() {
     if (!this.props.classifications) {
       return null;
     }
+
     return (
       <Card style={styles.container} className="metric-navbar">
         <div style={{padding: '0px 15px 5px 15px'}}>
-          <SearchBar />
+          <SearchBar selectRowHandler={d => this.selectRowHandler(d)} />
         </div>
         <Card style={{cursor: 'pointer'}}>
           <CardHeader
