@@ -21,7 +21,7 @@ export default class MorphologyCard extends React.Component {
         <div style={styles.right}>
           <div className="title">
             {
-              "Explore and interpret distinct reach-scale geomorphic settings across California's complex hydroscape, including key geomorphic attributes and dominant physical processes"
+              "Explore and interpret distinct  geomorphic settings across California's complex hydroscape, including key attributes and dominant physical processes"
             }
           </div>
           <div
@@ -32,7 +32,7 @@ export default class MorphologyCard extends React.Component {
           >
             <RaisedButton
               className="tour-explore-hydrology"
-              label="Explore Morphology"
+              label="Explore Geomorphology"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
               onClick={() => this._navigateTo('/morphology')}

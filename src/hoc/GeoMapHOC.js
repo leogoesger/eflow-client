@@ -96,7 +96,7 @@ export const GeoMapHOC = (
     }
 
     onClick(event) {
-      if (event.features.length === 0 || !this.state.hoverMode) {
+      if (event.features.length === 0) {
         return null;
       } else if (event.features.some(el => el.properties.siteId)) {
         this.setState({

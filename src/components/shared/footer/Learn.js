@@ -16,7 +16,7 @@ export default class Learn extends React.Component {
           </li>
           <li>
             <Link to="/morphology" className="footer-link">
-              Morphology
+              Geomorphology
             </Link>
           </li>
           <li>
