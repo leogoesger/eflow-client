@@ -230,19 +230,27 @@ class MetricGaugeDrawer extends React.Component {
               floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
               onChange={(_event, value) => this.setState({percentile: value})}
               onBlur={() => this._handleFixedYaxis(this.state.percentile)}
+              onKeyPress={ev => {
+                if (ev.key === 'Enter') {
+                  this._handleFixedYaxis(this.state.percentile);
+                }
+              }}
             />
             <Save
               onClick={() => this._handleFixedYaxis(this.state.percentile)}
               style={{
                 marginTop: '40px',
-                cursor: this.getErrorMessage(this.state.percentile)
-                  ? 'not-allowed'
-                  : 'pointer',
+                cursor:
+                  this.getErrorMessage(this.state.percentile) ||
+                  this.props.fixedYaxis === this.state.percentile
+                    ? 'not-allowed'
+                    : 'pointer',
               }}
               disabled={this.getErrorMessage(this.state.percentile)}
               color={
-                this.getErrorMessage(this.state.percentile)
-                  ? Colors.grey
+                this.getErrorMessage(this.state.percentile) ||
+                this.props.fixedYaxis === this.state.percentile
+                  ? '#bdbdbd'
                   : Colors.blue
               }
             />
