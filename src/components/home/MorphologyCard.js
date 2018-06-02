@@ -21,7 +21,7 @@ export default class MorphologyCard extends React.Component {
         <div style={styles.right}>
           <div className="title">
             {
-              "Explore and interpret distinct  geomorphic settings across California's complex hydroscape, including key attributes and dominant physical processes"
+              "Explore distinct  geomorphic settings across California's complex hydroscape, including dominant attributes and physical processes"
             }
           </div>
           <div
