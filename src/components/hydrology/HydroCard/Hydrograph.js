@@ -208,7 +208,6 @@ class Hydrograph extends React.Component {
       return (
         <div>
           {this._renderTitleInfo()}
-
           <div style={styles.plotTitle}>
             {'Dimensionless Reference Hydrograph'}
           </div>
@@ -296,7 +295,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     position: 'absolute',
-    top: '460px',
+    top: '480px',
     left: '40px',
   },
   label: {
@@ -311,7 +310,7 @@ const styles = {
     borderRadius: '0px',
   },
   plotTitle: {
-    marginTop: '20px',
+    marginTop: '40px',
     width: '100%',
     textAlign: 'center',
     fontWeight: '500',
