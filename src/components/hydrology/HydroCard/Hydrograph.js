@@ -4,8 +4,13 @@ import * as d3 from 'd3';
 import Paper from 'material-ui/Paper';
 import {CardHeader} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
-import Toggle from 'material-ui/Toggle';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Reply from 'material-ui/svg-icons/content/reply';
+import TimeLine from 'material-ui/svg-icons/action/timeline';
+import ViewDay from 'material-ui/svg-icons/action/view-day';
 
+import {navigateTo} from '../../../utils/helpers';
 import {LinePlot} from '../../shared/plots';
 import {classInfo} from '../../../constants/classification';
 
@@ -75,23 +80,30 @@ class Hydrograph extends React.Component {
       classInfo[`class${this.props.currentGauge.classId}`];
     return (
       <div>
-        <CardHeader
-          title={this.props.currentGauge.stationName}
-          subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
-            currentGaugeClass.fullName
-          }`}
-          subtitleColor={currentGaugeClass.colors[0]}
-          actAsExpander={false}
-          showExpandableButton={false}
-        />
-        <Toggle
-          label="Show Min/Max"
-          toggled={this.state.minMax}
-          style={styles.minMax}
-          labelStyle={styles.labelStyle}
-          labelPosition="right"
-          onClick={() => this.setState({minMax: !this.state.minMax})}
-        />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <CardHeader
+            title={this.props.currentGauge.stationName}
+            subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
+              currentGaugeClass.fullName
+            }`}
+            subtitleColor={currentGaugeClass.colors[0]}
+            actAsExpander={false}
+            showExpandableButton={false}
+            style={{padding: '15px 0px 15px 10px'}}
+          />
+          <Control
+            currentGauge={this.props.currentGauge}
+            currentClassification={this.props.currentClassification}
+            overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
+            toggleMinMax={() => this.setState({minMax: !this.state.minMax})}
+            minMax={this.state.minMax}
+          />
+        </div>
         <Divider />
       </div>
     );
@@ -102,21 +114,28 @@ class Hydrograph extends React.Component {
       classInfo[`class${this.props.currentClassification.id}`];
     return (
       <div>
-        <CardHeader
-          title={this.props.currentClassification.name}
-          titleColor={currentClass.colors[0]}
-          subtitle={`ID: ${this.props.currentClassification.id}`}
-          actAsExpander={false}
-          showExpandableButton={false}
-        />
-        <Toggle
-          label="Show Min/Max"
-          toggled={this.state.minMax}
-          labelStyle={styles.labelStyle}
-          style={styles.minMax}
-          labelPosition="right"
-          onClick={() => this.setState({minMax: !this.state.minMax})}
-        />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <CardHeader
+            title={this.props.currentClassification.name}
+            titleColor={currentClass.colors[0]}
+            subtitle={`ID: ${this.props.currentClassification.id}`}
+            actAsExpander={false}
+            showExpandableButton={false}
+            style={{padding: '15px 0px 15px 10px'}}
+          />
+          <Control
+            currentGauge={this.props.currentGauge}
+            currentClassification={this.props.currentClassification}
+            overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
+            toggleMinMax={() => this.setState({minMax: !this.state.minMax})}
+            minMax={this.state.minMax}
+          />
+        </div>
         <Divider />
       </div>
     );
@@ -222,16 +241,31 @@ class Hydrograph extends React.Component {
   }
 
   render() {
+    const {currentGauge, removeClassGaugeProps} = this.props;
     return (
       <Paper style={styles.graph} className="tour-hydro-general-display">
         {this._renderDRHs(this.state.hydroData)}
         {this._renderPercentilleChips()}
-        <Control
-          currentGauge={this.props.currentGauge}
-          currentClassification={this.props.currentClassification}
-          removeClassGaugeProps={() => this.props.removeClassGaugeProps()}
-          overLayBoxPlotMethods={this.props.overLayBoxPlotMethods}
-        />
+
+        <div style={styles.rightBtn}>
+          <FlatButton
+            label="Gauge List"
+            style={{marginRight: '20px'}}
+            labelStyle={{fontSize: '12px', color: Colors.gold}}
+            icon={<Reply color={Colors.gold} />}
+            onClick={() => removeClassGaugeProps()}
+          />
+          <RaisedButton
+            className="tour-hydro-metricDetail"
+            label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
+            backgroundColor={Colors.gold}
+            labelColor={Colors.white}
+            disabled={false}
+            icon={currentGauge ? <TimeLine /> : <ViewDay />}
+            labelStyle={{fontSize: '12px'}}
+            onClick={() => navigateTo('/metricDetail')}
+          />
+        </div>
       </Paper>
     );
   }
@@ -293,6 +327,12 @@ const styles = {
   labelStyle: {
     fontSize: '16px',
     color: '#757575',
+  },
+  rightBtn: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '30px',
+    marginRight: '10px',
   },
 };
 
