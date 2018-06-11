@@ -85,7 +85,7 @@ class Sidebar extends React.Component {
         openSecondary={true}
         open={open}
         docked={true}
-        containerStyle={{marginTop: '15px', paddingTop: '45px', zIndex: 20}}
+        containerStyle={{marginTop: '15px', paddingTop: '45px'}}
       >
         <div
           style={{

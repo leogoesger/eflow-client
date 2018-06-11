@@ -94,6 +94,6 @@ const styles = {
     position: 'fixed',
     right: '20px',
     bottom: '20px',
-    zIndex: 4,
+    zIndex: 2,
   },
 };

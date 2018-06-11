@@ -24,24 +24,20 @@ export default class Control extends React.Component {
     this.setState({open: !this.state.open});
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.currentGauge != this.props.currentGauge ||
-      nextProps.currentClassification != this.props.currentClassification
-    ) {
-      //Reset all boxplot data to null
-      Object.keys(this.state).forEach(key => {
-        if (key !== 'open') {
-          const currentMetric = find(metricReference, m => m.name == key);
-          this.props.overLayBoxPlotMethods[
-            currentMetric.boxPlotOverLayMethods[1]
-          ]({
-            type: currentMetric.name,
-          });
-          this.setState({[key]: false});
-        }
-      });
-    }
+  componentWillUnmount() {
+    //Reset all boxplot data to null
+
+    Object.keys(this.state).forEach(key => {
+      if (key !== 'open') {
+        const currentMetric = find(metricReference, m => m.name == key);
+        this.props.overLayBoxPlotMethods[
+          currentMetric.boxPlotOverLayMethods[1]
+        ]({
+          type: currentMetric.name,
+        });
+        this.setState({[key]: false});
+      }
+    });
   }
 
   _toggleCheckBox(metricObject) {
@@ -101,7 +97,6 @@ export default class Control extends React.Component {
         <FlatButton
           className="tour-metricDetail-display"
           label="Display"
-          labelColor={Colors.gold}
           disabled={false}
           labelStyle={{fontSize: '12px', color: Colors.gold}}
           style={{margin: '10px 10px 10px 0px'}}
