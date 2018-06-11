@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CardHeader} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
-import Reply from 'material-ui/svg-icons/content/reply';
-import TimeLine from 'material-ui/svg-icons/action/timeline';
 import {find} from 'lodash';
-import ViewDay from 'material-ui/svg-icons/action/view-day';
+import FlatButton from 'material-ui/FlatButton';
 
-import {navigateTo} from '../../../utils/helpers';
+import Sidebar from './Sidebar';
 import {metricReference} from '../../../constants/metrics';
 import {Colors} from '../../../styles';
+import Setting from 'material-ui/svg-icons/action/settings';
 
 export default class Control extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {open: false};
     metricReference.forEach(metric => {
       if (metric.isBoxplotOverlay) {
         this.state[metric.name] = false; // eslint-disable-line
       }
     });
+  }
+
+  handleToggle() {
+    this.setState({open: !this.state.open});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,13 +31,15 @@ export default class Control extends React.Component {
     ) {
       //Reset all boxplot data to null
       Object.keys(this.state).forEach(key => {
-        const currentMetric = find(metricReference, m => m.name == key);
-        this.props.overLayBoxPlotMethods[
-          currentMetric.boxPlotOverLayMethods[1]
-        ]({
-          type: currentMetric.name,
-        });
-        this.setState({[key]: false});
+        if (key !== 'open') {
+          const currentMetric = find(metricReference, m => m.name == key);
+          this.props.overLayBoxPlotMethods[
+            currentMetric.boxPlotOverLayMethods[1]
+          ]({
+            type: currentMetric.name,
+          });
+          this.setState({[key]: false});
+        }
       });
     }
   }
@@ -94,56 +96,37 @@ export default class Control extends React.Component {
   }
 
   render() {
-    const {currentGauge, removeClassGaugeProps} = this.props;
     return (
-      <div style={styles.btnContainer}>
-        <div style={styles.checkBoxContainer}>
-          <CardHeader
-            title="BoxPlot Overlay"
-            style={{padding: '10px 0px', width: '200px'}}
-            titleStyle={{width: '200px', color: Colors.blue}}
-          />
-          <div
-            style={{
-              width: '55%',
-              height: '110px',
-              display: 'flex',
-              flexDirection: 'column',
-              flexWrap: 'wrap',
-            }}
-          >
-            {this._renderCheckBox()}
-          </div>
-        </div>
-        <div style={styles.rightBtn}>
-          <FlatButton
-            label="Gauge List"
-            style={{marginRight: '20px'}}
-            labelStyle={{fontSize: '12px', color: Colors.gold}}
-            icon={<Reply color={Colors.gold} />}
-            onClick={() => removeClassGaugeProps()}
-          />
-          <RaisedButton
-            className="tour-hydro-metricDetail"
-            label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
-            backgroundColor={Colors.gold}
-            labelColor={Colors.white}
-            disabled={false}
-            icon={currentGauge ? <TimeLine /> : <ViewDay />}
-            labelStyle={{fontSize: '12px'}}
-            onClick={() => navigateTo('/metricDetail')}
-          />
-        </div>
+      <div>
+        <FlatButton
+          className="tour-metricDetail-display"
+          label="Display"
+          labelColor={Colors.gold}
+          disabled={false}
+          labelStyle={{fontSize: '12px', color: Colors.gold}}
+          style={{margin: '10px 10px 10px 0px'}}
+          icon={<Setting color={Colors.gold} />}
+          onClick={() => this.handleToggle()}
+        />
+        <Sidebar
+          open={this.state.open}
+          toggleMetric={metricObject => this._toggleCheckBox(metricObject)}
+          toggledMetrics={this.state}
+          toggleDrawer={() => this.handleToggle()}
+          toggleMinMax={() => this.props.toggleMinMax()}
+          minMax={this.props.minMax}
+        />
       </div>
     );
   }
 }
 
 Control.propTypes = {
-  currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
-  removeClassGaugeProps: PropTypes.func,
   overLayBoxPlotMethods: PropTypes.object,
+  currentGauge: PropTypes.object,
+  toggleMinMax: PropTypes.func.isRequired,
+  minMax: PropTypes.bool.isRequired,
 };
 
 const styles = {

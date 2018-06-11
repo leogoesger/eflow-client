@@ -16,6 +16,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'June 11th, 2018',
+            version: 'v0.20',
+            title: 'DRH drawer to replace check boxes',
+            tasks: ['DRH drawer', 'Implement all toggle buttons for metrics'],
+          },
+          {
             date: 'May 30th, 2018',
             version: 'v0.19',
             title: 'Search Bar for hydrology summary list',
