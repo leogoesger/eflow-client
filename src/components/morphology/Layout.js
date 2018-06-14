@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import * as React from "react";
+=======
+import React from "react";
+>>>>>>> modify overview geo page
 import PropTypes from "prop-types";
 import { Card } from "material-ui/Card";
 
@@ -18,7 +22,10 @@ const Layout = props => {
           overflow: "scroll",
         }}
       >
-        <Overview geoRegions={props.geoRegions} />
+        <Overview
+          geoRegions={props.geoRegions}
+          currentRegion={props.currentRegion}
+        />
       </Card>
     </div>
   );
@@ -36,6 +43,7 @@ const styles = {
 
 Layout.propTypes = {
   geoRegions: PropTypes.array,
+  currentRegion: PropTypes.string,
 };
 
 export default Layout;
