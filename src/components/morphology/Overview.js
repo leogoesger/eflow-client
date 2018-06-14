@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-import PhotoCamera from 'material-ui/svg-icons/image/photo-camera';
+import React from "react";
+import PropTypes from "prop-types";
+import { Card, CardHeader, CardText } from "material-ui/Card";
+import PhotoCamera from "material-ui/svg-icons/image/photo-camera";
 
-import MapDialog from './MapDialog';
-import {Colors} from '../../styles';
+import MapDialog from "./MapDialog";
+import { Colors } from "../../styles";
 
 export default class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      subtitle: '',
-      imageUrl: '',
+      title: "",
+      subtitle: "",
+      imageUrl: "",
       dialogFeature: null,
     };
   }
@@ -50,7 +50,7 @@ export default class Overview extends React.Component {
                         actAsExpander={false}
                         showExpandableButton={geoSite.imageUrl ? true : false}
                         title={geoSite.identity}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                         openIcon={<PhotoCamera color={Colors.gold} />}
                         closeIcon={<PhotoCamera color={Colors.gold} />}
                         onClick={() =>
@@ -58,7 +58,7 @@ export default class Overview extends React.Component {
                             title: region.name,
                             subtitle: geoClass.name,
                             imageUrl: geoSite.imageUrl,
-                            dialogFeature: {feature: 'newFeature'},
+                            dialogFeature: { feature: "newFeature" },
                           })
                         }
                       />
@@ -81,7 +81,7 @@ export default class Overview extends React.Component {
         return (
           <Card
             key={region.name}
-            style={{marginBottom: '10px'}}
+            style={{ marginBottom: "10px" }}
             initiallyExpanded={true}
           >
             <CardHeader
@@ -93,7 +93,7 @@ export default class Overview extends React.Component {
             {this.renderGeoClasses(region)}
             <MapDialog
               {...this.state}
-              handleClose={() => this.setState({dialogFeature: null})}
+              handleClose={() => this.setState({ dialogFeature: null })}
             />
           </Card>
         );

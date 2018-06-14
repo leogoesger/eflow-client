@@ -1,40 +1,40 @@
 /* eslint-disable import/no-named-as-default */
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Switch, Route} from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import React from "react";
+import PropTypes from "prop-types";
+import { Switch, Route } from "react-router-dom";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 
-import {Colors} from '../styles';
-import withTracker from '../utils/withTracker';
-import Construction from '../containers/Construction';
-import Home from '../containers/Home';
-import Header from '../containers/Header';
-import Footer from '../containers/Footer';
-import Hydrology from '../containers/Hydrology';
-import Morphology from '../containers/Morphology';
-// import Ecology from '../containers/Ecology';
-import Team from '../containers/Team';
-import Paper from '../containers/Paper';
-import MetricDetail from '../containers/MetricDetail';
-import KnownIssue from '../containers/KnownIssue';
-import ReleaseNote from '../containers/ReleaseNote';
-import TermCitation from '../containers/TermCitation';
-import BugReport from '../containers/BugReport';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import { Colors } from "../styles";
+import withTracker from "../utils/withTracker";
+import Construction from "../containers/Construction";
+import Home from "../containers/Home";
+import Header from "../containers/Header";
+import Footer from "../containers/Footer";
+import Hydrology from "../containers/Hydrology";
+import Morphology from "../containers/Morphology";
+// import Ecology from "../containers/Ecology";
+import Team from "../containers/Team";
+import Paper from "../containers/Paper";
+import MetricDetail from "../containers/MetricDetail";
+import KnownIssue from "../containers/KnownIssue";
+import ReleaseNote from "../containers/ReleaseNote";
+import TermCitation from "../containers/TermCitation";
+import BugReport from "../containers/BugReport";
+import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
 class App extends React.Component {
   render() {
     const muiTheme = getMuiTheme({
       palette: {},
-      snackbar: {actionColor: Colors.orange},
+      snackbar: { actionColor: Colors.orange },
     });
 
     return (
-      <div style={{minWidth: '1300px'}}>
+      <div style={{ minWidth: "1300px" }}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <div style={{backgroundColor: '#f5f6f7'}}>
+          <div style={{ backgroundColor: "#f5f6f7" }}>
             <Header />
             <Switch>
               <Route exact path="/" component={withTracker(Home)} />

@@ -1,0 +1,15 @@
+[ignore]
+.*/node_modules/jsonlint-lines-primitives/.*
+.*/node_modules/mapbox-gl/.*
+.*/node_modules/immutable/.*
+
+[include]
+
+[libs]
+flow-typed
+
+[lints]
+
+[options]
+
+[strict]

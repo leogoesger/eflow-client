@@ -2,7 +2,6 @@
 
 exports[`<Layout /> Render Layout 1`] = `
 <Card
-  className="col-lg-9 col-md-9 col-xs-12 animated zoomIn"
   expandable={false}
   expanded={null}
   initiallyExpanded={false}
@@ -12,9 +11,27 @@ exports[`<Layout /> Render Layout 1`] = `
       "margin": "0 auto",
       "marginTop": "120px",
       "minHeight": "500px",
+      "width": "1200px",
     }
   }
 >
-  heelo
+  <CardHeader
+    actAsExpander={false}
+    avatar={null}
+    showExpandableButton={false}
+    style={
+      Object {
+        "padding": "30px 0px",
+      }
+    }
+    subtitle="Submit the bug report, and we will get back to you shortly!"
+    subtitleStyle={
+      Object {
+        "fontSize": "16px",
+        "marginTop": "5px",
+      }
+    }
+    title="Hello world"
+  />
 </Card>
 `;
