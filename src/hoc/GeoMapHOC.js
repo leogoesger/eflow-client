@@ -28,6 +28,11 @@ export const GeoMapHOC = (
       if (!nextProps.geoSites) {
         return null;
       }
+
+      if (nextProps.geoSite !== this.props.geoSite) {
+        return console.log(nextProps.geoSite);
+      }
+
       const mapStyle = getCombinedLayer(
         nextProps.geoSites,
         defaultMapStyle,
@@ -160,6 +165,8 @@ export const GeoMapHOC = (
   EnhancedComponent.propTypes = {
     geoSites: PropTypes.array,
     updateCurrentRegion: PropTypes.func,
+    geoSite: PropTypes.object,
   };
+
   return EnhancedComponent;
 };

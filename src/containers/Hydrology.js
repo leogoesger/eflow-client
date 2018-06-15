@@ -1,98 +1,98 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import Layout from '../components/hydrology/Layout';
-import {updateTab, updateHoveredGauge} from '../actions/hydrology';
+import Layout from "../components/hydrology/Layout";
+import { updateTab, updateHoveredGauge } from "../actions/hydrology";
 import {
   fetchClassification,
   removeCurrentClass,
   fetchClassifications,
-} from '../actions/classification';
+} from "../actions/classification";
 import {
   fetchGauges,
   fetchCurrentGauge,
   removeCurrentGauge,
-} from '../actions/gauge';
-import {fetchFallBoxPlotData, removeFallBoxPlotData} from '../actions/fall';
+} from "../actions/gauge";
+import { fetchFallBoxPlotData, removeFallBoxPlotData } from "../actions/fall";
 import {
   fetchSpringBoxPlotData,
   removeSpringBoxPlotData,
-} from '../actions/spring';
+} from "../actions/spring";
 import {
   fetchSummerBoxPlotData,
   removeSummerBoxPlotData,
-} from '../actions/summer';
+} from "../actions/summer";
 import {
   fetchWinterBoxPlotData,
   removeWinterBoxPlotData,
-} from '../actions/winter';
+} from "../actions/winter";
 
 import {
   fetchFallWinterBoxPlotData,
   removeFallWinterBoxPlotData,
-} from '../actions/fallWinter';
+} from "../actions/fallWinter";
 
-import UserTour from '../components/shared/UserTour';
+import UserTour from "../components/shared/UserTour";
 
 const hydrologyTourSteps = [
   {
     step: 1,
-    selector: '.mapboxgl-map',
+    selector: ".mapboxgl-map",
     title: <div className="tour-title">Map</div>,
     body: (
       <div className="tour-body">
-        {'Hovering over the map will display different gauge or class names.'}
+        {"Hovering over the map will display different gauge or class names."}
         <div className="tour-warning">
-          {'Try zoom (scroll), pan (drag), and tilt (ctrl + mouse)!'}
+          {"Try zoom (scroll), pan (drag), and tilt (ctrl + mouse)!"}
         </div>
       </div>
     ),
-    position: 'top',
+    position: "top",
   },
   {
     step: 2,
-    selector: '.tour-map-toggle-1',
+    selector: ".tour-map-toggle-1",
     title: <div className="tour-title">Map Layer Control</div>,
     body: (
       <div className="tour-body">
-        {'Clicking on the slider will hide/display different map layers.'}
+        {"Clicking on the slider will hide/display different map layers."}
       </div>
     ),
-    position: 'bottom',
+    position: "bottom",
   },
   {
     step: 3,
-    selector: '.tour-hydro-general-display',
+    selector: ".tour-hydro-general-display",
     title: <div className="tour-title">General Display</div>,
     body: (
       <div className="tour-body">
-        {'This window will display hydrographs, gauges, and metrics data.'}
+        {"This window will display hydrographs, gauges, and metrics data."}
       </div>
     ),
-    position: 'bottom',
+    position: "bottom",
   },
   {
     step: 4,
-    selector: '.tour-tab-2',
+    selector: ".tour-tab-2",
     title: <div className="tour-title">Tabs</div>,
     body: (
       <div className="tour-body">
         {
-          'You can click on either the DATA or HYDROGRAPH tab to switch between metric values or the DRH for individual gauges or classes.'
+          "You can click on either the DATA or HYDROGRAPH tab to switch between metric values or the DRH for individual gauges or classes."
         }
         <div className="tour-warning">
-          {'You can only do this once you have selected a gauge or class'}
+          {"You can only do this once you have selected a gauge or class"}
         </div>
       </div>
     ),
-    position: 'bottom',
+    position: "bottom",
   },
 ];
 
 export class Hydrology extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Hydrology';
+    document.title = "Eflows | Hydrology";
     this.props.fetchGauges();
     this.props.fetchClassifications();
     this.removeClassGaugeProps();
@@ -101,7 +101,7 @@ export class Hydrology extends React.Component {
   removeClassGaugeProps() {
     this.props.removeCurrentGauge();
     this.props.removeCurrentClass();
-    this.props.updateTab('a');
+    this.props.updateTab("a");
   }
 
   getBoxPlotOverlayData() {
@@ -266,9 +266,12 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   banner: {
-    backgroundColor: '#424242',
-    height: '230px',
-    zIndex: '0',
+    backgroundColor: "#424242",
+    height: "230px",
+    zIndex: "0",
   },
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Hydrology);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Hydrology);

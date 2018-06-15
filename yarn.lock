@@ -2858,6 +2858,10 @@ detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
 
+detect-passive-events@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/detect-passive-events/-/detect-passive-events-1.0.4.tgz#6ed477e6e5bceb79079735dcd357789d37f9a91a"
+
 dev-ip@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dev-ip/-/dev-ip-1.0.1.tgz#a76a3ed1855be7a012bb8ac16cb80f3c00dc28f0"
@@ -5580,6 +5584,10 @@ lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
 lodash.flattendeep@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
@@ -7396,6 +7404,16 @@ react-hot-loader@3.0.0-beta.6:
     redbox-react "^1.2.5"
     source-map "^0.4.4"
 
+react-image-gallery@0.8.9:
+  version "0.8.9"
+  resolved "https://registry.yarnpkg.com/react-image-gallery/-/react-image-gallery-0.8.9.tgz#7fc008443d54f0b8b97c208e12a2470d07e26413"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+    prop-types "^15.5.8"
+    react-swipeable "^4.2.2"
+    resize-observer-polyfill "^1.5.0"
+
 react-map-gl@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.2.0.tgz#44871578c7ea3094d387ce65fcac3a3e2099b445"
@@ -7473,6 +7491,13 @@ react-router@^4.1.1, react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.4"
     warning "^3.0.0"
+
+react-swipeable@^4.2.2:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-4.3.0.tgz#818c0818ac565f5b169348f442153f343abff8bc"
+  dependencies:
+    detect-passive-events "^1.0.4"
+    prop-types "^15.5.8"
 
 react-tap-event-plugin@3.0.2:
   version "3.0.2"
@@ -7878,6 +7903,10 @@ require-uncached@^1.0.3:
 requires-port@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+
+resize-observer-polyfill@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.0.tgz#660ff1d9712a2382baa2cad450a4716209f9ca69"
 
 resolve-from@^1.0.0:
   version "1.0.1"

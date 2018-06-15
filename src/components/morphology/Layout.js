@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import * as React from "react";
-=======
 import React from "react";
->>>>>>> modify overview geo page
 import PropTypes from "prop-types";
 import { Card } from "material-ui/Card";
 
@@ -12,7 +8,7 @@ import Overview from "./Overview";
 const Layout = props => {
   return (
     <div style={styles.container}>
-      <Map path="/morphology" />
+      <Map path="/morphology" geoSite={props.geoSite} />
       <Card
         style={{
           zIndex: "2",
@@ -25,6 +21,7 @@ const Layout = props => {
         <Overview
           geoRegions={props.geoRegions}
           currentRegion={props.currentRegion}
+          updateCurrentSite={d => props.updateCurrentSite(d)}
         />
       </Card>
     </div>
@@ -44,6 +41,8 @@ const styles = {
 Layout.propTypes = {
   geoRegions: PropTypes.array,
   currentRegion: PropTypes.string,
+  geoSite: PropTypes.object,
+  updateCurrentSite: PropTypes.func,
 };
 
 export default Layout;

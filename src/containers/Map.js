@@ -34,6 +34,7 @@ class Map extends React.Component {
     if (this.props.path === "/morphology") {
       return (
         <MorphologyMap
+          geoSite={this.props.geoSite}
           geoSites={this.props.geoSites}
           updateCurrentRegion={d => this.props.updateCurrentRegion(d)}
         />
@@ -47,6 +48,7 @@ Map.propTypes = {
   path: PropTypes.string,
   geoSites: PropTypes.array,
   updateCurrentRegion: PropTypes.func,
+  geoSite: PropTypes.object,
 };
 
 const mapStateToProps = state => {
