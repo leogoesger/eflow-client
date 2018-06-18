@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import RaisedButton from 'material-ui/RaisedButton';
+import React from "react";
+import PropTypes from "prop-types";
+import RaisedButton from "material-ui/RaisedButton";
 
-import {Colors} from '../../styles';
+import { Colors } from "../../styles";
 
 export default class PaperCard extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class PaperCard extends React.Component {
   }
 
   _handleMore() {
-    this.setState({fullDescription: true});
+    this.setState({ fullDescription: true });
   }
 
   _renderDescription(description) {
@@ -38,18 +38,18 @@ export default class PaperCard extends React.Component {
     return (
       <div style={styles.infoContainer}>
         <div style={styles.name}>{this.props.paper.title}</div>
-        <div style={styles.title}>{this.props.paper.authors.join(', ')}</div>
+        <div style={styles.title}>{this.props.paper.authors.join(", ")}</div>
         <div
           style={{
-            color: 'grey',
-            fontSize: '13px',
+            color: "grey",
+            fontSize: "13px",
             fontWeight: 400,
-            marginTop: '12px',
+            marginTop: "12px",
           }}
         >
-          <span style={{fontWeight: 600, color: 'black'}}>
+          <span style={{ fontWeight: 600, color: "black" }}>
             First Published:
-          </span>{' '}
+          </span>
           {this.props.paper.publishedDate}, {this.props.paper.journal}
         </div>
         <div style={styles.description}>
@@ -65,7 +65,7 @@ export default class PaperCard extends React.Component {
               label="Request full-text"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
-              labelStyle={{fontSize: '12px'}}
+              labelStyle={{ fontSize: "12px" }}
             />
           </a>
         </div>
@@ -75,20 +75,24 @@ export default class PaperCard extends React.Component {
 }
 
 const styles = {
-  infoContainer: {lineHeight: '20px', marginTop: '20px', marginBottom: '20px'},
-  name: {fontSize: '20px', fontWeight: '600', lineHeight: '20px'},
-  title: {marginTop: '5px'},
-  description: {marginTop: '20px', fontSize: '14px'},
+  infoContainer: {
+    lineHeight: "20px",
+    marginTop: "20px",
+    marginBottom: "20px",
+  },
+  name: { fontSize: "20px", fontWeight: "600", lineHeight: "20px" },
+  title: { marginTop: "5px" },
+  description: { marginTop: "20px", fontSize: "14px" },
   readMore: {
-    marginTop: '10px',
-    cursor: 'pointer',
-    fontSize: '12px',
-    color: '#039be5',
+    marginTop: "10px",
+    cursor: "pointer",
+    fontSize: "12px",
+    color: "#039be5",
   },
   btnContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginTop: '10px',
+    display: "flex",
+    justifyContent: "flex-end",
+    marginTop: "10px",
   },
 };
 

@@ -1,10 +1,17 @@
-import request from 'superagent';
-import {GeoSiteTypes as types} from '../action-types';
+import request from "superagent";
+import { GeoSiteTypes as types } from "../action-types";
 
 const fetchGeoSitesObjects = geoSites => {
   return {
     type: types.FETCH_GEOSITE_OBJECTS,
     geoSites,
+  };
+};
+
+const updateCurrentSiteObject = geoSite => {
+  return {
+    type: types.UPDATE_GEOSITE_OBJECT,
+    geoSite,
   };
 };
 
@@ -18,5 +25,11 @@ export function fetchGeoSites() {
     } catch (e) {
       throw e;
     }
+  };
+}
+
+export function updateCurrentSite(geoSite) {
+  return dispatch => {
+    dispatch(updateCurrentSiteObject(geoSite));
   };
 }
