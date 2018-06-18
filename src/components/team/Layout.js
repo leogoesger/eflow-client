@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Card, CardMedia, CardTitle} from 'material-ui/Card';
-import Dialog from 'material-ui/Dialog';
+import React from "react";
+import PropTypes from "prop-types";
+import { Card, CardMedia, CardTitle } from "material-ui/Card";
+import Dialog from "material-ui/Dialog";
 
-import MemberCard from './MemberCard';
+import MemberCard from "./MemberCard";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -15,11 +15,11 @@ export default class Layout extends React.Component {
   }
 
   handleOpen(member) {
-    this.setState({open: true, selectedMember: member});
+    this.setState({ open: true, selectedMember: member });
   }
 
   handleClose() {
-    this.setState({open: false, selectedMember: null});
+    this.setState({ open: false, selectedMember: null });
   }
 
   _renderMembers(members) {
@@ -28,25 +28,25 @@ export default class Layout extends React.Component {
         <div
           key={member.name}
           style={{
-            marginLeft: '15px',
-            marginRight: '15px',
-            marginBottom: '30px',
-            height: '100%',
-            width: '220px',
+            marginLeft: "15px",
+            marginRight: "15px",
+            marginBottom: "30px",
+            height: "100%",
+            width: "220px",
           }}
         >
           <Card
-            style={{cursor: 'pointer'}}
+            style={{ cursor: "pointer" }}
             onClick={() => this.handleOpen(members[index])}
           >
             <CardMedia
               overlay={
                 <CardTitle
-                  style={{paddingTop: '0px', paddingBottom: '12px'}}
+                  style={{ paddingTop: "0px", paddingBottom: "12px" }}
                   title={member.name}
                   subtitle={member.title}
-                  titleStyle={{fontSize: '14px', color: '#eeeeee'}}
-                  subtitleStyle={{fontSize: '12px', color: '#e0e0e0'}}
+                  titleStyle={{ fontSize: "14px", color: "#eeeeee" }}
+                  subtitleStyle={{ fontSize: "12px", color: "#e0e0e0" }}
                 />
               }
             >
@@ -60,10 +60,17 @@ export default class Layout extends React.Component {
 
   render() {
     if (!this.props.members) {
-      return <div style={{height: '600px'}} />;
+      return <div style={{ height: "600px" }} />;
     }
     return (
-      <div className="row" style={{margin: '120px auto', width: '1000px'}}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          margin: "120px auto",
+          width: "1000px",
+        }}
+      >
         {this._renderMembers(this.props.members)}
         <Dialog
           modal={false}

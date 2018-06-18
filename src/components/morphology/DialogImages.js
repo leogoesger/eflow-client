@@ -40,9 +40,10 @@ class DialogImages extends React.PureComponent<Props, States> {
     if (!this.props.geoClass) {
       return null;
     }
-    this.props.updateCurrentSite(
-      this.props.geoClass.geoSites[this.state.number]
-    );
+    this.props.updateCurrentSite({
+      ...this.props.geoClass.geoSites[this.state.number],
+      geoClass: this.props.geoClass.name,
+    });
   }
 
   getImages(geoSites: Array<GeoSite>): Images {
@@ -82,9 +83,10 @@ class DialogImages extends React.PureComponent<Props, States> {
                       : this.state.number - 1,
                 },
                 () =>
-                  this.props.updateCurrentSite(
-                    geoClass.geoSites[this.state.number]
-                  )
+                  this.props.updateCurrentSite({
+                    ...geoClass.geoSites[this.state.number],
+                    geoClass: geoClass.name,
+                  })
               )
             }
           />
@@ -100,9 +102,10 @@ class DialogImages extends React.PureComponent<Props, States> {
                       : this.state.number + 1,
                 },
                 () =>
-                  this.props.updateCurrentSite(
-                    geoClass.geoSites[this.state.number]
-                  )
+                  this.props.updateCurrentSite({
+                    ...geoClass.geoSites[this.state.number],
+                    geoClass: geoClass.name,
+                  })
               )
             }
           />

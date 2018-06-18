@@ -7,6 +7,7 @@ import { updateCurrentRegion } from "../actions/geoRegion";
 import {
   defaultMapStyle,
   getSiteLayer,
+  getSiteLayerLarge,
 } from "../components/morphology/MapStyle.js";
 import BaseMap from "../components/map/BaseMap";
 import { GeoMapHOC } from "../hoc/GeoMapHOC";
@@ -20,6 +21,7 @@ const MorphologyMap = GeoMapHOC(
   MapLegend,
   defaultMapStyle,
   getSiteLayer,
+  getSiteLayerLarge,
   MapDialog
 );
 

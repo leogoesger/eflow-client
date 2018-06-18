@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Card} from 'material-ui/Card';
-import Dialog from 'material-ui/Dialog';
+import React from "react";
+import PropTypes from "prop-types";
+import { Card } from "material-ui/Card";
+import Dialog from "material-ui/Dialog";
 
-import {Colors} from '../../styles';
+import { Colors } from "../../styles";
 
-import PaperCard from './PaperCard';
+import PaperCard from "./PaperCard";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -17,11 +17,11 @@ export default class Layout extends React.Component {
   }
 
   handleOpen(paper) {
-    this.setState({open: true, selectedPaper: paper});
+    this.setState({ open: true, selectedPaper: paper });
   }
 
   handleClose() {
-    this.setState({open: false, selectedPaper: null});
+    this.setState({ open: false, selectedPaper: null });
   }
 
   _renderDescription(description) {
@@ -41,20 +41,20 @@ export default class Layout extends React.Component {
             style={styles.card}
             onClick={() => this.handleOpen(papers[index])}
           >
-            <div style={{padding: '10px'}}>
+            <div style={{ padding: "10px" }}>
               <div style={styles.title}>{paper.title}</div>
-              <div style={styles.subtitle}>{paper.authors.join(', ')}</div>
+              <div style={styles.subtitle}>{paper.authors.join(", ")}</div>
               <div
                 style={{
-                  color: 'grey',
-                  fontSize: '13px',
+                  color: "grey",
+                  fontSize: "13px",
                   fontWeight: 400,
-                  marginTop: '12px',
+                  marginTop: "12px",
                 }}
               >
-                <span style={{fontWeight: 600, color: 'black'}}>
+                <span style={{ fontWeight: 600, color: "black" }}>
                   First Published:
-                </span>{' '}
+                </span>{" "}
                 {paper.publishedDate}, {paper.journal}
               </div>
               <div style={styles.description}>
@@ -69,16 +69,16 @@ export default class Layout extends React.Component {
 
   render() {
     if (!this.props.papers) {
-      return <div style={{height: '600px'}} />;
+      return <div style={{ height: "600px" }} />;
     }
     return (
-      <div className="row col-lg-8 col-md-8" style={{margin: '120px auto'}}>
-        <div style={styles.catagory}>Hydrology</div>
-        {this._renderPapers(this.props.papers, 'HYDROLOGY')}
-        <div style={{...styles.catagory, marginTop: '20px'}}>Morphology</div>
-        {this._renderPapers(this.props.papers, 'MORPHOLOGY')}
-        <div style={{...styles.catagory, marginTop: '20px'}}>Ecology</div>
-        {this._renderPapers(this.props.papers, 'ECOLOGY')}
+      <div style={{ margin: "120px auto", width: "800px" }}>
+        <div style={styles.header}>Hydrology</div>
+        {this._renderPapers(this.props.papers, "HYDROLOGY")}
+        <div style={{ ...styles.header, marginTop: "20px" }}>Morphology</div>
+        {this._renderPapers(this.props.papers, "MORPHOLOGY")}
+        <div style={{ ...styles.header, marginTop: "20px" }}>Ecology</div>
+        {this._renderPapers(this.props.papers, "ECOLOGY")}
 
         <Dialog
           modal={false}
@@ -98,32 +98,34 @@ Layout.propTypes = {
 
 const styles = {
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: '120px auto',
+    display: "flex",
+    flexWrap: "wrap",
+    margin: "120px auto",
   },
   title: {
-    fontWeight: '600',
-    lineHeight: '20px',
+    fontWeight: "600",
+    lineHeight: "20px",
   },
   subtitle: {
     color: Colors.grey,
-    fontSize: '12px',
-    lineHeight: '1.5',
+    fontSize: "12px",
+    lineHeight: "1.5",
   },
   description: {
-    fontSize: '14px',
-    marginTop: '10px',
-    lineHeight: '20px',
+    fontSize: "14px",
+    marginTop: "10px",
+    lineHeight: "20px",
   },
   card: {
-    margin: '10px',
-    cursor: 'pointer',
-    width: '100%',
+    margin: "10px",
+    cursor: "pointer",
+    width: "100%",
   },
-  catagory: {
+  header: {
     color: Colors.grey,
-    margin: '0 auto 20px auto',
-    fontSize: '20px',
+    display: "flex",
+    justifyContent: "center",
+    fontSize: "20px",
+    marginTop: "20px",
   },
 };

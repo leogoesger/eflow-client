@@ -222,7 +222,7 @@
       "source": "composite",
       "source-layer": "Klamath-4uuk98",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"
@@ -234,7 +234,7 @@
       "source": "composite",
       "source-layer": "Sacramento-4u9o02",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
@@ -246,7 +246,7 @@
       "source": "composite",
       "source-layer": "Sacramento-4u9o02",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"
@@ -258,7 +258,7 @@
       "source": "composite",
       "source-layer": "SouthCoast-ab5zhj",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
@@ -270,7 +270,7 @@
       "source": "composite",
       "source-layer": "SouthCoast-ab5zhj",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"
@@ -282,7 +282,7 @@
       "source": "composite",
       "source-layer": "SouthCentralCoast-a2a0ol",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
@@ -294,7 +294,7 @@
       "source": "composite",
       "source-layer": "SouthCentralCoast-a2a0ol",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"
@@ -306,7 +306,7 @@
       "source": "composite",
       "source-layer": "NorthCentralCoast-8rfe9a",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
@@ -318,7 +318,7 @@
       "source": "composite",
       "source-layer": "NorthCentralCoast-8rfe9a",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"
@@ -330,7 +330,7 @@
       "source": "composite",
       "source-layer": "NorthCoast-2jvh51",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-color": "hsla(0, 0%, 0%, 0.07)",
         "fill-opacity": 0.6
@@ -342,7 +342,7 @@
       "source": "composite",
       "source-layer": "NorthCoast-2jvh51",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"
@@ -354,7 +354,7 @@
       "source": "composite",
       "source-layer": "SouthForkEel-8ckmdn",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "fill-opacity": 0.6,
         "fill-color": "hsla(0, 0%, 0%, 0.2)"
@@ -366,7 +366,7 @@
       "source": "composite",
       "source-layer": "SouthForkEel-8ckmdn",
       "interactive": true,
-      "layout": {"visibility": "visible"},
+      "layout": { "visibility": "visible" },
       "paint": {
         "line-width": 1,
         "line-color": "#424242"

@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { cloneDeep, assign, last } from "lodash";
+import { fromJS } from "immutable";
 
 import { getCombinedLayer, toCamelCase } from "../utils/helpers";
 
@@ -9,6 +11,7 @@ export const GeoMapHOC = (
   MapLegend,
   defaultMapStyle,
   getSiteLayer,
+  getSiteLayerLarge,
   MapDialog
 ) => {
   class EnhancedComponent extends React.Component {
@@ -29,8 +32,54 @@ export const GeoMapHOC = (
         return null;
       }
 
-      if (nextProps.geoSite !== this.props.geoSite) {
-        return console.log(nextProps.geoSite);
+      if (
+        (nextProps.geoSite && nextProps.geoSite !== this.props.geoSite) ||
+        Boolean(
+          this.props.geoSite &&
+            last(this.state.mapStyle.toJS().layers).id !== "currentSite"
+        )
+      ) {
+        const newLayers = cloneDeep(this.state.mapStyle.toJS().layers).concat(
+          getSiteLayerLarge(nextProps.geoSite.geoClass.split("-")[0]).toJS()
+        );
+
+        const sitesData = {
+          currentSite: {
+            data: {
+              type: "FeatureCollection",
+              features: [
+                {
+                  geometry: {
+                    type: "Point",
+                    coordinates: [
+                      nextProps.geoSite.geometry.coordinates[1],
+                      nextProps.geoSite.geometry.coordinates[0],
+                    ],
+                  },
+                  properties: {
+                    geoClassId: Number(
+                      nextProps.geoSite.geoClass.split("-")[1]
+                    ),
+                  },
+                  type: "Feature",
+                },
+              ],
+            },
+            type: "geojson",
+            cluster: false,
+          },
+        };
+
+        const newStyle = defaultMapStyle
+          .set(
+            "sources",
+            fromJS(
+              assign({}, this.state.mapStyle.get("sources").toJS(), sitesData)
+            )
+          )
+          .set("layers", fromJS(newLayers));
+
+        return this.setState({ mapStyle: newStyle, reserveMapStyle: newStyle });
       }
 
       const mapStyle = getCombinedLayer(

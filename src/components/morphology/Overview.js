@@ -67,6 +67,11 @@ export default class Overview extends React.Component<Props, State> {
     return `Geomorphology Classifications: ${geoClassCount}; Total sites: ${geoSitesCount}`;
   }
 
+  _onRequestClose() {
+    this.setState({ dialogType: "" });
+    this.props.updateCurrentSite(null);
+  }
+
   renderDialogContent() {
     switch (this.state.dialogType) {
       case "siteImages":
@@ -204,7 +209,7 @@ export default class Overview extends React.Component<Props, State> {
         <Dialog
           modal={false}
           open={Boolean(this.state.dialogType)}
-          onRequestClose={() => this.setState({ dialogType: "" })}
+          onRequestClose={() => this._onRequestClose()}
           bodyStyle={{ padding: "0px" }}
           contentStyle={{ width: "600px" }}
           style={{ marginLeft: "320px" }}
