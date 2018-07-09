@@ -24,8 +24,7 @@
     "test:cover:CI": "node_modules/.bin/jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test:watch": "jest --watch",
     "open:cover": "yarn test:cover && opn ./coverage/lcov-report/index.html",
-    "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
-    "postinstall": "flow-typed install"
+    "analyze-bundle": "babel-node ./tools/analyzeBundle.js"
   },
   "author": "Leo Qiu",
   "license": "MIT",
