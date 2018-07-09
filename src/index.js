@@ -8,6 +8,7 @@ import Root from "./components/Root";
 import "../node_modules/animate.css/animate.min.css";
 import "./styles/styles.css";
 import "../node_modules/mapbox-gl/dist/mapbox-gl.css";
+// import "../node_modules/flexboxgrid/css/flexboxgrid.min.css";
 import "react-tippy/dist/tippy.css";
 
 const store = configureStore();

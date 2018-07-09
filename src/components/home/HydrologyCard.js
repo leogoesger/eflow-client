@@ -48,7 +48,7 @@ export default class HydrologyCard extends React.Component {
               labelStyle={{fontSize: '12px'}}
             />
             <FlatButton
-              href="https://leogoesger.gitbooks.io/funflow/content/website_summary.html"
+              href="https://leogoesger.gitbooks.io/funflow/content/"
               target="_blank"
               className="tour-how-hydrology"
               label="How does it work?"
