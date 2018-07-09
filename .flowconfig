@@ -1,4 +1,5 @@
 [ignore]
+.*/node_modules/jsonlint/.*
 .*/node_modules/jsonlint-lines-primitives/.*
 .*/node_modules/mapbox-gl/.*
 .*/node_modules/immutable/.*
