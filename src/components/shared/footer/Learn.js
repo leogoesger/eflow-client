@@ -31,7 +31,7 @@ export default class Learn extends React.Component {
           </li>
           <li>
             <a
-              href="https://leogoesger.gitbooks.io/funflow/content/"
+              href="https://eflow.gitbook.io/project/metrics"
               className="footer-link"
               target="_blank"
               rel="noopener noreferrer"
