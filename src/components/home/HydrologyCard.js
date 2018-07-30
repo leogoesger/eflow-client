@@ -48,7 +48,7 @@ export default class HydrologyCard extends React.Component {
               labelStyle={{ fontSize: "12px" }}
             />
             <FlatButton
-              href="https://eflow.gitbook.io/project/metrics/eflows-website"
+              href="https://eflow.gitbook.io/project/eflows-website"
               target="_blank"
               className="tour-how-hydrology"
               label="How does it work?"

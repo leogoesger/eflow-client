@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {uniqBy, some, cloneDeep} from 'lodash';
-import TextField from 'material-ui/TextField';
-import Drawer from 'material-ui/Drawer';
-import Toggle from 'material-ui/Toggle';
-import Divider from 'material-ui/Divider';
-import RaisedButton from 'material-ui/RaisedButton';
+import React from "react";
+import PropTypes from "prop-types";
+import { uniqBy, some, cloneDeep } from "lodash";
+import TextField from "material-ui/TextField";
+import Drawer from "material-ui/Drawer";
+import Toggle from "material-ui/Toggle";
+import Divider from "material-ui/Divider";
+import RaisedButton from "material-ui/RaisedButton";
 
-import Clear from 'material-ui/svg-icons/content/clear';
-import Save from 'material-ui/svg-icons/content/save';
+import Clear from "material-ui/svg-icons/content/clear";
+import Save from "material-ui/svg-icons/content/save";
 
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-import {metricReference} from '../../constants/metrics';
+import { Card, CardHeader, CardText } from "material-ui/Card";
+import { metricReference } from "../../constants/metrics";
 
-import Styles from '../../styles/Styles';
-import {Colors} from '../../styles';
+import Styles from "../../styles/Styles";
+import { Colors } from "../../styles";
 
 class MetricGaugeDrawer extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class MetricGaugeDrawer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.fixedYaxis) {
-      this.setState({percentile: nextProps.fixedYaxis});
+      this.setState({ percentile: nextProps.fixedYaxis });
     }
   }
 
@@ -86,8 +86,8 @@ class MetricGaugeDrawer extends React.Component {
   }
 
   _getDisplay(name) {
-    if (name.length > 20) {
-      return name.slice(0, 15);
+    if (name.length > 30) {
+      return name.slice(0, 30);
     }
     return name;
   }
@@ -95,14 +95,15 @@ class MetricGaugeDrawer extends React.Component {
   _renderTables() {
     const tableNames = this._getTableNames(metricReference);
     return tableNames.map(table => {
-      if (table.displayTableName !== 'All Year') {
+      if (table.displayTableName !== "All Year") {
         return (
           <Card key={table.displayTableName}>
             <CardHeader
               title={table.displayTableName}
+              titleStyle={{ width: "200px" }}
               actAsExpander={true}
               showExpandableButton={true}
-              subtitleStyle={{paddingTop: '3px'}}
+              subtitleStyle={{ paddingTop: "3px" }}
             />
 
             <CardText expandable={true}>
@@ -118,26 +119,26 @@ class MetricGaugeDrawer extends React.Component {
     const metrics = metricReference.filter(
       metric =>
         metric.displayTableName == tableName &&
-        metric.dimUnit !== 'none' &&
-        metric.dimUnit !== '%'
+        metric.dimUnit !== "none" &&
+        metric.dimUnit !== "%"
     );
     return metrics.map(metric => {
       if (
-        (!metric.hidden && metric.dimUnit === 'cfs') ||
-        (metric.dimUnit === 'julian date' && !metric.hidden)
+        (!metric.hidden && metric.dimUnit === "cfs") ||
+        (metric.dimUnit === "julian date" && !metric.hidden)
       ) {
         return (
           <Toggle
             key={metric.name}
             label={this._getDisplay(metric.display)}
             labelStyle={styles.labelStyle}
-            value={'empty'}
+            value={"empty"}
             thumbSwitchedStyle={{
-              size: '1',
+              size: "1",
               backgroundColor: metric.colors[0],
             }}
-            trackSwitchedStyle={{backgroundColor: metric.colors[1]}}
-            style={{padding: '1px 5px 1px 5px'}}
+            trackSwitchedStyle={{ backgroundColor: metric.colors[1] }}
+            style={{ padding: "1px 5px 1px 5px" }}
             onClick={() => this._handleToggle(metric.display)}
             toggled={this._checkToggleStatus(metric.display)}
           />
@@ -153,7 +154,7 @@ class MetricGaugeDrawer extends React.Component {
       percentile <= 0 ||
       !percentile
     ) {
-      return 'Value needs to be between 0 to 1';
+      return "Value needs to be between 0 to 1";
     }
   }
 
@@ -166,44 +167,44 @@ class MetricGaugeDrawer extends React.Component {
 
   _renderGeneralToggleBtns() {
     const generalList = [
-      {label: 'All Timing Metrics', keyWord: 'Timing'},
+      { label: "All Timing Metrics", keyWord: "Timing" },
       // {label: 'All Duration Metrics', keyWord: 'Duration'},
-      {label: 'All Magnitude Metrics', keyWord: 'Magnitude'},
+      { label: "All Magnitude Metrics", keyWord: "Magnitude" },
     ];
     return (
-      <div style={{padding: '15px'}}>
+      <div style={{ padding: "15px" }}>
         {generalList.map(item => {
           return (
             <Toggle
               key={item.keyWord}
               label={item.label}
               labelStyle={styles.labelStyle}
-              value={'empty'}
+              value={"empty"}
               onClick={() =>
                 this._handleToggle(
                   item.keyWord,
-                  'true',
-                  this._checkToggleStatus(item.keyWord, 'true')
+                  "true",
+                  this._checkToggleStatus(item.keyWord, "true")
                 )
               }
-              toggled={this._checkToggleStatus(item.keyWord, 'true')}
+              toggled={this._checkToggleStatus(item.keyWord, "true")}
             />
           );
         })}
 
-        <Divider style={{marginTop: '10px'}} />
+        <Divider style={{ marginTop: "10px" }} />
         <Toggle
-          label={'Log Scale'}
+          label={"Log Scale"}
           labelStyle={styles.labelStyle}
-          value={'empty'}
+          value={"empty"}
           onClick={() => this.props.handleToggleLogScale(!this.props.logScale)}
           toggled={this.props.logScale}
-          style={{marginTop: '10px'}}
+          style={{ marginTop: "10px" }}
         />
         <Toggle
-          label={'Fixed Y-axis'}
+          label={"Fixed Y-axis"}
           labelStyle={styles.labelStyle}
-          value={'empty'}
+          value={"empty"}
           onClick={() =>
             this._handleFixedYaxis(this.props.fixedYaxis ? null : 0.98)
           }
@@ -212,26 +213,26 @@ class MetricGaugeDrawer extends React.Component {
         {this.props.fixedYaxis ? (
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '14px',
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "14px",
             }}
           >
             <TextField
               className="requiredField"
-              onFocus={() => this.setState({focused: true})}
+              onFocus={() => this.setState({ focused: true })}
               value={this.state.percentile}
               fullWidth={true}
               errorText={this.getErrorMessage(this.state.percentile)}
-              errorStyle={{textAlign: 'left'}}
+              errorStyle={{ textAlign: "left" }}
               floatingLabelText="Y-axis Percentile"
               underlineFocusStyle={Styles.underlineFocusStyle}
               floatingLabelStyle={Styles.floatingLabelStyle}
               floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-              onChange={(_event, value) => this.setState({percentile: value})}
+              onChange={(_event, value) => this.setState({ percentile: value })}
               onBlur={() => this._handleFixedYaxis(this.state.percentile)}
               onKeyPress={ev => {
-                if (ev.key === 'Enter') {
+                if (ev.key === "Enter") {
                   this._handleFixedYaxis(this.state.percentile);
                 }
               }}
@@ -239,18 +240,18 @@ class MetricGaugeDrawer extends React.Component {
             <Save
               onClick={() => this._handleFixedYaxis(this.state.percentile)}
               style={{
-                marginTop: '40px',
+                marginTop: "40px",
                 cursor:
                   this.getErrorMessage(this.state.percentile) ||
                   this.props.fixedYaxis === this.state.percentile
-                    ? 'not-allowed'
-                    : 'pointer',
+                    ? "not-allowed"
+                    : "pointer",
               }}
               disabled={this.getErrorMessage(this.state.percentile)}
               color={
                 this.getErrorMessage(this.state.percentile) ||
                 this.props.fixedYaxis === this.state.percentile
-                  ? '#bdbdbd'
+                  ? "#bdbdbd"
                   : Colors.blue
               }
             />
@@ -258,9 +259,9 @@ class MetricGaugeDrawer extends React.Component {
         ) : null}
 
         <Toggle
-          label={'Hydrograph Overlay'}
+          label={"Hydrograph Overlay"}
           labelStyle={styles.labelStyle}
-          value={'empty'}
+          value={"empty"}
           onClick={() =>
             this.props.handleHydrographOverlay(!this.props.isHydrographOverlay)
           }
@@ -271,10 +272,10 @@ class MetricGaugeDrawer extends React.Component {
           label="Close"
           backgroundColor={Colors.gold}
           labelColor={Colors.white}
-          labelStyle={{fontSize: '12px'}}
+          labelStyle={{ fontSize: "12px" }}
           icon={<Clear color={Colors.white} />}
           onClick={() => this.props.toggleMetricGaugeDrawer(false)}
-          style={{margin: '20px auto 5px 50px'}}
+          style={{ margin: "20px auto 5px 50px" }}
         />
       </div>
     );
@@ -285,7 +286,7 @@ class MetricGaugeDrawer extends React.Component {
       <Drawer
         containerStyle={styles.container}
         docked={true}
-        width={230}
+        width={250}
         overlayStyle={styles.overlay}
         openSecondary={true}
         open={this.props.isDrawerOpen}
@@ -293,10 +294,10 @@ class MetricGaugeDrawer extends React.Component {
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: '96%',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "96%",
           }}
         >
           <div>{this._renderTables()}</div>
@@ -328,17 +329,17 @@ MetricGaugeDrawer.defaultProps = {
 
 const styles = {
   container: {
-    top: '60px',
-    zIndex: '10',
-    height: '94%',
+    top: "60px",
+    zIndex: "10",
+    height: "94%",
   },
   overlay: {
-    top: '60px',
-    zIndex: '10',
+    top: "60px",
+    zIndex: "10",
   },
   labelStyle: {
     color: Colors.grey,
-    fontSize: '14px',
+    fontSize: "12px",
   },
 };
 

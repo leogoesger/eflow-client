@@ -10,11 +10,14 @@ const fetchReleaseObjects = releaseNotes => {
 export function fetchReleaseNotes() {
   return async dispatch => {
     try {
-      // const releases = await request.get(
-      //   `${process.env.SERVER_ADDRESS}/api/releases`
-      // );
       const releaseNotes = {
         body: [
+          {
+            date: "July 30th, 2018",
+            version: "v1.01",
+            title: "Metric namings update",
+            tasks: ["Change all metric names"],
+          },
           {
             date: "June 14th, 2018",
             version: "v0.21",
