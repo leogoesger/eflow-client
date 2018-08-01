@@ -125,7 +125,7 @@ class MetricGaugeDrawer extends React.Component {
     return metrics.map(metric => {
       if (
         (!metric.hidden && metric.dimUnit === "cfs") ||
-        (metric.dimUnit === "julian date" && !metric.hidden)
+        (metric.dimUnit === "Date" && !metric.hidden)
       ) {
         return (
           <Toggle

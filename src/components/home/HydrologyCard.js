@@ -29,7 +29,7 @@ export default class HydrologyCard extends React.Component {
         <div style={styles.right}>
           <div className="title">
             {
-              "Explore and visualize California's natural (unimpaired) streamflow patterns, including natural stream classes and functional flow metrics"
+              "Explore and visualize California's unimpaired streamflow patterns, including natural stream classes and functional flow metrics"
             }
           </div>
           <div
