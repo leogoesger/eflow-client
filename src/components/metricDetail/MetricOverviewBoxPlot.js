@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as d3 from 'd3';
-import Paper from 'material-ui/Paper';
+import React from "react";
+import PropTypes from "prop-types";
+import * as d3 from "d3";
+import Paper from "material-ui/Paper";
 
-import BoxPlot from '../shared/plots/BoxPlot';
+import BoxPlot from "../shared/plots/BoxPlot";
 
 class MetricOverviewBoxPlot extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class MetricOverviewBoxPlot extends React.Component {
       .scaleExtent([-10, 10])
       .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
       .extent([[-100, -100], [700 + 100, 420 + 100]])
-      .on('zoom', () => this.zoomed());
+      .on("zoom", () => this.zoomed());
   }
 
   componentDidMount() {
@@ -44,12 +44,12 @@ class MetricOverviewBoxPlot extends React.Component {
           width={700}
           height={410}
           ref={el => (this.svg = el)}
-          style={{cursor: 'pointer'}}
+          style={{ cursor: "pointer" }}
         >
           <BoxPlot
             width={700}
             height={400}
-            x={70}
+            x={80}
             y={20}
             boxPlotData={this.props.boxPlotData}
             logScale={this.props.logScale}
@@ -70,19 +70,19 @@ MetricOverviewBoxPlot.propTypes = {
 
 const styles = {
   container: {
-    width: '720px',
-    height: '420px',
-    margin: '20px auto',
-    position: 'relative',
+    width: "740px",
+    height: "420px",
+    margin: "20px auto",
+    position: "relative",
   },
   yLabel: {
-    position: 'absolute',
-    fontSize: '16px',
-    left: '6px',
-    top: '100px',
-    color: '#616161',
-    writingMode: 'vertical-rl',
-    transform: 'rotate(-180deg)',
+    position: "absolute",
+    fontSize: "16px",
+    left: "6px",
+    top: "100px",
+    color: "#616161",
+    writingMode: "vertical-rl",
+    transform: "rotate(-180deg)",
   },
 };
 export default MetricOverviewBoxPlot;

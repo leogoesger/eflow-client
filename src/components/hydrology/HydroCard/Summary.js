@@ -12,6 +12,8 @@ import {
   TableHeaderColumn,
 } from "material-ui/Table";
 
+import { getCalenderDate } from "../../../utils/helpers";
+
 import { metricNameMap } from "../../../constants/classification";
 
 const renderRow = summaryData => {
@@ -33,19 +35,25 @@ const renderRow = summaryData => {
 
           <TableRowColumn style={{ height: "15px" }}>
             <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {summaryData[key][0]}
+              {metricNameMap[key].includes("Timing")
+                ? getCalenderDate(Math.floor(summaryData[key][0]))
+                : summaryData[key][0]}
             </Tooltip>
           </TableRowColumn>
 
           <TableRowColumn style={{ height: "15px" }}>
             <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {summaryData[key][1]}
+              {metricNameMap[key].includes("Timing")
+                ? getCalenderDate(Math.floor(summaryData[key][1]))
+                : summaryData[key][1]}
             </Tooltip>
           </TableRowColumn>
 
           <TableRowColumn style={{ height: "15px" }}>
             <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {summaryData[key][2]}
+              {metricNameMap[key].includes("Timing")
+                ? getCalenderDate(Math.floor(summaryData[key][2]))
+                : summaryData[key][2]}
             </Tooltip>
           </TableRowColumn>
         </TableRow>

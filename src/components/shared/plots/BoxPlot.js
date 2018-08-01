@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as d3 from 'd3';
+import React from "react";
+import PropTypes from "prop-types";
+import * as d3 from "d3";
 
-import Axis from './Axis';
-import {classInfo} from '../../../constants/classification';
+import Axis from "./Axis";
+import { classInfo } from "../../../constants/classification";
 
 export default class BoxPlot extends React.Component {
   constructor(props) {
@@ -48,21 +48,21 @@ export default class BoxPlot extends React.Component {
 
     this.xScale.domain(groupCounts).rangeRound([0, width - 120]);
     this.yScale.domain(globalExtent).range([height - 30, 0]);
-    this.setState({boxPlotData: boxPlotData});
+    this.setState({ boxPlotData: boxPlotData });
 
-    if (zoomTransform && zoomType === 'detail') {
+    if (zoomTransform && zoomType === "detail") {
       // this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
   }
 
   _transform() {
-    const {zoomTransform, zoomType} = this.props;
+    const { zoomTransform, zoomType } = this.props;
     let x = 0,
       y = 0;
-    let transform = '';
+    let transform = "";
 
-    if (zoomTransform && zoomType === 'scale') {
+    if (zoomTransform && zoomType === "scale") {
       transform = `translate(${x + zoomTransform.x}, ${y +
         zoomTransform.y}) scale(${zoomTransform.k})`;
     } else {
@@ -78,7 +78,7 @@ export default class BoxPlot extends React.Component {
         <line
           key={data.classId}
           strokeWidth={1}
-          stroke={'#000'}
+          stroke={"#000"}
           x1={this.xScale(data.classId) + 15}
           x2={this.xScale(data.classId) + 15}
           y1={this.yScale(data.whiskers[1])}
@@ -98,7 +98,7 @@ export default class BoxPlot extends React.Component {
           x={this.xScale(data.classId)}
           y={this.yScale(data.quartile[2])}
           fill={classInfo[`class${data.classId}`].colors[0]}
-          stroke={'#000'}
+          stroke={"#000"}
           strokeWidth={1}
         />
       );
@@ -110,7 +110,7 @@ export default class BoxPlot extends React.Component {
         <g key={data.classId}>
           <line
             strokeWidth={1}
-            stroke={'#000'}
+            stroke={"#000"}
             x1={this.xScale(data.classId)}
             x2={this.xScale(data.classId) + 30}
             y1={this.yScale(data.whiskers[0])}
@@ -118,7 +118,7 @@ export default class BoxPlot extends React.Component {
           />
           <line
             strokeWidth={1}
-            stroke={'#000'}
+            stroke={"#000"}
             x1={this.xScale(data.classId)}
             x2={this.xScale(data.classId) + 30}
             y1={this.yScale(data.whiskers[1])}
@@ -126,7 +126,7 @@ export default class BoxPlot extends React.Component {
           />
           <line
             strokeWidth={1}
-            stroke={'#000'}
+            stroke={"#000"}
             x1={this.xScale(data.classId)}
             x2={this.xScale(data.classId) + 30}
             y1={this.yScale(data.quartile[1])}
@@ -145,19 +145,20 @@ export default class BoxPlot extends React.Component {
       <g transform={this._transform()}>
         <Axis
           scale={this.yScale}
-          x={60}
+          x={70}
           y={this.props.y}
           gridLength={this.props.width - 50}
           orientation="left"
+          timing={this.props.boxPlotData[0].metricName.includes("Timing")}
         />
         <Axis
           scale={this.xScale}
           data={this.state.boxPlotData}
-          x={85}
+          x={95}
           y={this.props.height - 10}
           gridLength={0}
           orientation="bottom"
-          format={'className'}
+          format={"className"}
         />
 
         <g transform={`translate(${this.props.x}, ${this.props.y})`}>

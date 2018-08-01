@@ -1,8 +1,8 @@
 /* eslint-disable */
-import React, {Component} from 'react';
-import * as d3 from 'd3';
-import {classInfo} from '../../../constants/classification';
-import {getCalenderDate} from '../../../utils/helpers';
+import React, { Component } from "react";
+import * as d3 from "d3";
+import { classInfo } from "../../../constants/classification";
+import { getCalenderDate } from "../../../utils/helpers";
 
 const blackBox = D3render => {
   return class Blackbox extends Component {
@@ -14,8 +14,8 @@ const blackBox = D3render => {
     }
 
     render() {
-      if (this.props.orientation === 'bottom') {
-        let {x, y} = this.props;
+      if (this.props.orientation === "bottom") {
+        let { x, y } = this.props;
         return (
           <g
             transform={`translate(${x}, ${y})`}
@@ -23,7 +23,7 @@ const blackBox = D3render => {
           />
         );
       } else {
-        const {x, y} = this.props;
+        const { x, y } = this.props;
         return (
           <g
             transform={`translate(${x}, ${y})`}
@@ -36,7 +36,7 @@ const blackBox = D3render => {
 };
 
 const Axis = blackBox(function() {
-  if (this.props.orientation === 'bottom') {
+  if (this.props.orientation === "bottom") {
     const axis = d3
       .axisBottom()
       .scale(this.props.scale)
@@ -47,7 +47,7 @@ const Axis = blackBox(function() {
         if (d == 9.1) {
           return null;
         }
-        if (this.props.format === 'className') {
+        if (this.props.format === "className") {
           return classInfo[`class${d}`] ? classInfo[`class${d}`].abbre : d;
         }
         if (d == 1 || d == this.props.data.length) {
@@ -64,6 +64,13 @@ const Axis = blackBox(function() {
       .tickSizeOuter(0)
       .scale(this.props.scale)
       .ticks(5)
+      .tickFormat(d => {
+        if (this.props.timing) {
+          return getCalenderDate(d);
+        } else {
+          return d;
+        }
+      })
       .tickPadding(5);
     d3.select(this.anchor).call(axis);
   }
