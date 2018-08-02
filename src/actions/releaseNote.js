@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: "Aug 2nd, 2018",
+            version: "v1.02",
+            title: "Team update and bug fixes",
+            tasks: [
+              "Include all team members",
+              "Bug fixes for timing metrics",
+              "Only Boxplot's timing metric data is offset dates",
+            ],
+          },
+          {
             date: "July 30th, 2018",
             version: "v1.01",
             title: "Metric namings update",
