@@ -49,7 +49,7 @@ export default class PaperCard extends React.Component {
         >
           <span style={{ fontWeight: 600, color: "black" }}>
             First Published:
-          </span>
+          </span>{" "}
           {this.props.paper.publishedDate}, {this.props.paper.journal}
         </div>
         <div style={styles.description}>
