@@ -12,7 +12,7 @@ import {
   TableHeaderColumn,
 } from "material-ui/Table";
 
-import { getCalenderDate } from "../../../utils/helpers";
+import { getCalenderDateFromJulian } from "../../../utils/helpers";
 
 import { metricNameMap } from "../../../constants/classification";
 
@@ -36,7 +36,7 @@ const renderRow = summaryData => {
           <TableRowColumn style={{ height: "15px" }}>
             <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
               {metricNameMap[key].includes("Timing")
-                ? getCalenderDate(Math.floor(summaryData[key][0]))
+                ? getCalenderDateFromJulian(Math.floor(summaryData[key][0]))
                 : summaryData[key][0]}
             </Tooltip>
           </TableRowColumn>
@@ -44,7 +44,7 @@ const renderRow = summaryData => {
           <TableRowColumn style={{ height: "15px" }}>
             <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
               {metricNameMap[key].includes("Timing")
-                ? getCalenderDate(Math.floor(summaryData[key][1]))
+                ? getCalenderDateFromJulian(Math.floor(summaryData[key][1]))
                 : summaryData[key][1]}
             </Tooltip>
           </TableRowColumn>
@@ -52,7 +52,7 @@ const renderRow = summaryData => {
           <TableRowColumn style={{ height: "15px" }}>
             <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
               {metricNameMap[key].includes("Timing")
-                ? getCalenderDate(Math.floor(summaryData[key][2]))
+                ? getCalenderDateFromJulian(Math.floor(summaryData[key][2]))
                 : summaryData[key][2]}
             </Tooltip>
           </TableRowColumn>

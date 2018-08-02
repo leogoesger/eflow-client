@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import { classInfo } from "../../../constants/classification";
-import { getCalenderDate } from "../../../utils/helpers";
+import { getCalenderDateFromOffset } from "../../../utils/helpers";
 
 const blackBox = D3render => {
   return class Blackbox extends Component {
@@ -53,7 +53,7 @@ const Axis = blackBox(function() {
         if (d == 1 || d == this.props.data.length) {
           return null;
         }
-        return getCalenderDate(d);
+        return getCalenderDateFromOffset(d);
       })
       .tickPadding(8);
     d3.select(this.anchor).call(axis);
@@ -66,7 +66,7 @@ const Axis = blackBox(function() {
       .ticks(5)
       .tickFormat(d => {
         if (this.props.timing) {
-          return getCalenderDate(d);
+          return getCalenderDateFromOffset(d);
         } else {
           return d;
         }

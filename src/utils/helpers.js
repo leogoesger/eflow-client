@@ -1,10 +1,10 @@
-import {history} from '../store/configureStore';
-import {fromJS} from 'immutable';
-import {detect} from 'detect-browser';
-import {assign} from 'lodash';
+import { history } from "../store/configureStore";
+import { fromJS } from "immutable";
+import { detect } from "detect-browser";
+import { assign } from "lodash";
 
 export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
-  let siteLayers = defaultMapStyle.get('layers').toJS();
+  let siteLayers = defaultMapStyle.get("layers").toJS();
   const sitesData = {};
   geoSites.forEach(site => {
     const siteObj = {
@@ -16,16 +16,16 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
         imageUrl: site.imageUrl,
         geoRegionName: site.geoClass.geoRegion.name,
       },
-      type: 'Feature',
+      type: "Feature",
       geometry: {
-        type: 'Point',
+        type: "Point",
         coordinates: [
           site.geometry.coordinates[1],
           site.geometry.coordinates[0],
         ],
       },
     };
-    const currentGeoClass = site.geoClass.name.split('-')[0];
+    const currentGeoClass = site.geoClass.name.split("-")[0];
     if (!sitesData[currentGeoClass]) {
       siteLayers = siteLayers.concat(
         getSiteLayer(
@@ -34,8 +34,8 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
         ).toJS()
       );
       sitesData[currentGeoClass] = {
-        data: {type: 'FeatureCollection', features: []},
-        type: 'geojson',
+        data: { type: "FeatureCollection", features: [] },
+        type: "geojson",
         cluster: false,
       };
     }
@@ -44,10 +44,10 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
 
   const newStyle = defaultMapStyle
     .set(
-      'sources',
-      fromJS(assign({}, defaultMapStyle.get('sources').toJS(), sitesData))
+      "sources",
+      fromJS(assign({}, defaultMapStyle.get("sources").toJS(), sitesData))
     )
-    .set('layers', fromJS(siteLayers));
+    .set("layers", fromJS(siteLayers));
   return newStyle;
 }
 
@@ -60,28 +60,28 @@ export const toCamelCase = text =>
   text
     .split(/[_-\s]+/)
     .map(toCamelWord)
-    .join('');
+    .join("");
 
 export function navigateTo(pathname, query) {
-  history.push({pathname, query});
+  history.push({ pathname, query });
 }
 
 export function copyTextToClipboard(text) {
-  var textArea = document.createElement('textarea');
-  textArea.style.position = 'fixed';
+  var textArea = document.createElement("textarea");
+  textArea.style.position = "fixed";
   textArea.style.top = 0;
   textArea.style.left = 0;
 
-  textArea.style.width = '2em';
-  textArea.style.height = '2em';
+  textArea.style.width = "2em";
+  textArea.style.height = "2em";
 
   textArea.style.padding = 0;
 
-  textArea.style.border = 'none';
-  textArea.style.outline = 'none';
-  textArea.style.boxShadow = 'none';
+  textArea.style.border = "none";
+  textArea.style.outline = "none";
+  textArea.style.boxShadow = "none";
 
-  textArea.style.background = 'transparent';
+  textArea.style.background = "transparent";
 
   textArea.value = text;
   document.body.appendChild(textArea);
@@ -89,7 +89,7 @@ export function copyTextToClipboard(text) {
   textArea.select();
 
   try {
-    document.execCommand('copy');
+    document.execCommand("copy");
   } catch (err) {
     throw err;
   }
@@ -103,18 +103,18 @@ export const getCurrentMonthYear = () => {
 };
 
 const MONTH_NAMES = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 const dateFromDay = (year, day) => {
@@ -135,13 +135,19 @@ export function getJulianOffsetDate(julianDate) {
   return offsetJulianDate;
 }
 
-export function getCalenderDate(offsetJulianDate) {
+export function getCalenderDateFromOffset(offsetJulianDate) {
   let julianDate;
   if (offsetJulianDate < 365 - 274) {
     julianDate = 274 + offsetJulianDate;
   } else {
     julianDate = offsetJulianDate - 365 + 274;
   }
+  const date = dateFromDay(2001, julianDate),
+    calenderDate = `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
+  return calenderDate;
+}
+
+export function getCalenderDateFromJulian(julianDate) {
   const date = dateFromDay(2001, julianDate),
     calenderDate = `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
   return calenderDate;
@@ -154,7 +160,7 @@ export function validateEmail(email) {
 
 export function getEmailErrorMessage(email) {
   if (email && !validateEmail(email)) {
-    return 'Invalid Email address';
+    return "Invalid Email address";
   }
 }
 
@@ -170,18 +176,18 @@ export function getMapStyle(
   classifications.forEach(geoClass => {
     combinedMapStyle[`class${geoClass.classId}`] = {
       data: geoClass.geometry,
-      type: 'geojson',
+      type: "geojson",
     };
 
     let newDataLayer = dataLayer
-      .set('source', `class${geoClass.classId}`)
-      .set('id', `class${geoClass.classId}`);
+      .set("source", `class${geoClass.classId}`)
+      .set("id", `class${geoClass.classId}`);
     combinedLayer.push(newDataLayer.toJS());
   });
 
   const newCombinedLayer = fromJS(
     defaultMapStyle
-      .get('layers')
+      .get("layers")
       .toJS()
       .concat(combinedLayer)
       .concat(gaugeLayer)
@@ -189,17 +195,17 @@ export function getMapStyle(
 
   const mapStyle = defaultMapStyle
     .set(
-      'sources',
+      "sources",
       fromJS(
-        assign({}, defaultMapStyle.get('sources').toJS(), combinedMapStyle)
+        assign({}, defaultMapStyle.get("sources").toJS(), combinedMapStyle)
       )
     )
-    .set('layers', newCombinedLayer);
+    .set("layers", newCombinedLayer);
 
   const combinedGauges = {
     gauges: {
-      data: {type: 'FeatureCollection', features: []},
-      type: 'geojson',
+      data: { type: "FeatureCollection", features: [] },
+      type: "geojson",
     },
   };
   gauges.forEach(gauge => {
@@ -211,9 +217,9 @@ export function getMapStyle(
         },
       };
       const geometry = {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
+          type: "Point",
           coordinates: [
             gauge.geometry.coordinates[1],
             gauge.geometry.coordinates[0],
@@ -226,8 +232,8 @@ export function getMapStyle(
     }
   });
   const mapStyle_gauge = mapStyle.set(
-    'sources',
-    fromJS(assign({}, mapStyle.get('sources').toJS(), combinedGauges))
+    "sources",
+    fromJS(assign({}, mapStyle.get("sources").toJS(), combinedGauges))
   );
 
   return mapStyle_gauge;
@@ -236,15 +242,15 @@ export function getMapStyle(
 export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   const newCombinedLayer = fromJS(
     defaultMapStyle
-      .get('layers')
+      .get("layers")
       .toJS()
       .concat(gaugeLayer)
   );
 
   const combinedGauges = {
     gauges: {
-      data: {type: 'FeatureCollection', features: []},
-      type: 'geojson',
+      data: { type: "FeatureCollection", features: [] },
+      type: "geojson",
     },
   };
   gauges.forEach(gauge => {
@@ -257,9 +263,9 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
         },
       };
       const geometry = {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
+          type: "Point",
           coordinates: [
             gauge.geometry.coordinates[1],
             gauge.geometry.coordinates[0],
@@ -273,10 +279,10 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   });
   const mapStyle = defaultMapStyle
     .set(
-      'sources',
-      fromJS(assign({}, defaultMapStyle.get('sources').toJS(), combinedGauges))
+      "sources",
+      fromJS(assign({}, defaultMapStyle.get("sources").toJS(), combinedGauges))
     )
-    .set('layers', newCombinedLayer);
+    .set("layers", newCombinedLayer);
 
   return mapStyle;
 }
@@ -290,9 +296,9 @@ export const locateY = (data, x) => {
 
 const _getBrowserMajorVersion = version => {
   if (version) {
-    const versionNumbers = version.split('.');
+    const versionNumbers = version.split(".");
     if (versionNumbers.length) {
-      return parseInt(versionNumbers[0].replace(/[^0-9]/g, ''), 10);
+      return parseInt(versionNumbers[0].replace(/[^0-9]/g, ""), 10);
     }
   }
   return null;
@@ -304,27 +310,27 @@ export const isBrowserNotSupported = () => {
     const majorVersion = _getBrowserMajorVersion(browser.version);
     if (majorVersion) {
       switch (browser.name) {
-        case 'chrome':
+        case "chrome":
           if (majorVersion <= 50) {
             return true;
           }
           return false;
-        case 'firefox':
+        case "firefox":
           if (majorVersion <= 50) {
             return true;
           }
           return false;
-        case 'safari':
+        case "safari":
           if (majorVersion <= 10) {
             return true;
           }
           return false;
-        case 'ie':
+        case "ie":
           if (majorVersion <= 11) {
             return true;
           }
           return false;
-        case 'edge':
+        case "edge":
           if (majorVersion <= 11) {
             return true;
           }
