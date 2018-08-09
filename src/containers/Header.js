@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import io from 'socket.io-client';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import io from "socket.io-client";
 
 const socket = io(process.env.SERVER_ADDRESS);
 
-import Layout from '../components/shared/header/Layout';
-import {isBrowserNotSupported} from '../utils/helpers';
-import MetricGaugeDrawer from '../components/metricDetail/MetricGaugeDrawer';
-import {fetchReleaseNotes} from '../actions/releaseNote';
+import Layout from "../components/shared/header/Layout";
+import { isBrowserNotSupported } from "../utils/helpers";
+import MetricGaugeDrawer from "../components/metricDetail/MetricGaugeDrawer";
+import { fetchReleaseNotes } from "../actions/releaseNote";
 import {
   toggleMetricGaugeDrawer,
   toggleAnnualFlowMetrics,
@@ -18,9 +18,9 @@ import {
   handleHydrographOverlay,
   handleFixedYaxis,
   getYaxisMax,
-} from '../actions/metricDetail';
-import {fetchCurrentGauge} from '../actions/gauge';
-import {fetchBroadCastMessage} from '../actions/user';
+} from "../actions/metricDetail";
+import { fetchCurrentGauge } from "../actions/gauge";
+import { fetchBroadCastMessage } from "../actions/user";
 
 class Header extends React.Component {
   constructor(props) {
@@ -35,15 +35,15 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    isBrowserNotSupported() ? this.setState({dialogOpen: true}) : null;
-    socket.on('message', msg => {
+    isBrowserNotSupported() ? this.setState({ dialogOpen: true }) : null;
+    socket.on("msg", msg => {
       this.props.fetchBroadCastMessage(msg);
-      this.setState({dialogOpen: true});
+      this.setState({ dialogOpen: true });
     });
   }
 
   handleClose() {
-    this.setState({dialogOpen: false});
+    this.setState({ dialogOpen: false });
   }
 
   getVersion() {
@@ -60,7 +60,7 @@ class Header extends React.Component {
     return (
       <div>
         {
-          'Sorry, your browser may not be fully supported! We recommend Chrome v51+, Firefox v51+ or Edge v12+.'
+          "Sorry, your browser may not be fully supported! We recommend Chrome v51+, Firefox v51+ or Edge v12+."
         }
       </div>
     );
@@ -105,7 +105,7 @@ class Header extends React.Component {
         >
           {this.renderDialogMessage()}
 
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <FlatButton
               label="Continue"
               primary={true}
@@ -167,4 +167,7 @@ Header.propTypes = {
   getYaxisMax: PropTypes.func,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

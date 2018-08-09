@@ -1,5 +1,6 @@
-import request from 'superagent';
-import {UserTypes as types} from '../action-types';
+import request from "superagent";
+import { UserTypes as types } from "../action-types";
+import { navigateTo } from "../utils/helpers";
 
 const fetchBroadCastMessageObject = message => {
   return {
@@ -12,6 +13,19 @@ const submitBugReportObject = bugReport => {
   return {
     type: types.SUBMIT_BUG_REPORT_OBJECT,
     bugReport,
+  };
+};
+
+const loginUserObject = user => {
+  return {
+    type: types.USER_LOGIN_OBJECT,
+    user,
+  };
+};
+
+const removeUserObject = () => {
+  return {
+    type: types.REMOVE_USER_OBJECT,
   };
 };
 
@@ -31,5 +45,26 @@ export function submitBugReport(bugReport) {
     } catch (e) {
       throw e;
     }
+  };
+}
+
+export function loginUser(user) {
+  return async dispatch => {
+    try {
+      const response = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/user/login`)
+        .send(user);
+      localStorage.setItem("FF_JWT", response.body.FF_JWT);
+      dispatch(loginUserObject(response.body));
+      navigateTo("/admin");
+    } catch (e) {
+      throw e;
+    }
+  };
+}
+
+export function removeUser() {
+  return dispatch => {
+    dispatch(removeUserObject());
   };
 }

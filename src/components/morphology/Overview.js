@@ -205,7 +205,8 @@ export default class Overview extends React.Component<Props, State> {
               />
             </Card>
           );
-        })};
+        })}
+        ;
         <Dialog
           modal={false}
           open={Boolean(this.state.dialogType)}
