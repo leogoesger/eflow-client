@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: "Aug 12nd, 2018",
+            version: "v1.03",
+            title: "Admin Page",
+            tasks: ["Include 404 route", "Admin page to upload and update"],
+          },
+          {
             date: "Aug 2nd, 2018",
             version: "v1.02",
             title: "Team update and bug fixes",
