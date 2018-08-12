@@ -21,6 +21,10 @@ import KnownIssue from "../containers/KnownIssue";
 import ReleaseNote from "../containers/ReleaseNote";
 import TermCitation from "../containers/TermCitation";
 import BugReport from "../containers/BugReport";
+import Admin from "../containers/Admin";
+import Login from "../containers/Login";
+import UnknownRoute from "./shared/UnknownRoute";
+
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
@@ -76,6 +80,9 @@ class App extends React.Component {
                 path="/bugReport"
                 component={withTracker(BugReport)}
               />
+              <Route exact path="/login" component={withTracker(Login)} />
+              <Route exact path="/admin" component={withTracker(Admin)} />
+              <Route exact path="*" component={withTracker(UnknownRoute)} />
             </Switch>
             <Footer />
           </div>

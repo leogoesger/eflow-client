@@ -164,6 +164,22 @@ export function getEmailErrorMessage(email) {
   }
 }
 
+export function validatePassword(password) {
+  if (password.length >= 4 && password.length <= 20) {
+    return true;
+  }
+  return false;
+}
+
+export function getPasswordErrorMessage(password) {
+  if (!password || validatePassword(password)) {
+    return "";
+  }
+  if (!validatePassword(password)) {
+    return "Should be between 4 to 20 characters";
+  }
+}
+
 export function getMapStyle(
   classifications,
   gauges,
