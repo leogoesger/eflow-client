@@ -15,6 +15,19 @@ class Admin extends React.Component {
       snackOpen: false,
       message: "",
     };
+    this.updateClassMetricHandler = this.updateClassMetricHandler.bind(this);
+    this.updateGaugeMetricHandler = this.updateGaugeMetricHandler.bind(this);
+    this.broadcastMessageHandler = this.broadcastMessageHandler.bind(this);
+    this.uploadFlowDataHandler = this.uploadFlowDataHandler.bind(this);
+    this.uploadMetricResultHandler = this.uploadMetricResultHandler.bind(this);
+    this.uploadClassHydrographHandler = this.uploadClassHydrographHandler.bind(
+      this
+    );
+    this.uploadGaugeHydrographHandler = this.uploadGaugeHydrographHandler.bind(
+      this
+    );
+    this._handleRequestClose = this._handleRequestClose.bind(this);
+    this.responseMessage = this.responseMessage.bind(this);
   }
 
   componentDidMount() {
@@ -26,67 +39,48 @@ class Admin extends React.Component {
     document.title = "Eflows | Admin";
   }
 
+  responseMessage() {
+    return this.setState({
+      snackOpen: true,
+      message: "Success, wait 1 min before next action!",
+    });
+  }
+
+  _handleRequestClose() {
+    this.setState({ snackOpen: false, message: "" });
+  }
+
   updateClassMetricHandler() {
-    adminActions.updateClassMetric().then(() =>
-      this.setState({
-        snackOpen: true,
-        message: "Success, wait 1 min before next action!",
-      })
-    );
+    adminActions.updateClassMetric().then(this.responseMessage);
   }
 
   updateGaugeMetricHandler(id) {
-    adminActions.updateGaugeMetric(id).then(() =>
-      this.setState({
-        snackOpen: true,
-        message: "Success, wait 1 min before next action!",
-      })
-    );
+    adminActions.updateGaugeMetric(id).then(this.responseMessage);
   }
 
   broadcastMessageHandler(msg) {
-    adminActions.broadcastMessage(msg).then(() =>
+    adminActions.broadcastMessage(msg).then(() => {
       this.setState({
         snackOpen: true,
         message: "Success, wait 1 min before next action!",
-      })
-    );
+      });
+    });
   }
 
   uploadFlowDataHandler() {
-    adminActions.uploadFlowData().then(() =>
-      this.setState({
-        snackOpen: true,
-        message: "Success, wait 1 min before next action!",
-      })
-    );
+    adminActions.uploadFlowData().then(this.responseMessage);
   }
 
   uploadMetricResultHandler() {
-    adminActions.uploadMetricResult().then(() =>
-      this.setState({
-        snackOpen: true,
-        message: "Success, wait 1 min before next action!",
-      })
-    );
+    adminActions.uploadMetricResult().then(this.responseMessage);
   }
 
   uploadClassHydrographHandler() {
-    adminActions.uploadClassHydrograph().then(() =>
-      this.setState({
-        snackOpen: true,
-        message: "Success, wait 1 min before next action!",
-      })
-    );
+    adminActions.uploadClassHydrograph().then(this.responseMessage);
   }
 
   uploadGaugeHydrographHandler() {
-    adminActions.uploadGaugeHydrograph().then(() =>
-      this.setState({
-        snackOpen: true,
-        message: "Success, wait 1 min before next action!",
-      })
-    );
+    adminActions.uploadGaugeHydrograph().then(this.responseMessage);
   }
 
   render() {

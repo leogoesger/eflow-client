@@ -109,9 +109,9 @@ class Layout extends React.Component {
               </div>
               <div
                 style={{
-                  fontSize: "36px",
+                  fontSize: "32px",
                   color: "#9e9e9e",
-                  marginTop: "40px",
+                  marginTop: "42px",
                 }}
               >
                 {" | "}
