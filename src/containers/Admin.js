@@ -27,31 +27,66 @@ class Admin extends React.Component {
   }
 
   updateClassMetricHandler() {
-    adminActions.updateClassMetric().then(() => console.log("Success")); //eslint-disable-line
+    adminActions.updateClassMetric().then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   updateGaugeMetricHandler(id) {
-    adminActions.updateGaugeMetric(id).then(() => console.log("Success")); //eslint-disable-line
+    adminActions.updateGaugeMetric(id).then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   broadcastMessageHandler(msg) {
-    adminActions.broadcastMessage(msg).then(() => console.log("Success")); //eslint-disable-line
+    adminActions.broadcastMessage(msg).then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   uploadFlowDataHandler() {
-    adminActions.uploadFlowData().then(() => console.log("Success")); //eslint-disable-line
+    adminActions.uploadFlowData().then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   uploadMetricResultHandler() {
-    adminActions.uploadMetricResult().then(() => console.log("Success")); //eslint-disable-line
+    adminActions.uploadMetricResult().then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   uploadClassHydrographHandler() {
-    adminActions.uploadClassHydrograph().then(() => console.log("Success")); //eslint-disable-line
+    adminActions.uploadClassHydrograph().then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   uploadGaugeHydrographHandler() {
-    adminActions.uploadGaugeHydrograph().then(() => console.log("Success")); //eslint-disable-line
+    adminActions.uploadGaugeHydrograph().then(() =>
+      this.setState({
+        snackOpen: true,
+        message: "Success, wait 1 min before next action!",
+      })
+    );
   }
 
   render() {
