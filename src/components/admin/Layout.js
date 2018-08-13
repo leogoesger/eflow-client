@@ -25,7 +25,10 @@ class Layout extends React.Component {
   }
 
   _handleChange(v, field) {
-    this.setState({ [field]: v + 1 });
+    if (field === "classId") {
+      return this.setState({ [field]: v + 1 });
+    }
+    return this.setState({ [field]: v });
   }
 
   logoutUser() {
