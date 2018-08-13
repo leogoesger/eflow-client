@@ -17,7 +17,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     document.title = "Eflows | Login";
-    if (localStorage.getItem("FF_JWT")) {
+    if (localStorage.getItem("ff_jwt")) {
       navigateTo("/admin");
     }
   }

@@ -54,7 +54,7 @@ export function loginUser(user) {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/user/login`)
         .send(user);
-      localStorage.setItem("FF_JWT", response.body.FF_JWT);
+      localStorage.setItem("ff_jwt", response.body.ff_jwt);
       dispatch(loginUserObject(response.body));
       navigateTo("/admin");
     } catch (e) {

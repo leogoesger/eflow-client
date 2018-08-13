@@ -32,7 +32,7 @@ class Layout extends React.Component {
   }
 
   logoutUser() {
-    localStorage.removeItem("FF_JWT");
+    localStorage.removeItem("ff_jwt");
     this.props.removeUser();
     navigateTo("/");
   }
@@ -84,7 +84,7 @@ class Layout extends React.Component {
             />
 
             <AdminActionBtn
-              action={() => this.updateGaugeMetricHandler(this.state.classId)}
+              action={() => this.updateGaugeMetricHandler()}
               displayName="Update Gauge Metric"
             />
           </div>
@@ -115,7 +115,7 @@ class Layout extends React.Component {
           <h1>Upload Data to DB</h1>
           <div style={{ padding: "15px" }}>
             <AdminActionBtn
-              action={uploadFlowData}
+              action={() => uploadFlowData()}
               displayName="Upload Flow Data"
             />
             <AdminActionBtn

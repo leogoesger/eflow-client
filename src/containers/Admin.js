@@ -18,40 +18,40 @@ class Admin extends React.Component {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("FF_JWT")) {
+    if (!localStorage.getItem("ff_jwt")) {
       this.props.removeUser();
-      localStorage.removeItem("FF_JWT");
+      localStorage.removeItem("ff_jwt");
       navigateTo("/login");
     }
     document.title = "Eflows | Admin";
   }
 
   updateClassMetricHandler() {
-    adminActions.updateClassMetric();
+    adminActions.updateClassMetric().then(() => console.log("Success")); //eslint-disable-line
   }
 
   updateGaugeMetricHandler(id) {
-    adminActions.updateGaugeMetric(id);
+    adminActions.updateGaugeMetric(id).then(() => console.log("Success")); //eslint-disable-line
   }
 
   broadcastMessageHandler(msg) {
-    adminActions.broadcastMessage(msg);
+    adminActions.broadcastMessage(msg).then(() => console.log("Success")); //eslint-disable-line
   }
 
   uploadFlowDataHandler() {
-    adminActions.uploadFlowData();
+    adminActions.uploadFlowData().then(() => console.log("Success")); //eslint-disable-line
   }
 
   uploadMetricResultHandler() {
-    adminActions.uploadMetricResult();
+    adminActions.uploadMetricResult().then(() => console.log("Success")); //eslint-disable-line
   }
 
   uploadClassHydrographHandler() {
-    adminActions.uploadClassHydrograph();
+    adminActions.uploadClassHydrograph().then(() => console.log("Success")); //eslint-disable-line
   }
 
   uploadGaugeHydrographHandler() {
-    adminActions.uploadGaugeHydrograph();
+    adminActions.uploadGaugeHydrograph().then(() => console.log("Success")); //eslint-disable-line
   }
 
   render() {
