@@ -12,6 +12,7 @@ const requests = {
       .get(`${process.env.SERVER_ADDRESS}/api/admin/update-gauge-metrics/${id}`)
       .set("FF_JWT", FF_JWT),
   broadcastMessage: async msg => {
+    console.log(msg, FF_JWT); //eslint-disable-line
     return await request
       .post(`${process.env.SERVER_ADDRESS}/api/admin/broadcast-message`)
       .send({ message: msg })
