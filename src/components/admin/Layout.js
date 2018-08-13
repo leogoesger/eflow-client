@@ -56,9 +56,33 @@ class Layout extends React.Component {
     return (
       <div>
         <div style={{ padding: "40px 20px" }}>
+          <h1>Upload Data to DB</h1>
+          <div style={{ padding: "15px" }}>
+            <AdminActionBtn
+              action={uploadMetricResult}
+              displayName="Upload Metric Result"
+            />
+            <AdminActionBtn
+              action={uploadClassHydrograph}
+              displayName="Upload Class Hydrograph"
+            />
+
+            <AdminActionBtn
+              action={uploadGaugeHydrograph}
+              displayName="Upload Gauge Hydrograph"
+            />
+            <AdminActionBtn
+              action={uploadFlowData}
+              displayName="Upload Flow Data"
+            />
+          </div>
+        </div>
+        <Divider />
+
+        <div style={{ padding: "40px 20px" }}>
           <h1>Update Metrics</h1>
           <div style={{ padding: "5px" }}>
-            <div>
+            <div style={{ display: "flex" }}>
               <SelectField
                 floatingLabelText="Select Class To Update"
                 value={this.state.classId}
@@ -77,16 +101,28 @@ class Layout extends React.Component {
                 <MenuItem value={8} primaryText="8" />
                 <MenuItem value={9} primaryText="9" />
               </SelectField>
+              <div style={{ margin: "40px 20px 0px 20px" }}>
+                <AdminActionBtn
+                  action={() => this.updateGaugeMetricHandler()}
+                  displayName="Update Gauge Metric"
+                />
+              </div>
+              <div
+                style={{
+                  fontSize: "36px",
+                  color: "#9e9e9e",
+                  marginTop: "40px",
+                }}
+              >
+                {" | "}
+              </div>
+              <div style={{ margin: "40px 20px 0px 20px" }}>
+                <AdminActionBtn
+                  action={updateClassMetric}
+                  displayName="Update Class Metric"
+                />
+              </div>
             </div>
-            <AdminActionBtn
-              action={updateClassMetric}
-              displayName="Update Class Metric"
-            />
-
-            <AdminActionBtn
-              action={() => this.updateGaugeMetricHandler()}
-              displayName="Update Gauge Metric"
-            />
           </div>
         </div>
         <Divider />
@@ -111,29 +147,6 @@ class Layout extends React.Component {
         </div>
         <Divider />
 
-        <div style={{ padding: "40px 20px" }}>
-          <h1>Upload Data to DB</h1>
-          <div style={{ padding: "15px" }}>
-            <AdminActionBtn
-              action={() => uploadFlowData()}
-              displayName="Upload Flow Data"
-            />
-            <AdminActionBtn
-              action={uploadMetricResult}
-              displayName="Upload Metric Result"
-            />
-            <AdminActionBtn
-              action={uploadClassHydrograph}
-              displayName="Upload Class Hydrograph"
-            />
-
-            <AdminActionBtn
-              action={uploadGaugeHydrograph}
-              displayName="Upload Gauge Hydrograph"
-            />
-          </div>
-        </div>
-        <Divider />
         <div style={{ width: "100px", margin: "0 auto" }}>
           <RaisedButton
             label="Log Out"
