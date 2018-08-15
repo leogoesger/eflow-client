@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: "Aug 14th, 2018",
+            version: "v1.04",
+            title: "Include Flow Precipitation Condition",
+            tasks: ["Include annual recipitation information"],
+          },
+          {
             date: "Aug 12nd, 2018",
             version: "v1.03",
             title: "Admin Page",
