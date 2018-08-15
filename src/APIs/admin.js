@@ -32,6 +32,10 @@ const requests = {
     request
       .post(`${process.env.SERVER_ADDRESS}/api/admin/upload-gauge-hydrograph`)
       .send({ ff_jwt: localStorage.getItem("ff_jwt") }),
+  uploadFlowCondition: () =>
+    request
+      .post(`${process.env.SERVER_ADDRESS}/api/admin/upload_flow_condition`)
+      .send({ ff_jwt: localStorage.getItem("ff_jwt") }),
 };
 
 export default requests;

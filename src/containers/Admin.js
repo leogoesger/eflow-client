@@ -26,6 +26,9 @@ class Admin extends React.Component {
     this.uploadGaugeHydrographHandler = this.uploadGaugeHydrographHandler.bind(
       this
     );
+    this.uploadFlowConditionHandler = this.uploadFlowConditionHandler.bind(
+      this
+    );
     this._handleRequestClose = this._handleRequestClose.bind(this);
     this.responseMessage = this.responseMessage.bind(this);
   }
@@ -83,6 +86,10 @@ class Admin extends React.Component {
     adminActions.uploadGaugeHydrograph().then(this.responseMessage);
   }
 
+  uploadFlowConditionHandler() {
+    adminActions.uploadFlowCondition().then(this.responseMessage);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -96,6 +103,7 @@ class Admin extends React.Component {
             uploadMetricResult={this.uploadMetricResultHandler}
             uploadClassHydrograph={this.uploadClassHydrographHandler}
             uploadGaugeHydrograph={this.uploadGaugeHydrographHandler}
+            uploadFlowConditionHandler={this.uploadFlowConditionHandler}
             removeUser={this.props.removeUser}
           />
         </Paper>

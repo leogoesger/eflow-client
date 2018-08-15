@@ -1,5 +1,5 @@
-import request from 'superagent';
-import {SummerTypes as types} from '../action-types';
+import request from "superagent";
+import { SummerTypes as types } from "../action-types";
 
 const fetchSummerTimingObject = timing => {
   return {
@@ -47,11 +47,11 @@ export function fetchSummerBoxPlotData(data) {
       .send(data.fetchData);
 
     switch (data.type) {
-      case 'summerTiming':
+      case "summerTiming":
         return dispatch(fetchSummerTimingObject(summerData.body));
-      case 'summerMagnitude10':
+      case "summerMagnitude10":
         return dispatch(fetchSummerMagnitude10Object(summerData.body));
-      case 'summerMagnitude50':
+      case "summerMagnitude50":
         return dispatch(fetchSummerMagnitude50Object(summerData.body));
 
       default:
@@ -63,11 +63,11 @@ export function fetchSummerBoxPlotData(data) {
 export function removeSummerBoxPlotData(data) {
   return dispatch => {
     switch (data.type) {
-      case 'summerTiming':
+      case "summerTiming":
         return dispatch(removeSummerTimingObject());
-      case 'summerMagnitude10':
+      case "summerMagnitude10":
         return dispatch(removeSummerMagnitude10Object());
-      case 'summerMagnitude50':
+      case "summerMagnitude50":
         return dispatch(removeSummerMagnitude50Object());
 
       default:

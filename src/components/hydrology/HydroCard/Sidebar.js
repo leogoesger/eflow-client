@@ -1,17 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Drawer from "material-ui/Drawer";
-import RaisedButton from "material-ui/RaisedButton";
+import {
+  RaisedButton,
+  SelectField,
+  Drawer,
+  Toggle,
+  MenuItem,
+} from "material-ui";
+import { Card, CardHeader, CardText } from "material-ui/Card";
 import Clear from "material-ui/svg-icons/content/clear";
 
-import { Card, CardHeader, CardText } from "material-ui/Card";
-import Toggle from "material-ui/Toggle";
 import { uniqBy } from "lodash";
 
 import { metricReference } from "../../../constants/metrics";
 import { Colors } from "../../../styles";
 
+const conditionTypes = ["ALL", "DRY", "NORMAL", "WET"];
+
 class Sidebar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event, index, value) {
+    this.props.resetStates();
+    this.setState({ value });
+  }
+
   _getDisplay(name) {
     if (name.length > 30) {
       return name.slice(0, 30);
@@ -70,7 +89,9 @@ class Sidebar extends React.Component {
             }}
             trackSwitchedStyle={{ backgroundColor: metric.colors[1] }}
             style={{ padding: "1px 5px 1px 5px" }}
-            onClick={() => this.props.toggleMetric(metric)}
+            onClick={() =>
+              this.props.toggleMetric(metric, conditionTypes[this.state.value])
+            }
             toggled={this.props.toggledMetrics[metric.name]}
           />
         );
@@ -98,6 +119,17 @@ class Sidebar extends React.Component {
         >
           <div>{this._renderTables()}</div>
           <div>
+            <SelectField
+              floatingLabelText="Condition"
+              value={this.state.value}
+              onChange={this.handleChange}
+              style={{ width: "86%", margin: "10px 10px" }}
+            >
+              <MenuItem value={0} primaryText="All" />
+              <MenuItem value={1} primaryText="Dry" />
+              <MenuItem value={2} primaryText="Normal" />
+              <MenuItem value={3} primaryText="Wet" />
+            </SelectField>
             <Toggle
               label={"Min/Max"}
               labelStyle={styles.labelStyle}
@@ -132,6 +164,7 @@ Sidebar.propTypes = {
   toggleDrawer: PropTypes.func.isRequired,
   toggleMinMax: PropTypes.func.isRequired,
   minMax: PropTypes.bool.isRequired,
+  resetStates: PropTypes.func.isRequired,
 };
 
 const styles = {

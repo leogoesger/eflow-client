@@ -52,6 +52,7 @@ class Layout extends React.Component {
       uploadMetricResult,
       uploadClassHydrograph,
       uploadGaugeHydrograph,
+      uploadFlowConditionHandler,
     } = this.props;
     return (
       <div>
@@ -73,6 +74,10 @@ class Layout extends React.Component {
             />
             <AdminActionBtn
               action={uploadFlowData}
+              displayName="Upload Flow Data"
+            />
+            <AdminActionBtn
+              action={uploadFlowConditionHandler}
               displayName="Upload Flow Data"
             />
           </div>
@@ -171,6 +176,7 @@ Layout.propTypes = {
   uploadClassHydrograph: PropTypes.func,
   uploadGaugeHydrograph: PropTypes.func,
   removeUser: PropTypes.func,
+  uploadFlowConditionHandler: PropTypes.func,
 };
 
 export default Layout;

@@ -98,6 +98,49 @@ export class Hydrology extends React.Component {
     this.removeClassGaugeProps();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.currentClassification &&
+      nextProps.currentClassification &&
+      this.props.currentClassification.id !== nextProps.currentClassification.id
+    ) {
+      this.props.removeSummerBoxPlotData({ type: "summerMagnitude10" });
+      this.props.removeSummerBoxPlotData({ type: "summerMagnitude50" });
+      this.props.removeSummerBoxPlotData({ type: "summerTiming" });
+      this.props.removeFallBoxPlotData({ type: "fallTiming" });
+      this.props.removeFallBoxPlotData({ type: "fallMagnitude" });
+      this.props.removeFallBoxPlotData({ type: "fallTimingWet" });
+      this.props.removeFallWinterBoxPlotData();
+      this.props.removeSpringBoxPlotData({ type: "springTiming" });
+      this.props.removeSpringBoxPlotData({ type: "springMagnitude" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude2" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude5" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude10" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude20" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude50" });
+    }
+    if (
+      this.props.currentGauge &&
+      nextProps.currentGauge &&
+      this.props.currentGauge.id !== nextProps.currentGauge.id
+    ) {
+      this.props.removeSummerBoxPlotData({ type: "summerMagnitude10" });
+      this.props.removeSummerBoxPlotData({ type: "summerMagnitude50" });
+      this.props.removeSummerBoxPlotData({ type: "summerTiming" });
+      this.props.removeFallBoxPlotData({ type: "fallTiming" });
+      this.props.removeFallBoxPlotData({ type: "fallMagnitude" });
+      this.props.removeFallBoxPlotData({ type: "fallTimingWet" });
+      this.props.removeFallWinterBoxPlotData();
+      this.props.removeSpringBoxPlotData({ type: "springTiming" });
+      this.props.removeSpringBoxPlotData({ type: "springMagnitude" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude2" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude5" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude10" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude20" });
+      this.props.removeWinterBoxPlotData({ type: "winterMagnitude50" });
+    }
+  }
+
   removeClassGaugeProps() {
     this.props.removeCurrentGauge();
     this.props.removeCurrentClass();
