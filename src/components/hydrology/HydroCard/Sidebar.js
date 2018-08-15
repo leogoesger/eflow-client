@@ -123,9 +123,12 @@ class Sidebar extends React.Component {
               floatingLabelText="Condition"
               value={this.state.value}
               onChange={this.handleChange}
-              style={{ width: "86%", margin: "10px 10px" }}
-              underlineStyle={{ margin: "2px", top: "1px" }}
-              underlineFocusStyle={{ margin: "2px", top: "1px" }}
+              style={{
+                width: "86%",
+                margin: "10px 10px",
+                color: Colors.grey,
+                fontSize: "12px",
+              }}
             >
               <MenuItem value={0} primaryText="All" />
               <MenuItem value={1} primaryText="Dry" />
