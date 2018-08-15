@@ -124,6 +124,8 @@ class Sidebar extends React.Component {
               value={this.state.value}
               onChange={this.handleChange}
               style={{ width: "86%", margin: "10px 10px" }}
+              underlineStyle={{ margin: "2px", top: "1px" }}
+              underlineFocusStyle={{ margin: "2px", top: "1px" }}
             >
               <MenuItem value={0} primaryText="All" />
               <MenuItem value={1} primaryText="Dry" />
@@ -136,7 +138,7 @@ class Sidebar extends React.Component {
               value={"empty"}
               onClick={this.props.toggleMinMax}
               toggled={this.props.minMax}
-              style={{ width: "90%", margin: "0 auto" }}
+              style={{ width: "90%", margin: "4px auto" }}
             />
 
             <RaisedButton
