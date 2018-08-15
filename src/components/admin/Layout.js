@@ -78,7 +78,7 @@ class Layout extends React.Component {
             />
             <AdminActionBtn
               action={uploadFlowConditionHandler}
-              displayName="Upload Flow Data"
+              displayName="Upload Flow Condition"
             />
           </div>
         </div>
