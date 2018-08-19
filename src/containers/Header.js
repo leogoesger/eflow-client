@@ -20,7 +20,7 @@ import {
   getYaxisMax,
 } from "../actions/metricDetail";
 import { fetchCurrentGauge } from "../actions/gauge";
-import { fetchBroadCastMessage } from "../actions/user";
+import { fetchBroadCastMessage, getMe, removeUser } from "../actions/user";
 
 class Header extends React.Component {
   constructor(props) {
@@ -40,6 +40,11 @@ class Header extends React.Component {
       this.props.fetchBroadCastMessage(msg);
       this.setState({ dialogOpen: true });
     });
+    if (localStorage.getItem("ff_jwt") && !this.props.currentUser) {
+      this.props.getMe();
+    } else if (this.props.currentUser && !localStorage.getItem("ff_jwt")) {
+      this.props.removeUser();
+    }
   }
 
   handleClose() {
@@ -97,6 +102,8 @@ class Header extends React.Component {
           releaseNoteVersion={this.getVersion()}
           annualFlowData={this.props.annualFlowData}
           fetchCurrentGauge={d => this.props.fetchCurrentGauge(d)}
+          currentUser={this.props.currentUser}
+          removeUser={this.props.removeUser}
         />
         <Dialog
           modal={false}
@@ -128,6 +135,7 @@ const mapStateToProps = state => {
     message: state.user.message,
     isHydrographOverlay: state.metricDetail.isHydrographOverlay,
     fixedYaxis: state.metricDetail.fixedYaxis,
+    currentUser: state.user.currentUser,
   };
 };
 
@@ -144,6 +152,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(handleHydrographOverlay(status)),
     handleFixedYaxis: d => dispatch(handleFixedYaxis(d)),
     getYaxisMax: (id, percentile) => dispatch(getYaxisMax(id, percentile)),
+    getMe: () => dispatch(getMe()),
+    removeUser: () => dispatch(removeUser()),
   };
 };
 
@@ -165,6 +175,9 @@ Header.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   handleFixedYaxis: PropTypes.func,
   getYaxisMax: PropTypes.func,
+  currentUser: PropTypes.object,
+  getMe: PropTypes.func,
+  removeUser: PropTypes.func,
 };
 
 export default connect(

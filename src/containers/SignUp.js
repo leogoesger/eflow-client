@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Paper, Snackbar } from "material-ui";
-import Layout from "../components/login/Layout";
-import { loginUser } from "../actions/user";
+import Paper from "material-ui/Paper";
+import Layout from "../components/signUp/Layout";
+import Snackbar from "material-ui/Snackbar";
+import { signUpUser } from "../actions/user";
 
-class Login extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +15,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "Eflows | Login";
+    document.title = "Eflows | Sign Up";
   }
 
   _handleRequestClose() {
@@ -26,12 +27,12 @@ class Login extends React.Component {
       <React.Fragment>
         <div style={styles.banner} />
         <Paper style={styles.paperStyle}>
-          <Layout loginUser={d => this.props.loginUser(d)} />
+          <Layout signUpUser={d => this.props.signUpUser(d)} />
         </Paper>
 
         <Snackbar
           open={this.state.snackOpen}
-          message={this.props.loginUserMessage}
+          message={this.props.signUpUserMessage}
           autoHideDuration={4000}
           onRequestClose={() => this._handleRequestClose()}
         />
@@ -40,22 +41,22 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+SignUp.propTypes = {
   currentUser: PropTypes.object,
-  loginUser: PropTypes.func,
-  loginUserMessage: PropTypes.string,
+  signUpUser: PropTypes.func,
+  signUpUserMessage: PropTypes.string,
 };
 
 const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
-    loginUserMessage: state.user.loginUserMessage,
+    signUpUserMessage: state.user.signUpUserMessage,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginUser: d => dispatch(loginUser(d)),
+    signUpUser: d => dispatch(signUpUser(d)),
   };
 };
 
@@ -76,4 +77,4 @@ const styles = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(SignUp);
