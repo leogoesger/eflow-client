@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { getMe } from "../actions/user";
 import { navigateTo } from "../utils/helpers";
 
 const UserHoc = Component => {
@@ -12,7 +13,12 @@ const UserHoc = Component => {
       }
     }
     render() {
-      return <Component currentUser={this.props.currentUser} />;
+      return (
+        <Component
+          currentUser={this.props.currentUser}
+          getMe={this.props.getMe}
+        />
+      );
     }
   }
 
@@ -22,13 +28,20 @@ const UserHoc = Component => {
     };
   };
 
+  const mapDispatchToProps = dispatch => {
+    return {
+      getMe: () => dispatch(getMe()),
+    };
+  };
+
   EnhancedComponent.propTypes = {
     currentUser: PropTypes.object,
+    getMe: PropTypes.func,
   };
 
   return connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )(EnhancedComponent);
 };
 

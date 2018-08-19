@@ -46,7 +46,7 @@ class Uploader extends React.Component {
 
   isEnabled() {
     const { flows, dates, start_date, name } = this.state;
-    return Boolean(flows && dates && start_date && name);
+    return Boolean(flows && dates && start_date && name && this.props.enabled);
   }
 
   async onSubmit() {
@@ -100,6 +100,13 @@ class Uploader extends React.Component {
           getMe={this.props.getMe}
           enabled={this.isEnabled()}
         />
+
+        {!this.props.enabled && (
+          <div style={{ fontSize: "13px", color: "#e65100" }}>
+            Maximum upload reached, please delete existing files before
+            uploading more!
+          </div>
+        )}
       </div>
     );
   }
@@ -114,6 +121,7 @@ const mapDispatchToProps = dispatch => {
 Uploader.propTypes = {
   uploadResorts: PropTypes.func,
   getMe: PropTypes.func,
+  enabled: PropTypes.bool,
 };
 
 export default connect(

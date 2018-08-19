@@ -236,3 +236,7 @@ body *::-webkit-scrollbar {
 hr {
   margin: 0 !important;
 }
+
+a {
+  text-decoration: none !important;
+}

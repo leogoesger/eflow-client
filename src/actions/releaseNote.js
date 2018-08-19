@@ -13,6 +13,18 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: "Aug 18th, 2018",
+            version: "v1.10",
+            title: "User Upload",
+            tasks: [
+              "User Authentication",
+              "Inlucde Python Flask",
+              "Calculate Metrics on the fly",
+              "User Upload",
+              " User Download Metric result",
+            ],
+          },
+          {
             date: "Aug 14th, 2018",
             version: "v1.04",
             title: "Include Flow Precipitation Condition",

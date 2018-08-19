@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { RaisedButton } from "material-ui";
+import { RaisedButton, FlatButton } from "material-ui";
 import { Colors } from "../../styles";
 
 const Uploader = ({ onUpload, onSubmit, enabled }) => {
@@ -11,6 +11,13 @@ const Uploader = ({ onUpload, onSubmit, enabled }) => {
         type="file"
         style={{ fontSize: "14px" }}
       />
+      <FlatButton
+        href="https://s3-us-west-1.amazonaws.com/funcflow/resources/sample.csv"
+        target="_blank"
+        label="Download Sample File"
+        style={{ marginLeft: "20px" }}
+        labelStyle={{ fontSize: "12px", color: Colors.gold }}
+      />
       <RaisedButton
         label="Upload"
         disabled={!enabled}
@@ -18,7 +25,7 @@ const Uploader = ({ onUpload, onSubmit, enabled }) => {
         labelColor={Colors.white}
         labelStyle={{ fontSize: "12px" }}
         onClick={() => onSubmit()}
-        style={{ width: "100px", margin: "20px auto" }}
+        style={{ width: "100px", margin: "20px 10px" }}
       />
     </div>
   );

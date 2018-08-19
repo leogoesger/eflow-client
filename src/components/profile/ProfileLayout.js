@@ -8,10 +8,11 @@ import { Colors } from "../../styles";
 
 import UploadData from "./UploadData";
 
-const ProfileLayout = ({ currentUser }) => {
+const ProfileLayout = ({ currentUser, getMe }) => {
   if (!currentUser) {
     return null;
   }
+
   const sortedData = cloneDeep(currentUser.uploadData).sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
@@ -29,14 +30,21 @@ const ProfileLayout = ({ currentUser }) => {
             Upload your time series data here. Please follow the provided data
             format.
           </div>
-          <Uploader />
+          <Uploader enabled={currentUser.uploadData.length < 5} />
         </div>
         <div>
           <Divider style={{ margin: "0px" }} />
         </div>
+        {!sortedData.length && (
+          <div style={{ margin: "40px 20px" }}>
+            {
+              "Looks like you havn't uploaded any data yet. Try upload some time series data!"
+            }
+          </div>
+        )}
         <div style={{ marginTop: "20px" }}>
           {sortedData.map(d => (
-            <UploadData key={d.id} data={d} />
+            <UploadData key={d.id} data={d} getMe={getMe} />
           ))}
         </div>
       </Paper>
@@ -62,6 +70,7 @@ const styles = {
 
 ProfileLayout.propTypes = {
   currentUser: PropTypes.object || null,
+  getMe: PropTypes.func,
 };
 
 export default ProfileLayout;
