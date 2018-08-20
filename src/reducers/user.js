@@ -9,6 +9,7 @@ const initialState: STATE = {
   error: null,
   currentUser: null,
   loginUserMessage: "",
+  signUpUserMessage: "",
 };
 
 export default function(state: STATE = initialState, action: ACTION) {

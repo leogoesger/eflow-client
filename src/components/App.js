@@ -23,7 +23,11 @@ import TermCitation from "../containers/TermCitation";
 import BugReport from "../containers/BugReport";
 import Admin from "../containers/Admin";
 import Login from "../containers/Login";
+import SignUp from "../containers/SignUp";
 import UnknownRoute from "./shared/UnknownRoute";
+import Profile from "../components/profile/ProfileLayout";
+
+import UserHOC from "../hoc/UserHOC";
 
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
@@ -81,7 +85,13 @@ class App extends React.Component {
                 component={withTracker(BugReport)}
               />
               <Route exact path="/login" component={withTracker(Login)} />
+              <Route exact path="/signup" component={withTracker(SignUp)} />
               <Route exact path="/admin" component={withTracker(Admin)} />
+              <Route
+                exact
+                path="/profile"
+                component={withTracker(UserHOC(Profile))}
+              />
               <Route exact path="*" component={withTracker(UnknownRoute)} />
             </Switch>
             <Footer />

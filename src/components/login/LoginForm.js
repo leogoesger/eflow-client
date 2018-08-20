@@ -7,6 +7,7 @@ import { Colors } from "../../styles";
 import {
   getEmailErrorMessage,
   getPasswordErrorMessage,
+  navigateTo,
 } from "../../utils/helpers";
 
 export default class LoginForm extends React.Component {
@@ -60,15 +61,29 @@ export default class LoginForm extends React.Component {
           floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
           onChange={(_event, value) => this._handleChange(value, "password")}
         />
-        <RaisedButton
-          label="Submit"
-          backgroundColor={Colors.gold}
-          labelColor={Colors.white}
-          disabled={this._validateForm()}
-          labelStyle={{ fontSize: "12px" }}
-          style={{ marginTop: "20px" }}
-          onClick={() => this.props.submitHandler(this.state)}
-        />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            onClick={() => navigateTo("/signup")}
+            style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: Colors.gold,
+              cursor: "pointer",
+              marginTop: "30px",
+            }}
+          >
+            Sign Up
+          </div>
+          <RaisedButton
+            label="Submit"
+            backgroundColor={Colors.gold}
+            labelColor={Colors.white}
+            disabled={this._validateForm()}
+            labelStyle={{ fontSize: "12px" }}
+            style={{ marginTop: "20px" }}
+            onClick={() => this.props.submitHandler(this.state)}
+          />
+        </div>
       </div>
     );
   }

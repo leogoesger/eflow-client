@@ -238,7 +238,7 @@ export default class Map extends React.Component {
 
   _getSnackBarMessage() {
     if (this.props.hoveredGauge) {
-      return `Gauge ${this.props.hoveredGauge.id} do not have location Info.`;
+      return `Gauge ${this.props.hoveredGauge.id} does not have location Info.`;
     } else {
       return 'nothing';
     }

@@ -56,8 +56,31 @@ export function loginUser(user) {
         .send(user);
       localStorage.setItem("ff_jwt", response.body.ff_jwt);
       dispatch(loginUserObject(response.body));
-      navigateTo("/admin");
+      if (response.body.role === "ADMIN") {
+        return navigateTo("/admin");
+      }
+      navigateTo("/");
     } catch (e) {
+      localStorage.removeItem("ff_jwt");
+      throw e;
+    }
+  };
+}
+
+export function signUpUser(user) {
+  return async dispatch => {
+    try {
+      const response = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/user/signup`)
+        .send(user);
+      localStorage.setItem("ff_jwt", response.body.ff_jwt);
+      dispatch(loginUserObject(response.body));
+      if (response.body.role === "ADMIN") {
+        return navigateTo("/admin");
+      }
+      navigateTo("/");
+    } catch (e) {
+      localStorage.removeItem("ff_jwt");
       throw e;
     }
   };
@@ -65,6 +88,22 @@ export function loginUser(user) {
 
 export function removeUser() {
   return dispatch => {
+    localStorage.removeItem("ff_jwt");
     dispatch(removeUserObject());
+    navigateTo("/");
+  };
+}
+
+export function getMe() {
+  return async dispatch => {
+    try {
+      const response = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/user/getme`)
+        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
+      dispatch(loginUserObject(response.body));
+      navigateTo("/profile");
+    } catch (error) {
+      localStorage.removeItem("ff_jwt");
+    }
   };
 }

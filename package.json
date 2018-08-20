@@ -31,6 +31,7 @@
   "dependencies": {
     "animate.css": "3.6.1",
     "babel-plugin-react-transform": "3.0.0",
+    "csvtojson": "2.0.8",
     "d3": "4.13.0",
     "detect-browser": "2.4.0",
     "immutable": "3.8.2",
@@ -38,6 +39,7 @@
     "object-assign": "4.1.0",
     "react": "16.2.0",
     "react-copy-to-clipboard": "5.0.1",
+    "react-csv": "1.0.14",
     "react-dom": "16.2.0",
     "react-ga": "2.4.1",
     "react-highlighter": "0.4.2",

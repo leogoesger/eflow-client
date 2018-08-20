@@ -3,6 +3,18 @@ import { fromJS } from "immutable";
 import { detect } from "detect-browser";
 import { assign } from "lodash";
 
+export function getNameErrorMessage(name) {
+  if (!name) {
+    return null;
+  }
+  const isValid = /^[a-zA-Z ]+$/.test(name);
+  if (isValid) {
+    return null;
+  } else {
+    return "Currently we only support names from English Alphabet!";
+  }
+}
+
 export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
   let siteLayers = defaultMapStyle.get("layers").toJS();
   const sitesData = {};

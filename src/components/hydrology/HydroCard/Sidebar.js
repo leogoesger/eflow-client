@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
   _renderTables() {
     const tableNames = this._getTableNames(metricReference);
     return tableNames.map(table => {
-      if (table.displayTableName !== "All Year") {
+      if (table.displayTableName !== "Annual") {
         return (
           <Card key={table.displayTableName}>
             <CardHeader
