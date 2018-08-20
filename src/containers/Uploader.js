@@ -8,6 +8,7 @@ import upload from "../APIs/upload";
 import Layout from "../components/uploader/Layout";
 import { getMe } from "../actions/user";
 import Styles from "../styles/Styles";
+import Loader from "../components/shared/loader/Loader";
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Uploader extends React.Component {
       dates: null,
       start_date: new Date("10/01/2000"),
       name: "",
+      loading: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -57,7 +59,9 @@ class Uploader extends React.Component {
       start_date: `${start_date.getMonth() + 1}/${start_date.getDate()}`,
       name,
     });
+
     this.props.getMe();
+    this.setState({ loading: false });
   }
 
   readFile(fileToRead) {
@@ -69,6 +73,7 @@ class Uploader extends React.Component {
   render() {
     return (
       <div>
+        <Loader loading={this.state.loading} />
         <div
           style={{
             display: "flex",
