@@ -15,7 +15,7 @@ class SignUp extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "Eflows | Sign Up";
+    document.title = "eFlows | Sign Up";
   }
 
   _handleRequestClose() {

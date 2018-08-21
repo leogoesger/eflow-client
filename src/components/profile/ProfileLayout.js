@@ -38,7 +38,7 @@ const ProfileLayout = ({ currentUser, getMe }) => {
         {!sortedData.length && (
           <div style={{ margin: "40px 20px" }}>
             {
-              "Looks like you havn't uploaded any data yet. Try upload some time series data!"
+              "Looks like you haven't uploaded any data yet. Try uploading some time series data!"
             }
           </div>
         )}

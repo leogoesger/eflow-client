@@ -8,7 +8,7 @@ import Layout from '../components/paper/Layout';
 
 export class Paper extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Papers';
+    document.title = 'eFlows | Papers';
     this.props.fetchPapers();
   }
 

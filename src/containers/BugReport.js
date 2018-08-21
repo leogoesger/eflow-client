@@ -15,7 +15,7 @@ class BugReport extends React.Component {
   }
 
   componentDidMount() {
-    document.title = 'Eflows | Bugs';
+    document.title = 'eFlows | Bugs';
   }
 
   componentWillReceiveProps(nextProps) {

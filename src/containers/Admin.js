@@ -39,7 +39,7 @@ class Admin extends React.Component {
       localStorage.removeItem("ff_jwt");
       navigateTo("/login");
     }
-    document.title = "Eflows | Admin";
+    document.title = "eFlows | Admin";
   }
 
   responseMessage() {

@@ -92,7 +92,7 @@ const hydrologyTourSteps = [
 
 export class Hydrology extends React.Component {
   componentDidMount() {
-    document.title = "Eflows | Hydrology";
+    document.title = "eFlows | Hydrology";
     this.props.fetchGauges();
     this.props.fetchClassifications();
     this.removeClassGaugeProps();

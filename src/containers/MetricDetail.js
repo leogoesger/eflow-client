@@ -133,7 +133,7 @@ const metricDetailTourSteps = [
 
 export class MetricDetail extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Detail';
+    document.title = 'eFlows | Detail';
     if (!this.props.classifications) {
       this.props.fetchClassifications();
     }

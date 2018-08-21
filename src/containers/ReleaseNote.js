@@ -6,7 +6,7 @@ import Layout from '../components/releaseNote/Layout';
 
 class ReleaseNote extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Releases';
+    document.title = 'eFlows | Releases';
   }
 
   render() {

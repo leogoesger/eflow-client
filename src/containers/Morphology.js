@@ -8,7 +8,7 @@ import { updateCurrentSite } from "../actions/geoSite";
 
 export class Morphology extends React.Component {
   componentDidMount() {
-    document.title = "Eflows | Geomorphology";
+    document.title = "eFlows | Geomorphology";
     this.props.fetchGeoRegions();
   }
 

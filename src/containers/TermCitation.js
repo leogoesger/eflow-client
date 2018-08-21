@@ -6,7 +6,7 @@ import Layout from '../components/term/Layout';
 
 class TermCitation extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Terms';
+    document.title = 'eFlows | Terms';
   }
 
   render() {

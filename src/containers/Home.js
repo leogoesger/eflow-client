@@ -68,7 +68,7 @@ const homeTourSteps = [
 
 export class Home extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Home';
+    document.title = 'eFlows | Home';
   }
 
   render() {

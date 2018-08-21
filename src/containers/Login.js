@@ -14,7 +14,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "Eflows | Login";
+    document.title = "eFlows | Login";
   }
 
   _handleRequestClose() {

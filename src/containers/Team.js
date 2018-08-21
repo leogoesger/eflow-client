@@ -8,7 +8,7 @@ import Layout from '../components/team/Layout';
 
 class Team extends React.Component {
   componentDidMount() {
-    document.title = 'Eflows | Team';
+    document.title = 'eFlows | Team';
     this.props.fetchMembers();
   }
 
