@@ -52,6 +52,7 @@ class Uploader extends React.Component {
   }
 
   async onSubmit() {
+    this.setState({ loading: true });
     const { flows, dates, start_date, name } = this.state;
     await upload.uploadTimeSeries({
       flows,
