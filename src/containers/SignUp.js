@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Paper from "material-ui/Paper";
 import Layout from "../components/signUp/Layout";
 import Snackbar from "material-ui/Snackbar";
-import { signUpUser } from "../actions/user";
+import { signUpUser, removeErrorMessage } from "../actions/user";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -31,10 +31,10 @@ class SignUp extends React.Component {
         </Paper>
 
         <Snackbar
-          open={this.state.snackOpen}
-          message={this.props.signUpUserMessage}
+          open={Boolean(this.props.userErrorMessage)}
+          message={this.props.userErrorMessage}
           autoHideDuration={4000}
-          onRequestClose={() => this._handleRequestClose()}
+          onRequestClose={() => this.props.removeErrorMessage()}
         />
       </React.Fragment>
     );
@@ -44,19 +44,21 @@ class SignUp extends React.Component {
 SignUp.propTypes = {
   currentUser: PropTypes.object,
   signUpUser: PropTypes.func,
-  signUpUserMessage: PropTypes.string,
+  userErrorMessage: PropTypes.string,
+  removeErrorMessage: PropTypes.func,
 };
 
 const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
-    signUpUserMessage: state.user.signUpUserMessage,
+    userErrorMessage: state.user.userErrorMessage,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     signUpUser: d => dispatch(signUpUser(d)),
+    removeErrorMessage: () => dispatch(removeErrorMessage()),
   };
 };
 

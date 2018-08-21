@@ -17,7 +17,7 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
+      message: "Sorry, we are updating the website for the next 2 mins!",
       classId: 1,
     };
     this.updateGaugeMetricHandler = this.updateGaugeMetricHandler.bind(this);
