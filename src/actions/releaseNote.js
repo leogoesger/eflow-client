@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: "Aug 21th, 2018",
+            version: "v1.11",
+            title: "User Account Validation",
+            tasks: [
+              "User Login Validations",
+              "Snackbar for upload",
+              "Upload validations",
+            ],
+          },
+          {
             date: "Aug 18th, 2018",
             version: "v1.10",
             title: "User Upload",

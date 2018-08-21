@@ -1,19 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import {CardHeader} from 'material-ui/Card';
-import Divider from 'material-ui/Divider';
-import Reply from 'material-ui/svg-icons/content/reply';
-import TimeLine from 'material-ui/svg-icons/action/timeline';
-import ViewDay from 'material-ui/svg-icons/action/view-day';
+import React from "react";
+import PropTypes from "prop-types";
+import Paper from "material-ui/Paper";
+import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
+import { CardHeader } from "material-ui/Card";
+import Divider from "material-ui/Divider";
+import Reply from "material-ui/svg-icons/content/reply";
+import TimeLine from "material-ui/svg-icons/action/timeline";
+import ViewDay from "material-ui/svg-icons/action/view-day";
+import Upload from "material-ui/svg-icons/file/cloud-upload";
 
-import {navigateTo} from '../../../utils/helpers';
-import {classInfo} from '../../../constants/classification';
-import {Colors} from '../../../styles';
-import Summary from './Summary';
-import ClassGaugeList from './ClassGaugeList';
+import { navigateTo } from "../../../utils/helpers";
+import { classInfo } from "../../../constants/classification";
+import { Colors } from "../../../styles";
+import Summary from "./Summary";
+import ClassGaugeList from "./ClassGaugeList";
 
 class HydroInfo extends React.Component {
   _renderInfo() {
@@ -85,28 +86,44 @@ class HydroInfo extends React.Component {
       return (
         <div style={styles.btnContainer}>
           <FlatButton
-            label="Gauge List"
-            style={{marginRight: '20px'}}
-            labelStyle={{fontSize: '12px', color: Colors.gold}}
-            icon={<Reply color={Colors.gold} />}
-            onClick={() => removeClassGaugeProps()}
+            label="Upload Data"
+            style={{ marginRight: "20px" }}
+            labelStyle={{ fontSize: "12px", color: Colors.gold }}
+            icon={<Upload color={Colors.gold} />}
+            onClick={() => navigateTo("/profile")}
           />
-          <RaisedButton
-            className="tour-hydro-metricDetail"
-            label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
-            backgroundColor={Colors.gold}
-            labelColor={Colors.white}
-            disabled={false}
-            icon={currentGauge ? <TimeLine /> : <ViewDay />}
-            labelStyle={{fontSize: '12px'}}
-            onClick={() => navigateTo('/metricDetail')}
-          />
+          <div>
+            <FlatButton
+              label="Gauge List"
+              style={{ marginRight: "20px" }}
+              labelStyle={{ fontSize: "12px", color: Colors.gold }}
+              icon={<Reply color={Colors.gold} />}
+              onClick={() => removeClassGaugeProps()}
+            />
+            <RaisedButton
+              className="tour-hydro-metricDetail"
+              label={currentGauge ? "Annual Flow Plot" : "Class Box plot"}
+              backgroundColor={Colors.gold}
+              labelColor={Colors.white}
+              disabled={false}
+              icon={currentGauge ? <TimeLine /> : <ViewDay />}
+              labelStyle={{ fontSize: "12px" }}
+              onClick={() => navigateTo("/metricDetail")}
+            />
+          </div>
         </div>
       );
     }
 
     return (
       <div style={styles.btnContainer}>
+        <FlatButton
+          label="Upload Data"
+          style={{ marginRight: "20px" }}
+          labelStyle={{ fontSize: "12px", color: Colors.gold }}
+          icon={<Upload color={Colors.gold} />}
+          onClick={() => navigateTo("/profile")}
+        />
         <RaisedButton
           className="tour-hydro-metricDetail"
           label="Class Box Plot"
@@ -114,8 +131,8 @@ class HydroInfo extends React.Component {
           labelColor={Colors.white}
           disabled={false}
           icon={<ViewDay />}
-          labelStyle={{fontSize: '12px'}}
-          onClick={() => navigateTo('/metricDetail')}
+          labelStyle={{ fontSize: "12px" }}
+          onClick={() => navigateTo("/metricDetail")}
         />
       </div>
     );
@@ -133,16 +150,16 @@ class HydroInfo extends React.Component {
 
 const styles = {
   graph: {
-    height: '750px',
-    width: '650px',
-    marginBottom: '20px',
-    borderRadius: '0px',
+    height: "750px",
+    width: "650px",
+    marginBottom: "20px",
+    borderRadius: "0px",
   },
   btnContainer: {
-    width: '95%',
-    marginTop: '25px',
-    display: 'flex',
-    justifyContent: 'flex-end',
+    display: "flex",
+    justifyContent: "space-between",
+    width: "96%",
+    margin: "30px auto",
   },
 };
 

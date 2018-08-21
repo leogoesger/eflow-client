@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import csv from "csvtojson";
-import { TextField, DatePicker } from "material-ui";
+import { TextField, DatePicker, Snackbar } from "material-ui";
 
 import upload from "../APIs/upload";
 import Layout from "../components/uploader/Layout";
@@ -14,13 +14,15 @@ class Uploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messsage: "",
+      message: "",
       flows: null,
       dates: null,
       start_date: new Date("10/01/2000"),
       name: "",
       loading: false,
+      isError: false,
     };
+    this.reader = new FileReader();
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
   }
@@ -30,13 +32,21 @@ class Uploader extends React.Component {
       .fromString(csvStr)
       .on("err", err => this.setState({ message: err.toString() }))
       .then(data => {
+        const dataTypes = Object.keys(data[0]);
+        if (!("flow" in data[0]) || !("date" in data[0])) {
+          return this.setState({
+            isError: true,
+            message: `Invalid Data Types: ${dataTypes[0]} or ${dataTypes[1]}`,
+          });
+        }
+
         const flows = [];
         const dates = [];
         data.forEach(d => {
           flows.push(Number(d.flow));
           dates.push(d.date);
         });
-        this.setState({ flows, dates });
+        this.setState({ flows, dates, isError: false });
       });
   }
 
@@ -54,6 +64,13 @@ class Uploader extends React.Component {
   async onSubmit() {
     this.setState({ loading: true });
     const { flows, dates, start_date, name } = this.state;
+    if (flows.length !== dates.length) {
+      return this.setState({
+        flows: [],
+        dates: [],
+        message: "Length of flow and date's arrays are not equal",
+      });
+    }
     await upload.uploadTimeSeries({
       flows,
       dates,
@@ -66,9 +83,8 @@ class Uploader extends React.Component {
   }
 
   readFile(fileToRead) {
-    const reader = new FileReader();
-    reader.readAsText(fileToRead[0]);
-    reader.onload = e => this.stringProcessor(e.target.result);
+    this.reader.readAsText(fileToRead[0]);
+    this.reader.onload = e => this.stringProcessor(e.target.result);
   }
 
   render() {
@@ -105,6 +121,7 @@ class Uploader extends React.Component {
           onSubmit={this.onSubmit}
           getMe={this.props.getMe}
           enabled={this.isEnabled()}
+          isError={this.state.isError}
         />
 
         {!this.props.enabled && (
@@ -113,6 +130,13 @@ class Uploader extends React.Component {
             uploading more!
           </div>
         )}
+
+        <Snackbar
+          open={Boolean(this.state.message)}
+          message={this.state.message}
+          autoHideDuration={4000}
+          onRequestClose={() => this.setState({ message: "" })}
+        />
       </div>
     );
   }

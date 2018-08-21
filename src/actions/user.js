@@ -23,6 +23,13 @@ const loginUserObject = user => {
   };
 };
 
+const userErrorMessage = msg => {
+  return {
+    type: types.USER_ERROR_MESSAGE,
+    msg,
+  };
+};
+
 const removeUserObject = () => {
   return {
     type: types.REMOVE_USER_OBJECT,
@@ -32,6 +39,12 @@ const removeUserObject = () => {
 export function fetchBroadCastMessage(message) {
   return dispatch => {
     dispatch(fetchBroadCastMessageObject(message));
+  };
+}
+
+export function removeErrorMessage() {
+  return dispatch => {
+    dispatch(userErrorMessage(""));
   };
 }
 
@@ -61,8 +74,8 @@ export function loginUser(user) {
       }
       navigateTo("/");
     } catch (e) {
+      dispatch(userErrorMessage("Log In Failed!"));
       localStorage.removeItem("ff_jwt");
-      throw e;
     }
   };
 }
@@ -81,7 +94,7 @@ export function signUpUser(user) {
       navigateTo("/");
     } catch (e) {
       localStorage.removeItem("ff_jwt");
-      throw e;
+      dispatch(userErrorMessage("Sign Up Failed!"));
     }
   };
 }

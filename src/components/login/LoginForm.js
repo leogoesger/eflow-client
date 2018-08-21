@@ -26,9 +26,12 @@ export default class LoginForm extends React.Component {
   }
 
   _validateForm() {
+    const { email, password } = this.state;
     return Boolean(
-      getEmailErrorMessage(this.state.email) &&
-        getPasswordErrorMessage(this.state.password)
+      email &&
+        password &&
+        !getEmailErrorMessage(this.state.email) &&
+        !getPasswordErrorMessage(this.state.password)
     );
   }
 
@@ -78,7 +81,7 @@ export default class LoginForm extends React.Component {
             label="Submit"
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
-            disabled={this._validateForm()}
+            disabled={!this._validateForm()}
             labelStyle={{ fontSize: "12px" }}
             style={{ marginTop: "20px" }}
             onClick={() => this.props.submitHandler(this.state)}

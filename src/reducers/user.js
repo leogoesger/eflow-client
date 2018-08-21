@@ -6,10 +6,8 @@ type ACTION = {};
 const initialState: STATE = {
   message: null,
   submitEmailMessage: "",
-  error: null,
   currentUser: null,
-  loginUserMessage: "",
-  signUpUserMessage: "",
+  userErrorMessage: "",
 };
 
 export default function(state: STATE = initialState, action: ACTION) {
@@ -25,6 +23,9 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.REMOVE_USER_OBJECT:
       return objectAssign({}, state, { currentUser: null });
+
+    case types.USER_ERROR_MESSAGE:
+      return objectAssign({}, state, { userErrorMessage: action.msg });
 
     default:
       return state;

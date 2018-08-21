@@ -16,7 +16,8 @@ const Layout = ({ signUpUser }) => {
     >
       <div style={styles.header}>Sign Up</div>
       <div style={styles.subHeader}>
-        Welcome, please enter your information below to get started
+        Welcome, please enter your information below to upload your own time
+        series data
       </div>
       <SignUpForm submitHandler={signUpUser} />
     </div>

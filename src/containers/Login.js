@@ -3,22 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Paper, Snackbar } from "material-ui";
 import Layout from "../components/login/Layout";
-import { loginUser } from "../actions/user";
+import { loginUser, removeErrorMessage } from "../actions/user";
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      snackOpen: false,
-    };
-  }
-
   componentDidMount() {
     document.title = "eFlows | Login";
-  }
-
-  _handleRequestClose() {
-    this.setState({ snackOpen: false });
   }
 
   render() {
@@ -30,10 +19,10 @@ class Login extends React.Component {
         </Paper>
 
         <Snackbar
-          open={this.state.snackOpen}
-          message={this.props.loginUserMessage}
+          open={Boolean(this.props.userErrorMessage)}
+          message={this.props.userErrorMessage}
           autoHideDuration={4000}
-          onRequestClose={() => this._handleRequestClose()}
+          onRequestClose={() => this.props.removeErrorMessage()}
         />
       </React.Fragment>
     );
@@ -44,18 +33,22 @@ Login.propTypes = {
   currentUser: PropTypes.object,
   loginUser: PropTypes.func,
   loginUserMessage: PropTypes.string,
+  userErrorMessage: PropTypes.string,
+  removeErrorMessage: PropTypes.func,
 };
 
 const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
     loginUserMessage: state.user.loginUserMessage,
+    userErrorMessage: state.user.userErrorMessage,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loginUser: d => dispatch(loginUser(d)),
+    removeErrorMessage: () => dispatch(removeErrorMessage()),
   };
 };
 
