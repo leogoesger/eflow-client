@@ -45,7 +45,7 @@ class Download extends React.Component {
       ['DS_Tim', ...summer.timings],
       ['DS_Mag_10', ...summer.magnitudes_ten],
       ['DS_Mag_50', ...summer.magnitudes_fifty],
-      ['DS_Dur_Fl', ...summer.durations_flush],
+      ['DS_Dur_WSI', ...summer.durations_flush],
       ['DS_Dur_WS', ...summer.durations_wet],
       ['DS_No_Flow', ...summer.no_flow_counts],
       ['WSI_Tim', ...fall.timings],
@@ -133,6 +133,7 @@ class Download extends React.Component {
           </CSVLink>
         </MenuItem>
         <MenuItem
+          style={{ color: 'rgb(97, 97, 97)' }}
           primaryText="Reference Data"
           onClick={() =>
             window.open(
