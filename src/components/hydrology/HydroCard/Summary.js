@@ -133,7 +133,7 @@ const Summary = props => {
         'Duration, Magnitude, No flow days, and Timing',
         [
           'DS_Dur_Fl',
-          'DS_Dur_Wet',
+          'DS_Dur_WS',
           'DS_Mag_10',
           'DS_Mag_50',
           'DS_No_Flow',

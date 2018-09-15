@@ -46,7 +46,7 @@ class Download extends React.Component {
       ['DS_Mag_10', ...summer.magnitudes_ten],
       ['DS_Mag_50', ...summer.magnitudes_fifty],
       ['DS_Dur_Fl', ...summer.durations_flush],
-      ['DS_Dur_Wet', ...summer.durations_wet],
+      ['DS_Dur_WS', ...summer.durations_wet],
       ['DS_No_Flow', ...summer.no_flow_counts],
       ['WSI_Tim', ...fall.timings],
       ['WSI_Mag', ...fall.magnitudes],

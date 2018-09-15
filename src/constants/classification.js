@@ -128,7 +128,7 @@ export const metricNameMap = {
   DS_Mag_10: 'Dry Season Magnitude 10P (CFS)',
   DS_Mag_50: 'Dry Season Magnitude 50P (CFS)',
   DS_Dur_Fl: 'Dry Season Duration until Wet Season Initiation (Days)',
-  DS_Dur_Wet: 'Dry Season Duration until Wet Season Start (Days)',
+  DS_Dur_WS: 'Dry Season Duration until Wet Season Start (Days)',
   DS_No_Flow: 'Dry Season with no flow days (Days)',
   WSI_Tim: 'Wet Season Initiation Timing',
   WSI_Mag: 'Wet Season Initiation Magnitude (CFS)',
