@@ -1,25 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { TextField, RaisedButton } from "material-ui";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TextField, RaisedButton } from 'material-ui';
 
-import Styles from "../../styles/Styles";
-import { Colors } from "../../styles";
+import Styles from '../../styles/Styles';
+import { Colors } from '../../styles';
 import {
   getEmailErrorMessage,
   getPasswordErrorMessage,
   navigateTo,
   getNameErrorMessage,
-} from "../../utils/helpers";
+} from '../../utils/helpers';
 
 export default class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      passwordR: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      passwordR: '',
     };
   }
 
@@ -28,12 +28,12 @@ export default class SignUpForm extends React.Component {
       const upperName = name.charAt(0).toUpperCase() + name.slice(1);
       this.setState({ [property]: upperName });
     } else {
-      this.setState({ [property]: "" });
+      this.setState({ [property]: '' });
     }
   }
 
   _handleChange(value, property) {
-    if (property === "firstName" || property === "lastName") {
+    if (property === 'firstName' || property === 'lastName') {
       return this._turnUpperCase(value, property);
     }
     this.setState({
@@ -66,36 +66,36 @@ export default class SignUpForm extends React.Component {
     return (
       <div
         style={{
-          width: "100%",
-          overflow: "scroll",
-          height: "400px",
-          margin: "20px auto",
+          width: '100%',
+          overflow: 'scroll',
+          height: '400px',
+          margin: '20px auto',
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <TextField
             className="requiredField"
             value={firstName}
-            style={{ width: "45%" }}
+            style={{ width: '45%' }}
             floatingLabelText="First Name"
             errorText={getNameErrorMessage(firstName)}
-            errorStyle={{ textAlign: "left" }}
+            errorStyle={{ textAlign: 'left' }}
             underlineFocusStyle={Styles.underlineFocusStyle}
             floatingLabelStyle={Styles.floatingLabelStyle}
             floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-            onChange={(_event, value) => this._handleChange(value, "firstName")}
+            onChange={(_event, value) => this._handleChange(value, 'firstName')}
           />
           <TextField
             className="requiredField"
             value={lastName}
-            style={{ width: "45%" }}
+            style={{ width: '45%' }}
             floatingLabelText="Last Name"
             errorText={getNameErrorMessage(lastName)}
-            errorStyle={{ textAlign: "left" }}
+            errorStyle={{ textAlign: 'left' }}
             underlineFocusStyle={Styles.underlineFocusStyle}
             floatingLabelStyle={Styles.floatingLabelStyle}
             floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-            onChange={(_event, value) => this._handleChange(value, "lastName")}
+            onChange={(_event, value) => this._handleChange(value, 'lastName')}
           />
         </div>
 
@@ -106,11 +106,11 @@ export default class SignUpForm extends React.Component {
           fullWidth={true}
           floatingLabelText="Email"
           errorText={getEmailErrorMessage(email)}
-          errorStyle={{ textAlign: "left" }}
+          errorStyle={{ textAlign: 'left' }}
           underlineFocusStyle={Styles.underlineFocusStyle}
           floatingLabelStyle={Styles.floatingLabelStyle}
           floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-          onChange={(_event, value) => this._handleChange(value, "email")}
+          onChange={(_event, value) => this._handleChange(value, 'email')}
         />
         <br />
         <TextField
@@ -120,11 +120,11 @@ export default class SignUpForm extends React.Component {
           fullWidth={true}
           floatingLabelText="Password"
           errorText={getPasswordErrorMessage(password)}
-          errorStyle={{ textAlign: "left" }}
+          errorStyle={{ textAlign: 'left' }}
           underlineFocusStyle={Styles.underlineFocusStyle}
           floatingLabelStyle={Styles.floatingLabelStyle}
           floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-          onChange={(_event, value) => this._handleChange(value, "password")}
+          onChange={(_event, value) => this._handleChange(value, 'password')}
         />
         <br />
         <TextField
@@ -134,22 +134,31 @@ export default class SignUpForm extends React.Component {
           fullWidth={true}
           floatingLabelText="Repeat Your Password"
           errorText={getPasswordErrorMessage(passwordR)}
-          errorStyle={{ textAlign: "left" }}
+          errorStyle={{ textAlign: 'left' }}
           underlineFocusStyle={Styles.underlineFocusStyle}
           floatingLabelStyle={Styles.floatingLabelStyle}
           floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-          onChange={(_event, value) => this._handleChange(value, "passwordR")}
+          onChange={(_event, value) => this._handleChange(value, 'passwordR')}
         />
+        <div
+          style={{
+            color: '#f44336',
+            fontSize: '12px',
+            display: password === passwordR ? 'none' : '',
+          }}
+        >
+          Passwords do not match
+        </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div
-            onClick={() => navigateTo("/login")}
+            onClick={() => navigateTo('/login')}
             style={{
-              fontSize: "18px",
-              fontWeight: "bold",
+              fontSize: '18px',
+              fontWeight: 'bold',
               color: Colors.gold,
-              cursor: "pointer",
-              marginTop: "30px",
+              cursor: 'pointer',
+              marginTop: '30px',
             }}
           >
             Log In
@@ -159,9 +168,9 @@ export default class SignUpForm extends React.Component {
             backgroundColor={Colors.gold}
             labelColor={Colors.white}
             disabled={!this._validateForm()}
-            labelStyle={{ fontSize: "12px" }}
+            labelStyle={{ fontSize: '12px' }}
             style={{
-              marginTop: "20px",
+              marginTop: '20px',
             }}
             onClick={() =>
               this.props.submitHandler({ firstName, lastName, email, password })
