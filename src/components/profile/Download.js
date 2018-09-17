@@ -134,7 +134,7 @@ class Download extends React.Component {
         </MenuItem>
         <MenuItem
           style={{ color: 'rgb(97, 97, 97)' }}
-          primaryText="Reference Data"
+          primaryText="Metrics Read Me"
           onClick={() =>
             window.open(
               'https://s3-us-west-1.amazonaws.com/funcflow/resources/Reference_Data.csv'

@@ -278,7 +278,7 @@ class MetricGaugeCard extends React.Component {
                 }}
               />
               <MenuItem
-                primaryText="Reference Data"
+                primaryText="Metrics Read Me"
                 onClick={() =>
                   window.open(
                     'https://s3-us-west-1.amazonaws.com/funcflow/resources/Reference_Data.csv'
