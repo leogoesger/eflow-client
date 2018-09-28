@@ -21,6 +21,7 @@ const renderRow = summaryData => {
     return null;
   }
   return Object.keys(summaryData).map(key => {
+    if(summaryData[key] !== null){
     if (summaryData[key].length === 3 && key !== 'abbreviation') {
       return (
         <TableRow
@@ -58,7 +59,7 @@ const renderRow = summaryData => {
           </TableRowColumn>
         </TableRow>
       );
-    }
+    }}
   });
 };
 
@@ -151,6 +152,11 @@ const Summary = props => {
         'Peak Magnitude High Flows',
         'Duration, Frequency and Timing for 5 exceedance rates',
         [
+          'Peak_Mag_2',
+          'Peak_Mag_5',
+          'Peak_Mag_10',
+          'Peak_Mag_20',
+          'Peak_Mag_50',
           'Peak_Dur_2',
           'Peak_Dur_5',
           'Peak_Dur_10',
