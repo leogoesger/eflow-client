@@ -116,11 +116,7 @@ class MetricGaugeCard extends React.Component {
             style={{ color: Colors.blue, fontSize: '14px', fontWeight: '700' }}
             className="tour-metricDetail-impairedStatus"
           >
-            <Tooltip
-              title={'Water Year Type'}
-              position="top"
-              arrow={true}
-            >
+            <Tooltip title={'Water Year Type'} position="top" arrow={true}>
               {condition}
             </Tooltip>
             {' | '}
@@ -133,11 +129,7 @@ class MetricGaugeCard extends React.Component {
             style={{ color: Colors.blue, fontSize: '14px', fontWeight: '700' }}
             className="tour-metricDetail-impairedStatus"
           >
-            <Tooltip
-              title={'Water Year Type'}
-              position="top"
-              arrow={true}
-            >
+            <Tooltip title={'Water Year Type'} position="top" arrow={true}>
               {condition}
             </Tooltip>
             {' | '}
@@ -319,9 +311,11 @@ class MetricGaugeCard extends React.Component {
           className="tour-metricDetail-slider"
           min={this.props.annualFlowData.Years.year[0]}
           max={
-            this.props.annualFlowData.Years.allYears[
-              this.props.annualFlowData.Years.allYears.length - 1
-            ]
+            this.props.annualFlowData.Years.allYears
+              ? this.props.annualFlowData.Years.allYears[
+                  this.props.annualFlowData.Years.allYears.length - 1
+                ]
+              : this.props.annualFlowData.Years.year[0] + 5
           }
           sliderStyle={{ marginBottom: '10px' }}
           step={1}
