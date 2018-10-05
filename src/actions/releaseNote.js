@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Oct 5th, 2018',
+            version: 'v1.13',
+            title: 'Water Year Type',
+            tasks: ['Display water year type', 'Refetch data'],
+          },
+          {
             date: 'Sep 14th, 2018',
             version: 'v1.12',
             title: 'Naming Convention Change',

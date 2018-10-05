@@ -117,7 +117,7 @@ class MetricGaugeCard extends React.Component {
             className="tour-metricDetail-impairedStatus"
           >
             <Tooltip
-              title={'Precipation Condition'}
+              title={'Water Year Type'}
               position="top"
               arrow={true}
             >
@@ -134,7 +134,7 @@ class MetricGaugeCard extends React.Component {
             className="tour-metricDetail-impairedStatus"
           >
             <Tooltip
-              title={'Precipation Condition'}
+              title={'Water Year Type'}
               position="top"
               arrow={true}
             >

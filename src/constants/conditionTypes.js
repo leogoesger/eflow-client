@@ -1,8 +1,7 @@
 export const conditionTypes = [
-  "All",
-  "Dry",
-  "Normal",
-  "Wet",
-  "Moderate Dry",
-  "Moderate Wet",
+  'All',
+  'Dry',
+  'Wet',
+  'Moderate Dry',
+  'Moderate Wet',
 ];

@@ -1,20 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   RaisedButton,
   SelectField,
   Drawer,
   Toggle,
   MenuItem,
-} from "material-ui";
-import { Card, CardHeader, CardText } from "material-ui/Card";
-import Clear from "material-ui/svg-icons/content/clear";
+} from 'material-ui';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Clear from 'material-ui/svg-icons/content/clear';
 
-import { uniqBy } from "lodash";
+import { uniqBy } from 'lodash';
 
-import { metricReference } from "../../../constants/metrics";
-import { conditionTypes } from "../../../constants/conditionTypes";
-import { Colors } from "../../../styles";
+import { metricReference } from '../../../constants/metrics';
+import { conditionTypes } from '../../../constants/conditionTypes';
+import { Colors } from '../../../styles';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -44,15 +44,15 @@ class Sidebar extends React.Component {
   _renderTables() {
     const tableNames = this._getTableNames(metricReference);
     return tableNames.map(table => {
-      if (table.displayTableName !== "Annual") {
+      if (table.displayTableName !== 'Annual') {
         return (
           <Card key={table.displayTableName}>
             <CardHeader
               title={table.displayTableName}
-              titleStyle={{ width: "200px" }}
+              titleStyle={{ width: '200px' }}
               actAsExpander={true}
               showExpandableButton={true}
-              subtitleStyle={{ paddingTop: "3px" }}
+              subtitleStyle={{ paddingTop: '3px' }}
             />
 
             <CardText expandable={true}>
@@ -68,26 +68,26 @@ class Sidebar extends React.Component {
     const metrics = metricReference.filter(
       metric =>
         metric.displayTableName == tableName &&
-        metric.dimUnit !== "none" &&
-        metric.dimUnit !== "%"
+        metric.dimUnit !== 'none' &&
+        metric.dimUnit !== '%'
     );
     return metrics.map(metric => {
       if (
-        (!metric.hidden && metric.dimUnit === "cfs") ||
-        (metric.dimUnit === "Date" && !metric.hidden)
+        (!metric.hidden && metric.dimUnit === 'cfs') ||
+        (metric.dimUnit === 'Date' && !metric.hidden)
       ) {
         return (
           <Toggle
             key={metric.name}
             label={this._getDisplay(metric.display)}
             labelStyle={styles.labelStyle}
-            value={"empty"}
+            value={'empty'}
             thumbSwitchedStyle={{
-              size: "1",
+              size: '1',
               backgroundColor: metric.colors[0],
             }}
             trackSwitchedStyle={{ backgroundColor: metric.colors[1] }}
-            style={{ padding: "1px 5px 1px 5px" }}
+            style={{ padding: '1px 5px 1px 5px' }}
             onClick={() =>
               this.props.toggleMetric(
                 metric,
@@ -109,27 +109,27 @@ class Sidebar extends React.Component {
         openSecondary={true}
         open={open}
         docked={true}
-        containerStyle={{ marginTop: "15px", paddingTop: "45px" }}
+        containerStyle={{ marginTop: '15px', paddingTop: '45px' }}
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            height: "96%",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: '96%',
           }}
         >
           <div>{this._renderTables()}</div>
           <div>
             <SelectField
-              floatingLabelText="Condition"
+              floatingLabelText="Water Year Type"
               value={this.state.value}
               onChange={this.handleChange}
               style={{
-                width: "86%",
-                margin: "10px 10px",
+                width: '86%',
+                margin: '10px 10px',
                 color: Colors.grey,
-                fontSize: "12px",
+                fontSize: '12px',
               }}
             >
               {conditionTypes.map((cond, indx) => {
@@ -137,22 +137,22 @@ class Sidebar extends React.Component {
               })}
             </SelectField>
             <Toggle
-              label={"Min/Max"}
+              label={'Min/Max'}
               labelStyle={styles.labelStyle}
-              value={"empty"}
+              value={'empty'}
               onClick={this.props.toggleMinMax}
               toggled={this.props.minMax}
-              style={{ width: "90%", margin: "4px auto" }}
+              style={{ width: '90%', margin: '4px auto' }}
             />
 
             <RaisedButton
               label="Close"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
-              labelStyle={{ fontSize: "12px" }}
+              labelStyle={{ fontSize: '12px' }}
               icon={<Clear color={Colors.white} />}
               onClick={this.props.toggleDrawer}
-              style={{ margin: "20px auto 5px 50px" }}
+              style={{ margin: '20px auto 5px 50px' }}
             />
           </div>
         </div>
@@ -175,17 +175,17 @@ Sidebar.propTypes = {
 
 const styles = {
   container: {
-    top: "60px",
-    zIndex: "10",
-    height: "94%",
+    top: '60px',
+    zIndex: '10',
+    height: '94%',
   },
   overlay: {
-    top: "60px",
-    zIndex: "10",
+    top: '60px',
+    zIndex: '10',
   },
   labelStyle: {
     color: Colors.grey,
-    fontSize: "12px",
-    width: "150px",
+    fontSize: '12px',
+    width: '150px',
   },
 };
