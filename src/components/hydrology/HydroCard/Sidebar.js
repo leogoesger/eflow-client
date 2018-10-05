@@ -13,9 +13,8 @@ import Clear from "material-ui/svg-icons/content/clear";
 import { uniqBy } from "lodash";
 
 import { metricReference } from "../../../constants/metrics";
+import { conditionTypes } from "../../../constants/conditionTypes";
 import { Colors } from "../../../styles";
-
-const conditionTypes = ["ALL", "DRY", "NORMAL", "WET"];
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class Sidebar extends React.Component {
   }
 
   handleChange(event, index, value) {
-    this.props.resetStates();
+    this.props.resetStates(conditionTypes[index].toUpperCase());
     this.setState({ value });
   }
 
@@ -90,7 +89,10 @@ class Sidebar extends React.Component {
             trackSwitchedStyle={{ backgroundColor: metric.colors[1] }}
             style={{ padding: "1px 5px 1px 5px" }}
             onClick={() =>
-              this.props.toggleMetric(metric, conditionTypes[this.state.value])
+              this.props.toggleMetric(
+                metric,
+                conditionTypes[this.state.value].toUpperCase()
+              )
             }
             toggled={this.props.toggledMetrics[metric.name]}
           />
@@ -130,10 +132,9 @@ class Sidebar extends React.Component {
                 fontSize: "12px",
               }}
             >
-              <MenuItem value={0} primaryText="All" />
-              <MenuItem value={1} primaryText="Dry" />
-              <MenuItem value={2} primaryText="Normal" />
-              <MenuItem value={3} primaryText="Wet" />
+              {conditionTypes.map((cond, indx) => {
+                return <MenuItem key={indx} value={indx} primaryText={cond} />;
+              })}
             </SelectField>
             <Toggle
               label={"Min/Max"}
