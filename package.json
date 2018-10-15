@@ -34,6 +34,7 @@
     "csvtojson": "2.0.8",
     "d3": "4.13.0",
     "detect-browser": "2.4.0",
+    "gitlog": "3.1.2",
     "immutable": "3.8.2",
     "material-ui": "0.20.0",
     "object-assign": "4.1.0",

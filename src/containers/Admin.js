@@ -7,6 +7,7 @@ import Layout from "../components/admin/Layout";
 import adminActions from "../APIs/admin";
 import { navigateTo } from "../utils/helpers";
 import { removeUser } from "../actions/user";
+import { fetchAppInfo } from "../actions/appInfo";
 
 class Admin extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Admin extends React.Component {
       navigateTo("/login");
     }
     document.title = "eFlows | Admin";
+    this.props.fetchAppInfo();
   }
 
   responseMessage() {
@@ -90,6 +92,10 @@ class Admin extends React.Component {
     adminActions.uploadFlowCondition().then(this.responseMessage);
   }
 
+  fetchAppInfo() {
+    adminActions.fetchAppInfo();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -105,6 +111,7 @@ class Admin extends React.Component {
             uploadGaugeHydrograph={this.uploadGaugeHydrographHandler}
             uploadFlowConditionHandler={this.uploadFlowConditionHandler}
             removeUser={this.props.removeUser}
+            appInfo={this.props.appInfo}
           />
         </Paper>
 
@@ -122,18 +129,22 @@ class Admin extends React.Component {
 const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
+    appInfo: state.appInfo.appInfo,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     removeUser: () => dispatch(removeUser()),
+    fetchAppInfo: () => dispatch(fetchAppInfo()),
   };
 };
 
 Admin.propTypes = {
   currentUser: PropTypes.object,
   removeUser: PropTypes.func,
+  appInfo: PropTypes.object,
+  fetchAppInfo: PropTypes.func,
 };
 
 const styles = {

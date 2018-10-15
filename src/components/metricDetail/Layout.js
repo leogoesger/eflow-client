@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {cloneDeep} from 'lodash';
+import React from "react";
+import PropTypes from "prop-types";
+import { cloneDeep } from "lodash";
 
-import MetricNavbar from './MetricNavbar';
-import MetricOverviewCard from './MetricOverviewCard';
-import MetricGaugeCard from './MetricGaugeCard';
+import MetricNavbar from "./MetricNavbar";
+import MetricOverviewCard from "./MetricOverviewCard";
+import MetricGaugeCard from "./MetricGaugeCard";
 
 export default class Layout extends React.Component {
   _getAllClassesBoxPlots() {
@@ -88,11 +88,11 @@ Layout.propTypes = {
 
 const styles = {
   container: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    margin: '-60px auto 100px auto',
-    height: '100%',
-    overflow: 'scroll',
-    width: '1200px',
+    display: "flex",
+    justifyContent: "space-around",
+    margin: "-60px auto 100px auto",
+    height: "100%",
+    overflow: "scroll",
+    width: "1200px",
   },
 };

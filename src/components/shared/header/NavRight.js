@@ -16,6 +16,7 @@ import Eject from "material-ui/svg-icons/action/eject";
 import SignUser from "material-ui/svg-icons/content/add";
 import Face from "material-ui/svg-icons/action/face";
 import Book from "material-ui/svg-icons/av/library-books";
+import Info from "material-ui/svg-icons/action/info";
 import MoreVertIcon from "material-ui/svg-icons/action/account-circle";
 
 import { navigateTo } from "../../../utils/helpers";
@@ -80,17 +81,25 @@ export default class NavRight extends React.Component {
           onClick={() => navigateTo("/profile")}
         />
         {this.props.currentUser.role === "ADMIN" ? (
-          <MenuItem
-            leftIcon={<Book />}
-            value="2"
-            primaryText="Admin"
-            onClick={() => navigateTo("/admin")}
-          />
+          <React.Fragment>
+            <MenuItem
+              leftIcon={<Book />}
+              value="2"
+              primaryText="Admin"
+              onClick={() => navigateTo("/admin")}
+            />
+            <MenuItem
+              leftIcon={<Info />}
+              value="3"
+              primaryText="App Info"
+              onClick={() => navigateTo("/env")}
+            />
+          </React.Fragment>
         ) : null}
         <Divider style={{ margin: "0px" }} />
         <MenuItem
           leftIcon={<Eject />}
-          value="3"
+          value="4"
           primaryText="Logout"
           onClick={() => this.props.removeUser()}
         />
