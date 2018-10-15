@@ -1,6 +1,6 @@
-import request from 'superagent';
-import {MetricDetailTypes as types} from '../action-types';
-import {getAllMetricBoxPlotClourse} from './helpers';
+import request from "superagent";
+import { MetricDetailTypes as types } from "../action-types";
+//import { getAllMetricBoxPlotClourse } from "./helpers";
 
 const fetchAllClassesBoxPlotObjects = boxPlotData => {
   return {
@@ -74,8 +74,12 @@ const getFixedYaxisValueObject = yMax => {
 
 export function fetchAllClassesBoxPlots() {
   return async dispatch => {
-    const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
-    dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots));
+    //const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
+    //api call consolidation into one -Madhav
+    const allMetricBoxPlots = await request.get(
+      `${process.env.SERVER_ADDRESS}/api/getAllClassesBoxPlotAttributes`
+    );
+    dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots.body));
     dispatch(updateLoadingObject(false));
   };
 }
@@ -96,7 +100,7 @@ export function fetchHydrographOverlay(gaugeInfo) {
   return async dispatch => {
     const hydrograph = await request
       .post(`${process.env.SERVER_ADDRESS}/api/dimHydrographs/`)
-      .send({gaugeId: gaugeInfo});
+      .send({ gaugeId: gaugeInfo });
     dispatch(fetchHydrographOverlayObject(hydrograph.body));
   };
 }
@@ -135,7 +139,7 @@ export function getYaxisMax(gaugeId, percentile) {
   return async dispatch => {
     const yMax = await request
       .post(`${process.env.SERVER_ADDRESS}/api/annualFlowPOR`)
-      .send({gaugeId, percentile});
+      .send({ gaugeId, percentile });
     dispatch(getFixedYaxisValueObject(yMax.body.percentilePOR));
   };
 }
