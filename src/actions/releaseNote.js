@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Oct 22nd, 2018',
+            version: 'v1.14',
+            title: 'Upload data fix',
+            tasks: [
+              'Fix issues with upload data',
+              'Remove loading screen when error',
+              'Display error message when upload',
+            ],
+          },
+          {
             date: 'Oct 5th, 2018',
             version: 'v1.13',
             title: 'Water Year Type',

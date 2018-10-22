@@ -83,6 +83,7 @@ class Uploader extends React.Component {
       this.setState({ loading: false });
     } catch (error) {
       this.setState({
+        loading: false,
         isError: true,
         message: `Could not process data`,
       });
