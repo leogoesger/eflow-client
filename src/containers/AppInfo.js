@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Paper } from "material-ui";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Paper } from 'material-ui';
 
-import Layout from "../components/appInfo/Layout";
-import { navigateTo } from "../utils/helpers";
-import { removeUser } from "../actions/user";
-import { fetchAppInfo } from "../actions/appInfo";
+import Layout from '../components/appInfo/Layout';
+import { navigateTo } from '../utils/helpers';
+import { removeUser } from '../actions/user';
+import { fetchAppInfo } from '../actions/appInfo';
 
 class AppInfo extends React.Component {
   constructor(props) {
@@ -15,15 +15,18 @@ class AppInfo extends React.Component {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("ff_jwt")) {
+    if (!localStorage.getItem('ff_jwt')) {
       this.props.removeUser();
-      localStorage.removeItem("ff_jwt");
-      navigateTo("/login");
+      localStorage.removeItem('ff_jwt');
+      navigateTo('/login');
     }
     this.props.fetchAppInfo();
   }
 
   render() {
+    if (!this.props.appInfo) {
+      return null;
+    }
     return (
       <React.Fragment>
         <div style={styles.banner} />
@@ -56,18 +59,18 @@ AppInfo.propTypes = {
 
 const styles = {
   banner: {
-    backgroundColor: "#424242",
-    height: "230px",
-    zIndex: "0",
+    backgroundColor: '#424242',
+    height: '230px',
+    zIndex: '0',
   },
   paperStyle: {
-    height: "600px",
-    margin: "-60px auto 160px auto",
-    width: "1000px",
-    zIndex: "2",
-    overflow: "scroll",
+    height: '600px',
+    margin: '-60px auto 160px auto',
+    width: '1000px',
+    zIndex: '2',
+    overflow: 'scroll',
   },
-  warningIcon: { color: "#616161", height: "60px", width: "60px" },
+  warningIcon: { color: '#616161', height: '60px', width: '60px' },
 };
 
 export default connect(
