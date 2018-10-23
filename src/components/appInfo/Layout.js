@@ -10,7 +10,46 @@ class Layout extends React.Component {
     super(props);
   }
 
+  rednerAppData(appData) {
+    return (
+      <Card>
+        <CardHeader
+          title={`Commit Message: ${appData.message}`}
+          actAsExpander={true}
+          showExpandableButton={true}
+          style={{ padding: "15px" }}
+        />
+        <CardText expandable={true} style={{ paddingTop: "5px" }}>
+          <h1 style={{ padding: "5px 5px 5px 20px" }}>
+            Version: {appData.version}
+          </h1>
+          <h1 style={{ padding: "5px 5px 5px 20px" }}>
+            Commit Author: {appData.author}
+          </h1>
+          <h1 style={{ padding: "5px 5px 5px 20px" }}>
+            Commit Date: {appData.date}
+          </h1>
+
+          <List>
+            <h1 style={{ paddingLeft: "20px" }}>Files changed:</h1>
+            {appData.files.map((file, inx) => {
+              return (
+                <ListItem
+                  key={inx}
+                  primaryText={file}
+                  leftIcon={<Merge />}
+                  style={{ paddingLeft: "10px" }}
+                />
+              );
+            })}
+          </List>
+        </CardText>
+      </Card>
+    );
+  }
+
   render() {
+    const { client, nodeAPI, flaskAPI } = this.props.appInfo;
     return (
       <div>
         <div>
@@ -23,60 +62,42 @@ class Layout extends React.Component {
             actAsExpander={true}
             showExpandableButton={true}
           />
-          {this.props.appInfo.apiEnv && (
+          {nodeAPI && (
             <CardText expandable={true}>
               <div>
                 <h1 style={{ padding: "10px 10px 10px 20px" }}>
-                  Version: {this.props.appInfo.apiEnv.version}
+                  Repo: Node API
                 </h1>
               </div>
-              <Divider />
+              <div>{this.rednerAppData(nodeAPI)}</div>
+            </CardText>
+          )}
+          {flaskAPI && (
+            <CardText expandable={true}>
               <div>
-                {this.props.appInfo.apiEnv.commit.map((commit, indx) => {
-                  return (
-                    <Card key={indx}>
-                      <CardHeader
-                        title={`Commit Message: ${commit.subject}`}
-                        subtitle={`Commit Date: ${commit.authorDateRel}`}
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                      />
-                      <CardText expandable={true}>
-                        <h1 style={{ padding: "10px 10px 10px 20px" }}>
-                          Author: {commit.authorName}
-                        </h1>
-                        <List>
-                          {commit.files.map((file, inx) => {
-                            return (
-                              <ListItem
-                                key={inx}
-                                primaryText={file}
-                                leftIcon={<Merge />}
-                              />
-                            );
-                          })}
-                        </List>
-                      </CardText>
-                    </Card>
-                  );
-                })}
+                <h1 style={{ padding: "10px 10px 10px 20px" }}>
+                  Repo: Flask API
+                </h1>
               </div>
+              <div>{this.rednerAppData(flaskAPI)}</div>
             </CardText>
           )}
         </Card>
+
         <Card style={{ paddingLeft: "30px" }}>
           <CardHeader
             title="Client Side"
             actAsExpander={true}
             showExpandableButton={true}
           />
-          <CardText expandable={true}>
-            <div>
-              <h1 style={{ padding: "10px 10px 10px 20px" }}>
-                Version: {process.env.npm_package_version}
-              </h1>
-            </div>
-          </CardText>
+          {client && (
+            <CardText expandable={true}>
+              <div>
+                <h1 style={{ padding: "10px 10px 10px 20px" }}>Repo: Client</h1>
+              </div>
+              <div>{this.rednerAppData(client)}</div>
+            </CardText>
+          )}
         </Card>
       </div>
     );

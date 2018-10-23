@@ -12,12 +12,11 @@ const fetchAppInfoObject = appInfo => {
 export function fetchAppInfo() {
   return async dispatch => {
     try {
-      const apiEnv = await request
+      const appEnv = await request
         .get(`${process.env.SERVER_ADDRESS}/api/admin/env`)
         .set({ ff_jwt: localStorage.getItem("ff_jwt") });
 
-      const appInfo = {};
-      appInfo.apiEnv = apiEnv.body;
+      const appInfo = appEnv.body;
       dispatch(fetchAppInfoObject(appInfo));
     } catch (e) {
       throw e;
