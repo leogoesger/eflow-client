@@ -13,6 +13,15 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Oct 24nd, 2018',
+            version: 'v1.15',
+            title: 'Geodatabase download',
+            tasks: [
+              'Admin user can see commit message',
+              'Include geodatabase download button',
+            ],
+          },
+          {
             date: 'Oct 22nd, 2018',
             version: 'v1.14',
             title: 'Upload data fix',

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Toggle from 'material-ui/Toggle';
-import Divider from 'material-ui/Divider';
+import { Divider, IconMenu, FlatButton, MenuItem, Toggle } from 'material-ui';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
 
-import {classInfo} from '../../constants/classification.js';
-import {Colors} from '../../styles';
+import { classInfo } from '../../constants/classification.js';
+import { Colors } from '../../styles';
 
 export default class Control extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class Control extends React.Component {
   }
 
   handleToggle(layerId) {
-    this.setState({[layerId]: !this.state[layerId]}, () =>
+    this.setState({ [layerId]: !this.state[layerId] }, () =>
       this.props.hideLayer(layerId, this.state[layerId])
     );
   }
@@ -44,7 +44,7 @@ export default class Control extends React.Component {
             size: '1',
             backgroundColor: currentClass.colors[0],
           }}
-          trackSwitchedStyle={{backgroundColor: currentClass.colors[1]}}
+          trackSwitchedStyle={{ backgroundColor: currentClass.colors[1] }}
           onClick={() => this.handleToggle(`class${index + 1}`)}
           toggled={this.state[`class${index + 1}`]}
         />
@@ -52,13 +52,46 @@ export default class Control extends React.Component {
     });
   }
 
+  _renderDownloadBtns() {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          width: '100%',
+          margin: '4px auto',
+        }}
+      >
+        <IconMenu
+          iconButtonElement={
+            <FlatButton
+              className="tour-metricDetail-download"
+              label="Download"
+              labelStyle={{ fontSize: '12px', color: Colors.gold }}
+              icon={<FileDownload color={Colors.gold} />}
+            />
+          }
+        >
+          <MenuItem
+            primaryText="Geodatabase"
+            onClick={() =>
+              window.open(
+                'https://s3-us-west-1.amazonaws.com/funcflow/resources/eflow_geodatabase.zip'
+              )
+            }
+          />
+        </IconMenu>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div style={styles.BLcontainer}>
         {this._renderClassControllers()}
-        <Divider style={{marginTop: '2px', height: '2px'}} />
+        <Divider style={{ marginTop: '2px', height: '2px' }} />
         <Toggle
-          style={{marginTop: '5px'}}
+          style={{ marginTop: '5px' }}
           label={'Gauge'}
           labelStyle={styles.labelStyle}
           value={'empty'}
@@ -72,6 +105,8 @@ export default class Control extends React.Component {
           onClick={() => this.handleToggle('cities')}
           toggled={this.state.cities}
         />
+        <Divider style={{ marginTop: '2px', height: '2px' }} />
+        {this._renderDownloadBtns()}
       </div>
     );
   }
@@ -86,10 +121,10 @@ const styles = {
   BLcontainer: {
     backgroundColor: '#fff',
     position: 'absolute',
-    bottom: '40px',
+    bottom: '60px',
     left: '20px',
     width: '140px',
-    height: '270px',
+    height: '304px',
     padding: '20px',
     boxShadow: '2px 2px 45px -5px rgba(110,110,110,1)',
     zIndex: '8',
