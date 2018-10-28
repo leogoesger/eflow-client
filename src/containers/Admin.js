@@ -6,7 +6,7 @@ import { Snackbar, Paper } from "material-ui";
 import Layout from "../components/admin/Layout";
 import adminActions from "../APIs/admin";
 import { navigateTo } from "../utils/helpers";
-import { removeUser } from "../actions/user";
+import { removeUser, getFailedUpload } from "../actions/user";
 import { fetchAppInfo } from "../actions/appInfo";
 
 class Admin extends React.Component {
@@ -42,6 +42,7 @@ class Admin extends React.Component {
     }
     document.title = "eFlows | Admin";
     this.props.fetchAppInfo();
+    this.props.getFailedUpload();
   }
 
   responseMessage() {
@@ -137,6 +138,7 @@ const mapDispatchToProps = dispatch => {
   return {
     removeUser: () => dispatch(removeUser()),
     fetchAppInfo: () => dispatch(fetchAppInfo()),
+    getFailedUpload: () => dispatch(getFailedUpload()),
   };
 };
 
@@ -145,6 +147,8 @@ Admin.propTypes = {
   removeUser: PropTypes.func,
   appInfo: PropTypes.object,
   fetchAppInfo: PropTypes.func,
+  getFailedUpload: PropTypes.func,
+  failedUploads: PropTypes.object,
 };
 
 const styles = {

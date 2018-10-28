@@ -42,3 +42,4 @@ dist
 .env.prod
 .env.dev
 .env.default
+runDev.sh

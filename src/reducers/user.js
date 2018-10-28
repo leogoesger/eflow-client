@@ -8,6 +8,7 @@ const initialState: STATE = {
   submitEmailMessage: "",
   currentUser: null,
   userErrorMessage: "",
+  failedUploads: null,
 };
 
 export default function(state: STATE = initialState, action: ACTION) {
@@ -26,6 +27,9 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.USER_ERROR_MESSAGE:
       return objectAssign({}, state, { userErrorMessage: action.msg });
+
+    case types.ADMIN_FAILED_UPLOAD:
+      return objectAssign({}, state, { failedUploads: action.uploads });
 
     default:
       return state;
