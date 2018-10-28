@@ -13,6 +13,15 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Oct 27nd, 2018',
+            version: 'v1.16',
+            title: 'See Failed Uploads',
+            tasks: [
+              'Admin user can see failed uploads',
+              'Fix bug snags for flask server',
+            ],
+          },
+          {
             date: 'Oct 24nd, 2018',
             version: 'v1.15',
             title: 'Geodatabase download',
