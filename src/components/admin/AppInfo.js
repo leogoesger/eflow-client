@@ -53,7 +53,7 @@ class AppInfo extends React.Component {
     return (
       <div>
         <div>
-          <h1 style={{ fontWeight: "bold", padding: "40px 20px" }}>App Info</h1>
+          <h1 style={{ padding: "40px 20px" }}>App Info</h1>
         </div>
         <Divider />
         <Card style={{ paddingLeft: "30px" }}>

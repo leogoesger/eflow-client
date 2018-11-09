@@ -6,7 +6,7 @@ import { Snackbar, Paper } from "material-ui";
 import Layout from "../components/admin/Layout";
 import adminActions from "../APIs/admin";
 import { navigateTo } from "../utils/helpers";
-import { removeUser, getFailedUpload } from "../actions/user";
+import { removeUser, getFailedUpload, getMe } from "../actions/user";
 import { fetchAppInfo } from "../actions/appInfo";
 
 class Admin extends React.Component {
@@ -114,6 +114,8 @@ class Admin extends React.Component {
             removeUser={this.props.removeUser}
             appInfo={this.props.appInfo}
             failedUploads={this.props.failedUploads}
+            getMe={this.props.getMe}
+            getFailedUpload={this.props.getFailedUpload}
           />
         </Paper>
 
@@ -141,6 +143,7 @@ const mapDispatchToProps = dispatch => {
     removeUser: () => dispatch(removeUser()),
     fetchAppInfo: () => dispatch(fetchAppInfo()),
     getFailedUpload: () => dispatch(getFailedUpload()),
+    getMe: () => dispatch(getMe()),
   };
 };
 
@@ -151,6 +154,7 @@ Admin.propTypes = {
   fetchAppInfo: PropTypes.func,
   getFailedUpload: PropTypes.func,
   failedUploads: PropTypes.array,
+  getMe: PropTypes.func,
 };
 
 const styles = {

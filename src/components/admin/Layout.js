@@ -14,6 +14,7 @@ import {
 // import AdminActionBtn from "./AdminActionBtn";
 import AWSUploads from "./AWSUploads";
 import AppInfo from "./AppInfo";
+import RenderFailedUpload from "./RenderFailedUpload";
 import { navigateTo } from "../../utils/helpers";
 
 import Eject from "material-ui/svg-icons/action/eject";
@@ -80,6 +81,9 @@ class Layout extends React.Component {
       uploadGaugeHydrograph,
       uploadFlowConditionHandler,
       appInfo,
+      failedUploads,
+      getMe,
+      getFailedUpload,
     } = this.props;
 
     if (clicked.loadAdmin) {
@@ -93,8 +97,34 @@ class Layout extends React.Component {
           uploadFlowConditionHandler={uploadFlowConditionHandler}
         />
       );
+    } else if (clicked.loadAppInfo) {
+      return <AppInfo appInfo={appInfo} />;
+    } else if (clicked.loadFailedUploads) {
+      return (
+        <div>
+          <h1 style={{ padding: "40px 20px" }}>Failed Uploads</h1>
+
+          {failedUploads.map((data, key) => {
+            return (
+              <RenderFailedUpload
+                key={key}
+                data={data}
+                getMe={getMe}
+                getFailedUpload={getFailedUpload}
+              />
+            );
+          })}
+        </div>
+      );
+    } else if (clicked.loadUploads) {
+      return (
+        <div>
+          <h1 style={{ padding: "40px 20px" }}>Uploaded Files</h1>
+          <h1 style={{ padding: "40px 20px" }}>Feature coming soon!</h1>
+        </div>
+      );
     }
-    if (clicked.loadAppInfo) return <AppInfo appInfo={appInfo} />;
+    return null;
   }
 
   render() {
@@ -113,16 +143,27 @@ class Layout extends React.Component {
               leftIcon={<Info />}
               onClick={() => this.onClickHandler("loadAppInfo")}
             />
-            <MenuItem primaryText="Uploaded Files" leftIcon={<Upload />} />
+            <MenuItem
+              primaryText="Uploaded Files"
+              leftIcon={<Upload />}
+              onClick={() => this.onClickHandler("loadUploads")}
+            />
             <MenuItem
               primaryText="Failed Uploads"
               leftIcon={<FailedUpload />}
+              onClick={() => this.onClickHandler("loadFailedUploads")}
             />
-            <MenuItem primaryText="Log Out" leftIcon={<Eject />} />
+            <MenuItem
+              primaryText="Log Out"
+              leftIcon={<Eject />}
+              onClick={() => this.logoutUser()}
+            />
           </Menu>
         </div>
         <div style={{ width: "80%", float: "right" }}>
-          {this.renderClicked(this.state)}
+          <div style={{ width: "90%", margin: "auto" }}>
+            {this.renderClicked(this.state)}
+          </div>
         </div>
       </React.Fragment>
     );
@@ -139,8 +180,10 @@ Layout.propTypes = {
   uploadGaugeHydrograph: PropTypes.func,
   removeUser: PropTypes.func,
   uploadFlowConditionHandler: PropTypes.func,
-  failedUpload: PropTypes.array,
+  failedUploads: PropTypes.array,
   appInfo: PropTypes.object,
+  getMe: PropTypes.func,
+  getFailedUpload: PropTypes.func,
 };
 
 export default Layout;

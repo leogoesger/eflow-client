@@ -7,14 +7,8 @@ import Uploader from "../../containers/Uploader";
 import { Colors } from "../../styles";
 
 import UploadData from "./UploadData";
-import RenderFailedUpload from "./RenderFailedUpload";
 
-const ProfileLayout = ({
-  currentUser,
-  getMe,
-  failedUploads,
-  getFailedUpload,
-}) => {
+const ProfileLayout = ({ currentUser, getMe }) => {
   if (!currentUser) {
     return null;
   }
@@ -66,27 +60,6 @@ const ProfileLayout = ({
             <UploadData key={d.id} data={d} getMe={getMe} />
           ))}
         </div>
-        {currentUser.role === "ADMIN" &&
-          failedUploads && (
-            <div style={{ marginTop: "20px" }}>
-              <Divider />
-              <h1
-                style={{ padding: "20px 20px 10px 160px", fontWeight: "bold" }}
-              >
-                Failed Uploads
-              </h1>
-              <div style={{ marginTop: "10px" }}>
-                {failedUploads.map(d => (
-                  <RenderFailedUpload
-                    key={d.id}
-                    data={d}
-                    getMe={getMe}
-                    getFailedUpload={getFailedUpload}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
       </Paper>
     </React.Fragment>
   );
@@ -111,8 +84,6 @@ const styles = {
 ProfileLayout.propTypes = {
   currentUser: PropTypes.object || null,
   getMe: PropTypes.func,
-  failedUploads: PropTypes.array,
-  getFailedUpload: PropTypes.func,
 };
 
 export default ProfileLayout;
