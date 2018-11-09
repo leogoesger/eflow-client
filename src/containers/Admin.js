@@ -113,6 +113,7 @@ class Admin extends React.Component {
             uploadFlowConditionHandler={this.uploadFlowConditionHandler}
             removeUser={this.props.removeUser}
             appInfo={this.props.appInfo}
+            failedUploads={this.props.failedUploads}
           />
         </Paper>
 
@@ -130,6 +131,7 @@ class Admin extends React.Component {
 const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
+    failedUploads: state.user.failedUploads,
     appInfo: state.appInfo.appInfo,
   };
 };
@@ -148,7 +150,7 @@ Admin.propTypes = {
   appInfo: PropTypes.object,
   fetchAppInfo: PropTypes.func,
   getFailedUpload: PropTypes.func,
-  failedUploads: PropTypes.object,
+  failedUploads: PropTypes.array,
 };
 
 const styles = {

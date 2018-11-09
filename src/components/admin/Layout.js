@@ -1,17 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Divider,
-  TextField,
-  SelectField,
+  // Divider,
+  // TextField,
+  // SelectField,
+  Menu,
   MenuItem,
-  RaisedButton,
+  // RaisedButton,
 } from "material-ui";
 
-import { Colors } from "../../styles";
-import Styles from "../../styles/Styles";
-import AdminActionBtn from "./AdminActionBtn";
+// import { Colors } from "../../styles";
+// import Styles from "../../styles/Styles";
+// import AdminActionBtn from "./AdminActionBtn";
+import AWSUploads from "./AWSUploads";
+import AppInfo from "./AppInfo";
 import { navigateTo } from "../../utils/helpers";
+
+import Eject from "material-ui/svg-icons/action/eject";
+import Book from "material-ui/svg-icons/av/library-books";
+import Info from "material-ui/svg-icons/action/info";
+import FailedUpload from "material-ui/svg-icons/file/cloud-off";
+import Upload from "material-ui/svg-icons/file/cloud-done";
 
 class Layout extends React.Component {
   constructor(props) {
@@ -19,9 +28,26 @@ class Layout extends React.Component {
     this.state = {
       message: "Sorry, we are updating the website for the next 2 mins!",
       classId: 1,
+      loadAdmin: true,
+      loadAppInfo: false,
+      loadUploads: false,
+      loadFailedUploads: false,
     };
     this.updateGaugeMetricHandler = this.updateGaugeMetricHandler.bind(this);
     this.broadcastMessageHandler = this.broadcastMessageHandler.bind(this);
+  }
+
+  onClickHandler(e) {
+    const resetStates = {
+      loadAdmin: false,
+      loadAppInfo: false,
+      loadUploads: false,
+      loadFailedUploads: false,
+    };
+
+    resetStates[e] = true;
+
+    this.setState(resetStates);
   }
 
   _handleChange(v, field) {
@@ -45,7 +71,7 @@ class Layout extends React.Component {
     this.props.broadcastMessage(this.state.message);
   }
 
-  render() {
+  renderClicked(clicked) {
     const {
       updateClassMetric,
       uploadFlowData,
@@ -53,116 +79,52 @@ class Layout extends React.Component {
       uploadClassHydrograph,
       uploadGaugeHydrograph,
       uploadFlowConditionHandler,
+      appInfo,
     } = this.props;
+
+    if (clicked.loadAdmin) {
+      return (
+        <AWSUploads
+          updateClassMetric={updateClassMetric}
+          uploadFlowData={uploadFlowData}
+          uploadMetricResult={uploadMetricResult}
+          uploadClassHydrograph={uploadClassHydrograph}
+          uploadGaugeHydrograph={uploadGaugeHydrograph}
+          uploadFlowConditionHandler={uploadFlowConditionHandler}
+        />
+      );
+    }
+    if (clicked.loadAppInfo) return <AppInfo appInfo={appInfo} />;
+  }
+
+  render() {
     return (
-      <div>
-        <div style={{ padding: "40px 20px" }}>
-          <h1>Upload Data to DB</h1>
-          <div style={{ padding: "15px" }}>
-            <AdminActionBtn
-              action={uploadMetricResult}
-              displayName="Upload Metric Result"
+      <React.Fragment>
+        <div style={{ width: "20%", float: "left" }}>
+          <Menu>
+            <MenuItem
+              primaryText="Admin"
+              value={0}
+              leftIcon={<Book />}
+              onClick={() => this.onClickHandler("loadAdmin")}
             />
-            <AdminActionBtn
-              action={uploadClassHydrograph}
-              displayName="Upload Class Hydrograph"
+            <MenuItem
+              primaryText="App Info"
+              leftIcon={<Info />}
+              onClick={() => this.onClickHandler("loadAppInfo")}
             />
-
-            <AdminActionBtn
-              action={uploadGaugeHydrograph}
-              displayName="Upload Gauge Hydrograph"
+            <MenuItem primaryText="Uploaded Files" leftIcon={<Upload />} />
+            <MenuItem
+              primaryText="Failed Uploads"
+              leftIcon={<FailedUpload />}
             />
-            <AdminActionBtn
-              action={uploadFlowData}
-              displayName="Upload Flow Data"
-            />
-            <AdminActionBtn
-              action={uploadFlowConditionHandler}
-              displayName="Upload Flow Condition"
-            />
-          </div>
+            <MenuItem primaryText="Log Out" leftIcon={<Eject />} />
+          </Menu>
         </div>
-        <Divider />
-
-        <div style={{ padding: "40px 20px" }}>
-          <h1>Update Metrics</h1>
-          <div style={{ padding: "5px" }}>
-            <div style={{ display: "flex" }}>
-              <SelectField
-                floatingLabelText="Select Class To Update"
-                value={this.state.classId}
-                style={{ marginTop: "10px" }}
-                onChange={(_event, value) =>
-                  this._handleChange(value, "classId")
-                }
-              >
-                <MenuItem value={1} primaryText="1" />
-                <MenuItem value={2} primaryText="2" />
-                <MenuItem value={3} primaryText="3" />
-                <MenuItem value={4} primaryText="4" />
-                <MenuItem value={5} primaryText="5" />
-                <MenuItem value={6} primaryText="6" />
-                <MenuItem value={7} primaryText="7" />
-                <MenuItem value={8} primaryText="8" />
-                <MenuItem value={9} primaryText="9" />
-              </SelectField>
-              <div style={{ margin: "40px 20px 0px 20px" }}>
-                <AdminActionBtn
-                  action={() => this.updateGaugeMetricHandler()}
-                  displayName="Update Gauge Metric"
-                />
-              </div>
-              <div
-                style={{
-                  fontSize: "32px",
-                  color: "#9e9e9e",
-                  marginTop: "42px",
-                }}
-              >
-                {" | "}
-              </div>
-              <div style={{ margin: "40px 20px 0px 20px" }}>
-                <AdminActionBtn
-                  action={updateClassMetric}
-                  displayName="Update Class Metric"
-                />
-              </div>
-            </div>
-          </div>
+        <div style={{ width: "80%", float: "right" }}>
+          {this.renderClicked(this.state)}
         </div>
-        <Divider />
-
-        <div style={{ padding: "40px 20px" }}>
-          <h1>Broadcast Message</h1>
-          <div style={{ padding: "5px" }}>
-            <TextField
-              hintText="Enter Message"
-              value={this.state.message}
-              floatingLabelText="Enter Message"
-              underlineFocusStyle={Styles.underlineFocusStyle}
-              floatingLabelStyle={Styles.floatingLabelStyle}
-              floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-              onChange={(_event, value) => this._handleChange(value, "message")}
-            />
-            <AdminActionBtn
-              action={() => this.broadcastMessageHandler(this.state.message)}
-              displayName="Broadcast Message"
-            />
-          </div>
-        </div>
-        <Divider />
-
-        <div style={{ width: "100px", margin: "0 auto" }}>
-          <RaisedButton
-            label="Log Out"
-            backgroundColor={Colors.gold}
-            labelColor={Colors.white}
-            labelStyle={{ fontSize: "12px" }}
-            onClick={() => this.logoutUser()}
-            style={{ width: "100px", margin: "20px auto" }}
-          />
-        </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -177,6 +139,8 @@ Layout.propTypes = {
   uploadGaugeHydrograph: PropTypes.func,
   removeUser: PropTypes.func,
   uploadFlowConditionHandler: PropTypes.func,
+  failedUpload: PropTypes.array,
+  appInfo: PropTypes.object,
 };
 
 export default Layout;
