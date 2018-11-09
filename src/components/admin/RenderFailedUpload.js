@@ -30,7 +30,6 @@ const RenderFailedUpload = ({ data, getMe, getFailedUpload }) => {
     <Card
       style={{
         margin: "10px auto",
-        width: "70%",
       }}
     >
       <div
@@ -56,14 +55,14 @@ const RenderFailedUpload = ({ data, getMe, getFailedUpload }) => {
               1}/${date.getDate()}/${date.getFullYear()}`}</div>
           </CardText>
         </div>
-        <div style={{ margin: "20px -120px 10px 10px" }}>
+        <div style={{ margin: "20px -200px 10px 10px" }}>
           <Tooltip title={"Download"} position="top" arrow={true}>
             <CSVLink data={csvData} filename={`${data.name}.csv`}>
               <FileDownload color={Colors.gold} />
             </CSVLink>
           </Tooltip>
         </div>
-        <div
+        {/* <div
           style={{
             margin: "20px -120px 10px 0px",
             fontSize: "20px",
@@ -71,7 +70,7 @@ const RenderFailedUpload = ({ data, getMe, getFailedUpload }) => {
           }}
         >
           {"|"}
-        </div>
+        </div> */}
         <div
           style={{
             marginTop: "20px",
