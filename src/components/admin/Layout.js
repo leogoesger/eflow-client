@@ -80,6 +80,7 @@ class Layout extends React.Component {
       uploadClassHydrograph,
       uploadGaugeHydrograph,
       uploadFlowConditionHandler,
+      broadcastMessage,
       appInfo,
       failedUploads,
       getMe,
@@ -90,6 +91,7 @@ class Layout extends React.Component {
     if (clicked.loadAdmin) {
       return (
         <AWSUploads
+          broadcastMessage={broadcastMessage}
           updateGaugeMetric={updateGaugeMetric}
           updateClassMetric={updateClassMetric}
           uploadFlowData={uploadFlowData}
