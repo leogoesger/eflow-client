@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   // Divider,
   // TextField,
@@ -7,27 +7,27 @@ import {
   Menu,
   MenuItem,
   // RaisedButton,
-} from "material-ui";
+} from 'material-ui';
 
 // import { Colors } from "../../styles";
 // import Styles from "../../styles/Styles";
 // import AdminActionBtn from "./AdminActionBtn";
-import AWSUploads from "./AWSUploads";
-import AppInfo from "./AppInfo";
-import RenderFailedUpload from "./RenderFailedUpload";
-import { navigateTo } from "../../utils/helpers";
+import AWSUploads from './AWSUploads';
+import AppInfo from './AppInfo';
+import RenderFailedUpload from './RenderFailedUpload';
+import { navigateTo } from '../../utils/helpers';
 
-import Eject from "material-ui/svg-icons/action/eject";
-import Book from "material-ui/svg-icons/av/library-books";
-import Info from "material-ui/svg-icons/action/info";
-import FailedUpload from "material-ui/svg-icons/file/cloud-off";
-import Upload from "material-ui/svg-icons/file/cloud-done";
+import Eject from 'material-ui/svg-icons/action/eject';
+import Book from 'material-ui/svg-icons/av/library-books';
+import Info from 'material-ui/svg-icons/action/info';
+import FailedUpload from 'material-ui/svg-icons/file/cloud-off';
+import Upload from 'material-ui/svg-icons/file/cloud-done';
 
 class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "Sorry, we are updating the website for the next 2 mins!",
+      message: 'Sorry, we are updating the website for the next 2 mins!',
       classId: 1,
       loadAdmin: true,
       loadAppInfo: false,
@@ -52,16 +52,16 @@ class Layout extends React.Component {
   }
 
   _handleChange(v, field) {
-    if (field === "classId") {
+    if (field === 'classId') {
       return this.setState({ [field]: v + 1 });
     }
     return this.setState({ [field]: v });
   }
 
   logoutUser() {
-    localStorage.removeItem("ff_jwt");
+    localStorage.removeItem('ff_jwt');
     this.props.removeUser();
-    navigateTo("/");
+    navigateTo('/');
   }
 
   updateGaugeMetricHandler() {
@@ -84,11 +84,13 @@ class Layout extends React.Component {
       failedUploads,
       getMe,
       getFailedUpload,
+      updateGaugeMetric,
     } = this.props;
 
     if (clicked.loadAdmin) {
       return (
         <AWSUploads
+          updateGaugeMetric={updateGaugeMetric}
           updateClassMetric={updateClassMetric}
           uploadFlowData={uploadFlowData}
           uploadMetricResult={uploadMetricResult}
@@ -102,7 +104,7 @@ class Layout extends React.Component {
     } else if (clicked.loadFailedUploads) {
       return (
         <div>
-          <h1 style={{ padding: "40px 20px" }}>Failed Uploads</h1>
+          <h1 style={{ padding: '40px 20px' }}>Failed Uploads</h1>
 
           {failedUploads.map((data, key) => {
             return (
@@ -119,8 +121,8 @@ class Layout extends React.Component {
     } else if (clicked.loadUploads) {
       return (
         <div>
-          <h1 style={{ padding: "40px 20px" }}>Uploaded Files</h1>
-          <h1 style={{ padding: "40px 20px" }}>Feature coming soon!</h1>
+          <h1 style={{ padding: '40px 20px' }}>Uploaded Files</h1>
+          <h1 style={{ padding: '40px 20px' }}>Feature coming soon!</h1>
         </div>
       );
     }
@@ -130,28 +132,28 @@ class Layout extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ width: "20%", float: "left" }}>
+        <div style={{ width: '20%', float: 'left' }}>
           <Menu>
             <MenuItem
               primaryText="Admin"
               value={0}
               leftIcon={<Book />}
-              onClick={() => this.onClickHandler("loadAdmin")}
+              onClick={() => this.onClickHandler('loadAdmin')}
             />
             <MenuItem
               primaryText="App Info"
               leftIcon={<Info />}
-              onClick={() => this.onClickHandler("loadAppInfo")}
+              onClick={() => this.onClickHandler('loadAppInfo')}
             />
             <MenuItem
               primaryText="Uploaded Files"
               leftIcon={<Upload />}
-              onClick={() => this.onClickHandler("loadUploads")}
+              onClick={() => this.onClickHandler('loadUploads')}
             />
             <MenuItem
               primaryText="Failed Uploads"
               leftIcon={<FailedUpload />}
-              onClick={() => this.onClickHandler("loadFailedUploads")}
+              onClick={() => this.onClickHandler('loadFailedUploads')}
             />
             <MenuItem
               primaryText="Log Out"
@@ -160,8 +162,8 @@ class Layout extends React.Component {
             />
           </Menu>
         </div>
-        <div style={{ width: "80%", float: "right" }}>
-          <div style={{ width: "90%", margin: "auto" }}>
+        <div style={{ width: '80%', float: 'right' }}>
+          <div style={{ width: '90%', margin: 'auto' }}>
             {this.renderClicked(this.state)}
           </div>
         </div>
