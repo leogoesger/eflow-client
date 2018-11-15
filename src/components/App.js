@@ -22,7 +22,6 @@ import ReleaseNote from "../containers/ReleaseNote";
 import TermCitation from "../containers/TermCitation";
 import BugReport from "../containers/BugReport";
 import Admin from "../containers/Admin";
-import AppInfo from "../containers/AppInfo";
 import Login from "../containers/Login";
 import SignUp from "../containers/SignUp";
 import UnknownRoute from "./shared/UnknownRoute";
@@ -88,7 +87,6 @@ class App extends React.Component {
               <Route exact path="/login" component={withTracker(Login)} />
               <Route exact path="/signup" component={withTracker(SignUp)} />
               <Route exact path="/admin" component={withTracker(Admin)} />
-              <Route exact path="/env" component={withTracker(AppInfo)} />
               <Route
                 exact
                 path="/profile"

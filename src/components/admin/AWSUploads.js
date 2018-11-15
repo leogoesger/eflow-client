@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Divider,
-  TextField,
-  SelectField,
-  MenuItem,
-  RaisedButton,
-} from "material-ui";
+import { Divider, TextField, SelectField, MenuItem } from "material-ui";
 
-import { Colors } from "../../styles";
 import Styles from "../../styles/Styles";
 import AdminActionBtn from "./AdminActionBtn";
 import { navigateTo } from "../../utils/helpers";
@@ -149,18 +142,6 @@ class AWSUploads extends React.Component {
               displayName="Broadcast Message"
             />
           </div>
-        </div>
-        <Divider />
-
-        <div style={{ width: "100px", margin: "0 auto" }}>
-          <RaisedButton
-            label="Log Out"
-            backgroundColor={Colors.gold}
-            labelColor={Colors.white}
-            labelStyle={{ fontSize: "12px" }}
-            onClick={() => this.logoutUser()}
-            style={{ width: "100px", margin: "20px auto" }}
-          />
         </div>
       </div>
     );
