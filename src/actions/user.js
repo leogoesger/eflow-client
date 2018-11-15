@@ -121,7 +121,9 @@ export function getMe() {
         .post(`${process.env.SERVER_ADDRESS}/api/user/getme`)
         .send({ ff_jwt: localStorage.getItem("ff_jwt") });
       dispatch(loginUserObject(response.body));
-      navigateTo("/profile");
+      response.body.role === "ADMIN"
+        ? navigateTo("/admin")
+        : navigateTo("/profile");
     } catch (error) {
       localStorage.removeItem("ff_jwt");
     }

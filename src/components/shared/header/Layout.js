@@ -1,11 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FlatButton from "material-ui/FlatButton";
+import {
+  FlatButton,
+  IconMenu,
+  MenuItem,
+  IconButton,
+  Divider,
+} from "material-ui";
 
 import { Colors, Theme } from "../../../styles";
 import { navigateTo } from "../../../utils/helpers";
 import NavRight from "./NavRight";
 import Build from "material-ui/svg-icons/action/build";
+import More from "material-ui/svg-icons/navigation/more-vert";
 
 export default class Layout extends React.Component {
   _navigateTo(url) {
@@ -36,6 +43,32 @@ export default class Layout extends React.Component {
     }
   }
 
+  renderOptions() {
+    return (
+      <IconMenu
+        iconButtonElement={
+          <IconButton>
+            <More color="rgba(0, 0, 0, 0.60)" />
+          </IconButton>
+        }
+        anchorOrigin={{ horizontal: "left", vertical: "top" }}
+        targetOrigin={{ horizontal: "left", vertical: "top" }}
+      >
+        <MenuItem
+          value="0"
+          primaryText="Overview"
+          onClick={() => navigateTo("/hydrology")}
+        />
+        <Divider />
+        <MenuItem
+          value="2"
+          primaryText="Annual Metrics"
+          onClick={() => navigateTo("/metricDetail")}
+        />
+      </IconMenu>
+    );
+  }
+
   render() {
     return (
       <div style={styles.nav}>
@@ -60,14 +93,26 @@ export default class Layout extends React.Component {
               justifyContent: "space-around",
             }}
           >
-            <FlatButton
-              className="tour-hydrology"
-              label="Hydrology"
-              style={styles.headerButton}
-              labelStyle={styles.headerWhiteButtonLabel}
-              hoverColor={"white"}
-              onClick={() => this._navigateTo("/hydrology")}
-            />
+            <div>
+              <FlatButton
+                className="tour-hydrology"
+                label="Hydrology"
+                style={styles.headerButton}
+                labelStyle={styles.headerWhiteButtonLabel}
+                hoverColor={"white"}
+                onClick={() => this._navigateTo("/hydrology")}
+              />
+              <div
+                style={{
+                  zIndex: "1",
+                  position: "relative",
+                  top: "-41px",
+                  right: "-75px",
+                }}
+              >
+                {this.renderOptions()}
+              </div>
+            </div>
             <FlatButton
               className="e2e-header-sign-up-btn"
               label="Geomorphology"
