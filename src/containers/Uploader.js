@@ -1,24 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import csv from 'csvtojson';
-import { TextField, DatePicker, Snackbar } from 'material-ui';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import csv from "csvtojson";
+import { TextField, DatePicker, Snackbar } from "material-ui";
 
-import upload from '../APIs/upload';
-import Layout from '../components/uploader/Layout';
-import { getMe } from '../actions/user';
-import Styles from '../styles/Styles';
-import Loader from '../components/shared/loader/Loader';
+import upload from "../APIs/upload";
+import Layout from "../components/uploader/Layout";
+import { getMe } from "../actions/user";
+import Styles from "../styles/Styles";
+import Loader from "../components/shared/loader/Loader";
+import { params } from "../constants/params";
 
 class Uploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: '',
+      message: "",
       flows: null,
       dates: null,
-      start_date: new Date('10/01/2000'),
-      name: '',
+      start_date: new Date("10/01/2000"),
+      name: "",
+      userParams: params,
       loading: false,
       isError: false,
     };
@@ -30,10 +32,10 @@ class Uploader extends React.Component {
   stringProcessor(csvStr) {
     csv({})
       .fromString(csvStr)
-      .on('err', err => this.setState({ message: err.toString() }))
+      .on("err", err => this.setState({ message: err.toString() }))
       .then(data => {
         const dataTypes = Object.keys(data[0]);
-        if (!('flow' in data[0]) || !('date' in data[0])) {
+        if (!("flow" in data[0]) || !("date" in data[0])) {
           return this.setState({
             isError: true,
             message: `Invalid Data Types: ${dataTypes[0]} or ${dataTypes[1]}`,
@@ -63,7 +65,7 @@ class Uploader extends React.Component {
 
   async onSubmit() {
     this.setState({ loading: true });
-    const { flows, dates, start_date, name } = this.state;
+    const { flows, dates, start_date, name, userParams } = this.state;
     if (flows.length !== dates.length) {
       return this.setState({
         flows: [],
@@ -77,10 +79,11 @@ class Uploader extends React.Component {
         dates,
         start_date: `${start_date.getMonth() + 1}/${start_date.getDate()}`,
         name,
+        params: { ...userParams },
       });
 
       this.props.getMe();
-      this.setState({ loading: false });
+      this.setState({ userParams: params, loading: false });
     } catch (error) {
       this.setState({
         loading: false,
@@ -95,15 +98,25 @@ class Uploader extends React.Component {
     this.reader.onload = e => this.stringProcessor(e.target.result);
   }
 
+  setUserParams(params) {
+    this.setState({ userParams: params });
+  }
+
+  handleSlider(event, value, season, param) {
+    const tmpState = { ...this.state.userParams };
+    tmpState[season][param] = value;
+    this.setState({ userParams: tmpState });
+  }
+
   render() {
     return (
       <div>
         <Loader loading={this.state.loading} />
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '600px',
+            display: "flex",
+            justifyContent: "space-between",
+            width: "600px",
           }}
         >
           <DatePicker
@@ -130,10 +143,15 @@ class Uploader extends React.Component {
           getMe={this.props.getMe}
           enabled={this.isEnabled()}
           isError={this.state.isError}
+          userParams={this.state.userParams}
+          setUserParams={() => this.setUserParams(params)}
+          handleSlider={(e, value, season, param) =>
+            this.handleSlider(e, value, season, param)
+          }
         />
 
         {!this.props.enabled && (
-          <div style={{ fontSize: '13px', color: '#e65100' }}>
+          <div style={{ fontSize: "13px", color: "#e65100" }}>
             Maximum upload reached, please delete existing files before
             uploading more!
           </div>
@@ -143,7 +161,7 @@ class Uploader extends React.Component {
           open={Boolean(this.state.message)}
           message={this.state.message}
           autoHideDuration={4000}
-          onRequestClose={() => this.setState({ message: '' })}
+          onRequestClose={() => this.setState({ message: "" })}
         />
       </div>
     );

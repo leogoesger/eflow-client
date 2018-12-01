@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { RaisedButton } from "material-ui";
 import { Colors } from "../../styles";
+import Params from "./Params";
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -9,7 +10,14 @@ class Uploader extends React.Component {
   }
 
   render() {
-    const { onUpload, onSubmit, enabled, isError } = this.props;
+    const {
+      onUpload,
+      onSubmit,
+      enabled,
+      isError,
+      userParams,
+      setUserParams,
+    } = this.props;
 
     if (isError) {
       this.fileInput.value = "";
@@ -22,6 +30,13 @@ class Uploader extends React.Component {
           style={{ fontSize: "14px" }}
           ref={ref => (this.fileInput = ref)}
         />
+
+        <Params
+          userParams={userParams}
+          setUserParams={setUserParams}
+          handleSlider={this.props.handleSlider}
+        />
+
         <RaisedButton
           label="Upload"
           disabled={!enabled}
@@ -41,6 +56,9 @@ Uploader.propTypes = {
   onSubmit: PropTypes.func,
   enabled: PropTypes.bool,
   isError: PropTypes.bool,
+  userParams: PropTypes.object,
+  setUserParams: PropTypes.func,
+  handleSlider: PropTypes.func,
 };
 
 export default Uploader;
