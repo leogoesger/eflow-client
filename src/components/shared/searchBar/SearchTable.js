@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Highlight from 'react-highlighter';
+import React from "react";
+import PropTypes from "prop-types";
+import Highlight from "react-highlighter";
 
 import {
   Table,
@@ -9,9 +9,9 @@ import {
   TableRowColumn,
   TableHeader,
   TableHeaderColumn,
-} from 'material-ui/Table';
-import {Card} from 'material-ui/Card';
-import {classInfo} from '../../../constants/classification';
+} from "material-ui/Table";
+import { Card } from "material-ui/Card";
+import { classInfo } from "../../../constants/classification";
 
 export default class SearchTable extends React.Component {
   getColumnName(name) {
@@ -24,7 +24,7 @@ export default class SearchTable extends React.Component {
   _selectRow(e) {
     const gauge = this.props.searchedGauges[e];
     this.props.selectRowHandler(gauge);
-    this.props.onSelect('');
+    this.props.onSelect("");
   }
 
   _hoverRow(rowNumber) {
@@ -34,22 +34,22 @@ export default class SearchTable extends React.Component {
   _renderRow(gauges) {
     return gauges.map(gauge => {
       return (
-        <TableRow key={gauge.id} style={{cursor: 'pointer', height: '35px'}}>
-          <TableRowColumn style={{height: '35px', width: '25%'}}>
+        <TableRow key={gauge.id} style={{ cursor: "pointer", height: "35px" }}>
+          <TableRowColumn style={{ height: "35px", width: "25%" }}>
             <div style={styles.column}>
-              <Highlight matchElement={'span'} search={this.props.keyWord}>
+              <Highlight matchElement={"span"} search={this.props.keyWord}>
                 {gauge.id.toString()}
               </Highlight>
             </div>
           </TableRowColumn>
-          <TableRowColumn style={{height: '35px', width: '15%'}}>
+          <TableRowColumn style={{ height: "35px", width: "15%" }}>
             <div style={styles.column}>
               {classInfo[`class${gauge.classId}`].abbre}
             </div>
           </TableRowColumn>
-          <TableRowColumn style={{height: '35px', width: '50%'}}>
+          <TableRowColumn style={{ height: "35px", width: "50%" }}>
             <div style={styles.column}>
-              <Highlight matchElement={'span'} search={this.props.keyWord}>
+              <Highlight matchElement={"span"} search={this.props.keyWord}>
                 {this.getColumnName(gauge.stationName)}
               </Highlight>
             </div>
@@ -76,15 +76,15 @@ export default class SearchTable extends React.Component {
             adjustForCheckbox={false}
             enableSelectAll={false}
           >
-            <TableRow style={{height: '35px'}}>
-              <TableHeaderColumn style={{height: '35px', width: '25%'}}>
-                <div style={styles.column}>{'ID'}</div>
+            <TableRow style={{ height: "35px" }}>
+              <TableHeaderColumn style={{ height: "35px", width: "25%" }}>
+                <div style={styles.column}>{"ID"}</div>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '35px', width: '15%'}}>
-                <div style={styles.column}>{'Class'}</div>
+              <TableHeaderColumn style={{ height: "35px", width: "15%" }}>
+                <div style={styles.column}>{"Class"}</div>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{height: '35px', width: '50%'}}>
-                <div style={styles.column}>{'Station Name'}</div>
+              <TableHeaderColumn style={{ height: "35px", width: "50%" }}>
+                <div style={styles.column}>{"Station Name"}</div>
               </TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -112,8 +112,8 @@ SearchTable.propTypes = {
 
 const styles = {
   column: {
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
   },
 };

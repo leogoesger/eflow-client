@@ -8,7 +8,13 @@ import { Colors } from "../../styles";
 
 import UploadData from "./UploadData";
 
-const ProfileLayout = ({ currentUser, getMe }) => {
+const ProfileLayout = ({
+  currentUser,
+  getMe,
+  currentGauge,
+  gauges,
+  fetchCurrentGauge,
+}) => {
   if (!currentUser) {
     return null;
   }
@@ -57,7 +63,14 @@ const ProfileLayout = ({ currentUser, getMe }) => {
         )}
         <div style={{ marginTop: "20px" }}>
           {sortedData.map(d => (
-            <UploadData key={d.id} data={d} getMe={getMe} />
+            <UploadData
+              key={d.id}
+              data={d}
+              getMe={getMe}
+              currentGauge={currentGauge}
+              gauges={gauges}
+              fetchCurrentGauge={fetchCurrentGauge}
+            />
           ))}
         </div>
       </Paper>
@@ -84,6 +97,9 @@ const styles = {
 ProfileLayout.propTypes = {
   currentUser: PropTypes.object || null,
   getMe: PropTypes.func,
+  currentGauge: PropTypes.object,
+  gauges: PropTypes.array,
+  fetchCurrentGauge: PropTypes.func,
 };
 
 export default ProfileLayout;
