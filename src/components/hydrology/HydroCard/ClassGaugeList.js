@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { cloneDeep, sortBy } from "lodash";
-import { Card, CardHeader, CardText } from "material-ui/Card";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { cloneDeep, sortBy } from 'lodash';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import {
   Table,
   TableBody,
@@ -9,10 +9,10 @@ import {
   TableRowColumn,
   TableHeader,
   TableHeaderColumn,
-} from "material-ui/Table";
+} from 'material-ui/Table';
 
-import SearchBar from "../../../containers/SearchBar";
-import { classInfo } from "../../../constants/classification";
+import SearchBar from '../../../containers/SearchBar';
+import { classInfo } from '../../../constants/classification';
 
 export default class ClassGaugeList extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export default class ClassGaugeList extends React.Component {
     if (!props.classifications) {
       return null;
     }
-    const classifications = cloneDeep(props.classifications);
+    const classifications = cloneDeep(sortBy(props.classifications, d => d.id));
     classifications.forEach((classification, index) => {
       classifications[index].gauges = sortBy(classification.gauges, e => e.id);
     });
@@ -54,13 +54,13 @@ export default class ClassGaugeList extends React.Component {
       return (
         <TableRow
           key={gauge.id}
-          style={{ height: "40px", padding: "0px", cursor: "pointer" }}
+          style={{ height: '40px', padding: '0px', cursor: 'pointer' }}
         >
-          <TableRowColumn style={{ height: "15px", paddingTop: "15px" }}>
+          <TableRowColumn style={{ height: '15px', paddingTop: '15px' }}>
             {gauge.id}
           </TableRowColumn>
 
-          <TableRowColumn style={{ height: "15px" }}>
+          <TableRowColumn style={{ height: '15px' }}>
             {gauge.stationName}
           </TableRowColumn>
         </TableRow>
@@ -116,14 +116,14 @@ export default class ClassGaugeList extends React.Component {
                 displaySelectAll={false}
                 adjustForCheckbox={false}
                 enableSelectAll={false}
-                style={{ height: "40px", padding: "0px" }}
+                style={{ height: '40px', padding: '0px' }}
               >
-                <TableRow style={{ height: "20px" }}>
-                  <TableHeaderColumn style={{ height: "20px" }}>
-                    {"ID"}
+                <TableRow style={{ height: '20px' }}>
+                  <TableHeaderColumn style={{ height: '20px' }}>
+                    {'ID'}
                   </TableHeaderColumn>
-                  <TableHeaderColumn style={{ height: "20px" }}>
-                    {"Station Name"}
+                  <TableHeaderColumn style={{ height: '20px' }}>
+                    {'Station Name'}
                   </TableHeaderColumn>
                 </TableRow>
               </TableHeader>
@@ -134,15 +134,15 @@ export default class ClassGaugeList extends React.Component {
                 stripedRows={false}
               >
                 <TableRow
-                  style={{ height: "40px", padding: "0px", cursor: "pointer" }}
+                  style={{ height: '40px', padding: '0px', cursor: 'pointer' }}
                 >
                   <TableRowColumn
-                    style={{ height: "15px", paddingTop: "15px" }}
+                    style={{ height: '15px', paddingTop: '15px' }}
                   >
                     {`Class ${classification.id}`}
                   </TableRowColumn>
 
-                  <TableRowColumn style={{ height: "15px" }}>
+                  <TableRowColumn style={{ height: '15px' }}>
                     {classification.name}
                   </TableRowColumn>
                 </TableRow>
@@ -161,7 +161,7 @@ export default class ClassGaugeList extends React.Component {
     }
     return (
       <div style={styles.container}>
-        <div style={{ padding: "0px 15px 5px 15px" }}>
+        <div style={{ padding: '0px 15px 5px 15px' }}>
           <SearchBar
             selectRowHandler={d => this.selectSearchedRowHandler(d)}
             onRowHover={d => this.props.updateHoveredGauge(d)}
@@ -182,7 +182,7 @@ ClassGaugeList.propTypes = {
 
 const styles = {
   container: {
-    maxHeight: "650px",
-    overflow: "scroll",
+    maxHeight: '650px',
+    overflow: 'scroll',
   },
 };
