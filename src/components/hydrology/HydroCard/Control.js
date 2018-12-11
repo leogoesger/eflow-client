@@ -30,8 +30,8 @@ export default class Control extends React.Component {
     if (
       Boolean(
         this.props.currentClassification &&
-          this.props.currentClassification.classId !==
-            nextProps.currentClassification.classId
+          this.props.currentClassification.id !==
+            nextProps.currentClassification.id
       ) ||
       Boolean(
         this.props.currentGauge &&

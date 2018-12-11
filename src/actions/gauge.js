@@ -1,7 +1,7 @@
-import request from 'superagent';
-import {GaugeTypes as types} from '../action-types';
-import {removeCurrentClass} from './classification';
-import {updateTab} from './hydrology';
+import request from "superagent";
+import { GaugeTypes as types } from "../action-types";
+import { removeCurrentClass } from "./classification";
+import { updateTab } from "./hydrology";
 
 const fetchGaugeObjects = gauges => {
   return {
@@ -46,12 +46,12 @@ export function fetchGauges() {
 export function fetchCurrentGauge(gaugeId) {
   return async dispatch => {
     try {
+      dispatch(removeCurrentClass());
       const gauge = await request.get(
         `${process.env.SERVER_ADDRESS}/api/gauges/${gaugeId}`
       );
       dispatch(fetchCurrentGaugeObject(gauge.body));
-      dispatch(updateTab('b'));
-      dispatch(removeCurrentClass());
+      dispatch(updateTab("b"));
     } catch (e) {
       throw e;
     }
@@ -66,7 +66,7 @@ export function searchGauge(keyWord) {
       }
       const gauges = await request
         .post(`${process.env.SERVER_ADDRESS}/api/gauges/search`)
-        .send({keyWord});
+        .send({ keyWord });
       dispatch(searchGaugeObject(gauges.body));
     } catch (e) {
       throw e;
