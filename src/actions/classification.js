@@ -1,7 +1,7 @@
-import request from 'superagent';
-import {ClassificationTypes as types} from '../action-types';
-import {removeCurrentGauge} from './gauge';
-import {updateTab} from './hydrology';
+import request from "superagent";
+import { ClassificationTypes as types } from "../action-types";
+import { removeCurrentGauge } from "./gauge";
+import { updateTab } from "./hydrology";
 
 const fetchClassificationObject = classification => {
   return {
@@ -30,12 +30,12 @@ export function removeCurrentClass() {
 export function fetchClassification(classId) {
   return async dispatch => {
     try {
+      dispatch(removeCurrentGauge());
       const classification = await request.get(
         `${process.env.SERVER_ADDRESS}/api/classes/${classId}`
       );
       dispatch(fetchClassificationObject(classification.body));
-      dispatch(updateTab('b'));
-      dispatch(removeCurrentGauge());
+      dispatch(updateTab("b"));
     } catch (e) {
       throw e;
     }
