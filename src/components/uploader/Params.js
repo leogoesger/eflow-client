@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { RaisedButton, Dialog, FlatButton } from "material-ui";
-import { Colors } from "../../styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { RaisedButton, Dialog, FlatButton, Divider } from 'material-ui';
+import { Colors } from '../../styles';
 
-import ParamsSliders from "./ParamsSliders";
+import ParamsSliders from './ParamsSliders';
 
 class Params extends React.Component {
   constructor(props) {
@@ -20,7 +20,6 @@ class Params extends React.Component {
   }
 
   handleSubmit() {
-    this.props.setUserParams(this.state.params);
     this.setState({ open: false });
   }
 
@@ -31,43 +30,57 @@ class Params extends React.Component {
   // }
 
   render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        key="0"
-        primary={true}
-        onClick={() => this.handleClose()}
-      />,
-      <FlatButton
-        label="Submit"
-        key="1"
-        primary={true}
-        onClick={() => this.handleSubmit()}
-      />,
-    ];
-
     return (
       <React.Fragment>
         <RaisedButton
           label="Params (Optional)"
           backgroundColor={Colors.grey}
           labelColor={Colors.white}
-          labelStyle={{ fontSize: "12px" }}
+          labelStyle={{ fontSize: '12px' }}
           onClick={() => this.handleOpen()}
-          style={{ margin: "20px 10px" }}
+          style={{ margin: '20px 10px' }}
         />
         <Dialog
           title="Set Params (optional)"
-          actions={actions}
           modal={true}
           open={this.state.open}
-          style={{ margin: "auto" }}
+          style={{ margin: 'auto' }}
           autoScrollBodyContent={true}
         >
           <ParamsSliders
             params={this.props.userParams}
             handleSlider={this.props.handleSlider}
           />
+          <Divider />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '20px',
+            }}
+          >
+            <FlatButton
+              label="Reset to Default"
+              key="0"
+              primary={true}
+              onClick={() => this.props.setUserParams()}
+            />
+            <div style={{ display: 'flex' }}>
+              <FlatButton
+                label="Cancel"
+                key="1"
+                primary={true}
+                onClick={() => this.handleClose()}
+              />
+              <RaisedButton
+                label="Save"
+                style={{ marginLeft: '10px' }}
+                key="2"
+                primary={true}
+                onClick={() => this.handleSubmit()}
+              />
+            </div>
+          </div>
         </Dialog>
       </React.Fragment>
     );
