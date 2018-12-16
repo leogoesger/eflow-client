@@ -13,6 +13,15 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Dec 17th, 2018',
+            version: 'v2.00',
+            title: 'Upload DRH',
+            tasks: [
+              'User can upload time series data',
+              'See upload data DRH directly',
+            ],
+          },
+          {
             date: 'Oct 27nd, 2018',
             version: 'v1.16',
             title: 'See Failed Uploads',
