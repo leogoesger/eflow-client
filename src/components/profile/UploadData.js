@@ -1,15 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Card, CardText, RaisedButton, Dialog, FlatButton } from "material-ui";
+import { Card, CardText } from "material-ui";
 import { Tooltip } from "react-tippy";
 import Delete from "material-ui/svg-icons/action/delete";
-import Chart from "material-ui/svg-icons/editor/show-chart";
 
 import { Colors } from "../../styles";
 import Download from "./Download";
-// import { navigateTo } from "../../utils/helpers";
 import upload from "../../APIs/upload";
-import Hydrograph from "./Hydrograph";
 
 const onDelete = async (id, getMe) => {
   await upload.deleteTimeSeries(id);
@@ -38,16 +36,9 @@ class UploadData extends React.Component {
   }
 
   render() {
-    const { data, getMe, currentGauge, gauges } = { ...this.props };
+    const { data, getMe } = { ...this.props };
     const date = new Date(data.createdAt);
-    const actions = [
-      <FlatButton
-        key="1"
-        label="Close"
-        primary={true}
-        onClick={() => this.handleClose()}
-      />,
-    ];
+
     return (
       <Card
         style={{
@@ -62,40 +53,18 @@ class UploadData extends React.Component {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ cursor: "not-allowed", width: "400px" }}>
+          <div style={{ width: "400px" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div style={{ padding: "15px", fontSize: "24px" }}>
-                {data.name}
-              </div>
-              <div style={{ marginTop: "10px" }}>
-                <RaisedButton
-                  label="DRH"
-                  icon={<Chart />}
-                  onClick={() => this.onClickHandler()}
-                />
-                <Dialog
-                  title={`DRH: ${data.name}`}
-                  actions={actions}
-                  modal={false}
-                  open={this.state.open}
-                  onRequestClose={() => this.handleClose()}
-                  style={{ alignItems: "center" }}
-                >
-                  <Hydrograph
-                    containerWidth={410}
-                    currentClassification={this.props.currentClassification}
-                    data={data}
-                    currentGauge={currentGauge}
-                    removeClassGaugeProps={() =>
-                      this.props.removeClassGaugeProps()
-                    }
-                    gauges={gauges}
-                    overLayBoxPlotData={[]}
-                    verticalOverlayBoxPlotData={[]}
-                    fetchCurrentGauge={this.props.fetchCurrentGauge}
-                  />
-                </Dialog>
-              </div>
+              <Link
+                to={{
+                  pathname: `uploadhydrograph/${this.props.indx}`,
+                  ...this.props,
+                }}
+              >
+                <div style={{ padding: "15px", fontSize: "24px" }}>
+                  {data.name}
+                </div>
+              </Link>
             </div>
             <CardText
               style={{ fontSize: "16px", color: Colors.grey }}
@@ -136,6 +105,7 @@ class UploadData extends React.Component {
 }
 
 UploadData.propTypes = {
+  indx: PropTypes.number,
   data: PropTypes.object,
   getMe: PropTypes.func,
   currentGauge: PropTypes.object,

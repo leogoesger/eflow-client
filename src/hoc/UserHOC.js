@@ -12,7 +12,6 @@ const UserHoc = Component => {
       if (!this.props.currentUser) {
         navigateTo("/login");
       }
-      if (!this.props.currentGauge) this.props.fetchCurrentGauge("11183000");
     }
     render() {
       return (

@@ -62,8 +62,9 @@ const ProfileLayout = ({
           </div>
         )}
         <div style={{ marginTop: "20px" }}>
-          {sortedData.map(d => (
+          {sortedData.map((d, indx) => (
             <UploadData
+              indx={indx}
               key={d.id}
               data={d}
               getMe={getMe}

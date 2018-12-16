@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import {searchGauge} from '../actions/gauge';
-import Layout from '../components/shared/searchBar/Layout';
+import { searchGauge } from "../actions/gauge";
+import Layout from "../components/shared/searchBar/Layout";
 
 class SearchBar extends React.Component {
   _onRowHover(id) {
@@ -44,4 +44,7 @@ SearchBar.propTypes = {
   onRowHover: PropTypes.func,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchBar);

@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as d3 from 'd3';
+import React from "react";
+import PropTypes from "prop-types";
+import * as d3 from "d3";
 
-import Axis from './Axis';
-import BoxplotOverlay from './BoxplotOverlay';
+import Axis from "./Axis";
+import BoxplotOverlay from "./BoxplotOverlay";
 
 export default class LinePlot extends React.Component {
   constructor(props) {
@@ -19,33 +19,53 @@ export default class LinePlot extends React.Component {
   }
 
   updateD3(props) {
-    let {data, width, height, highestKey, zoomTransform, zoomType} = props;
-    this.xScale
-      .domain(d3.extent(data[highestKey], d => this.props.xValue(d)))
-      .range([0, width]);
+    let { data, width, height, highestKey, zoomTransform, zoomType } = props;
 
-    this.yScale
-      .domain([0, d3.max(data[highestKey], d => Number(d.flow))])
-      .range([height, 0]);
+    let [min, max] = d3.extent(data[highestKey], d => this.props.xValue(d));
+
+    if (highestKey === "ninty") {
+      if (data["NINTY"]) {
+        let [minNINTY, maxNINTY] = d3.extent(data["NINTY"], d =>
+          this.props.xValue(d)
+        );
+
+        min = minNINTY <= min ? minNINTY : min;
+        max = maxNINTY >= max ? maxNINTY : max;
+      }
+    }
+
+    this.xScale.domain([min, max]).range([0, width]);
+
+    let yMax = d3.max(data[highestKey], d => Number(d.flow));
+
+    if (highestKey === "ninty") {
+      if (data["NINTY"]) {
+        let maxNINTY = d3.max(data["NINTY"], d => Number(d.flow));
+
+        yMax = maxNINTY >= yMax ? maxNINTY : yMax;
+      }
+    }
+
+    this.yScale.domain([0, yMax]).range([height, 0]);
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
       .y(d => this.yScale(this.props.yValue(d)))
       .curve(d3.curveCardinal);
 
-    if (zoomTransform && zoomType === 'detail') {
+    if (zoomTransform && zoomType === "detail") {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
   }
 
   _transform() {
-    const {zoomTransform, zoomType} = this.props;
+    const { zoomTransform, zoomType } = this.props;
     let x = 0,
       y = 0;
-    let transform = '';
+    let transform = "";
 
-    if (zoomTransform && zoomType === 'scale') {
+    if (zoomTransform && zoomType === "scale") {
       transform = `translate(${x + zoomTransform.x}, ${y +
         zoomTransform.y}) scale(${zoomTransform.k})`;
     } else {
@@ -118,7 +138,7 @@ export default class LinePlot extends React.Component {
     const transform = `translate(${x}, ${y})`;
     if (this.line(data[highestKey])) {
       return (
-        <g style={{fill: 'none'}} transform={this._transform()}>
+        <g style={{ fill: "none" }} transform={this._transform()}>
           <Axis
             scale={this.xScale}
             data={data[highestKey]}

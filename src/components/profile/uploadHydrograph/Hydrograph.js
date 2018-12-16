@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as d3 from "d3";
-import { Paper, Divider, Toggle } from "material-ui";
+import { Paper, Divider, Toggle, Dialog, FlatButton } from "material-ui";
 import { CardHeader } from "material-ui/Card";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 
-import { LinePlot } from "../shared/plots";
-import { classInfo } from "../../constants/classification";
+import Compare from "material-ui/svg-icons/action/compare-arrows";
 
-import { Colors } from "../../styles";
-import SearchBar from "../../containers/SearchBar";
+import { LinePlot } from "../../shared/plots";
+import { classInfo } from "../../../constants/classification";
+
+import { Colors } from "../../../styles";
+import SearchBar from "../../../containers/SearchBar";
 
 const colors = {
   NINTY: Colors.NINTY,
@@ -41,14 +44,18 @@ class Hydrograph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
+      displayToggle: false,
       hydroData: null,
+      hydroUploadData: null,
+      hydroCompareData: null,
       fallFlushTiming: false,
       fallWetTiming: false,
       springTiming: false,
       summerTiming: false,
       zoomTransform: null,
       plots: {
-        overlay: true,
+        overlay: false,
         min: false,
         max: false,
         ninty: true,
@@ -68,7 +75,16 @@ class Hydrograph extends React.Component {
 
   componentDidMount() {
     d3.select(this.svg).call(this.zoom);
-    this._setHydrographData();
+    if (this.props.currentGauge || this.props.currentClassification)
+      this.handleToggle("overlay");
+    this.displayToggle();
+    this._setHydrographUploadData();
+  }
+
+  displayToggle() {
+    if (!this.props.currentGauge && !this.props.currentClassification)
+      this.setState({ displayToggle: false });
+    else this.setState({ displayToggle: true });
   }
 
   componentDidUpdate() {
@@ -85,6 +101,14 @@ class Hydrograph extends React.Component {
     if (nextProps.currentGauge || nextProps.currentClassification) {
       this._setHydrographData(nextProps);
     }
+  }
+
+  handleOpen() {
+    this.setState({ open: true });
+  }
+
+  handleClose() {
+    this.setState({ open: false });
   }
 
   _renderTitleInfo() {
@@ -158,19 +182,14 @@ class Hydrograph extends React.Component {
       NINTY: [],
       MIN: [],
       MAX: [],
-      ten: [],
-      twenty_five: [],
-      fifty: [],
-      seventy_five: [],
-      ninty: [],
-      min: [],
-      max: [],
     };
 
     let hydrographs;
-    hydrographs = this.props.currentGauge
-      ? this.props.currentGauge.hydrographs
-      : this.props.currentClassification.hydrographs;
+
+    if (this.props.currentGauge) {
+      hydrographs = this.props.currentGauge.hydrographs;
+    } else if (this.props.currentClassification)
+      hydrographs = this.props.currentClassification.hydrographs;
 
     if (hydrographs) {
       hydrographs.forEach(hydrograph => {
@@ -183,35 +202,71 @@ class Hydrograph extends React.Component {
       });
     }
 
+    this.setState({ hydroCompareData: hydroData }, () => {
+      this.setState({
+        hydroData: {
+          ...this.state.hydroUploadData,
+          ...this.state.hydroCompareData,
+        },
+      });
+    });
+  }
+
+  _setHydrographUploadData() {
+    let hydroData = {
+      ten: [],
+      twenty_five: [],
+      fifty: [],
+      seventy_five: [],
+      ninty: [],
+      min: [],
+      max: [],
+    };
+
     Object.keys(this.props.data.DRH).forEach(hydrograph => {
       this.props.data.DRH[hydrograph].forEach((ele, index) => {
         hydroData[hydrograph].push({ date: index + 1, flow: ele });
       });
     });
 
-    this.setState({ hydroData: hydroData });
+    this.setState({ hydroUploadData: hydroData }, () => {
+      this.setState({ hydroData: { ...this.state.hydroUploadData } }, () => {
+        this._setHydrographData();
+      });
+    });
   }
 
   handleToggle(cent) {
     let plots = { ...this.state.plots };
     plots[cent] = !this.state.plots[cent];
 
-    this.setState({ plots });
+    this.setState({ plots }, () => {
+      if (cent === "overlay" && !plots[cent]) {
+        this.setState({ hydroData: { ...this.state.hydroUploadData } });
+      } else
+        this.setState({
+          hydroData: {
+            ...this.state.hydroUploadData,
+            ...this.state.hydroCompareData,
+          },
+        });
+    });
   }
 
   _renderPercentilleChips() {
     return (
       <div style={styles.labels}>
         {Object.keys(this.state.plots).map((cent, indx) => {
-          return (
-            <span key={indx} onClick={() => this.handleToggle(cent)}>
-              <Toggle
-                label={percentileMap[cent]}
-                toggled={this.state.plots[cent]}
-                style={styles.track}
-              />
-            </span>
-          );
+          if (cent !== "overlay")
+            return (
+              <span key={indx} onClick={() => this.handleToggle(cent)}>
+                <Toggle
+                  label={percentileMap[cent]}
+                  toggled={this.state.plots[cent]}
+                  style={styles.track}
+                />
+              </span>
+            );
         })}
       </div>
     );
@@ -231,7 +286,7 @@ class Hydrograph extends React.Component {
     }
 
     if (max) {
-      colors.MAX = Colors.MAX;
+      colors.MAX = overlay ? Colors.MAX : "rgba(0, 0, 0, 0)";
       colors.max = Colors.max;
     } else {
       colors.MAX = "rgba(0, 0, 0, 0)";
@@ -240,14 +295,14 @@ class Hydrograph extends React.Component {
 
     if (ninty) {
       colors.ninty = Colors.ninty;
-      colors.NINTY = Colors.NINTY;
+      colors.NINTY = overlay ? Colors.NINTY : "rgba(0, 0, 0, 0)";
     } else {
       colors.ninty = "rgba(0, 0, 0, 0)";
       colors.NINTY = "rgba(0, 0, 0, 0)";
     }
     if (fifty) {
       colors.fifty = Colors.fifty;
-      colors.FIFTY = Colors.FIFTY;
+      colors.FIFTY = overlay ? Colors.FIFTY : "rgba(0, 0, 0, 0)";
     } else {
       colors.fifty = "rgba(0, 0, 0, 0)";
       colors.FIFTY = "rgba(0, 0, 0, 0)";
@@ -255,7 +310,7 @@ class Hydrograph extends React.Component {
 
     if (ten) {
       colors.ten = Colors.ten;
-      colors.TEN = Colors.TEN;
+      colors.TEN = overlay ? Colors.TEN : "rgba(0, 0, 0, 0)";
     } else {
       colors.ten = "rgba(0, 0, 0, 0)";
       colors.TEN = "rgba(0, 0, 0, 0)";
@@ -263,7 +318,7 @@ class Hydrograph extends React.Component {
 
     if (seventy_five) {
       colors.seventy_five = Colors.seventy_five;
-      colors.SEVENTYFIVE = Colors.SEVENTYFIVE;
+      colors.SEVENTYFIVE = overlay ? Colors.SEVENTYFIVE : "rgba(0, 0, 0, 0)";
     } else {
       colors.seventy_five = "rgba(0, 0, 0, 0)";
       colors.SEVENTYFIVE = "rgba(0, 0, 0, 0)";
@@ -271,7 +326,7 @@ class Hydrograph extends React.Component {
 
     if (twenty_five) {
       colors.twenty_five = Colors.twenty_five;
-      colors.TWENTYFIVE = Colors.TWENTYFIVE;
+      colors.TWENTYFIVE = overlay ? Colors.TWENTYFIVE : "rgba(0, 0, 0, 0)";
     } else {
       colors.twenty_five = "rgba(0, 0, 0, 0)";
       colors.TWENTYFIVE = "rgba(0, 0, 0, 0)";
@@ -279,15 +334,64 @@ class Hydrograph extends React.Component {
   }
 
   _renderDRHs(hydroData) {
+    const actions = [
+      <FlatButton
+        key={1}
+        label="Cancel"
+        primary={true}
+        onClick={() => this.handleClose()}
+      />,
+    ];
     this.changePlotsColor();
 
     if (hydroData) {
       return (
         <div>
-          {this._renderTitleInfo()}
           <div style={styles.plotTitle}>
             {"Dimensionless Reference Hydrograph"}
           </div>
+          <Divider />
+          <div
+            style={{
+              margin: "auto",
+              display: "flex",
+            }}
+          >
+            <div style={{ float: "left" }}>
+              <FloatingActionButton
+                mini={true}
+                style={{ margin: "10px" }}
+                onClick={() => this.handleOpen()}
+              >
+                <Compare />
+              </FloatingActionButton>
+              <Dialog
+                title="Compare With:"
+                actions={actions}
+                modal={false}
+                open={this.state.open}
+                onRequestClose={this.handleClose}
+              >
+                <SearchBar
+                  selectRowHandler={gauge => this.selectRowHandler(gauge.id)}
+                />
+              </Dialog>
+              <div />
+            </div>
+            <div style={{ float: "right" }}>{this._renderTitleInfo()}</div>
+            {this.state.displayToggle && (
+              <span
+                style={{ paddingTop: "18px" }}
+                onClick={() => this.handleToggle("overlay")}
+              >
+                <Toggle
+                  toggled={this.state.plots.overlay}
+                  style={styles.track}
+                />
+              </span>
+            )}
+          </div>
+
           <div style={styles.yLabel}>{"Daily flow / Average annual Flow"} </div>
           <svg
             width={620}
@@ -296,14 +400,14 @@ class Hydrograph extends React.Component {
             style={{ cursor: "pointer", marginLeft: "10px" }}
           >
             <LinePlot
-              x={this.props.containerWidth / 10}
+              x={410 / 10}
               y={25}
               width={550}
               height={300}
               data={this.state.hydroData}
               xValue={value => value.date}
               yValue={value => value.flow}
-              highestKey={"NINTY"}
+              highestKey={"ninty"}
               colors={colors}
               overLayBoxPlotData={[]}
               verticalOverlayBoxPlotData={[]}
@@ -316,34 +420,28 @@ class Hydrograph extends React.Component {
     }
   }
 
+  async selectRowHandler(gaugeId) {
+    await this.props.fetchCurrentGauge(gaugeId);
+    this._setHydrographData();
+    if (!this.state.plots.overlay) this.handleToggle("overlay");
+    this.displayToggle();
+    this.handleClose();
+  }
+
   render() {
     return (
-      <Paper style={styles.graph} className="tour-hydro-general-display">
-        {this._renderDRHs(this.state.hydroData)}
-        {this._renderPercentilleChips()}
-        <div
-          style={{
-            width: "90%",
-            margin: "auto",
-            paddingTop: "10px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-          }}
-        >
-          <div style={{ fontWeight: "bold" }}>Compare with: </div>
-          <div>
-            <SearchBar
-              selectRowHandler={gauge => this.props.fetchCurrentGauge(gauge.id)}
-            />
-          </div>
-        </div>
-      </Paper>
+      <React.Fragment>
+        <Paper style={styles.graph} className="tour-hydro-general-display">
+          {this._renderDRHs(this.state.hydroData)}
+          {this._renderPercentilleChips()}
+        </Paper>
+      </React.Fragment>
     );
   }
 }
 
 Hydrograph.propTypes = {
+  match: PropTypes.object,
   containerWidth: PropTypes.number,
   currentGauge: PropTypes.object,
   currentClassification: PropTypes.object,
@@ -356,6 +454,18 @@ Hydrograph.propTypes = {
 };
 
 const styles = {
+  banner: {
+    backgroundColor: "#424242",
+    height: "230px",
+    zIndex: "0",
+  },
+  paperStyle: {
+    height: "600px",
+    margin: "-60px auto 160px auto",
+    width: "1000px",
+    zIndex: "2",
+    overflow: "scroll",
+  },
   yLabel: {
     position: "absolute",
     fontSize: "14px",
@@ -365,12 +475,12 @@ const styles = {
     transform: "rotate(-180deg)",
   },
   labels: {
-    width: "80%",
     display: "flex",
+    margin: "auto",
     justifyContent: "space-around",
-    position: "absolute",
-    top: "580px",
-    left: "40px",
+    paddingBottom: "20px",
+    //   position: "absolute",
+    //   top: "600px",
   },
   label: {
     height: "10px",
@@ -378,10 +488,11 @@ const styles = {
     marginTop: "0px",
   },
   graph: {
-    height: "600px",
-    width: "650px",
+    height: "auto",
+    width: "100%",
     marginBottom: "20px",
     borderRadius: "0px",
+    overflow: "visible",
   },
   plotTitle: {
     marginTop: "40px",
@@ -389,6 +500,7 @@ const styles = {
     textAlign: "center",
     fontWeight: "500",
     fontSize: "16px",
+    padding: "20px",
   },
   labelName: { fontSize: "14px" },
   minMax: {
