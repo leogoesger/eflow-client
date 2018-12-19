@@ -26,6 +26,7 @@ import Login from "../containers/Login";
 import SignUp from "../containers/SignUp";
 import UnknownRoute from "./shared/UnknownRoute";
 import Profile from "../components/profile/ProfileLayout";
+import UploadHydrograph from "../containers/UploadHydrograph";
 
 import UserHOC from "../hoc/UserHOC";
 
@@ -91,6 +92,11 @@ class App extends React.Component {
                 exact
                 path="/profile"
                 component={withTracker(UserHOC(Profile))}
+              />
+              <Route
+                exact
+                path="/uploadhydrograph/:id"
+                component={withTracker(UploadHydrograph)}
               />
               <Route exact path="*" component={withTracker(UnknownRoute)} />
             </Switch>
