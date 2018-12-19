@@ -15,6 +15,12 @@ class Layout extends React.Component {
     };
   }
 
+  _updateHoverGauge(gaugeId) {
+    this.props.updateHoveredGauge(
+      this.props.gauges.find(gauge => gauge.id === gaugeId)
+    );
+  }
+
   onClickHandler(e) {
     const resetStates = {
       loadDRH: false,
@@ -38,10 +44,13 @@ class Layout extends React.Component {
         <Hydrograph
           data={this.props.data}
           fetchCurrentGauge={this.props.fetchCurrentGauge}
-          gauge={this.props.gauge}
+          gauges={this.props.gauges}
           currentGauge={this.props.currentGauge}
           currentClassification={this.props.currentClassification}
           removeClassGaugeProps={this.props.removeClassGaugeProps}
+          classifications={this.props.classifications}
+          fetchClassification={this.props.fetchClassification}
+          updateHoveredGauge={gaugeId => this._updateHoverGauge(gaugeId)}
         />
       );
     }
@@ -55,8 +64,7 @@ class Layout extends React.Component {
         <div style={styles.paperStyle}>
           <div
             style={{
-              width: "15%",
-              float: "left",
+              width: "20%",
             }}
           >
             <Menu>
@@ -76,13 +84,18 @@ class Layout extends React.Component {
 
           <div
             style={{
-              width: "83%",
-              float: "right",
-              borderLeft: "1px solid rgb(224,224,224)",
-              height: "inherit",
+              width: "80%",
+              margin: "0 auto",
+              boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px",
             }}
           >
-            <div style={{ width: "90%", margin: "auto" }}>
+            <div
+              style={{
+                width: "90%",
+                margin: "30px auto",
+                position: "relative",
+              }}
+            >
               {this.renderClicked(this.state)}
             </div>
           </div>
@@ -96,9 +109,12 @@ Layout.propTypes = {
   data: PropTypes.object,
   currentClassification: PropTypes.object,
   currentGauge: PropTypes.object,
-  gauge: PropTypes.array,
+  gauges: PropTypes.array,
   fetchCurrentGauge: PropTypes.func,
   removeClassGaugeProps: PropTypes.func,
+  classifications: PropTypes.array,
+  fetchClassification: PropTypes.func,
+  updateHoveredGauge: PropTypes.func,
 };
 
 const styles = {
@@ -108,10 +124,12 @@ const styles = {
     zIndex: "0",
   },
   paperStyle: {
-    height: "auto",
-    margin: "-60px auto 160px auto",
+    display: "flex",
+    justifyContent: "space-around",
+    height: "100%",
+    margin: "-60px auto 100px auto",
     backgroundColor: "white",
-    width: "1000px",
+    width: "1100px",
     zIndex: "2",
     overflow: "scroll",
   },
