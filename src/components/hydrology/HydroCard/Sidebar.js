@@ -124,12 +124,13 @@ class Sidebar extends React.Component {
             <SelectField
               floatingLabelText="Water Year Type"
               value={this.state.value}
+              floatingLabelStyle={{ color: 'black', fontSize: '16px' }}
               onChange={this.handleChange}
               style={{
                 width: '86%',
                 margin: '10px 10px',
                 color: Colors.grey,
-                fontSize: '12px',
+                fontSize: '14px',
               }}
             >
               {conditionTypes.map((cond, indx) => {
