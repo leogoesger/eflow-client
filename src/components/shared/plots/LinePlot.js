@@ -23,28 +23,30 @@ export default class LinePlot extends React.Component {
 
     let [min, max] = d3.extent(data[highestKey], d => this.props.xValue(d));
 
-    if (highestKey === "ninty") {
-      if (data["NINTY"]) {
-        let [minNINTY, maxNINTY] = d3.extent(data["NINTY"], d =>
-          this.props.xValue(d)
-        );
+    /* Uncomment below code to rescale X axis based on highest 90% data when comparing*/
+    // if (highestKey === "ninty") {
+    //   if (data["NINTY"]) {
+    //     let [minNINTY, maxNINTY] = d3.extent(data["NINTY"], d =>
+    //       this.props.xValue(d)
+    //     );
 
-        min = minNINTY <= min ? minNINTY : min;
-        max = maxNINTY >= max ? maxNINTY : max;
-      }
-    }
+    //     min = minNINTY <= min ? minNINTY : min;
+    //     max = maxNINTY >= max ? maxNINTY : max;
+    //   }
+    // }
 
     this.xScale.domain([min, max]).range([0, width]);
 
     let yMax = d3.max(data[highestKey], d => Number(d.flow));
 
-    if (highestKey === "ninty") {
-      if (data["NINTY"]) {
-        let maxNINTY = d3.max(data["NINTY"], d => Number(d.flow));
+    /* Uncomment below code to rescale Y axis based on highest 90% data when comparing*/
+    // if (highestKey === "ninty") {
+    //   if (data["NINTY"]) {
+    //     let maxNINTY = d3.max(data["NINTY"], d => Number(d.flow));
 
-        yMax = maxNINTY >= yMax ? maxNINTY : yMax;
-      }
-    }
+    //     yMax = maxNINTY >= yMax ? maxNINTY : yMax;
+    //   }
+    // }
 
     this.yScale.domain([0, yMax]).range([height, 0]);
 

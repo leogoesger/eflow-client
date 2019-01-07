@@ -1,18 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Drawer from "material-ui/Drawer";
-import Toggle from "material-ui/Toggle";
-import Divider from "material-ui/Divider";
-import RaisedButton from "material-ui/RaisedButton";
+import SearchBar from "../../../containers/SearchBar";
+import {
+  Drawer,
+  Toggle,
+  Divider,
+  RadioButton,
+  RadioButtonGroup,
+  RaisedButton,
+  DropDownMenu,
+  MenuItem,
+} from "material-ui";
+
 import Clear from "material-ui/svg-icons/content/clear";
-import ClassGaugeList from "../../hydrology/HydroCard/ClassGaugeList";
 import { Colors } from "../../../styles";
+
+import { classInfo } from "../../../constants/classification";
 
 class MetricDrawer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      compare: "",
+      value: 0,
+    };
+  }
+
+  handleRadioButton(btn) {
+    this.setState({
+      compare: btn,
+    });
   }
 
   _renderGeneralToggleBtns() {
@@ -37,7 +55,6 @@ class MetricDrawer extends React.Component {
                   label={percentileMap[cent]}
                   toggled={this.props.plots[cent]}
                   labelStyle={styles.labelStyle}
-                  style={styles.track}
                 />
               </span>
             );
@@ -62,10 +79,111 @@ class MetricDrawer extends React.Component {
           labelStyle={{ fontSize: "12px" }}
           icon={<Clear color={Colors.white} />}
           onClick={() => this.props.closeDrawer(false)}
-          style={{ margin: "20px auto 5px 50px" }}
+          style={{ margin: "20px auto 5px 85px" }}
         />
       </div>
     );
+  }
+
+  renderCompare() {
+    return (
+      <div>
+        <div style={{ padding: "15px" }}>
+          <h1
+            style={{
+              display: "inline",
+              ...styles.compareStyle,
+            }}
+          >
+            Compare With:
+          </h1>
+          <RadioButtonGroup
+            name="compare"
+            valueSelected={this.state.compare}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              padding: "15px 0px 15px 0px",
+            }}
+          >
+            <RadioButton
+              value="class"
+              label="Class"
+              labelStyle={styles.compareStyle}
+              onClick={() => {
+                this.handleRadioButton("class");
+              }}
+            />
+            <RadioButton
+              value="gauge"
+              label="Gauge"
+              labelStyle={styles.compareStyle}
+              onClick={() => {
+                this.handleRadioButton("gauge");
+              }}
+            />
+          </RadioButtonGroup>
+          {this.state.compare ? (
+            <React.Fragment>
+              <Divider />
+              {this.state.compare === "class"
+                ? this.renderClassSelector()
+                : this.renderGaugeSelector()}
+            </React.Fragment>
+          ) : null}
+        </div>
+      </div>
+    );
+  }
+
+  handleChange(value) {
+    this.setState({ value });
+    this.props.handleToggle("OVERLAY");
+    this.props.fetchClassification(value);
+  }
+
+  renderClassSelector() {
+    return (
+      <div style={{ height: "72px" }}>
+        <DropDownMenu
+          value={this.state.value}
+          onChange={(e, indx, val) => this.handleChange(val)}
+          openImmediately={true}
+          labelStyle={styles.compareStyle}
+          menuItemStyle={styles.compareStyle}
+          underlineStyle={{ margin: "auto", bottom: "-8px" }}
+          autoWidth={false}
+          style={{ width: "275px" }}
+        >
+          <MenuItem value={0} primaryText="Class List" disabled={true} />
+          {Object.keys(classInfo).map((val, indx) => {
+            return (
+              <MenuItem
+                key={indx + val}
+                value={indx + 1}
+                primaryText={`${indx + 1}: ${classInfo[val].abbre} -${
+                  classInfo[val].fullName
+                }`}
+              />
+            );
+          })}
+        </DropDownMenu>
+      </div>
+    );
+  }
+
+  renderGaugeSelector() {
+    return (
+      <SearchBar
+        selectRowHandler={d => this.selectSearchedRowHandler(d)}
+        onRowHover={d => this.props.updateHoveredGauge(d)}
+      />
+    );
+  }
+
+  selectSearchedRowHandler(gauge) {
+    this.props.handleToggle("OVERLAY");
+    this.props.fetchCurrentGauge(gauge.id);
   }
 
   render() {
@@ -73,7 +191,7 @@ class MetricDrawer extends React.Component {
       <Drawer
         containerStyle={styles.container}
         docked={true}
-        width={385}
+        width={301}
         overlayStyle={styles.overlay}
         openSecondary={true}
         open={this.props.isDrawerOpen}
@@ -87,12 +205,7 @@ class MetricDrawer extends React.Component {
             height: "96%",
           }}
         >
-          <ClassGaugeList
-            fetchClassification={this.props.fetchClassification}
-            classifications={this.props.classifications}
-            updateHoveredGauge={this.props.updateHoveredGauge}
-            fetchCurrentGauge={this.props.fetchCurrentGauge}
-          />
+          {this.renderCompare()}
 
           {this._renderGeneralToggleBtns()}
         </div>
@@ -141,6 +254,10 @@ const styles = {
   labelStyle: {
     color: Colors.grey,
     fontSize: "12px",
+  },
+  compareStyle: {
+    color: Colors.grey,
+    fontSize: "14px",
   },
 };
 
