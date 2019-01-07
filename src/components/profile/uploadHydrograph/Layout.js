@@ -4,7 +4,6 @@ import { Menu, MenuItem } from "material-ui";
 
 import Hydrograph from "./Hydrograph";
 import Divider from "material-ui/Divider";
-import Book from "material-ui/svg-icons/av/library-books";
 import Chart from "material-ui/svg-icons/editor/show-chart";
 
 class Layout extends React.Component {
@@ -12,6 +11,8 @@ class Layout extends React.Component {
     super(props);
     this.state = {
       loadDRH: true,
+      loadAFP: false,
+      loadBP: false,
     };
   }
 
@@ -24,6 +25,8 @@ class Layout extends React.Component {
   onClickHandler(e) {
     const resetStates = {
       loadDRH: false,
+      loadAFP: false,
+      loadBP: false,
     };
 
     resetStates[e] = true;
@@ -54,6 +57,20 @@ class Layout extends React.Component {
         />
       );
     }
+    if (clicked.loadAFP) {
+      return (
+        <h1 style={{ height: "570px", margin: "auto" }}>
+          New Feature Coming Soon!
+        </h1>
+      );
+    }
+    if (clicked.loadBP) {
+      return (
+        <h1 style={{ height: "570px", margin: "auto" }}>
+          New Feature Coming Soon!
+        </h1>
+      );
+    }
     return null;
   }
 
@@ -71,14 +88,35 @@ class Layout extends React.Component {
               <MenuItem
                 primaryText={this.props.data.name}
                 value={0}
-                leftIcon={<Book />}
+                disabled={true}
+                style={{ fontWeight: "bold", color: "black" }}
               />
               <Divider style={{ width: "98%" }} />
               <MenuItem
                 primaryText="DRH"
+                value={"drh"}
                 leftIcon={<Chart />}
+                style={this.state.loadDRH ? styles.selectedMenu : null}
                 onClick={() => this.onClickHandler("loadDRH")}
               />
+
+              <Divider style={{ width: "98%" }} />
+              <MenuItem
+                primaryText="Annual Flow Plot"
+                value={"afp"}
+                leftIcon={<Chart />}
+                style={this.state.loadAFP ? styles.selectedMenu : null}
+                onClick={() => this.onClickHandler("loadAFP")}
+              />
+              <Divider style={{ width: "98%" }} />
+              <MenuItem
+                primaryText="Box Plots"
+                value={"bp"}
+                leftIcon={<Chart />}
+                style={this.state.loadBP ? styles.selectedMenu : null}
+                onClick={() => this.onClickHandler("loadBP")}
+              />
+              <Divider style={{ width: "98%" }} />
             </Menu>
           </div>
 
@@ -132,6 +170,12 @@ const styles = {
     width: "1100px",
     zIndex: "2",
     overflow: "scroll",
+  },
+  selectedMenu: {
+    borderRightStyle: "solid",
+    borderWidth: "3px",
+    marginRight: "5px",
+    borderColor: "rgba(0, 188, 212, 0.5)",
   },
 };
 

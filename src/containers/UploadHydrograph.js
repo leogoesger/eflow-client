@@ -36,6 +36,8 @@ class UploadHydrograph extends React.Component {
   }
 
   render() {
+    if (!this.props.currentUser) return null;
+
     return (
       <React.Fragment>
         <Layout

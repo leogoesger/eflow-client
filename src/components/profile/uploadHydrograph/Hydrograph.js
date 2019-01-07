@@ -40,11 +40,11 @@ class Hydrograph extends React.Component {
         overlay: false,
         min: false,
         max: false,
-        ninty: false,
-        seventy_five: false,
+        ninty: true,
+        seventy_five: true,
         fifty: true,
-        twenty_five: false,
-        ten: false,
+        twenty_five: true,
+        ten: true,
       },
       openDrawer: false,
     };
@@ -206,7 +206,9 @@ class Hydrograph extends React.Component {
 
   handleToggle(cent) {
     let plots = { ...this.state.plots };
-    plots[cent] = !this.state.plots[cent];
+
+    if (cent === "OVERLAY") plots["overlay"] = true;
+    else plots[cent] = !this.state.plots[cent];
 
     this.setState({ plots }, () => {
       if (cent === "overlay" && !plots[cent]) {
@@ -276,7 +278,8 @@ class Hydrograph extends React.Component {
               justifyContent: "space-between",
             }}
           >
-            {this.props.currentGauge || this.props.currentClassification ? (
+            {(this.props.currentGauge || this.props.currentClassification) &&
+            this.state.plots.overlay ? (
               <div style={{ float: "left", display: "flex" }}>
                 <div style={{ float: "left" }}>
                   <FloatingActionButton
@@ -291,7 +294,7 @@ class Hydrograph extends React.Component {
                 <div style={{ float: "right" }}>{this._renderTitleInfo()}</div>
               </div>
             ) : (
-              <div />
+              <div style={{ height: "60px" }} />
             )}
             <div style={{ float: "right" }}>
               <RaisedButton
