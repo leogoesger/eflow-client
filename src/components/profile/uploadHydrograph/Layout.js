@@ -6,6 +6,8 @@ import Hydrograph from "./Hydrograph";
 import Divider from "material-ui/Divider";
 import Chart from "material-ui/svg-icons/editor/show-chart";
 
+import MetricCard from "./MetricCard";
+
 class Layout extends React.Component {
   constructor(props) {
     super(props);
@@ -58,11 +60,7 @@ class Layout extends React.Component {
       );
     }
     if (clicked.loadAFP) {
-      return (
-        <h1 style={{ height: "570px", margin: "auto" }}>
-          New Feature Coming Soon!
-        </h1>
-      );
+      return <MetricCard data={this.props.data} />;
     }
     if (clicked.loadBP) {
       return (
