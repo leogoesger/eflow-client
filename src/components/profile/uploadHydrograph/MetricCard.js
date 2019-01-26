@@ -3,20 +3,15 @@ import PropTypes from "prop-types";
 import * as d3 from "d3";
 import Slider from "material-ui/Slider";
 import Paper from "material-ui/Paper";
-// import RaisedButton from "material-ui/RaisedButton";
-// import IconMenu from "material-ui/IconMenu";
-// import MenuItem from "material-ui/MenuItem";
-// import FlatButton from "material-ui/FlatButton";
-// import Setting from "material-ui/svg-icons/action/settings";
-// import FileDownload from "material-ui/svg-icons/file/file-download";
-// import { Tooltip } from "react-tippy";
-
+import RaisedButton from "material-ui/RaisedButton";
+import Setting from "material-ui/svg-icons/action/settings";
 import Card, { CardHeader } from "material-ui/Card";
 import Divider from "material-ui/Divider";
 import { SimpleLinePlot } from "../../shared/plots";
-//import { classInfo } from "../../../constants/classification";
+import MetricGaugeDrawer from "../../metricDetail/MetricGaugeDrawer";
 import { Colors } from "../../../styles";
 import ErrorBoundary from "../../shared/ErrorBoundary";
+import { removeNaN } from "../../../utils/helpers";
 
 class MetricCard extends React.Component {
   constructor(props) {
@@ -25,6 +20,11 @@ class MetricCard extends React.Component {
       currentYear: this.props.data.yearRanges[0],
       zoomTransform: null,
       isDrawerOpen: false,
+      logScale: false,
+      isHydrographOverlay: false,
+      fixedYaxis: 0,
+      toggledMetrics: [],
+      yMax: 475,
     };
     this.zoom = d3
       .zoom()
@@ -41,12 +41,6 @@ class MetricCard extends React.Component {
   componentDidUpdate() {
     d3.select(this.svg).call(this.zoom);
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.data.Years.gaugeId !== this.props.data.Years.gaugeId) {
-  //     this.setState({ currentYear: nextProps.data.Years.year[0] });
-  //   }
-  // }
 
   zoomed() {
     this.setState({
@@ -73,6 +67,32 @@ class MetricCard extends React.Component {
     return flowObjects;
   }
 
+  handleToggleLogScale(bool) {
+    this.setState({ logScale: bool });
+  }
+
+  handleHydrographOverlay(bool) {
+    this.setState({ isHydrographOverlay: bool });
+  }
+
+  handleFixedYaxis(percentile) {
+    this.setState({ fixedYaxis: percentile });
+  }
+
+  getYaxisMax(_, percentile) {
+    let flowDataPOR = [];
+    this.props.data.flowMatrix.forEach(flow => {
+      flowDataPOR = flowDataPOR.concat(flow);
+    });
+    this.setState({
+      yMax: d3.quantile(removeNaN(flowDataPOR), percentile),
+    });
+  }
+
+  toggleAnnualFlowMetrics(metrics) {
+    this.setState({ toggledMetrics: metrics });
+  }
+
   _renderSliderHelper() {
     const year = this.props.data.yearRanges;
     return (
@@ -93,48 +113,6 @@ class MetricCard extends React.Component {
     );
   }
 
-  // _renderYearStatus(condition) {
-  //   return (
-  //     <div
-  //       style={{
-  //         marginTop: "-15px",
-  //         display: "flex",
-  //         justifyContent: "flex-end",
-  //         marginRight: "20px",
-  //       }}
-  //     >
-  //       {this.state.currentYear > this.props.data.Gauge.unimpairedEndYear ||
-  //       this.state.currentYear < this.props.data.Gauge.unimpairedStartYear ? (
-  //         <span
-  //           style={{ color: Colors.blue, fontSize: "14px", fontWeight: "700" }}
-  //           className="tour-metricDetail-impairedStatus"
-  //         >
-  //           <Tooltip title={"Water Year Type"} position="top" arrow={true}>
-  //             {condition}
-  //           </Tooltip>
-  //           {" | "}
-  //           <Tooltip title={"Alteration Status"} position="top" arrow={true}>
-  //             {"Impaired"}
-  //           </Tooltip>
-  //         </span>
-  //       ) : (
-  //         <span
-  //           style={{ color: Colors.blue, fontSize: "14px", fontWeight: "700" }}
-  //           className="tour-metricDetail-impairedStatus"
-  //         >
-  //           <Tooltip title={"Water Year Type"} position="top" arrow={true}>
-  //             {condition}
-  //           </Tooltip>
-  //           {" | "}
-  //           <Tooltip title={"Alteration Status"} position="top" arrow={true}>
-  //             {"Unimpaired"}
-  //           </Tooltip>
-  //         </span>
-  //       )}
-  //     </div>
-  //   );
-  // }
-
   populateAnnualFlowData(flowMatrix) {
     const yearIndx = this.props.data.yearRanges.findIndex(
       year => year === this.state.currentYear
@@ -145,6 +123,41 @@ class MetricCard extends React.Component {
       annualFlowData.push(d[yearIndx]);
     });
     return annualFlowData;
+  }
+
+  populateAnnualMetricsData() {
+    const yearIndx = this.props.data.yearRanges.findIndex(
+      year => year === this.state.currentYear
+    );
+    const annualMetricsData = {
+      Springs: {},
+      Falls: {},
+      Summers: {},
+      FallWinters: {},
+      Winters: {},
+    };
+
+    Object.keys(metricsRef).forEach(metric => {
+      const metrics = {};
+      Object.keys(metricsRef[metric])
+        .filter(k => k !== "tableName")
+        .forEach(key => {
+          if (Object.keys(metricsRef[metric][key]).indexOf("two") === -1) {
+            metrics[metricsRef[metric][key]] = this.props.data[metric][key][
+              yearIndx
+            ];
+          } else {
+            Object.keys(metricsRef[metric][key]).forEach(subKey => {
+              metrics[metricsRef[metric][key][subKey]] = this.props.data[
+                metric
+              ][key][subKey][yearIndx];
+            });
+          }
+        });
+      annualMetricsData[metricsRef[metric]["tableName"]] = { ...metrics };
+    });
+
+    return annualMetricsData;
   }
 
   _renderAnnualPlot() {
@@ -159,6 +172,7 @@ class MetricCard extends React.Component {
     }
     const { flowMatrix } = this.props.data;
     const annualFlowData = this.populateAnnualFlowData(flowMatrix);
+
     const filteredData = annualFlowData.filter(d => d === null);
 
     if (filteredData.length > 200) {
@@ -197,13 +211,13 @@ class MetricCard extends React.Component {
                 color={Colors.blue}
                 zoomTransform={this.state.zoomTransform}
                 zoomType="detail"
-                logScale={false}
-                isHydrographOverlay={false}
-                hydrograph={this.props.data.DRH}
-                toggledMetrics={null}
-                annualFlowData={null}
-                yMax={null}
-                fixedYaxisPercentile={null}
+                logScale={this.state.logScale}
+                isHydrographOverlay={this.state.isHydrographOverlay}
+                hydrograph={this.props.data.hydrograph}
+                toggledMetrics={this.state.toggledMetrics}
+                annualFlowData={this.populateAnnualMetricsData()}
+                yMax={this.state.yMax}
+                fixedYaxisPercentile={this.state.fixedYaxis}
               />
             </svg>
           </div>
@@ -231,70 +245,25 @@ class MetricCard extends React.Component {
             actAsExpander={false}
             showExpandableButton={false}
           />
-
-          {/* <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              width: "40%",
-              marginTop: "10px",
-            }}
-          >
-            <IconMenu
-              iconButtonElement={
-                <FlatButton
-                  className="tour-metricDetail-download"
-                  label="Download"
-                  style={{ marginLeft: "20px", marginTop: "10px" }}
-                  labelStyle={{ fontSize: "12px", color: Colors.gold }}
-                  icon={<FileDownload color={Colors.gold} />}
-                />
-              }
-            >
-              <MenuItem
-                primaryText="Annual Flow Matrix"
-                onClick={() => {
-                  const url1 = `${process.env.S3_BUCKET}annual_flow_matrix/${
-                    data.Gauge.id
-                  }.csv`;
-                  return window.open(url1);
-                }}
-              />
-              <MenuItem
-                primaryText="Annual Metric Result"
-                onClick={() => {
-                  const url2 = `${process.env.S3_BUCKET}annual_flow_result/${
-                    data.Gauge.id
-                  }_annual_result_matrix.csv`;
-                  return window.open(url2);
-                }}
-              />
-              <MenuItem
-                primaryText="Metrics Read Me"
-                onClick={() =>
-                  window.open(
-                    "https://s3-us-west-1.amazonaws.com/funcflow/resources/Reference_Data.csv"
-                  )
-                }
-              />
-            </IconMenu>
-
-            <div>
-              <RaisedButton
-                className="tour-metricDetail-display"
-                label="Display"
-                backgroundColor={Colors.gold}
-                labelColor={Colors.white}
-                disabled={false}
-                style={{ marginTop: "10px", marginRight: "10px" }}
-                icon={<Setting />}
-                labelStyle={{ fontSize: "12px" }}
-                onClick={() => this.props.toggleMetricGaugeDrawer(true)}
-              />
-            </div>
-          </div> */}
         </div>
         <Divider />
+        <RaisedButton
+          className="tour-metricDetail-display"
+          label="Display"
+          backgroundColor={Colors.gold}
+          labelColor={Colors.white}
+          disabled={false}
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            top: "67px",
+            width: "auto",
+            left: "672px",
+          }}
+          icon={<Setting />}
+          labelStyle={{ fontSize: "12px" }}
+          onClick={() => this._toggleDrawer(true)}
+        />
 
         <Paper
           style={{
@@ -321,6 +290,24 @@ class MetricCard extends React.Component {
           onChange={(e, v) => this._handleSlider(e, v)}
         />
         {this._renderSliderHelper()}
+        <MetricGaugeDrawer
+          isDrawerOpen={this.state.isDrawerOpen}
+          toggleMetricGaugeDrawer={bool => this._toggleDrawer(bool)}
+          toggledMetrics={this.state.toggledMetrics}
+          logScale={this.state.logScale}
+          toggleAnnualFlowMetrics={metrics =>
+            this.toggleAnnualFlowMetrics(metrics)
+          }
+          handleToggleLogScale={bool => this.handleToggleLogScale(bool)}
+          handleHydrographOverlay={bool => this.handleHydrographOverlay(bool)}
+          handleFixedYaxis={percentile => this.handleFixedYaxis(percentile)}
+          isHydrographOverlay={this.state.isHydrographOverlay}
+          fixedYaxis={this.state.fixedYaxis}
+          currentGaugeId={null}
+          getYaxisMax={(gaugeId, percentile) =>
+            this.getYaxisMax(gaugeId, percentile)
+          }
+        />
       </Card>
     );
   }
@@ -360,4 +347,48 @@ const styles = {
     margin: "5px 0px 5px 275px",
   },
 };
+
+const metricsRef = {
+  spring: {
+    tableName: "Springs",
+    rocs: "rateOfChange",
+    timings: "timing",
+    durations: "duration",
+    magnitudes: "magnitude",
+  },
+
+  summer: {
+    tableName: "Summers",
+    durations_wet: "durationWet",
+    durations_flush: "durationFlush",
+    timings: "timing",
+    magnitudes_ten: "magnitude10",
+    magnitudes_fifty: "magnitude50",
+    no_flow_counts: "noFlowCount",
+  },
+
+  fall: {
+    tableName: "Falls",
+    timings: "timing",
+    wet_timings: "timingWet",
+    durations: "duration",
+    magnitudes: "magnitude",
+  },
+
+  fallWinter: {
+    tableName: "FallWinters",
+    baseflows: "magWet",
+  },
+
+  winter: {
+    tableName: "Winters",
+    magnitudes: {
+      two: "magnitude2",
+      ten: "magnitude10",
+      five: "magnitude5",
+      twenty: "magnitude20",
+    },
+  },
+};
+
 export default MetricCard;

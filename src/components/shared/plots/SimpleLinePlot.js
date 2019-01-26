@@ -78,9 +78,8 @@ export default class SimpleLinePlot extends React.Component {
   }
 
   _renderOverLay(transform) {
-    
     const { annualFlowData, toggledMetrics } = this.props;
-    if(!annualFlowData) return null;
+    if (!annualFlowData || !toggledMetrics) return null;
     return Object.keys(annualFlowData).map(tableName => {
       return Object.keys(annualFlowData[tableName]).map(columnName => {
         const currentMetric = metricReference.filter(
