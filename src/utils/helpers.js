@@ -1,7 +1,12 @@
 import { history } from "../store/configureStore";
 import { fromJS } from "immutable";
 import { detect } from "detect-browser";
-import { assign } from "lodash";
+import { assign, sortBy } from "lodash";
+
+export function removeNaN(array) {
+  const filteredArray = array.filter(ele => !isNaN(Number(ele)));
+  return sortBy(filteredArray.map(Number));
+}
 
 export function getNameErrorMessage(name) {
   if (!name) {

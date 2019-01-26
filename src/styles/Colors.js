@@ -25,13 +25,13 @@ const Colors = {
   MIN: "#c7c7c7",
   MAX: "#c7c7c7",
 
-  ninty: "#8642f4",
-  seventy_five: "#41f4cd",
-  fifty: "#f48e41",
-  twenty_five: "#41f4cd",
-  ten: "#8642f4",
-  min: "#636363",
-  max: "#636363",
+  ninty: "#2196f3",
+  seventy_five: "#4fc3f7",
+  fifty: "#ef5350",
+  twenty_five: "#4fc3f7",
+  ten: "#2196f3",
+  min: "#c7c7c7",
+  max: "#c7c7c7",
 };
 
 export default Colors;
