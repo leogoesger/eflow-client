@@ -19,9 +19,12 @@ const ProfileLayout = ({
     return null;
   }
 
-  const sortedData = cloneDeep(currentUser.uploadData).sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  let sortedData = [];
+  if (currentUser.uploadData) {
+    sortedData = cloneDeep(currentUser.uploadData).sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  }
 
   return (
     <React.Fragment>
@@ -49,7 +52,11 @@ const ProfileLayout = ({
             </a>{" "}
             for a data format example.
           </div>
-          <Uploader enabled={currentUser.uploadData.length < 5} />
+          <Uploader
+            enabled={
+              !currentUser.uploadData || currentUser.uploadData.length < 5
+            }
+          />
         </div>
         <div>
           <Divider style={{ margin: "0px" }} />
