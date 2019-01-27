@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Jan 28th, 2019',
+            version: 'v2.02',
+            title: 'Update Param Adjustments',
+            tasks: [
+              'Add on hover effect on parameter adjustments',
+              'Change lower and upper bound for each parameter',
+              'Change parameter name and description',
+            ],
+          },
+          {
             date: 'Jan 27th, 2019',
             version: 'v2.01',
             title: 'Upload Annual Flow Plot',

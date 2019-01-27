@@ -3,18 +3,8 @@ import PropTypes from 'prop-types';
 import { Slider, Divider } from 'material-ui';
 import { paramRange } from '../../constants/params';
 
+import { Tooltip } from 'react-tippy';
 class ParamsSliders extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { ...this.props.params };
-  // }
-
-  // handleSlider(event, value, season, param) {
-  //   const tmpState = { ...this.state };
-  //   tmpState[season][param] = value;
-  //   this.setState({ ...tmpState });
-  // }
-
   render() {
     const params = { ...this.props.params };
 
@@ -41,9 +31,15 @@ class ParamsSliders extends React.Component {
                       margin: 'auto',
                     }}
                   >
-                    <div style={{ paddingLeft: '10px' }}>
-                      {paramRange[season][param].map}: {params[season][param]}
-                    </div>
+                    <Tooltip
+                      title={paramRange[season][param].description}
+                      position="top"
+                      arrow={true}
+                    >
+                      <div style={{ paddingLeft: '10px' }}>
+                        {paramRange[season][param].map}: {params[season][param]}
+                      </div>
+                    </Tooltip>
                     <Slider
                       min={paramRange[season][param].min}
                       max={paramRange[season][param].max}
