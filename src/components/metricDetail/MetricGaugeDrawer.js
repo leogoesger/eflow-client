@@ -101,7 +101,7 @@ class MetricGaugeDrawer extends React.Component {
             <CardHeader
               title={table.displayTableName}
               titleStyle={{ width: "200px" }}
-              textStyle={{ paddingRight: "50px" }}
+              textStyle={{ paddingRight: "30px" }}
               actAsExpander={true}
               showExpandableButton={true}
               subtitleStyle={{ paddingTop: "3px" }}
