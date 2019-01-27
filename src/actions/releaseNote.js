@@ -13,6 +13,17 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Jan 27th, 2019',
+            version: 'v2.01',
+            title: 'Upload Annual Flow Plot',
+            tasks: [
+              'User can visualize annual flow plot',
+              'DRH overlay',
+              'Annual metric results',
+              'Minor bug fixes',
+            ],
+          },
+          {
             date: 'Dec 17th, 2018',
             version: 'v2.00',
             title: 'Upload DRH',

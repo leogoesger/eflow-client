@@ -239,7 +239,7 @@ class MetricCard extends React.Component {
           }}
         >
           <CardHeader
-            style={{ padding: "20px", margin: "auto" }}
+            style={{ padding: "20px", margin: "auto", fontWeight: "bold" }}
             title="Annual Flow Plot"
             textStyle={{ paddingRight: "0px" }}
             actAsExpander={false}
