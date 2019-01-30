@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Jan 30th, 2019',
+            version: 'v2.03',
+            title: 'Select Class Parameter',
+            tasks: [
+              'Convert uploaded data metric into calender date',
+              'Select and use parameters from existing class',
+              'Shift year by one',
+            ],
+          },
+          {
             date: 'Jan 28th, 2019',
             version: 'v2.02',
             title: 'Update Param Adjustments',

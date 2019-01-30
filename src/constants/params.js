@@ -3,79 +3,177 @@ export const params = {
     max_zero_allowed_per_year: 270,
     max_nan_allowed_per_year: 100,
   },
-
   fall_params: {
     max_zero_allowed_per_year: 270,
     max_nan_allowed_per_year: 100,
-    // Don't calculate flow metrics if max flow is befow this value.
     min_flow_rate: 1,
-    sigma: 0.2, // Smaller filter to find fall flush peak
     broad_sigma: 15,
-    wet_season_sigma: 12, // Medium sigma to find wet season initation peak
-    peak_sensitivity: 0.005, // smaller value detects more peaks
-    // larger value used for detection of wet season initiation
+    wet_season_sigma: 12,
+    peak_sensitivity: 0.005,
     peak_sensitivity_wet: 0.005,
-    max_flush_duration: 40, // Maximum duration from start to end, for fall flush peak
-    // <- * min_flush, to satisfy the min required to be called a flush
+    max_flush_duration: 40,
     min_flush_percentage: 0.1,
-    // Return to wet season flow must be certain percentage of that year's max flow
     wet_threshold_perc: 0.2,
-    // The peak identified to search after for wet season initation
     peak_detect_perc: 0.3,
-    // Size of flush peak, from rising limb to top of peak, has great enough change
     flush_threshold_perc: 0.3,
-    min_flush_threshold: 1, // minimum allowable magnitude threshold for fall flush flow
-    // Latest accepted date for fall flush, in Julian Date counting from Oct 1st = 0. (i.e. Dec 15th = 75)
     date_cutoff: 75,
   },
-
   spring_params: {
     max_zero_allowed_per_year: 270,
     max_nan_allowed_per_year: 100,
-    // max search date for the peak flow date
     max_peak_flow_date: 350,
-    search_window_left: 20, // left side of search window set around max peak
-    search_window_right: 50, // right side of search window set around max peak
-    peak_sensitivity: 0.1, // smaller':> more peaks detection
-    // Relative flow (Q-Qmin) of start of spring must be certain percentage of peak relative flow (Qmax-Qmin)
+    search_window_left: 20,
+    search_window_right: 50,
+    peak_sensitivity: 0.1,
     peak_filter_percentage: 0.5,
-    // If filtered max flow is below this, automatically set spring timing to max flow
     min_max_flow_rate: 0.1,
-    window_sigma: 10, // Heavy filter to identify major peaks in entire water year
-    // Smaller filter to identify small peaks in windowed data (smaller sigma val => less filter)
+    window_sigma: 10,
     fit_sigma: 1.3,
-    sensitivity: 0.2, // 0.1 - 10, 10 being the most sensitive
-    // the detected date's flow has be certain percentage of the max flow in that region
+    sensitivity: 0.2,
     min_percentage_of_max_flow: 0.5,
     lag_time: 4,
-    // Earliest accepted date for spring timing, in Julian Date couting from Oct 1st = 0 (i.e. February 15 = 138)
     timing_cutoff: 138,
-    // Don't calculate flow metrics if max flow is befow this value.
     min_flow_rate: 1,
   },
-
   summer_params: {
     max_zero_allowed_per_year: 270,
     max_nan_allowed_per_year: 100,
-    // scalar to set amount of smoothing
     sigma: 7,
-    // increased sensitivity returns smaller threshold for derivative
     sensitivity: 900,
-    // identifies last major peak after which to search for start date
     peak_sensitivity: 0.2,
-    // max search date for the peak flow date
     max_peak_flow_date: 325,
-    // require that summer start is below this flow threshold. Represents percentage of the flow difference between annual max flow and summer minimum.
     min_summer_flow_percent: 0.125,
-    // Don't calculate flow metrics if max flow is befow this value.
     min_flow_rate: 1,
   },
-
   general_params: {
     annual_result_low_Percentille_filter: 0,
     annual_result_high_Percentille_filter: 100,
     max_nan_allowed_per_year: 100,
   },
+};
+
+export const classParms = {
+  Snowmelt: Object.assign({}, params),
+  'High-volume snowmelt and rain': Object.assign({}, params),
+  'Low-volume snowmelt and rain': Object.assign({}, params),
+  'Winter Storms': Object.assign({}, params, {
+    spring_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      max_peak_flow_date: 255,
+      search_window_left: 20,
+      search_window_right: 50,
+      peak_sensitivity: 0.1,
+      peak_filter_percentage: 0.1,
+      min_max_flow_rate: 0.1,
+      window_sigma: 2.5,
+      fit_sigma: 1.3,
+      sensitivity: 0.2,
+      min_percentage_of_max_flow: 0.05,
+      lag_time: 4,
+      timing_cutoff: 138,
+      min_flow_rate: 1,
+    },
+    summer_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      sigma: 4,
+      sensitivity: 1100,
+      peak_sensitivity: 0.1,
+      max_peak_flow_date: 325,
+      min_summer_flow_percent: 0.125,
+      min_flow_rate: 1,
+    },
+  }),
+  Groudwater: Object.assign({}, params),
+  'Perenial Groundwater and Rain': Object.assign({}, params, {
+    spring_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      max_peak_flow_date: 255,
+      search_window_left: 20,
+      search_window_right: 50,
+      peak_sensitivity: 0.1,
+      peak_filter_percentage: 0.12,
+      min_max_flow_rate: 0.1,
+      window_sigma: 2.5,
+      fit_sigma: 1.3,
+      sensitivity: 0.2,
+      min_percentage_of_max_flow: 0.12,
+      lag_time: 4,
+      timing_cutoff: 138,
+      min_flow_rate: 1,
+    },
+    summer_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      sigma: 4,
+      sensitivity: 1100,
+      peak_sensitivity: 0.1,
+      max_peak_flow_date: 325,
+      min_summer_flow_percent: 0.125,
+      min_flow_rate: 1,
+    },
+  }),
+  'Flashy, ephemeral rain': Object.assign({}, params, {
+    spring_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      max_peak_flow_date: 255,
+      search_window_left: 20,
+      search_window_right: 50,
+      peak_sensitivity: 0.1,
+      peak_filter_percentage: 0.05,
+      min_max_flow_rate: 0.1,
+      window_sigma: 2,
+      fit_sigma: 1.3,
+      sensitivity: 0.2,
+      min_percentage_of_max_flow: 0.05,
+      lag_time: 4,
+      timing_cutoff: 138,
+      min_flow_rate: 1,
+    },
+    summer_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      sigma: 4,
+      sensitivity: 1100,
+      peak_sensitivity: 0.1,
+      max_peak_flow_date: 325,
+      min_summer_flow_percent: 0.125,
+      min_flow_rate: 1,
+    },
+  }),
+  'Rain and seasonal groundwater': Object.assign({}, params, {
+    spring_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      max_peak_flow_date: 255,
+      search_window_left: 20,
+      search_window_right: 50,
+      peak_sensitivity: 0.1,
+      peak_filter_percentage: 0.15,
+      min_max_flow_rate: 0.1,
+      window_sigma: 2.5,
+      fit_sigma: 1.3,
+      sensitivity: 0.2,
+      min_percentage_of_max_flow: 0.15,
+      lag_time: 4,
+      timing_cutoff: 138,
+      min_flow_rate: 1,
+    },
+    summer_params: {
+      max_zero_allowed_per_year: 270,
+      max_nan_allowed_per_year: 100,
+      sigma: 4,
+      sensitivity: 1100,
+      peak_sensitivity: 0.1,
+      max_peak_flow_date: 325,
+      min_summer_flow_percent: 0.125,
+      min_flow_rate: 1,
+    },
+  }),
+  'High elevation low precipitation': Object.assign({}, params),
 };
 
 export const paramRange = {
@@ -106,7 +204,7 @@ export const paramRange = {
       max: 100,
       step: 1,
       map: 'Min Flush %',
-      description: '',
+      description: 'Min Flush',
     },
     max_zero_allowed_per_year: {
       min: 0,
@@ -169,6 +267,8 @@ export const paramRange = {
       max: 5,
       step: 0.01,
       map: 'Peak Sensitivity',
+      description:
+        'Sensitivity factor for identifying the peak that signals the start of the wet season. A smaller value detects more peaks.',
     },
     sigma: {
       min: 0,
@@ -265,7 +365,7 @@ export const paramRange = {
     peak_sensitivity: {
       min: 0.01,
       max: 10,
-      step: 0.02,
+      step: 0.01,
       map: 'Peak Sensitivity',
       description:
         'Amount of sensitivity when searching for potential spring recession peaks, where 10 is the most sensitive. ',
@@ -313,7 +413,7 @@ export const paramRange = {
     min_percentage_of_max_flow: {
       min: 0,
       max: 1,
-      step: 0.1,
+      step: 0.01,
       map: 'Relative Flow Threshold',
       description:
         'The detected spring recession peak magnitude must be a certain percent of max flow. Values range from 0-1, with a recommended value at or near 0.5. ',
@@ -330,7 +430,7 @@ export const paramRange = {
       min: 0,
       max: 366,
       step: 1,
-      map: 'TIming Cutoff',
+      map: 'Timing Cutoff',
       description:
         'Earliest allowed date for spring timing, in Julian Dates couting from Oct 1st = 0 (i.e. February 15 = 138).',
     },
@@ -372,7 +472,7 @@ export const paramRange = {
     },
     sensitivity: {
       min: 0,
-      max: 1000,
+      max: 1500,
       step: 10,
       map: 'Recession Slope Sensitivity',
       description:
@@ -381,7 +481,7 @@ export const paramRange = {
     peak_sensitivity: {
       min: 0,
       max: 10,
-      step: 0.1,
+      step: 0.01,
       map: 'Peak Sensitivity',
       description:
         'Set sensitivity when searching for last major peak before dry season. A smaller value detects more peaks in the data. Recommended value between 0.01-0.5.',

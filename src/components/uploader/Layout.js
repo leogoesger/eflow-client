@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { RaisedButton } from "material-ui";
-import { Colors } from "../../styles";
-import Params from "./Params";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { RaisedButton } from 'material-ui';
+import { Colors } from '../../styles';
+import Params from './Params';
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -20,14 +20,14 @@ class Uploader extends React.Component {
     } = this.props;
 
     if (isError) {
-      this.fileInput.value = "";
+      this.fileInput.value = '';
     }
     return (
       <div>
         <input
           onChange={e => onUpload(e.target.files)}
           type="file"
-          style={{ fontSize: "14px" }}
+          style={{ fontSize: '14px' }}
           ref={ref => (this.fileInput = ref)}
         />
 
@@ -42,10 +42,20 @@ class Uploader extends React.Component {
           disabled={!enabled}
           backgroundColor={Colors.gold}
           labelColor={Colors.white}
-          labelStyle={{ fontSize: "12px" }}
+          labelStyle={{ fontSize: '12px' }}
           onClick={() => onSubmit()}
-          style={{ width: "100px", margin: "20px 10px" }}
+          style={{ width: '100px', margin: '20px 10px' }}
         />
+        <div
+          style={{
+            marginLeft: '304px',
+            marginTop: '-10px',
+          }}
+        >
+          <span style={{ fontSize: '12px', color: '#d32f2f' }}>
+            Optional: Select a hydrologic class to refine metric results
+          </span>
+        </div>
       </div>
     );
   }

@@ -9,7 +9,7 @@ class ParamsSliders extends React.Component {
     const params = { ...this.props.params };
 
     return (
-      <div>
+      <div style={{ marginTop: '10px' }}>
         {Object.keys(params).map((season, indx) => {
           return (
             <div
@@ -32,7 +32,12 @@ class ParamsSliders extends React.Component {
                     }}
                   >
                     <Tooltip
-                      title={paramRange[season][param].description}
+                      html={
+                        paramRange[season][param].description ? (
+                          <p>{paramRange[season][param].description}</p>
+                        ) : null
+                      }
+                      // title={paramRange[season][param].description}
                       position="top"
                       arrow={true}
                     >

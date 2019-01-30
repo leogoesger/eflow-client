@@ -1,14 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RaisedButton, Dialog, FlatButton, Divider } from 'material-ui';
+import {
+  RaisedButton,
+  Dialog,
+  FlatButton,
+  Divider,
+  SelectField,
+  MenuItem,
+} from 'material-ui';
 import { Colors } from '../../styles';
 
+import Styles from '../../styles/Styles';
 import ParamsSliders from './ParamsSliders';
+import { classification } from '../../constants/classification';
+import { classParms } from '../../constants/params';
 
 class Params extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = { open: false, class: '' };
   }
 
   handleOpen() {
@@ -23,11 +33,10 @@ class Params extends React.Component {
     this.setState({ open: false });
   }
 
-  // handleSlider(event, value, season, param) {
-  //   const tmpState = { ...this.state.params };
-  //   tmpState[season][param] = value;
-  //   this.setState({ params: tmpState });
-  // }
+  _handleChange(v) {
+    this.setState({ class: classification[v] });
+    this.props.setUserParams(classParms[classification[v]]);
+  }
 
   render() {
     return (
@@ -40,13 +49,46 @@ class Params extends React.Component {
           onClick={() => this.handleOpen()}
           style={{ margin: '20px 10px' }}
         />
+
         <Dialog
-          title="Set Params (optional)"
-          modal={true}
+          modal={false}
           open={this.state.open}
-          style={{ margin: 'auto' }}
+          style={{ margin: 'auto', paddingTop: '0px' }}
+          onRequestClose={() => this.handleClose()}
           autoScrollBodyContent={true}
         >
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+              marginBottom: '6px',
+            }}
+          >
+            <div style={{ fontSize: '22px', fontWeight: 600 }}>
+              Select / Set Parameters <br />
+              <span style={{ fontSize: '12px', color: '#d32f2f' }}>
+                Optional: Select a hydrologic class to refine metric results
+              </span>
+            </div>
+
+            <SelectField
+              floatingLabelText="Select Params Base on Class"
+              style={{ marginTop: '-24px' }}
+              value={this.state.class}
+              underlineFocusStyle={Styles.underlineFocusStyle}
+              floatingLabelStyle={Styles.floatingLabelStyle}
+              floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
+              onChange={(_event, value) => this._handleChange(value)}
+            >
+              {classification.map(c => (
+                <MenuItem value={c} primaryText={c} key={c} />
+              ))}
+            </SelectField>
+          </div>
+
+          <Divider />
+
           <ParamsSliders
             params={this.props.userParams}
             handleSlider={this.props.handleSlider}
