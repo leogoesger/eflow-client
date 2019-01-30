@@ -15,6 +15,7 @@ import {
 import AWSUploads from "./AWSUploads";
 import AppInfo from "./AppInfo";
 import RenderFailedUpload from "./RenderFailedUpload";
+import RenderUpload from "./RenderUpload";
 import { navigateTo } from "../../utils/helpers";
 
 import Eject from "material-ui/svg-icons/action/eject";
@@ -87,6 +88,8 @@ class Layout extends React.Component {
       getMe,
       getFailedUpload,
       updateGaugeMetric,
+      uploads,
+      getUploads,
     } = this.props;
 
     if (clicked.loadAdmin) {
@@ -125,7 +128,16 @@ class Layout extends React.Component {
       return (
         <div>
           <h1 style={{ padding: "40px 20px" }}>Uploaded Files</h1>
-          <h1 style={{ padding: "40px 20px" }}>Feature coming soon!</h1>
+          {uploads.map((data, key) => {
+            return (
+              <RenderUpload
+                key={key}
+                data={data}
+                getMe={getMe}
+                getFailedUpload={getUploads}
+              />
+            );
+          })}
         </div>
       );
     }
@@ -203,6 +215,8 @@ Layout.propTypes = {
   appInfo: PropTypes.object,
   getMe: PropTypes.func,
   getFailedUpload: PropTypes.func,
+  uploads: PropTypes.array,
+  getUploads: PropTypes.func,
 };
 
 export default Layout;
