@@ -10,7 +10,7 @@ export const params = {
     // Don't calculate flow metrics if max flow is befow this value.
     min_flow_rate: 1,
     sigma: 0.2, // Smaller filter to find fall flush peak
-
+    broad_sigma: 15,
     wet_season_sigma: 12, // Medium sigma to find wet season initation peak
     peak_sensitivity: 0.005, // smaller value detects more peaks
     // larger value used for detection of wet season initiation
