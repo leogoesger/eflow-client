@@ -6,7 +6,12 @@ import { Snackbar, Paper } from "material-ui";
 import Layout from "../components/admin/Layout";
 import adminActions from "../APIs/admin";
 import { navigateTo } from "../utils/helpers";
-import { removeUser, getFailedUpload, getMe } from "../actions/user";
+import {
+  removeUser,
+  getFailedUpload,
+  getMe,
+  getUploads,
+} from "../actions/user";
 import { fetchAppInfo } from "../actions/appInfo";
 
 class Admin extends React.Component {
@@ -43,6 +48,7 @@ class Admin extends React.Component {
     document.title = "eFlows | Admin";
     this.props.fetchAppInfo();
     this.props.getFailedUpload();
+    this.props.getUploads();
   }
 
   responseMessage() {
@@ -116,6 +122,8 @@ class Admin extends React.Component {
             failedUploads={this.props.failedUploads}
             getMe={this.props.getMe}
             getFailedUpload={this.props.getFailedUpload}
+            uploads={this.props.uploads}
+            getUploads={this.props.getUploads}
           />
         </Paper>
 
@@ -135,6 +143,7 @@ const mapStateToProps = state => {
     currentUser: state.user.currentUser,
     failedUploads: state.user.failedUploads,
     appInfo: state.appInfo.appInfo,
+    uploads: state.user.uploads,
   };
 };
 
@@ -144,6 +153,7 @@ const mapDispatchToProps = dispatch => {
     fetchAppInfo: () => dispatch(fetchAppInfo()),
     getFailedUpload: () => dispatch(getFailedUpload()),
     getMe: () => dispatch(getMe()),
+    getUploads: () => dispatch(getUploads()),
   };
 };
 
@@ -155,6 +165,8 @@ Admin.propTypes = {
   getFailedUpload: PropTypes.func,
   failedUploads: PropTypes.array,
   getMe: PropTypes.func,
+  uploads: PropTypes.array,
+  getUploads: PropTypes.func,
 };
 
 const styles = {
