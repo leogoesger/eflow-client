@@ -112,7 +112,7 @@ class Layout extends React.Component {
         <div>
           <h1 style={{ padding: "40px 20px" }}>Failed Uploads</h1>
 
-          {failedUploads.map((data, key) => {
+          {failedUploads && failedUploads.map((data, key) => {
             return (
               <RenderFailedUpload
                 key={key}
