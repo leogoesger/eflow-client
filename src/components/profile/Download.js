@@ -34,7 +34,7 @@ class Download extends React.Component {
       yearRanges,
     } = this.props.data;
 
-    return [
+    let result = [
       ['Year', ...yearRanges],
       ['Avg', ...allYear.average_annual_flows],
       ['Std', ...allYear.standard_deviations],
@@ -70,6 +70,22 @@ class Download extends React.Component {
       ['Peak_Fre_20', ...winter.frequencys['twenty']],
       ['Peak_Mag_20', ...winter.magnitudes['twenty']],
     ];
+
+    if (spring.timings_water) {
+      result = [
+        ...result,
+        ['SP_Tim_Water', ...spring.timings_water],
+        ['DS_Tim_Water', ...summer.timings_water],
+        ['WSI_Tim_Water', ...fall.timings_water],
+        ['Wet_Tim_Water', ...fall.wet_timings_water],
+        ['Peak_Tim_2_Water', ...winter.timings['two_water']],
+        ['Peak_Tim_5_Water', ...winter.timings['five_water']],
+        ['Peak_Tim_10_Water', ...winter.timings['ten_water']],
+        ['Peak_Tim_20_Water', ...winter.timings['twenty_water']],
+      ];
+    }
+
+    return result;
   }
 
   render() {

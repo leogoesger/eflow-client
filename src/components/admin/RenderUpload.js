@@ -9,10 +9,9 @@ import { CSVLink } from "react-csv";
 import { Colors } from "../../styles";
 import upload from "../../APIs/upload";
 
-const onDelete = async (id, getMe, getFailedUpload) => {
+const onDelete = async (id, getUploads) => {
   await upload.deleteTimeSeries(id);
-  getMe();
-  getFailedUpload();
+  getUploads();
 };
 
 const getCSVdata = data => {
@@ -23,7 +22,7 @@ const getCSVdata = data => {
   return csvData;
 };
 
-const RenderUpload = ({ data, getMe, getFailedUpload }) => {
+const RenderUpload = ({ data, getUploads }) => {
   const date = new Date(data.createdAt);
   const csvData = getCSVdata(data);
   return (
@@ -79,7 +78,7 @@ const RenderUpload = ({ data, getMe, getFailedUpload }) => {
         >
           <Tooltip title={"Delete"} position="top" arrow={true}>
             <Delete
-              onClick={() => onDelete(data.id, getMe, getFailedUpload)}
+              onClick={() => onDelete(data.id, getUploads)}
               color={"#f9a825"}
               style={{
                 cursor: "pointer",
@@ -94,8 +93,7 @@ const RenderUpload = ({ data, getMe, getFailedUpload }) => {
 
 RenderUpload.propTypes = {
   data: PropTypes.object,
-  getMe: PropTypes.func,
-  getFailedUpload: PropTypes.func,
+  getUploads: PropTypes.func,
 };
 
 export default RenderUpload;
