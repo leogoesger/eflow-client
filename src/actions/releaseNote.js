@@ -16,7 +16,11 @@ export function fetchReleaseNotes() {
             date: 'Jan 31th, 2019',
             version: 'v2.05',
             title: 'Julian offset dates and julian dates in uploaded result',
-            tasks: ['Added julian offset dates and julian dates to be part of the result files', 'Add back button'],
+            tasks: [
+              'Added julian offset dates and julian dates to be part of the result files',
+              'Add back button',
+              'Fix bug for previously uploaded data',
+            ],
           },
           {
             date: 'Jan 30th, 2019',
