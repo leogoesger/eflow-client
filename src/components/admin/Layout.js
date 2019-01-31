@@ -85,7 +85,6 @@ class Layout extends React.Component {
       broadcastMessage,
       appInfo,
       failedUploads,
-      getMe,
       getFailedUpload,
       updateGaugeMetric,
       uploads,
@@ -112,32 +111,28 @@ class Layout extends React.Component {
         <div>
           <h1 style={{ padding: "40px 20px" }}>Failed Uploads</h1>
 
-          {failedUploads && failedUploads.map((data, key) => {
-            return (
-              <RenderFailedUpload
-                key={key}
-                data={data}
-                getMe={getMe}
-                getFailedUpload={getFailedUpload}
-              />
-            );
-          })}
+          {failedUploads &&
+            failedUploads.map((data, key) => {
+              return (
+                <RenderFailedUpload
+                  key={key}
+                  data={data}
+                  getFailedUpload={getFailedUpload}
+                />
+              );
+            })}
         </div>
       );
     } else if (clicked.loadUploads) {
       return (
         <div>
           <h1 style={{ padding: "40px 20px" }}>Uploaded Files</h1>
-          {uploads.map((data, key) => {
-            return (
-              <RenderUpload
-                key={key}
-                data={data}
-                getMe={getMe}
-                getFailedUpload={getUploads}
-              />
-            );
-          })}
+          {uploads &&
+            uploads.map((data, key) => {
+              return (
+                <RenderUpload key={key} data={data} getUploads={getUploads} />
+              );
+            })}
         </div>
       );
     }

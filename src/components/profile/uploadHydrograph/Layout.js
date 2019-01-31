@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Menu, MenuItem } from "material-ui";
-
+import { Link } from "react-router-dom";
 import Hydrograph from "./Hydrograph";
 import Divider from "material-ui/Divider";
 import Chart from "material-ui/svg-icons/editor/show-chart";
+import Back from "material-ui/svg-icons/navigation/arrow-back";
 
 import MetricCard from "./MetricCard";
 
@@ -114,6 +115,10 @@ class Layout extends React.Component {
                 style={this.state.loadBP ? styles.selectedMenu : null}
                 onClick={() => this.onClickHandler("loadBP")}
               />
+              <Divider style={{ width: "98%" }} />
+              <Link to={"/profile"}>
+                <MenuItem primaryText="Back" value={"bp"} leftIcon={<Back />} />
+              </Link>
               <Divider style={{ width: "98%" }} />
             </Menu>
           </div>

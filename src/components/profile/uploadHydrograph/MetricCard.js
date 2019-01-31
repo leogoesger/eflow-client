@@ -217,7 +217,7 @@ class MetricCard extends React.Component {
                 toggledMetrics={this.state.toggledMetrics}
                 annualFlowData={this.populateAnnualMetricsData()}
                 yMax={this.state.yMax}
-                fixedYaxisPercentile={this.state.fixedYaxis}
+                fixedYaxisPercentile={Number(this.state.fixedYaxis)}
               />
             </svg>
           </div>
@@ -302,7 +302,7 @@ class MetricCard extends React.Component {
           handleHydrographOverlay={bool => this.handleHydrographOverlay(bool)}
           handleFixedYaxis={percentile => this.handleFixedYaxis(percentile)}
           isHydrographOverlay={this.state.isHydrographOverlay}
-          fixedYaxis={this.state.fixedYaxis}
+          fixedYaxis={Number(this.state.fixedYaxis)}
           currentGaugeId={null}
           getYaxisMax={(gaugeId, percentile) =>
             this.getYaxisMax(gaugeId, percentile)
