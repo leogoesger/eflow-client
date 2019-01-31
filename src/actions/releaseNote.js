@@ -14,12 +14,18 @@ export function fetchReleaseNotes() {
         body: [
           {
             date: 'Jan 31th, 2019',
+            version: 'v2.05',
+            title: 'Julian offset dates and julian dates in uploaded result',
+            tasks: ['Added julian offset dates and julian dates to be part of the result files', 'Add back button'],
+          },
+          {
+            date: 'Jan 30th, 2019',
             version: 'v2.04',
             title: 'Add doc to navbar',
             tasks: ['Add doc to navbar', 'Fix links to footer'],
           },
           {
-            date: 'Jan 30th, 2019',
+            date: 'Jan 29th, 2019',
             version: 'v2.03',
             title: 'Select Class Parameter',
             tasks: [
