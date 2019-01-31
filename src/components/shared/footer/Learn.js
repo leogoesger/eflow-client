@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import {Colors} from '../../../styles';
+import { Colors } from '../../../styles';
 
 export default class Learn extends React.Component {
   render() {
@@ -31,7 +31,7 @@ export default class Learn extends React.Component {
           </li>
           <li>
             <a
-              href="https://eflow.gitbook.io/project/metrics"
+              href="https://eflows.gitbook.io/project/website_summary"
               className="footer-link"
               target="_blank"
               rel="noopener noreferrer"

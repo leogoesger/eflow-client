@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Jan 31th, 2019',
+            version: 'v2.04',
+            title: 'Add doc to navbar',
+            tasks: ['Add doc to navbar', 'Fix links to footer'],
+          },
+          {
             date: 'Jan 30th, 2019',
             version: 'v2.03',
             title: 'Select Class Parameter',

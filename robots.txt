@@ -1,0 +1,7 @@
+#    We thought you'd never make it!
+
+User-agent: *
+Disallow: /admin
+Disallow: /profile
+
+Sitemap: https://eflows.ucdavis.edu/sitemap.xml
