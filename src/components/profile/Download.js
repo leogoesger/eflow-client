@@ -38,6 +38,7 @@ class Download extends React.Component {
       ['Year', ...yearRanges],
       ['Avg', ...allYear.average_annual_flows],
       ['Std', ...allYear.standard_deviations],
+      ['CV', ...allYear.coefficient_variations],
       ['SP_Tim', ...spring.timings],
       ['SP_Mag', ...spring.magnitudes],
       ['SP_Dur', ...spring.durations],
