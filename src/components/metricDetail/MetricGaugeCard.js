@@ -1,21 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as d3 from 'd3';
-import Slider from 'material-ui/Slider';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-import Setting from 'material-ui/svg-icons/action/settings';
-import FileDownload from 'material-ui/svg-icons/file/file-download';
-import { Tooltip } from 'react-tippy';
+import React from "react";
+import PropTypes from "prop-types";
+import * as d3 from "d3";
+import Slider from "material-ui/Slider";
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
+import IconMenu from "material-ui/IconMenu";
+import MenuItem from "material-ui/MenuItem";
+import FlatButton from "material-ui/FlatButton";
+import Setting from "material-ui/svg-icons/action/settings";
+import FileDownload from "material-ui/svg-icons/file/file-download";
+import { Tooltip } from "react-tippy";
 
-import Card, { CardHeader } from 'material-ui/Card';
-import Divider from 'material-ui/Divider';
-import { classInfo } from '../../constants/classification';
-import { SimpleLinePlot } from '../shared/plots';
-import { Colors } from '../../styles';
+import Card, { CardHeader } from "material-ui/Card";
+import Divider from "material-ui/Divider";
+import { classInfo } from "../../constants/classification";
+import { SimpleLinePlot } from "../shared/plots";
+import { Colors } from "../../styles";
 
 class MetricGaugeCard extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class MetricGaugeCard extends React.Component {
       .scaleExtent([-10, 10])
       .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
       .extent([[-100, -100], [700 + 100, 420 + 100]])
-      .on('zoom', () => this.zoomed());
+      .on("zoom", () => this.zoomed());
   }
 
   componentDidMount() {
@@ -71,9 +71,9 @@ class MetricGaugeCard extends React.Component {
   _getAnnualFlowData() {
     const { flowData } = this.props.annualFlowData.AnnualFlows;
     const flowObjects = flowData.map((d, i) => {
-      if (d) {
+      if (Number(d) >= 0) {
         return { date: i, flow: Number(d) };
-      }
+      } else return { date: i, flow: 0 };
     });
     return flowObjects;
   }
@@ -83,16 +83,16 @@ class MetricGaugeCard extends React.Component {
     return (
       <div
         style={{
-          display: 'flex',
-          width: '780px',
-          margin: '0 auto',
-          justifyContent: 'space-around',
-          fontSize: '14px',
+          display: "flex",
+          width: "780px",
+          margin: "0 auto",
+          justifyContent: "space-around",
+          fontSize: "14px",
           color: Colors.lightGrey,
         }}
       >
         <div>{year[0]}</div>
-        <div>{'Slide the bar to change the water year!'}</div>
+        <div>{"Slide the bar to change the water year!"}</div>
         <div>{Number(year[year.length - 1])}</div>
       </div>
     );
@@ -102,10 +102,10 @@ class MetricGaugeCard extends React.Component {
     return (
       <div
         style={{
-          marginTop: '-15px',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginRight: '20px',
+          marginTop: "-15px",
+          display: "flex",
+          justifyContent: "flex-end",
+          marginRight: "20px",
         }}
       >
         {this.state.currentYear >
@@ -113,28 +113,28 @@ class MetricGaugeCard extends React.Component {
         this.state.currentYear <
           this.props.annualFlowData.Gauge.unimpairedStartYear ? (
           <span
-            style={{ color: Colors.blue, fontSize: '14px', fontWeight: '700' }}
+            style={{ color: Colors.blue, fontSize: "14px", fontWeight: "700" }}
             className="tour-metricDetail-impairedStatus"
           >
-            <Tooltip title={'Water Year Type'} position="top" arrow={true}>
+            <Tooltip title={"Water Year Type"} position="top" arrow={true}>
               {condition}
             </Tooltip>
-            {' | '}
-            <Tooltip title={'Alteration Status'} position="top" arrow={true}>
-              {'Impaired'}
+            {" | "}
+            <Tooltip title={"Alteration Status"} position="top" arrow={true}>
+              {"Impaired"}
             </Tooltip>
           </span>
         ) : (
           <span
-            style={{ color: Colors.blue, fontSize: '14px', fontWeight: '700' }}
+            style={{ color: Colors.blue, fontSize: "14px", fontWeight: "700" }}
             className="tour-metricDetail-impairedStatus"
           >
-            <Tooltip title={'Water Year Type'} position="top" arrow={true}>
+            <Tooltip title={"Water Year Type"} position="top" arrow={true}>
               {condition}
             </Tooltip>
-            {' | '}
-            <Tooltip title={'Alteration Status'} position="top" arrow={true}>
-              {'Unimpaired'}
+            {" | "}
+            <Tooltip title={"Alteration Status"} position="top" arrow={true}>
+              {"Unimpaired"}
             </Tooltip>
           </span>
         )}
@@ -145,38 +145,38 @@ class MetricGaugeCard extends React.Component {
   _renderAnnualPlot() {
     if (!this.props.annualFlowData.AnnualFlows) {
       return (
-        <div style={{ height: '399px', margin: '0 auto' }}>
-          <p style={{ paddingTop: '160px', paddingLeft: '160px' }}>
-            {':( Sorry, could not get annual flow data for this gauge!'}
+        <div style={{ height: "399px", margin: "0 auto" }}>
+          <p style={{ paddingTop: "160px", paddingLeft: "160px" }}>
+            {":( Sorry, could not get annual flow data for this gauge!"}
           </p>
         </div>
       );
     }
     const { flowData } = this.props.annualFlowData.AnnualFlows;
-    const filteredData = flowData.filter(d => d === 'NaN');
+    const filteredData = flowData.filter(d => d === "NaN");
 
     if (filteredData.length > 200) {
       return (
-        <div style={{ height: '399px', margin: '0 auto' }}>
-          <p style={{ paddingTop: '160px', paddingLeft: '220px' }}>
-            {':( Sorry, too many NaN for the plot!'}
+        <div style={{ height: "399px", margin: "0 auto" }}>
+          <p style={{ paddingTop: "160px", paddingLeft: "220px" }}>
+            {":( Sorry, too many NaN for the plot!"}
           </p>
         </div>
       );
     }
     return (
       <React.Fragment>
-        <div style={styles.yLabel}>{'Flow Value (cfs)'}</div>
+        <div style={styles.yLabel}>{"Flow Value (cfs)"}</div>
         <div style={styles.xLabel}>{`Water year hydrograph for ${
           this.state.currentYear
         }`}</div>
         {this._renderYearStatus(this.props.annualFlowData.condition)}
-        <div style={{ marginLeft: '20px' }}>
+        <div style={{ marginLeft: "20px" }}>
           <svg
             width={700}
             height={360}
             ref={el => (this.svg = el)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <SimpleLinePlot
               x={70}
@@ -214,16 +214,16 @@ class MetricGaugeCard extends React.Component {
       <Card style={styles.container}>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '5px',
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "5px",
           }}
         >
-          <div style={{ width: '60%' }}>
+          <div style={{ width: "60%" }}>
             <CardHeader
-              style={{ paddingRight: '0px', marginTop: '10px' }}
+              style={{ paddingRight: "0px", marginTop: "10px" }}
               title={annualFlowData.Gauge.stationName}
-              textStyle={{ paddingRight: '0px' }}
+              textStyle={{ paddingRight: "0px" }}
               subtitle={`ID: ${annualFlowData.Gauge.id}, Class: ${
                 classObject.fullName
               }`}
@@ -234,10 +234,10 @@ class MetricGaugeCard extends React.Component {
           </div>
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              width: '40%',
-              marginTop: '10px',
+              display: "flex",
+              justifyContent: "space-around",
+              width: "40%",
+              marginTop: "10px",
             }}
           >
             <IconMenu
@@ -245,8 +245,8 @@ class MetricGaugeCard extends React.Component {
                 <FlatButton
                   className="tour-metricDetail-download"
                   label="Download"
-                  style={{ marginLeft: '20px', marginTop: '10px' }}
-                  labelStyle={{ fontSize: '12px', color: Colors.gold }}
+                  style={{ marginLeft: "20px", marginTop: "10px" }}
+                  labelStyle={{ fontSize: "12px", color: Colors.gold }}
                   icon={<FileDownload color={Colors.gold} />}
                 />
               }
@@ -273,7 +273,7 @@ class MetricGaugeCard extends React.Component {
                 primaryText="Metrics Read Me"
                 onClick={() =>
                   window.open(
-                    'https://s3-us-west-1.amazonaws.com/funcflow/resources/Reference_Data.csv'
+                    "https://s3-us-west-1.amazonaws.com/funcflow/resources/Reference_Data.csv"
                   )
                 }
               />
@@ -286,9 +286,9 @@ class MetricGaugeCard extends React.Component {
                 backgroundColor={Colors.gold}
                 labelColor={Colors.white}
                 disabled={false}
-                style={{ marginTop: '10px', marginRight: '10px' }}
+                style={{ marginTop: "10px", marginRight: "10px" }}
                 icon={<Setting />}
-                labelStyle={{ fontSize: '12px' }}
+                labelStyle={{ fontSize: "12px" }}
                 onClick={() => this.props.toggleMetricGaugeDrawer(true)}
               />
             </div>
@@ -298,10 +298,10 @@ class MetricGaugeCard extends React.Component {
 
         <Paper
           style={{
-            width: '90%',
-            overflow: 'hidden',
-            margin: '30px auto',
-            position: 'relative',
+            width: "90%",
+            overflow: "hidden",
+            margin: "30px auto",
+            position: "relative",
           }}
         >
           {this._renderAnnualPlot()}
@@ -317,9 +317,9 @@ class MetricGaugeCard extends React.Component {
                 ]
               : this.props.annualFlowData.Years.year[0] + 5
           }
-          sliderStyle={{ marginBottom: '10px' }}
+          sliderStyle={{ marginBottom: "10px" }}
           step={1}
-          style={{ width: '600px', margin: '0px auto' }}
+          style={{ width: "600px", margin: "0px auto" }}
           value={this.state.currentYear}
           onChange={(e, v) => this._handleSlider(e, v)}
         />
@@ -343,24 +343,24 @@ MetricGaugeCard.propTypes = {
 
 const styles = {
   container: {
-    width: '70%',
-    height: '600px',
-    overflow: 'scroll',
-    margin: '0 auto',
+    width: "70%",
+    height: "600px",
+    overflow: "scroll",
+    margin: "0 auto",
   },
   yLabel: {
-    position: 'absolute',
-    fontSize: '16px',
-    left: '10px',
-    top: '140px',
-    color: '#616161',
-    writingMode: 'vertical-rl',
-    transform: 'rotate(-180deg)',
+    position: "absolute",
+    fontSize: "16px",
+    left: "10px",
+    top: "140px",
+    color: "#616161",
+    writingMode: "vertical-rl",
+    transform: "rotate(-180deg)",
   },
   xLabel: {
-    width: '100%',
-    paddingTop: '20px',
-    margin: '0px 0px 0px 230px',
+    width: "100%",
+    paddingTop: "20px",
+    margin: "0px 0px 0px 230px",
   },
 };
 export default MetricGaugeCard;

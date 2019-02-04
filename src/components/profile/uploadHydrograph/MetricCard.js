@@ -60,9 +60,9 @@ class MetricCard extends React.Component {
     const filteredData = annualFlowData.filter(d => d !== null);
 
     const flowObjects = filteredData.map((d, i) => {
-      if (d) {
+      if (Number(d) >= 0) {
         return { date: i, flow: Number(d) };
-      }
+      } else return { date: i, flow: 0 };
     });
     return flowObjects;
   }
