@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { IconMenu, FlatButton, MenuItem } from 'material-ui';
+import { IconMenu, IconButton, MenuItem } from 'material-ui';
 import FileDownload from 'material-ui/svg-icons/file/file-download';
 import { CSVLink } from 'react-csv';
 import { Colors } from '../../styles';
+// import { Tooltip } from 'react-tippy';
 
 class Download extends React.Component {
   getDRH() {
@@ -92,16 +93,14 @@ class Download extends React.Component {
   render() {
     return (
       <IconMenu
-        style={{ margin: '44px -100px 0px 0px' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         iconButtonElement={
-          <FlatButton
-            label="Download"
-            style={{ marginLeft: '20px', marginTop: '10px' }}
-            labelStyle={{ fontSize: '12px', color: Colors.gold }}
-            icon={<FileDownload color={Colors.gold} />}
-          />
+          // <Tooltip title={'Download'} position="top" arrow={true}>
+          <IconButton>
+            <FileDownload color={Colors.gold} />
+          </IconButton>
+          // </Tooltip>
         }
       >
         <MenuItem>

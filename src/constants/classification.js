@@ -48,6 +48,18 @@ export const classification = [
   'High elevation low precipitation',
 ];
 
+export const predictionMap = {
+  Snowmelt: 'one',
+  'High-volume snowmelt and rain': 'two',
+  'Low-volume snowmelt and rain': 'three',
+  'Winter Storms': 'four',
+  Groudwater: 'five',
+  'Perenial Groundwater and Rain': 'six',
+  'Flashy, ephemeral rain': 'seven',
+  'Rain and seasonal groundwater': 'eight',
+  'High elevation low precipitation': 'nine',
+};
+
 export const classInfo = {
   class1: {
     abbre: 'SM',

@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 4th, 2019',
+            version: 'v2.10',
+            title: 'Include machine learning prediction for uploaded files',
+            tasks: [
+              'Fix bugs for uploaded data with empty years',
+              'Add hydrological classification predictions',
+              'Happy new year :)',
+            ],
+          },
+          {
             date: 'Jan 31th, 2019',
             version: 'v2.05',
             title: 'Julian offset dates and julian dates in uploaded result',
