@@ -15,6 +15,7 @@ import {
   removeCurrentGauge,
 } from "../actions/gauge";
 import { updateHoveredGauge } from "../actions/hydrology";
+import { getUploadById } from "../actions/user";
 
 class UploadHydrograph extends React.Component {
   constructor(props) {
@@ -22,12 +23,12 @@ class UploadHydrograph extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.currentUser) {
-      localStorage.removeItem("ff_jwt");
+    if (!localStorage.getItem("ff_jwt")) {
       navigateTo("/login");
     }
     this.props.fetchClassifications();
     this.props.fetchGauges();
+    this.props.getUploadById([this.props.match.params.id]);
   }
 
   removeClassGaugeProps() {
@@ -40,19 +41,22 @@ class UploadHydrograph extends React.Component {
 
     return (
       <React.Fragment>
-        <Layout
-          data={this.props.currentUser.uploadData[this.props.match.params.id]}
-          fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
-          gauges={this.props.gauges}
-          currentGauge={this.props.currentGauge}
-          currentClassification={this.props.currentClassification}
-          removeClassGaugeProps={() => this.removeClassGaugeProps()}
-          classifications={this.props.classifications}
-          fetchClassification={classId =>
-            this.props.fetchClassification(classId)
-          }
-          updateHoveredGauge={this.props.updateHoveredGauge}
-        />
+        {this.props.uploadData && (
+          <Layout
+            data={this.props.uploadData}
+            // data={this.props.currentUser.uploadData[this.props.match.params.id]}
+            fetchCurrentGauge={gaugeId => this.props.fetchCurrentGauge(gaugeId)}
+            gauges={this.props.gauges}
+            currentGauge={this.props.currentGauge}
+            currentClassification={this.props.currentClassification}
+            removeClassGaugeProps={() => this.removeClassGaugeProps()}
+            classifications={this.props.classifications}
+            fetchClassification={classId =>
+              this.props.fetchClassification(classId)
+            }
+            updateHoveredGauge={this.props.updateHoveredGauge}
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -77,6 +81,8 @@ UploadHydrograph.propTypes = {
   fetchClassifications: PropTypes.func,
   updateHoveredGauge: PropTypes.func,
   fetchGauges: PropTypes.func,
+  getUploadById: PropTypes.func,
+  uploadData: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -86,6 +92,7 @@ const mapStateToProps = state => {
     currentClassification: state.classification.currentClassification,
     currentUser: state.user.currentUser,
     classifications: state.classification.classifications,
+    uploadData: state.user.uploadData,
   };
 };
 
@@ -98,6 +105,7 @@ const mapDispatchToProps = dispatch => {
     removeCurrentClass: () => dispatch(removeCurrentClass()),
     fetchClassifications: () => dispatch(fetchClassifications()),
     updateHoveredGauge: gaugeId => dispatch(updateHoveredGauge(gaugeId)),
+    getUploadById: id => dispatch(getUploadById(id)),
   };
 };
 export default connect(
