@@ -1,18 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { IconButton, Snackbar } from "material-ui";
-import { Tooltip } from "react-tippy";
-import Delete from "material-ui/svg-icons/action/delete";
-import Open from "material-ui/svg-icons/action/open-in-new";
-import Predict from "material-ui/svg-icons/editor/bubble-chart";
-import Loader from "../shared/loader/Loader";
-import Share from "material-ui/svg-icons/social/share";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { IconButton, Snackbar } from 'material-ui';
+import { Tooltip } from 'react-tippy';
+import Delete from 'material-ui/svg-icons/action/delete';
+import Open from 'material-ui/svg-icons/action/open-in-new';
+import Predict from 'material-ui/svg-icons/editor/bubble-chart';
+import Loader from '../shared/loader/Loader';
+import Share from 'material-ui/svg-icons/social/share';
 
-import { copyTextToClipboard } from "../../utils/helpers";
-import upload from "../../APIs/upload";
-import Download from "./Download";
-import Colors from "../../styles/Colors";
+import { copyTextToClipboard } from '../../utils/helpers';
+import upload from '../../APIs/upload';
+import Download from './Download';
+import Colors from '../../styles/Colors';
 
 const onDelete = async (id, getMe) => {
   await upload.deleteTimeSeries(id);
@@ -38,7 +38,7 @@ export class ActionIcons extends React.Component {
   }
 
   getText() {
-    const text = `${window.location.href.split("profile")[0]}uploadhydrograph/${
+    const text = `${window.location.href.split('profile')[0]}uploadhydrograph/${
       this.props.id
     }`;
     copyTextToClipboard(text);
@@ -58,51 +58,56 @@ export class ActionIcons extends React.Component {
     return (
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
         >
           <Loader loading={this.state.loading} />
-          <div>{""}</div>
-          <Share
-            style={{ padding: "12px" }}
-            color={"#f9a825"}
-            onClick={() => this.getText()}
-          />
+          <div>{''}</div>
+
+          <Tooltip title={'Shareable Link'} position="top" arrow={true}>
+            <IconButton>
+              <Share
+                style={{ padding: '12px' }}
+                color={'#f9a825'}
+                onClick={() => this.getText()}
+              />
+            </IconButton>
+          </Tooltip>
         </div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: 'flex' }}>
           <Download data={data} />
           {!data.predictions.length && (
             <React.Fragment>
               <div
                 style={{
-                  marginTop: "6px",
-                  fontSize: "36px",
-                  color: "#bdbdbd",
+                  marginTop: '6px',
+                  fontSize: '36px',
+                  color: '#bdbdbd',
                 }}
               >
-                {"|"}
+                {'|'}
               </div>
               <div>
                 <Tooltip
-                  title={"Predict Classification"}
+                  title={'Predict Classification'}
                   position="top"
                   arrow={true}
                 >
                   <IconButton>
                     <Predict
                       onClick={() => this.onPredict(data.id)}
-                      color={"#f9a825"}
+                      color={'#f9a825'}
                       style={{
-                        cursor: "pointer",
+                        cursor: 'pointer',
                       }}
                     />
                   </IconButton>
@@ -112,21 +117,21 @@ export class ActionIcons extends React.Component {
           )}
           <div
             style={{
-              marginTop: "6px",
-              fontSize: "36px",
-              color: "#bdbdbd",
+              marginTop: '6px',
+              fontSize: '36px',
+              color: '#bdbdbd',
             }}
           >
-            {"|"}
+            {'|'}
           </div>
           <div>
-            <Tooltip title={"Delete"} position="top" arrow={true}>
+            <Tooltip title={'Delete'} position="top" arrow={true}>
               <IconButton>
                 <Delete
                   onClick={() => onDelete(data.id, getMe)}
-                  color={"#f9a825"}
+                  color={'#f9a825'}
                   style={{
-                    cursor: "pointer",
+                    cursor: 'pointer',
                   }}
                 />
               </IconButton>
@@ -135,12 +140,12 @@ export class ActionIcons extends React.Component {
 
           <div
             style={{
-              marginTop: "6px",
-              fontSize: "36px",
-              color: "#bdbdbd",
+              marginTop: '6px',
+              fontSize: '36px',
+              color: '#bdbdbd',
             }}
           >
-            {"|"}
+            {'|'}
           </div>
           <div>
             <Link
@@ -149,12 +154,12 @@ export class ActionIcons extends React.Component {
                 ...this.props,
               }}
             >
-              <Tooltip title={"Open"} position="top" arrow={true}>
+              <Tooltip title={'Open'} position="top" arrow={true}>
                 <IconButton>
                   <Open
-                    color={"#f9a825"}
+                    color={'#f9a825'}
                     style={{
-                      cursor: "pointer",
+                      cursor: 'pointer',
                     }}
                   />
                 </IconButton>
@@ -165,7 +170,7 @@ export class ActionIcons extends React.Component {
         <Snackbar
           bodyStyle={{ backgroundColor: Colors.blue }}
           open={this.state.share}
-          message={"Shareable Link copied to your clipboard!"}
+          message={'Shareable Link copied to your clipboard!'}
           autoHideDuration={4000}
           onRequestClose={() => this._handleRequestClose()}
         />
