@@ -13,6 +13,15 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 5th, 2019',
+            version: 'v2.11',
+            title: 'Include shareable link',
+            tasks: [
+              'Share your uploads',
+              'See failed uploads for admin',
+            ],
+          },
+          {
             date: 'Feb 4th, 2019',
             version: 'v2.10',
             title: 'Include machine learning prediction for uploaded files',
