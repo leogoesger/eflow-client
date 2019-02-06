@@ -60,6 +60,6 @@ For more information on all the things you can do with Sequelize CLI visit [sequ
 
 ## License
 
-Copyright (c) 2018
+Copyright (c) 2019
 
 Licensed under the [MIT license](LICENSE).

@@ -12,10 +12,10 @@ const Term = () => {
         color: '#757575',
       }}
     >
-      <p style={{marginTop: '20px'}}>
-        Copyright (c) 2018 UC Davis Department of Land, Air and Water Resources
+      <p style={{ marginTop: '20px' }}>
+        Copyright (c) 2019 UC Davis Department of Land, Air and Water Resources
       </p>
-      <p style={{marginTop: '20px'}}>
+      <p style={{ marginTop: '20px' }}>
         Permission is hereby granted, free of charge, to any person obtaining a
         copy of this software and associated documentation files (the
         "Software"), to deal in the Software without restriction, including
@@ -24,11 +24,11 @@ const Term = () => {
         permit persons to whom the Software is furnished to do so, subject to
         the following conditions:
       </p>
-      <p style={{marginTop: '20px'}}>
+      <p style={{ marginTop: '20px' }}>
         The above copyright notice, citation and this permission notice shall be
         included in all copies or substantial portions of the Software.
       </p>
-      <p style={{marginTop: '20px'}}>
+      <p style={{ marginTop: '20px' }}>
         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
         OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
         MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
