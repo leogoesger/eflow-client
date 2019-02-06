@@ -37,6 +37,13 @@ const uploads = uploads => {
   };
 };
 
+const uploadData = upload => {
+  return {
+    type: types.UPLOAD_DATA,
+    upload,
+  };
+};
+
 const userErrorMessage = msg => {
   return {
     type: types.USER_ERROR_MESSAGE,
@@ -128,9 +135,9 @@ export function getMe() {
         .post(`${process.env.SERVER_ADDRESS}/api/user/getme`)
         .send({ ff_jwt: localStorage.getItem("ff_jwt") });
       dispatch(loginUserObject(response.body));
-      response.body.role === "ADMIN"
-        ? navigateTo("/admin")
-        : navigateTo("/profile");
+      // response.body.role === "ADMIN"
+      //   ? navigateTo("/admin")
+      //   : navigateTo("/profile");
     } catch (error) {
       localStorage.removeItem("ff_jwt");
     }
@@ -141,7 +148,7 @@ export function getFailedUpload() {
   return async dispatch => {
     try {
       const response = await request
-        .post(`${process.env.SERVER_ADDRESS}/api/user/getFailedUploads`)
+        .post(`${process.env.SERVER_ADDRESS}/api/admin/get-failed-uploads`)
         .send({ ff_jwt: localStorage.getItem("ff_jwt") });
       dispatch(failedUpload(response.body));
     } catch (error) {
@@ -154,9 +161,22 @@ export function getUploads() {
   return async dispatch => {
     try {
       const response = await request
-        .post(`${process.env.SERVER_ADDRESS}/api/user/getUploads`)
+        .post(`${process.env.SERVER_ADDRESS}/api/admin/get-uploads`)
         .send({ ff_jwt: localStorage.getItem("ff_jwt") });
       dispatch(uploads(response.body));
+    } catch (error) {
+      localStorage.removeItem("ff_jwt");
+    }
+  };
+}
+
+export function getUploadById(id) {
+  return async dispatch => {
+    try {
+      const response = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/user/get-upload/${id}`)
+        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
+      dispatch(uploadData(response.body));
     } catch (error) {
       localStorage.removeItem("ff_jwt");
     }

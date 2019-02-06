@@ -270,7 +270,7 @@ class Hydrograph extends React.Component {
     return (
       <div>
         <div style={styles.plotTitle}>
-          {`Dimensionless Reference Hydrograph for ${this.props.data.name}`}
+          {`Dimensionless Reference Hydrograph`}
         </div>
         <Divider />
         <div

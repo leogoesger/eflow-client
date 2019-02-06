@@ -10,6 +10,7 @@ const initialState: STATE = {
   userErrorMessage: "",
   failedUploads: null,
   uploads: null,
+  uploadData: null,
 };
 
 export default function(state: STATE = initialState, action: ACTION) {
@@ -34,6 +35,9 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.ADMIN_UPLOADS:
       return objectAssign({}, state, { uploads: action.uploads });
+
+    case types.UPLOAD_DATA:
+      return objectAssign({}, state, { uploadData: action.upload });
 
     default:
       return state;
