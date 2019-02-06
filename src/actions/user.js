@@ -173,9 +173,9 @@ export function getUploads() {
 export function getUploadById(id) {
   return async dispatch => {
     try {
-      const response = await request.get(
-        `${process.env.SERVER_ADDRESS}/api/user/get-upload/${id}`
-      );
+      const response = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/user/get-upload/${id}`)
+        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
       dispatch(uploadData(response.body));
     } catch (error) {
       localStorage.removeItem("ff_jwt");
