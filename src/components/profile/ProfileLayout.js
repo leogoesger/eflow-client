@@ -71,9 +71,7 @@ const ProfileLayout = ({
         <div style={{ marginTop: "20px" }}>
           {sortedData.map(d => (
             <UploadData
-              indx={currentUser.uploadData.findIndex(
-                data => data.name === d.name
-              )}
+              id={d.id}
               key={d.id}
               data={d}
               getMe={getMe}
