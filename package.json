@@ -18,6 +18,7 @@
     "remove-dist": "rimraf ./dist",
     "prebuild": "yarn flow && yarn lint && yarn test && yarn clean-dist",
     "build": "babel-node tools/build.js && yarn open:dist",
+    "copy": "cp robots.txt dist/ && cp sitemap.xml dist/",
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",
     "test:cover": "yarn test -- --coverage ",
