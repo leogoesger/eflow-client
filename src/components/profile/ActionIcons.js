@@ -38,7 +38,7 @@ export class ActionIcons extends React.Component {
   }
 
   getText() {
-    const text = `${window.location.href.split('profile')[0]}uploadhydrograph/${
+    const text = `${window.location.href.split('profile')[0]}uploads/${
       this.props.id
     }`;
     copyTextToClipboard(text);
@@ -150,7 +150,7 @@ export class ActionIcons extends React.Component {
           <div>
             <Link
               to={{
-                pathname: `uploadhydrograph/${id}`,
+                pathname: `uploads/${id}`,
                 ...this.props,
               }}
             >

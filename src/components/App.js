@@ -95,7 +95,7 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/uploadhydrograph/:id"
+                path="/uploads/:id"
                 component={withTracker(UploadHydrograph)}
               />
               <Route exact path="*" component={withTracker(UnknownRoute)} />

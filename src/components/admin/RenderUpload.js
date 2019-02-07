@@ -1,13 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Card, CardText } from "material-ui";
-import { Tooltip } from "react-tippy";
-import Delete from "material-ui/svg-icons/action/delete";
-import FileDownload from "material-ui/svg-icons/file/file-download";
-import { CSVLink } from "react-csv";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Card, CardText } from 'material-ui';
+import { Tooltip } from 'react-tippy';
+import Delete from 'material-ui/svg-icons/action/delete';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
+import { CSVLink } from 'react-csv';
+import { navigateTo } from '../../utils/helpers';
 
-import { Colors } from "../../styles";
-import upload from "../../APIs/upload";
+import { Colors } from '../../styles';
+import upload from '../../APIs/upload';
 
 const onDelete = async (id, getUploads) => {
   await upload.deleteTimeSeries(id);
@@ -15,7 +16,7 @@ const onDelete = async (id, getUploads) => {
 };
 
 const getCSVdata = data => {
-  const csvData = [["date", "flow"]];
+  const csvData = [['date', 'flow']];
   for (let i = 0; i < data.dates.length; i++) {
     csvData.push([data.dates[i], data.flows[i]]);
   }
@@ -28,22 +29,25 @@ const RenderUpload = ({ data, getUploads }) => {
   return (
     <Card
       style={{
-        margin: "10px auto",
+        margin: '10px auto',
       }}
     >
       <div
         style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'space-between',
         }}
       >
-        <div style={{ cursor: "not-allowed", width: "400px" }}>
-          <div style={{ padding: "10px", fontSize: "15px" }}>{data.name}</div>
+        <div
+          style={{ cursor: 'pointer', width: '400px' }}
+          onClick={() => navigateTo(`/uploads/${data.id}`)}
+        >
+          <div style={{ padding: '10px', fontSize: '15px' }}>{data.name}</div>
           <CardText
             style={{
-              padding: "0px 10px 10px 10px",
-              fontSize: "10px",
+              padding: '0px 10px 10px 10px',
+              fontSize: '10px',
               color: Colors.grey,
             }}
           >
@@ -54,8 +58,8 @@ const RenderUpload = ({ data, getUploads }) => {
               1}/${date.getDate()}/${date.getFullYear()}`}</div>
           </CardText>
         </div>
-        <div style={{ margin: "20px -200px 10px 10px" }}>
-          <Tooltip title={"Download"} position="top" arrow={true}>
+        <div style={{ margin: '20px -200px 10px 10px' }}>
+          <Tooltip title={'Download'} position="top" arrow={true}>
             <CSVLink data={csvData} filename={`${data.name}.csv`}>
               <FileDownload color={Colors.gold} />
             </CSVLink>
@@ -72,16 +76,16 @@ const RenderUpload = ({ data, getUploads }) => {
         </div> */}
         <div
           style={{
-            marginTop: "20px",
-            marginRight: "10px",
+            marginTop: '20px',
+            marginRight: '10px',
           }}
         >
-          <Tooltip title={"Delete"} position="top" arrow={true}>
+          <Tooltip title={'Delete'} position="top" arrow={true}>
             <Delete
               onClick={() => onDelete(data.id, getUploads)}
-              color={"#f9a825"}
+              color={'#f9a825'}
               style={{
-                cursor: "pointer",
+                cursor: 'pointer',
               }}
             />
           </Tooltip>

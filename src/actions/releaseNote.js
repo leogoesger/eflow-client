@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 7th, 2019',
+            version: 'v2.13',
+            title: 'Admin view all uploads',
+            tasks: ['Admin view uploaded data', 'Change url'],
+          },
+          {
             date: 'Feb 6th, 2019',
             version: 'v2.12',
             title: 'Update terms',

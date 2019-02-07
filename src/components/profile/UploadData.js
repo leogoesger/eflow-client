@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Card, CardText } from "material-ui";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Card, CardText } from 'material-ui';
 
-import { Colors } from "../../styles";
+import { Colors } from '../../styles';
 import {
   classificationColor,
   classification,
-} from "../../constants/classification";
-import { ActionIcons } from "./ActionIcons";
+} from '../../constants/classification';
+import { ActionIcons } from './ActionIcons';
 
 class UploadData extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class UploadData extends React.Component {
     //   currentP[key].reduce((a, b) => Number(a) + Number(b), 0) /
     //   currentP[key].length;
     return (
-      <div style={{ color, paddingLeft: "14px", fontSize: "12px" }}>
+      <div style={{ color, paddingLeft: '14px', fontSize: '12px' }}>
         Prediction: {currentP.prediction}
       </div>
     );
@@ -52,36 +52,36 @@ class UploadData extends React.Component {
       <React.Fragment>
         <Card
           style={{
-            margin: "10px auto",
-            width: "70%",
+            margin: '10px auto',
+            width: '70%',
           }}
         >
           <div
             style={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-between",
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
             }}
           >
-            <div style={{ width: "400px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ width: '400px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Link
                   to={{
-                    pathname: `uploadhydrograph/${this.props.id}`,
+                    pathname: `uploads/${this.props.id}`,
                     ...this.props,
                   }}
                 >
                   <div
-                    style={{ padding: "15px 0px 5px 15px", fontSize: "24px" }}
+                    style={{ padding: '15px 0px 5px 15px', fontSize: '24px' }}
                   >
                     {data.name}
                   </div>
                   {!data.predictions.length && (
                     <div
                       style={{
-                        color: "#d2691e",
-                        paddingLeft: "14px",
-                        fontSize: "12px",
+                        color: '#d2691e',
+                        paddingLeft: '14px',
+                        fontSize: '12px',
                       }}
                     >
                       {
@@ -94,9 +94,9 @@ class UploadData extends React.Component {
               </div>
               <CardText
                 style={{
-                  fontSize: "16px",
+                  fontSize: '16px',
                   color: Colors.grey,
-                  marginTop: "16px",
+                  marginTop: '16px',
                 }}
               >{`Created at: ${date.getMonth() +
                 1}/${date.getDate()}/${date.getFullYear()}`}</CardText>
