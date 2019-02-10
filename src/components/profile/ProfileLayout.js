@@ -54,7 +54,7 @@ const ProfileLayout = ({
           </div>
           <Uploader
             enabled={
-              !currentUser.uploadData || currentUser.uploadData.length < 5
+              !currentUser.uploadData || currentUser.uploadData.length < 11
             }
           />
         </div>
