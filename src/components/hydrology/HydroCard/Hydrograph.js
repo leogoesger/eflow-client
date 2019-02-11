@@ -194,6 +194,7 @@ class Hydrograph extends React.Component {
   }
 
   _renderDRHs(hydroData) {
+    const years = this.props.currentGauge.years[0].allYears;
     if (this.state.minMax) {
       colors.MIN = Colors.MIN;
       colors.MAX = Colors.MAX;
@@ -207,7 +208,9 @@ class Hydrograph extends React.Component {
         <div>
           {this._renderTitleInfo()}
           <div style={styles.plotTitle}>
-            {"Dimensionless Reference Hydrograph"}
+            {`Dimensionless Reference Hydrograph ${years[0]}-${
+              years[years.length - 1]
+            }`}
           </div>
           <div style={styles.yLabel}>{"Daily flow / Average annual Flow"} </div>
           <svg

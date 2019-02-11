@@ -72,13 +72,13 @@ const getFixedYaxisValueObject = yMax => {
   };
 };
 
-export function fetchAllClassesBoxPlots() {
+export function fetchAllClassesBoxPlots(cond) {
   return async dispatch => {
     //const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
     //api call consolidation into one -Madhav
-    const allMetricBoxPlots = await request.get(
-      `${process.env.SERVER_ADDRESS}/api/getAllClassesBoxPlotAttributes`
-    );
+    const allMetricBoxPlots = await request
+      .post(`${process.env.SERVER_ADDRESS}/api/getAllClassesBoxPlotAttributes`)
+      .send({ condition: cond || "DRY" });
     dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots.body));
     dispatch(updateLoadingObject(false));
   };
