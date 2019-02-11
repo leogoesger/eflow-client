@@ -76,7 +76,7 @@ class UploadData extends React.Component {
                   >
                     {data.name}
                   </div>
-                  {!data.predictions.length && (
+                  {/* {!data.predictions.length && (
                     <div
                       style={{
                         color: '#d2691e',
@@ -89,7 +89,7 @@ class UploadData extends React.Component {
                       }
                     </div>
                   )}
-                  {this.getClassPrediction(data.predictions)}
+                  {this.getClassPrediction(data.predictions)} */}
                 </Link>
               </div>
               <CardText

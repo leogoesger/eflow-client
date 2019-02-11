@@ -68,12 +68,12 @@ class Params extends React.Component {
             <div style={{ fontSize: '22px', fontWeight: 600 }}>
               Select / Set Parameters <br />
               <span style={{ fontSize: '12px', color: '#d32f2f' }}>
-                Optional: Select a hydrologic class to refine metric results
+                Optional: Select a stream class to refine metric results
               </span>
             </div>
 
             <SelectField
-              floatingLabelText="Select Params Base on Class"
+              floatingLabelText="Set Parameters Based on Stream Class"
               style={{ marginTop: '-24px' }}
               value={this.state.class}
               underlineFocusStyle={Styles.underlineFocusStyle}
