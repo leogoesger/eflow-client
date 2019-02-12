@@ -85,8 +85,11 @@ class MetricOverviewCard extends React.Component {
       'columnName',
       this.state.metricColumnName
     );
+    // console.log(metric);
+    const display = metric.display;
+    const dimUnit = metric.dimUnit;
     this.setState({
-      title: `${metric.display} (${metric.dimUnit})`,
+      title: `${display} (${dimUnit})`,
     });
   }
 
@@ -144,19 +147,14 @@ class MetricOverviewCard extends React.Component {
       this.props.allClassesBoxPlots[this.state.metricTableName]
     ).map((key, index) => {
       if (key !== 'magWet') {
+        const metric = this._getDisplayValue(
+          'columnName',
+          key,
+          'tableName',
+          this.state.metricTableName
+        );
         return (
-          <MenuItem
-            value={index}
-            key={key}
-            primaryText={
-              this._getDisplayValue(
-                'columnName',
-                key,
-                'tableName',
-                this.state.metricTableName
-              ).display
-            }
-          />
+          <MenuItem value={index} key={key} primaryText={metric.display} />
         );
       } else {
         return (
@@ -194,6 +192,13 @@ class MetricOverviewCard extends React.Component {
       );
     }
 
+    const metric = this._getDisplayValue(
+      'columnName',
+      this.state.metricColumnName,
+      'tableName',
+      this.state.metricTableName
+    );
+    if (!metric) return null;
     return (
       <React.Fragment>
         <Card style={styles.container}>
@@ -221,14 +226,7 @@ class MetricOverviewCard extends React.Component {
               subtitle={`Category: ${
                 this._getDisplayValue('tableName', this.state.metricTableName)
                   .displayTableName
-              } | Metric: ${
-                this._getDisplayValue(
-                  'columnName',
-                  this.state.metricColumnName,
-                  'tableName',
-                  this.state.metricTableName
-                ).display
-              }`}
+              } | Metric: ${metric.display}`}
               subtitleStyle={{ color: Colors.gold }}
               actAsExpander={false}
               showExpandableButton={false}
