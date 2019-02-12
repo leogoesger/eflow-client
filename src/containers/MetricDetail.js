@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {fetchClassifications} from '../actions/classification';
-import {removeCurrentGauge} from '../actions/gauge';
+import { fetchClassifications } from '../actions/classification';
+import { removeCurrentGauge } from '../actions/gauge';
 import {
   fetchAllClassesBoxPlots,
   fetchAnnualFlowData,
@@ -138,7 +138,7 @@ export class MetricDetail extends React.Component {
       this.props.fetchClassifications();
     }
     if (this.props.currentGauge) {
-      this.props.fetchAnnualFlowData({gaugeId: this.props.currentGauge.id});
+      this.props.fetchAnnualFlowData({ gaugeId: this.props.currentGauge.id });
       this.props.fetchHydrographOverlay(this.props.currentGauge.id);
       if (this.props.fixedYaxisPercentile) {
         this.props.getYaxisMax(
@@ -169,8 +169,8 @@ export class MetricDetail extends React.Component {
             <Layout
               annualFlowData={this.props.annualFlowData}
               classifications={this.props.classifications}
-              fetchAllClassesBoxPlots={() =>
-                this.props.fetchAllClassesBoxPlots()
+              fetchAllClassesBoxPlots={cond =>
+                this.props.fetchAllClassesBoxPlots(cond)
               }
               allClassesBoxPlots={this.props.allClassesBoxPlots}
               loading={this.props.loading}
@@ -237,7 +237,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchClassifications: () => dispatch(fetchClassifications()),
     removeCurrentGauge: () => dispatch(removeCurrentGauge()),
-    fetchAllClassesBoxPlots: () => dispatch(fetchAllClassesBoxPlots()),
+    fetchAllClassesBoxPlots: cond => dispatch(fetchAllClassesBoxPlots(cond)),
     fetchAnnualFlowData: d => dispatch(fetchAnnualFlowData(d)),
     toggleMetricGaugeDrawer: status =>
       dispatch(toggleMetricGaugeDrawer(status)),
@@ -254,4 +254,7 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MetricDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MetricDetail);

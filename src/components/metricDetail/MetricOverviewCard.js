@@ -1,40 +1,59 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { find } from "lodash";
-import Card from "material-ui/Card";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
-import Toggle from "material-ui/Toggle";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { find } from 'lodash';
+import { Card, CardHeader, RaisedButton, Divider } from 'material-ui';
+import Setting from 'material-ui/svg-icons/action/settings';
+import MenuItem from 'material-ui/MenuItem';
 
-import { Colors } from "../../styles";
-import Loader from "../shared/loader/Loader";
-import MetricOverviewBoxPlot from "./MetricOverviewBoxPlot";
-import { metricReference } from "../../constants/metrics";
+import { Colors } from '../../styles';
+import Loader from '../shared/loader/Loader';
+import MetricOverviewBoxPlot from './MetricOverviewBoxPlot';
+import MetricBoxPlotDrawer from './MetricBoxPlotDrawer';
+import { metricReference } from '../../constants/metrics';
+import { conditionTypes } from '../../constants/conditionTypes';
 
 class MetricOverviewCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      condition: 'All',
+      conditionValue: 0,
       metricTableValue: 0,
-      metricTableName: "AllYears",
+      metricTableName: 'AllYears',
       metricColumnValue: 0,
-      metricColumnName: "average",
-      title: "Annual Average (cfs)",
+      metricColumnName: 'average',
+      title: 'Annual Average (cfs)',
       logScale: false,
+      openDrawer: false,
     };
   }
 
-  componentWillMount() {
+  async componentDidMount() {
     if (!this.props.allClassesBoxPlots) {
-      return this.props.fetchAllClassesBoxPlots();
+      this.props.fetchAllClassesBoxPlots('ALL');
     }
-  }
 
-  componentDidMount() {
     this.setState({
       metricTableValue: 0,
       metricColumnValue: 0,
+      conditionValue: 0,
     });
+  }
+
+  async _handleConditionChange(event, index, value) {
+    await this.setState(
+      {
+        condition: conditionTypes[index],
+        conditionValue: value,
+      },
+      () => {
+        this.props.fetchAllClassesBoxPlots(this.state.condition.toUpperCase());
+      }
+    );
+  }
+
+  toggleDrawer(bool) {
+    this.setState({ openDrawer: bool });
   }
 
   _getDisplayValue(key1, value1, key2, value2) {
@@ -55,15 +74,15 @@ class MetricOverviewCard extends React.Component {
   }
 
   _handleTitleChange() {
-    if (this.state.metricColumnName === "magWet") {
+    if (this.state.metricColumnName === 'magWet') {
       return this.setState({
-        title: "Winter Magnitude (cfs)",
+        title: 'Winter Magnitude (cfs)',
       });
     }
     const metric = this._getDisplayValue(
-      "tableName",
+      'tableName',
       this.state.metricTableName,
-      "columnName",
+      'columnName',
       this.state.metricColumnName
     );
     this.setState({
@@ -75,12 +94,12 @@ class MetricOverviewCard extends React.Component {
     await this.setState({
       metricTableValue: value,
       metricTableName: this._getDisplayValue(
-        "displayTableName",
+        'displayTableName',
         event.target.innerText
       ).tableName,
     });
-    if (this.state.metricTableName == "FallWinters") {
-      this.setState({ metricTableName: "Winters" });
+    if (this.state.metricTableName == 'FallWinters') {
+      this.setState({ metricTableName: 'Winters' });
     }
     await this.setState({
       metricColumnValue: 0,
@@ -93,14 +112,14 @@ class MetricOverviewCard extends React.Component {
 
   async _handleColumnChange(event, index, value) {
     let winterBaseflow;
-    if (event.target.innerText === "Winter Baseflow") {
-      winterBaseflow = "magWet";
+    if (event.target.innerText === 'Winter Baseflow') {
+      winterBaseflow = 'magWet';
     }
     await this.setState({
       metricColumnValue: value,
       metricColumnName: winterBaseflow
-        ? "magWet"
-        : this._getDisplayValue("display", event.target.innerText).columnName,
+        ? 'magWet'
+        : this._getDisplayValue('display', event.target.innerText).columnName,
     });
     this._handleTitleChange();
   }
@@ -111,7 +130,7 @@ class MetricOverviewCard extends React.Component {
         <MenuItem
           value={index}
           key={index}
-          primaryText={this._getDisplayValue("tableName", key).displayTableName}
+          primaryText={this._getDisplayValue('tableName', key).displayTableName}
         />
       );
     });
@@ -124,16 +143,16 @@ class MetricOverviewCard extends React.Component {
     return Object.keys(
       this.props.allClassesBoxPlots[this.state.metricTableName]
     ).map((key, index) => {
-      if (key !== "magWet") {
+      if (key !== 'magWet') {
         return (
           <MenuItem
             value={index}
             key={key}
             primaryText={
               this._getDisplayValue(
-                "columnName",
+                'columnName',
                 key,
-                "tableName",
+                'tableName',
                 this.state.metricTableName
               ).display
             }
@@ -141,7 +160,7 @@ class MetricOverviewCard extends React.Component {
         );
       } else {
         return (
-          <MenuItem value={index} key={key} primaryText={"Winter Baseflow"} />
+          <MenuItem value={index} key={key} primaryText={'Winter Baseflow'} />
         );
       }
     });
@@ -170,7 +189,7 @@ class MetricOverviewCard extends React.Component {
       return (
         <React.Fragment>
           <Loader loading={this.props.loading} />
-          <Card style={{ width: "65%", height: "600px", overflow: "scroll" }} />
+          <Card style={{ width: '65%', height: '600px', overflow: 'scroll' }} />
         </React.Fragment>
       );
     }
@@ -178,41 +197,69 @@ class MetricOverviewCard extends React.Component {
     return (
       <React.Fragment>
         <Card style={styles.container}>
-          <div style={styles.selectionContainer}>
-            <SelectField
-              floatingLabelText="Metric Category"
-              value={this.state.metricTableValue}
-              onChange={(event, index, value) =>
-                this._handleTableChange(event, index, value)
-              }
-              selectedMenuItemStyle={{ color: Colors.gold }}
-              floatingLabelStyle={{ color: Colors.gold }}
-            >
-              {this._renderTableItems()}
-            </SelectField>
-            <SelectField
-              floatingLabelText="Metric Name"
-              value={this.state.metricColumnValue}
-              onChange={(event, index, value) =>
-                this._handleColumnChange(event, index, value)
-              }
-              selectedMenuItemStyle={{ color: Colors.gold }}
-              floatingLabelStyle={{ color: Colors.gold }}
-            >
-              {this._renderColumnItems()}
-            </SelectField>
-            <Toggle
-              style={{ marginTop: "35px", width: "120px" }}
-              label={"Log Scale"}
-              labelStyle={styles.labelStyle}
-              value={"empty"}
-              onClick={() => this._toggleLogScale()}
-              toggled={this.state.logScale}
+          <RaisedButton
+            className="tour-metricDetail-display"
+            label="Display"
+            backgroundColor={Colors.gold}
+            labelColor={Colors.white}
+            disabled={false}
+            style={{
+              top: '25px',
+              zIndex: 1,
+              position: 'absolute',
+              left: '703px',
+            }}
+            icon={<Setting />}
+            labelStyle={{ fontSize: '12px' }}
+            onClick={() => this.toggleDrawer(true)}
+          />
+          <div style={{ width: '60%', marginTop: '15px' }}>
+            <CardHeader
+              style={{ paddingRight: '0px', marginTop: '10px' }}
+              title={`Water Year Type: ${this.state.condition}`}
+              textStyle={{ paddingRight: '0px' }}
+              subtitle={`Category: ${
+                this._getDisplayValue('tableName', this.state.metricTableName)
+                  .displayTableName
+              } | Metric: ${
+                this._getDisplayValue(
+                  'columnName',
+                  this.state.metricColumnName,
+                  'tableName',
+                  this.state.metricTableName
+                ).display
+              }`}
+              subtitleStyle={{ color: Colors.gold }}
+              actAsExpander={false}
+              showExpandableButton={false}
             />
           </div>
+          <Divider />
           {this._renderBoxplots()}
         </Card>
         <Loader loading={this.props.loading} />
+        <MetricBoxPlotDrawer
+          openDrawer={this.state.openDrawer}
+          toggleDrawer={bool => this.toggleDrawer(bool)}
+          fetchAllClassesBoxPlots={this.props.fetchAllClassesBoxPlots}
+          logScale={this.state.logScale}
+          toggleLogScale={() => this._toggleLogScale()}
+          allClassesBoxPlots={this.props.allClassesBoxPlots}
+          metricTableValue={this.state.metricTableValue}
+          metricTableName={this.state.metricTableName}
+          metricColumnName={this.state.metricColumnName}
+          metricColumnValue={this.state.metricColumnValue}
+          title={this.state.title}
+          handleColumnChange={(e, i, v) => this._handleColumnChange(e, i, v)}
+          handleTableChange={(e, i, v) => this._handleTableChange(e, i, v)}
+          renderColumnItems={() => this._renderColumnItems()}
+          renderTableItems={() => this._renderTableItems()}
+          condition={this.state.condition}
+          conditionValue={this.state.conditionValue}
+          handleConditionChange={(e, i, v) =>
+            this._handleConditionChange(e, i, v)
+          }
+        />
       </React.Fragment>
     );
   }
@@ -226,30 +273,32 @@ MetricOverviewCard.propTypes = {
 
 const styles = {
   container: {
-    width: "70%",
-    height: "600px",
-    overflow: "scroll",
-    margin: "0 auto",
+    width: '70%',
+    height: '600px',
+    overflow: 'scroll',
+    margin: '0 auto',
+    position: 'relative',
   },
   selectionContainer: {
-    display: "flex",
-    justifyContent: "space-around",
-    width: "90%",
-    marginTop: "20px",
-    marginLeft: "30px",
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    width: '90%',
+    padding: '16px',
+    marginTop: '15px',
   },
   BLcontainer: {
-    position: "absolute",
-    right: "20px",
-    top: "20px",
-    width: "100px",
-    padding: "20px",
-    boxShadow: "2px 2px 45px -5px rgba(110,110,110,0.5)",
-    zIndex: "20",
+    position: 'absolute',
+    right: '20px',
+    top: '20px',
+    width: '100px',
+    padding: '20px',
+    boxShadow: '2px 2px 45px -5px rgba(110,110,110,0.5)',
+    zIndex: '20',
   },
   labelStyle: {
     color: Colors.grey,
-    fontSize: "12px",
+    fontSize: '12px',
   },
 };
 export default MetricOverviewCard;
