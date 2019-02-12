@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as d3 from "d3";
-import { Paper, Divider, RaisedButton, FlatButton } from "material-ui";
-import { CardHeader } from "material-ui/Card";
-import Reply from "material-ui/svg-icons/content/reply";
-import TimeLine from "material-ui/svg-icons/action/timeline";
-import ViewDay from "material-ui/svg-icons/action/view-day";
-import Upload from "material-ui/svg-icons/file/cloud-upload";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as d3 from 'd3';
+import { Paper, Divider, RaisedButton, FlatButton } from 'material-ui';
+import { CardHeader } from 'material-ui/Card';
+import Reply from 'material-ui/svg-icons/content/reply';
+import TimeLine from 'material-ui/svg-icons/action/timeline';
+import ViewDay from 'material-ui/svg-icons/action/view-day';
+import Upload from 'material-ui/svg-icons/file/cloud-upload';
 
-import { navigateTo } from "../../../utils/helpers";
-import { LinePlot } from "../../shared/plots";
-import { classInfo } from "../../../constants/classification";
+import { navigateTo } from '../../../utils/helpers';
+import { LinePlot } from '../../shared/plots';
+import { classInfo } from '../../../constants/classification';
 
-import { Colors } from "../../../styles";
-import Control from "./Control";
+import { Colors } from '../../../styles';
+import Control from './Control';
 
 const colors = {
   NINTY: Colors.NINTY,
@@ -40,7 +40,7 @@ class Hydrograph extends React.Component {
       .scaleExtent([-10, 10])
       .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
       .extent([[-100, -100], [700 + 100, 420 + 100]])
-      .on("zoom", () => this.zoomed());
+      .on('zoom', () => this.zoomed());
   }
 
   componentDidMount() {
@@ -80,8 +80,8 @@ class Hydrograph extends React.Component {
       <div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
           <CardHeader
@@ -92,7 +92,7 @@ class Hydrograph extends React.Component {
             subtitleColor={currentGaugeClass.colors[0]}
             actAsExpander={false}
             showExpandableButton={false}
-            style={{ padding: "15px 0px 15px 10px" }}
+            style={{ padding: '15px 0px 15px 10px' }}
           />
           <Control
             currentGauge={this.props.currentGauge}
@@ -114,8 +114,8 @@ class Hydrograph extends React.Component {
       <div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
           <CardHeader
@@ -124,7 +124,7 @@ class Hydrograph extends React.Component {
             subtitle={`ID: ${this.props.currentClassification.id}`}
             actAsExpander={false}
             showExpandableButton={false}
-            style={{ padding: "15px 0px 15px 10px" }}
+            style={{ padding: '15px 0px 15px 10px' }}
           />
           <Control
             currentGauge={this.props.currentGauge}
@@ -166,27 +166,27 @@ class Hydrograph extends React.Component {
   _renderPercentilleChips() {
     return (
       <div style={styles.labels}>
-        <div style={styles.labelName}>{"Percentiles:"}</div>
+        <div style={styles.labelName}>{'Percentiles:'}</div>
 
         <div style={{ ...styles.label, backgroundColor: Colors.NINTY }} />
-        <div style={styles.labelName}>{"10th"}</div>
+        <div style={styles.labelName}>{'10th'}</div>
 
         <div style={{ ...styles.label, backgroundColor: Colors.SEVENTYFIVE }} />
-        <div style={styles.labelName}>{"25th"}</div>
+        <div style={styles.labelName}>{'25th'}</div>
 
         <div style={{ ...styles.label, backgroundColor: Colors.FIFTY }} />
-        <div style={styles.labelName}>{"50th"}</div>
+        <div style={styles.labelName}>{'50th'}</div>
 
         <div style={{ ...styles.label, backgroundColor: Colors.TWENTYFIVE }} />
-        <div style={styles.labelName}>{"75th"}</div>
+        <div style={styles.labelName}>{'75th'}</div>
 
         <div style={{ ...styles.label, backgroundColor: Colors.TEN }} />
-        <div style={styles.labelName}>{"90th"}</div>
+        <div style={styles.labelName}>{'90th'}</div>
 
         {this.state.minMax ? (
           <React.Fragment>
             <div style={{ ...styles.label, backgroundColor: Colors.MIN }} />
-            <div style={styles.labelName}>{"min/max"}</div>
+            <div style={styles.labelName}>{'min/max'}</div>
           </React.Fragment>
         ) : null}
       </div>
@@ -194,12 +194,18 @@ class Hydrograph extends React.Component {
   }
 
   _renderDRHs(hydroData) {
+    let yearRanges = '';
+    if (this.props.currentGauge) {
+      const years = this.props.currentGauge.years[0].allYears;
+      yearRanges = `${years[0]}-${years[years.length - 1]}`;
+    }
+
     if (this.state.minMax) {
       colors.MIN = Colors.MIN;
       colors.MAX = Colors.MAX;
     } else {
-      colors.MIN = "rgba(0, 0, 0, 0)";
-      colors.MAX = "rgba(0, 0, 0, 0)";
+      colors.MIN = 'rgba(0, 0, 0, 0)';
+      colors.MAX = 'rgba(0, 0, 0, 0)';
     }
 
     if (hydroData) {
@@ -207,14 +213,14 @@ class Hydrograph extends React.Component {
         <div>
           {this._renderTitleInfo()}
           <div style={styles.plotTitle}>
-            {"Dimensionless Reference Hydrograph"}
+            {`Dimensionless Reference Hydrograph ${yearRanges}`}
           </div>
-          <div style={styles.yLabel}>{"Daily flow / Average annual Flow"} </div>
+          <div style={styles.yLabel}>{'Daily flow / Average annual Flow'} </div>
           <svg
             width={620}
             height={400}
             ref={el => (this.svg = el)}
-            style={{ cursor: "pointer", marginLeft: "10px" }}
+            style={{ cursor: 'pointer', marginLeft: '10px' }}
           >
             <LinePlot
               x={this.props.containerWidth / 10}
@@ -224,7 +230,7 @@ class Hydrograph extends React.Component {
               data={this.state.hydroData}
               xValue={value => value.date}
               yValue={value => value.flow}
-              highestKey={"NINTY"}
+              highestKey={'NINTY'}
               colors={colors}
               overLayBoxPlotData={this.props.overLayBoxPlotData}
               verticalOverlayBoxPlotData={this.props.verticalOverlayBoxPlotData}
@@ -247,28 +253,28 @@ class Hydrograph extends React.Component {
         <div style={styles.btnContainer}>
           <FlatButton
             label="Upload Data"
-            style={{ marginRight: "20px" }}
-            labelStyle={{ fontSize: "12px", color: Colors.gold }}
+            style={{ marginRight: '20px' }}
+            labelStyle={{ fontSize: '12px', color: Colors.gold }}
             icon={<Upload color={Colors.gold} />}
-            onClick={() => navigateTo("/profile")}
+            onClick={() => navigateTo('/profile')}
           />
           <div>
             <FlatButton
               label="Gauge List"
-              style={{ marginRight: "20px" }}
-              labelStyle={{ fontSize: "12px", color: Colors.gold }}
+              style={{ marginRight: '20px' }}
+              labelStyle={{ fontSize: '12px', color: Colors.gold }}
               icon={<Reply color={Colors.gold} />}
               onClick={() => removeClassGaugeProps()}
             />
             <RaisedButton
               className="tour-hydro-metricDetail"
-              label={currentGauge ? "Annual Flow Plot" : "Class Box plot"}
+              label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
               disabled={false}
               icon={currentGauge ? <TimeLine /> : <ViewDay />}
-              labelStyle={{ fontSize: "12px" }}
-              onClick={() => navigateTo("/metricDetail")}
+              labelStyle={{ fontSize: '12px' }}
+              onClick={() => navigateTo('/metricDetail')}
             />
           </div>
         </div>
@@ -290,55 +296,55 @@ Hydrograph.propTypes = {
 
 const styles = {
   yLabel: {
-    position: "absolute",
-    fontSize: "14px",
-    left: "18px",
-    top: "180px",
-    writingMode: "vertical-rl",
-    transform: "rotate(-180deg)",
+    position: 'absolute',
+    fontSize: '14px',
+    left: '18px',
+    top: '180px',
+    writingMode: 'vertical-rl',
+    transform: 'rotate(-180deg)',
   },
   labels: {
-    width: "90%",
-    display: "flex",
-    justifyContent: "space-around",
-    position: "absolute",
-    top: "480px",
-    left: "40px",
+    width: '90%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    position: 'absolute',
+    top: '480px',
+    left: '40px',
   },
   label: {
-    height: "10px",
-    width: "10px",
-    marginTop: "0px",
+    height: '10px',
+    width: '10px',
+    marginTop: '0px',
   },
   graph: {
-    height: "750px",
-    width: "650px",
-    marginBottom: "20px",
-    borderRadius: "0px",
+    height: '750px',
+    width: '650px',
+    marginBottom: '20px',
+    borderRadius: '0px',
   },
   plotTitle: {
-    marginTop: "40px",
-    width: "100%",
-    textAlign: "center",
-    fontWeight: "500",
-    fontSize: "16px",
+    marginTop: '40px',
+    width: '100%',
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: '16px',
   },
-  labelName: { fontSize: "14px", marginLeft: "-35px", marginTop: "-2px" },
+  labelName: { fontSize: '14px', marginLeft: '-35px', marginTop: '-2px' },
   minMax: {
-    width: "180px",
-    position: "absolute",
-    right: "0px",
-    top: "20px",
+    width: '180px',
+    position: 'absolute',
+    right: '0px',
+    top: '20px',
   },
   labelStyle: {
-    fontSize: "16px",
-    color: "#757575",
+    fontSize: '16px',
+    color: '#757575',
   },
   btnContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "96%",
-    margin: "30px auto",
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '96%',
+    margin: '30px auto',
   },
 };
 

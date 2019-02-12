@@ -13,6 +13,16 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 11th, 2019',
+            version: 'v2.14',
+            title: 'Water year type selection for Boxplot',
+            tasks: [
+              'Water year type selection',
+              'DRH title with years range',
+              'Allows upto 11 uploads',
+            ],
+          },
+          {
             date: 'Feb 7th, 2019',
             version: 'v2.13',
             title: 'Admin view all uploads',
