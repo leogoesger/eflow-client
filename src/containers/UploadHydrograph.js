@@ -1,34 +1,39 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { navigateTo } from "../utils/helpers";
-import Layout from "../components/profile/uploadHydrograph/Layout";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { navigateTo } from '../utils/helpers';
+import Layout from '../components/profile/uploadHydrograph/Layout';
 
 import {
   fetchClassification,
   removeCurrentClass,
   fetchClassifications,
-} from "../actions/classification";
+} from '../actions/classification';
 import {
   fetchGauges,
   fetchCurrentGauge,
   removeCurrentGauge,
-} from "../actions/gauge";
-import { updateHoveredGauge } from "../actions/hydrology";
-import { getUploadById } from "../actions/user";
+} from '../actions/gauge';
+import { updateHoveredGauge } from '../actions/hydrology';
+import Loader from '../components/shared/loader/Loader';
+import { getUploadById } from '../actions/user';
 
 class UploadHydrograph extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true,
+    };
   }
 
-  componentDidMount() {
-    if (!localStorage.getItem("ff_jwt")) {
-      navigateTo("/login");
+  async componentDidMount() {
+    if (!localStorage.getItem('ff_jwt')) {
+      navigateTo('/login');
     }
     this.props.fetchClassifications();
     this.props.fetchGauges();
-    this.props.getUploadById([this.props.match.params.id]);
+    await this.props.getUploadById([this.props.match.params.id]);
+    this.setState({ loading: false });
   }
 
   removeClassGaugeProps() {
@@ -41,6 +46,7 @@ class UploadHydrograph extends React.Component {
 
     return (
       <React.Fragment>
+        <Loader loading={this.state.loading} />
         {this.props.uploadData && (
           <Layout
             data={this.props.uploadData}
@@ -108,6 +114,7 @@ const mapDispatchToProps = dispatch => {
     getUploadById: id => dispatch(getUploadById(id)),
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
