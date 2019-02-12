@@ -1,5 +1,5 @@
-import request from "superagent";
-import { MetricDetailTypes as types } from "../action-types";
+import request from 'superagent';
+import { MetricDetailTypes as types } from '../action-types';
 //import { getAllMetricBoxPlotClourse } from "./helpers";
 
 const fetchAllClassesBoxPlotObjects = boxPlotData => {
@@ -76,9 +76,10 @@ export function fetchAllClassesBoxPlots(cond) {
   return async dispatch => {
     //const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
     //api call consolidation into one -Madhav
+    dispatch(updateLoadingObject(true));
     const allMetricBoxPlots = await request
       .post(`${process.env.SERVER_ADDRESS}/api/getAllClassesBoxPlotAttributes`)
-      .send({ condition: cond || "DRY" });
+      .send({ condition: cond });
     dispatch(fetchAllClassesBoxPlotObjects(allMetricBoxPlots.body));
     dispatch(updateLoadingObject(false));
   };
