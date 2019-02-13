@@ -120,9 +120,9 @@ class MetricOverviewCard extends React.Component {
     }
     await this.setState({
       metricColumnValue: value,
-      metricColumnName: winterBaseflow
-        ? 'magWet'
-        : this._getDisplayValue('display', event.target.innerText).columnName,
+      metricColumnName:
+        winterBaseflow ||
+        this._getDisplayValue('display', event.target.innerText).columnName,
     });
     this._handleTitleChange();
   }
@@ -196,7 +196,11 @@ class MetricOverviewCard extends React.Component {
       'columnName',
       this.state.metricColumnName,
       'tableName',
-      this.state.metricTableName
+      `${
+        this.state.metricColumnName === 'magWet'
+          ? 'FallWinters'
+          : this.state.metricTableName
+      }`
     );
     if (!metric) return null;
     return (
