@@ -41,6 +41,7 @@ export default class Layout extends React.Component {
           }
           loading={this.props.loading}
           allClassesBoxPlots={this._getAllClassesBoxPlots()}
+          bPYAxisRange={this.props.bPYAxisRange}
         />
       );
     }
@@ -86,6 +87,7 @@ Layout.propTypes = {
   yMax: PropTypes.number,
   getYaxisMax: PropTypes.func,
   fixedYaxisPercentile: PropTypes.number,
+  bPYAxisRange: PropTypes.array,
 };
 
 const styles = {

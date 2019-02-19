@@ -10,6 +10,7 @@ import {
   toggleMetricGaugeDrawer,
   fetchHydrographOverlay,
   getYaxisMax,
+  getBoxPlotYaxisMax,
 } from '../actions/metricDetail';
 import Layout from '../components/metricDetail/Layout';
 import ErrorBoundary from '../components/shared/ErrorBoundary';
@@ -132,11 +133,14 @@ const metricDetailTourSteps = [
 ];
 
 export class MetricDetail extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     document.title = 'eFlows | Detail';
     if (!this.props.classifications) {
       this.props.fetchClassifications();
     }
+
+    await this.props.getBoxPlotYaxisMax(0.98);
+
     if (this.props.currentGauge) {
       this.props.fetchAnnualFlowData({ gaugeId: this.props.currentGauge.id });
       this.props.fetchHydrographOverlay(this.props.currentGauge.id);
@@ -188,6 +192,10 @@ export class MetricDetail extends React.Component {
               }
               fixedYaxisPercentile={this.props.fixedYaxisPercentile}
               fetchHydrographOverlay={d => this.props.fetchHydrographOverlay(d)}
+              getBoxPlotYaxisMax={percentile =>
+                this.props.getBoxPlotYaxisMax(percentile)
+              }
+              bPYAxisRange={this.props.bPYAxisRange}
             />
           </ErrorBoundary>
         </div>
@@ -215,6 +223,8 @@ MetricDetail.propTypes = {
   yMax: PropTypes.number,
   getYaxisMax: PropTypes.func,
   fixedYaxisPercentile: PropTypes.number,
+  getBoxPlotYaxisMax: PropTypes.func,
+  bPYAxisRange: PropTypes.array,
 };
 
 const mapStateToProps = state => {
@@ -230,6 +240,7 @@ const mapStateToProps = state => {
     hydrograph: state.metricDetail.hydrograph,
     yMax: state.metricDetail.yMax,
     fixedYaxisPercentile: state.metricDetail.fixedYaxis,
+    bPYAxisRange: state.metricDetail.bPYAxisRange,
   };
 };
 
@@ -243,6 +254,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(toggleMetricGaugeDrawer(status)),
     fetchHydrographOverlay: d => dispatch(fetchHydrographOverlay(d)),
     getYaxisMax: (id, percentile) => dispatch(getYaxisMax(id, percentile)),
+    getBoxPlotYaxisMax: percentile => dispatch(getBoxPlotYaxisMax(percentile)),
   };
 };
 

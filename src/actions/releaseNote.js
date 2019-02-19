@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 19th, 2019',
+            version: 'v2.15',
+            title: 'Fixed Y Axis for BoxPlots',
+            tasks: ['Fixed Y Axis for BoxPlots'],
+          },
+          {
             date: 'Feb 11th, 2019',
             version: 'v2.14',
             title: 'Water year type selection for Boxplot',

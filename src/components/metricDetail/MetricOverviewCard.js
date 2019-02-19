@@ -25,12 +25,13 @@ class MetricOverviewCard extends React.Component {
       title: 'Annual Average (cfs)',
       logScale: false,
       openDrawer: false,
+      fixedYAxis: false,
     };
   }
 
   async componentDidMount() {
     if (!this.props.allClassesBoxPlots) {
-      this.props.fetchAllClassesBoxPlots('ALL');
+      await this.props.fetchAllClassesBoxPlots('ALL');
     }
 
     this.setState({
@@ -50,6 +51,10 @@ class MetricOverviewCard extends React.Component {
         this.props.fetchAllClassesBoxPlots(this.state.condition.toUpperCase());
       }
     );
+  }
+
+  toggleFixedYAxis() {
+    this.setState({ fixedYAxis: !this.state.fixedYAxis });
   }
 
   toggleDrawer(bool) {
@@ -169,6 +174,20 @@ class MetricOverviewCard extends React.Component {
       return null;
     }
 
+    const { bPYAxisRange } = this.props;
+
+    let tableName =
+      this.state.metricColumnName === 'magWet'
+        ? 'FallWinters'
+        : this.state.metricTableName;
+
+    const metric = find(
+      bPYAxisRange,
+      metric =>
+        Object.keys(metric[Object.keys(metric)])[0] ===
+          this.state.metricColumnName && Object.keys(metric)[0] === tableName
+    );
+
     return (
       <MetricOverviewBoxPlot
         boxPlotData={
@@ -178,6 +197,12 @@ class MetricOverviewCard extends React.Component {
         }
         logScale={this.state.logScale}
         title={this.state.title}
+        yRange={
+          this.state.fixedYAxis &&
+          metric[tableName][this.state.metricColumnName]
+            ? metric[tableName][this.state.metricColumnName]
+            : null
+        }
       />
     );
   }
@@ -261,6 +286,8 @@ class MetricOverviewCard extends React.Component {
           handleConditionChange={(e, i, v) =>
             this._handleConditionChange(e, i, v)
           }
+          toggleFixedYAxis={() => this.toggleFixedYAxis()}
+          fixedYAxis={this.state.fixedYAxis}
         />
       </React.Fragment>
     );
@@ -271,6 +298,7 @@ MetricOverviewCard.propTypes = {
   fetchAllClassesBoxPlots: PropTypes.func,
   loading: PropTypes.bool,
   allClassesBoxPlots: PropTypes.object,
+  bPYAxisRange: PropTypes.array,
 };
 
 const styles = {
@@ -303,4 +331,5 @@ const styles = {
     fontSize: '12px',
   },
 };
+
 export default MetricOverviewCard;

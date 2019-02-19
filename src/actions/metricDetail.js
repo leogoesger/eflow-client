@@ -72,6 +72,13 @@ const getFixedYaxisValueObject = yMax => {
   };
 };
 
+const getBoxPlotFixedYaxisValueObject = bPYAxisRange => {
+  return {
+    type: types.GET_BOX_PLOT_FIXED_YAXIS_VALUE_OBJECT,
+    bPYAxisRange,
+  };
+};
+
 export function fetchAllClassesBoxPlots(cond) {
   return async dispatch => {
     //const allMetricBoxPlots = await getAllMetricBoxPlotClourse();
@@ -142,5 +149,14 @@ export function getYaxisMax(gaugeId, percentile) {
       .post(`${process.env.SERVER_ADDRESS}/api/annualFlowPOR`)
       .send({ gaugeId, percentile });
     dispatch(getFixedYaxisValueObject(yMax.body.percentilePOR));
+  };
+}
+
+export function getBoxPlotYaxisMax(percentile) {
+  return async dispatch => {
+    const bPYAxisRange = await request
+      .post(`${process.env.SERVER_ADDRESS}/api/getBoxPlotObjPercentilePOR`)
+      .send({ percentile });
+    dispatch(getBoxPlotFixedYaxisValueObject(bPYAxisRange.body.yMax));
   };
 }
