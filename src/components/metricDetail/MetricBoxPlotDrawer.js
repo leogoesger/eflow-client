@@ -84,6 +84,14 @@ class MetricBoxPlotDrawer extends React.Component {
                 onClick={() => this.props.toggleLogScale()}
                 toggled={this.props.logScale}
               />
+              <Toggle
+                style={{ marginTop: '35px', width: '120px' }}
+                label={'Fixed Y Axis'}
+                labelStyle={styles.labelStyle}
+                value={'empty'}
+                onClick={() => this.props.toggleFixedYAxis()}
+                toggled={this.props.fixedYAxis}
+              />
             </div>
           </div>
           <RaisedButton
@@ -119,6 +127,8 @@ MetricBoxPlotDrawer.propTypes = {
   condition: PropTypes.string,
   conditionValue: PropTypes.number,
   handleConditionChange: PropTypes.func,
+  fixedYAxis: PropTypes.bool,
+  toggleFixedYAxis: PropTypes.func,
 };
 
 const styles = {

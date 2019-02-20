@@ -55,6 +55,7 @@ class MetricOverviewBoxPlot extends React.Component {
             logScale={this.props.logScale}
             zoomTransform={this.state.zoomTransform}
             zoomType="detail"
+            yRange={this.props.yRange}
           />
         </svg>
       </Paper>
@@ -66,6 +67,7 @@ MetricOverviewBoxPlot.propTypes = {
   boxPlotData: PropTypes.array,
   logScale: PropTypes.bool,
   title: PropTypes.string,
+  yRange: PropTypes.array,
 };
 
 const styles = {
