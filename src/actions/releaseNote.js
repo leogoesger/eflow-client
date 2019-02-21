@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 21st, 2019',
+            version: 'v2.16',
+            title: 'Annual Metric Result download with Water Year Type',
+            tasks: ['Annual Metric Result download with Water Year Type'],
+          },
+          {
             date: 'Feb 19th, 2019',
             version: 'v2.15',
             title: 'Fixed Y Axis for BoxPlots',
