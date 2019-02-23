@@ -11,7 +11,7 @@ import {
 import Setting from 'material-ui/svg-icons/action/settings';
 import Image from 'material-ui/svg-icons/image/image';
 import MenuItem from 'material-ui/MenuItem';
-import * as domtoimage from 'dom-to-image-more';
+import { saveAsImage } from '../../utils/helpers';
 
 import { Colors } from '../../styles';
 import Loader from '../shared/loader/Loader';
@@ -23,6 +23,7 @@ import { conditionTypes } from '../../constants/conditionTypes';
 class MetricOverviewCard extends React.Component {
   constructor(props) {
     super(props);
+    this.saveImageRef;
     this.state = {
       condition: 'All',
       conditionValue: 0,
@@ -215,20 +216,12 @@ class MetricOverviewCard extends React.Component {
     );
   }
 
-  filterBtns(node) {
-    return node.className !== 'tour-metricDetail-display';
-  }
-
   handleSaveAsImageBtn() {
-    /* eslint-disable */
-    domtoimage
-      .toJpeg(this.refs['boxPlot'], { filter: this.filterBtns })
-      .then(function(dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'my-image-name.jpeg';
-        link.href = dataUrl;
-        link.click();
-      });
+    let fileName = `BP_${this.state.condition}_Years_${
+      this.state.metricTableName
+    }_${this.state.metricColumnName}.jpeg`;
+
+    saveAsImage(this.saveImageRef, fileName);
   }
 
   render() {
@@ -254,9 +247,10 @@ class MetricOverviewCard extends React.Component {
     if (!metric) return null;
     return (
       <div
-        id={'boxPlot'}
-        style={{ width: '840px', height: '600px' }}
-        ref={'boxPlot'} //eslint-disable-line
+        style={{ width: '840px' }}
+        ref={ref => {
+          this.saveImageRef = ref;
+        }}
       >
         <Card style={styles.container}>
           <RaisedButton
@@ -276,7 +270,7 @@ class MetricOverviewCard extends React.Component {
             onClick={() => this.toggleDrawer(true)}
           />
           <FlatButton
-            className="tour-metricDetail-display"
+            className="tour-metricDetail-download"
             label="Save As Image"
             style={{
               top: '25px',
