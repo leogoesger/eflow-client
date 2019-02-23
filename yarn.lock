@@ -2929,6 +2929,11 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
+dom-to-image-more@2.7.5:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/dom-to-image-more/-/dom-to-image-more-2.7.5.tgz#ee86a6e4fd8174171a3df4907caefdc8d2896f0f"
+  integrity sha512-SL6uAAPQbrqIpDPouJEt49pxm0VhCCoAJxtn1B3AzjEFc83URCrmA1PIb45UkuZCuLcWYQDS5MMfnvBeZ3Re4g==
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"

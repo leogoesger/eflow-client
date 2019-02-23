@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { find } from 'lodash';
-import { Card, CardHeader, RaisedButton, Divider } from 'material-ui';
+import {
+  Card,
+  CardHeader,
+  RaisedButton,
+  Divider,
+  FlatButton,
+} from 'material-ui';
 import Setting from 'material-ui/svg-icons/action/settings';
+import Image from 'material-ui/svg-icons/image/image';
 import MenuItem from 'material-ui/MenuItem';
+import * as domtoimage from 'dom-to-image-more';
 
 import { Colors } from '../../styles';
 import Loader from '../shared/loader/Loader';
@@ -207,6 +215,22 @@ class MetricOverviewCard extends React.Component {
     );
   }
 
+  filterBtns(node) {
+    return node.className !== 'tour-metricDetail-display';
+  }
+
+  handleSaveAsImageBtn() {
+    /* eslint-disable */
+    domtoimage
+      .toJpeg(this.refs['boxPlot'], { filter: this.filterBtns })
+      .then(function(dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
+      });
+  }
+
   render() {
     if (!this.props.allClassesBoxPlots) {
       return (
@@ -229,7 +253,11 @@ class MetricOverviewCard extends React.Component {
     );
     if (!metric) return null;
     return (
-      <React.Fragment>
+      <div
+        id={'boxPlot'}
+        style={{ width: '840px', height: '600px' }}
+        ref={'boxPlot'} //eslint-disable-line
+      >
         <Card style={styles.container}>
           <RaisedButton
             className="tour-metricDetail-display"
@@ -246,6 +274,19 @@ class MetricOverviewCard extends React.Component {
             icon={<Setting />}
             labelStyle={{ fontSize: '12px' }}
             onClick={() => this.toggleDrawer(true)}
+          />
+          <FlatButton
+            className="tour-metricDetail-display"
+            label="Save As Image"
+            style={{
+              top: '25px',
+              zIndex: 1,
+              position: 'absolute',
+              left: '503px',
+            }}
+            onClick={() => this.handleSaveAsImageBtn()}
+            labelStyle={{ fontSize: '12px', color: Colors.gold }}
+            icon={<Image color={Colors.gold} />}
           />
           <div style={{ width: '60%', marginTop: '15px' }}>
             <CardHeader
@@ -289,7 +330,7 @@ class MetricOverviewCard extends React.Component {
           toggleFixedYAxis={() => this.toggleFixedYAxis()}
           fixedYAxis={this.state.fixedYAxis}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -303,9 +344,9 @@ MetricOverviewCard.propTypes = {
 
 const styles = {
   container: {
-    width: '70%',
+    width: '100%',
     height: '600px',
-    overflow: 'scroll',
+    overflow: 'auto',
     margin: '0 auto',
     position: 'relative',
   },
