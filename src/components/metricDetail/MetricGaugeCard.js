@@ -228,7 +228,8 @@ class MetricGaugeCard extends React.Component {
   }
 
   handleSaveAsImageBtn() {
-    saveAsImage(this.saveImageRef, 'plots');
+    const fileName = `${this.props.annualFlowData.Gauge.id}_Year_${this.state.currentYear}_Hydrograph.jpeg`;
+    saveAsImage(this.saveImageRef, {fileName});
   }
 
   render() {

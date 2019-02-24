@@ -387,11 +387,13 @@ const filterDOMs = node => {
   );
 };
 
-export const saveAsImage = (dom, fileName) => {
-  domtoimage.toJpeg(dom, { filter: filterDOMs }).then(imgUrl => {
-    let link = document.createElement('a');
-    link.download = fileName;
-    link.href = imgUrl;
-    link.click();
-  });
+export const saveAsImage = (dom, options) => {
+  domtoimage
+    .toJpeg(dom, { filter: filterDOMs, height: options.height })
+    .then(imgUrl => {
+      let link = document.createElement('a');
+      link.download = options.fileName;
+      link.href = imgUrl;
+      link.click();
+    });
 };
