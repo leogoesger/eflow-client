@@ -7,8 +7,8 @@ import Reply from 'material-ui/svg-icons/content/reply';
 import TimeLine from 'material-ui/svg-icons/action/timeline';
 import ViewDay from 'material-ui/svg-icons/action/view-day';
 import Upload from 'material-ui/svg-icons/file/cloud-upload';
-
-import { navigateTo } from '../../../utils/helpers';
+import Image from 'material-ui/svg-icons/image/image';
+import { navigateTo, saveAsImage } from '../../../utils/helpers';
 import { LinePlot } from '../../shared/plots';
 import { classInfo } from '../../../constants/classification';
 
@@ -41,6 +41,7 @@ class Hydrograph extends React.Component {
       .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
       .extent([[-100, -100], [700 + 100, 420 + 100]])
       .on('zoom', () => this.zoomed());
+    this.saveImageRef;
   }
 
   componentDidMount() {
@@ -242,26 +243,45 @@ class Hydrograph extends React.Component {
       );
     }
   }
+  handleSaveAsImageBtn() {
+    let fileName = this.props.currentClassification
+      ? `Class_${this.props.currentClassification.id}`
+      : `Gauge_${this.props.currentGauge.id}`;
+
+    fileName += `_Hydrograph.jpeg`;
+    saveAsImage(this.saveImageRef, {
+      fileName,
+      height: 520,
+    });
+  }
 
   render() {
     const { currentGauge, removeClassGaugeProps } = this.props;
     return (
-      <Paper style={styles.graph} className="tour-hydro-general-display">
-        {this._renderDRHs(this.state.hydroData)}
-        {this._renderPercentilleChips()}
+      <div
+        ref={ref => {
+          this.saveImageRef = ref;
+        }}
+      >
+        <Paper style={styles.graph} className="tour-hydro-general-display">
+          {this._renderDRHs(this.state.hydroData)}
+          {this._renderPercentilleChips()}
 
-        <div style={styles.btnContainer}>
-          <FlatButton
-            label="Upload Data"
-            style={{ marginRight: '20px' }}
-            labelStyle={{ fontSize: '12px', color: Colors.gold }}
-            icon={<Upload color={Colors.gold} />}
-            onClick={() => navigateTo('/profile')}
-          />
-          <div>
+          <div style={styles.btnContainer}>
+            <FlatButton
+              label="Upload Data"
+              labelStyle={{ fontSize: '12px', color: Colors.gold }}
+              icon={<Upload color={Colors.gold} />}
+              onClick={() => navigateTo('/profile')}
+            />
+            <FlatButton
+              label="Save As Image"
+              labelStyle={{ fontSize: '12px', color: Colors.gold }}
+              icon={<Image color={Colors.gold} />}
+              onClick={() => this.handleSaveAsImageBtn()}
+            />
             <FlatButton
               label="Gauge List"
-              style={{ marginRight: '20px' }}
               labelStyle={{ fontSize: '12px', color: Colors.gold }}
               icon={<Reply color={Colors.gold} />}
               onClick={() => removeClassGaugeProps()}
@@ -277,8 +297,8 @@ class Hydrograph extends React.Component {
               onClick={() => navigateTo('/metricDetail')}
             />
           </div>
-        </div>
-      </Paper>
+        </Paper>
+      </div>
     );
   }
 }

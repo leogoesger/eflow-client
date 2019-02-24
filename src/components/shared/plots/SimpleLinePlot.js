@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as d3 from "d3";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as d3 from 'd3';
 
-import { metricReference } from "../../../constants/metrics";
-import { getJulianOffsetDate } from "../../../utils/helpers";
-import Axis from "./Axis";
-import { Colors } from "../../../styles";
+import { metricReference } from '../../../constants/metrics';
+import { getJulianOffsetDate } from '../../../utils/helpers';
+import Axis from './Axis';
+import { Colors } from '../../../styles';
 
 export default class SimpleLinePlot extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ export default class SimpleLinePlot extends React.Component {
       .y(d => this.yScale(yValue(d)))
       .curve(d3.curveCardinal);
 
-    if (zoomTransform && zoomType === "detail") {
+    if (zoomTransform && zoomType === 'detail') {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
@@ -65,9 +65,9 @@ export default class SimpleLinePlot extends React.Component {
     const { zoomTransform, zoomType } = this.props;
     let x = 0,
       y = 0;
-    let transform = "";
+    let transform = '';
 
-    if (zoomTransform && zoomType === "scale") {
+    if (zoomTransform && zoomType === 'scale') {
       transform = `translate(${x + zoomTransform.x}, ${y +
         zoomTransform.y}) scale(${zoomTransform.k})`;
     } else {
@@ -98,7 +98,7 @@ export default class SimpleLinePlot extends React.Component {
         }
         const metricValue = Number(annualFlowData[tableName][columnName]);
 
-        if (currentMetric.dimUnit === "cfs" && metricValue) {
+        if (currentMetric.dimUnit === 'cfs' && metricValue) {
           return (
             <line
               transform={transform}
@@ -111,7 +111,7 @@ export default class SimpleLinePlot extends React.Component {
               y2={this.yScale(metricValue)}
             />
           );
-        } else if (currentMetric.dimUnit === "Date" && metricValue) {
+        } else if (currentMetric.dimUnit === 'Date' && metricValue) {
           return (
             <line
               transform={transform}
@@ -155,7 +155,7 @@ export default class SimpleLinePlot extends React.Component {
     const { data, x, y, height, width } = this.props;
     const transform = `translate(${x}, ${y})`;
     return (
-      <g style={{ fill: "none" }} transform={this._transform()}>
+      <g style={{ fill: 'none' }} transform={this._transform()}>
         <Axis
           scale={this.xScale}
           data={data}

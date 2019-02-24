@@ -1,21 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as d3 from "d3";
-import Slider from "material-ui/Slider";
-import Paper from "material-ui/Paper";
-import RaisedButton from "material-ui/RaisedButton";
-import Setting from "material-ui/svg-icons/action/settings";
-import Card, { CardHeader } from "material-ui/Card";
-import Divider from "material-ui/Divider";
-import { SimpleLinePlot } from "../../shared/plots";
-import MetricGaugeDrawer from "../../metricDetail/MetricGaugeDrawer";
-import { Colors } from "../../../styles";
-import ErrorBoundary from "../../shared/ErrorBoundary";
-import { removeNaN } from "../../../utils/helpers";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as d3 from 'd3';
+import {
+  Slider,
+  Paper,
+  RaisedButton,
+  Card,
+  CardHeader,
+  Divider,
+  IconMenu,
+  FlatButton,
+  MenuItem,
+} from 'material-ui';
+import Setting from 'material-ui/svg-icons/action/settings';
+import { SimpleLinePlot } from '../../shared/plots';
+import MetricGaugeDrawer from '../../metricDetail/MetricGaugeDrawer';
+import { Colors } from '../../../styles';
+import ErrorBoundary from '../../shared/ErrorBoundary';
+import { removeNaN, saveAsImage } from '../../../utils/helpers';
+
+import FileDownload from 'material-ui/svg-icons/file/file-download';
 
 class MetricCard extends React.Component {
   constructor(props) {
     super(props);
+    this.saveImageRef;
     this.state = {
       currentYear: this.props.data.yearRanges[0],
       zoomTransform: null,
@@ -31,7 +40,7 @@ class MetricCard extends React.Component {
       .scaleExtent([-10, 10])
       .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
       .extent([[-100, -100], [700 + 100, 420 + 100]])
-      .on("zoom", () => this.zoomed());
+      .on('zoom', () => this.zoomed());
   }
 
   componentDidMount() {
@@ -98,16 +107,16 @@ class MetricCard extends React.Component {
     return (
       <div
         style={{
-          display: "flex",
-          width: "780px",
-          margin: "0 auto",
-          justifyContent: "space-around",
-          fontSize: "14px",
+          display: 'flex',
+          width: '780px',
+          margin: '0 auto',
+          justifyContent: 'space-around',
+          fontSize: '14px',
           color: Colors.lightGrey,
         }}
       >
         <div>{year[0]}</div>
-        <div>{"Slide the bar to change the water year!"}</div>
+        <div>{'Slide the bar to change the water year!'}</div>
         <div>{Number(year[year.length - 1])}</div>
       </div>
     );
@@ -140,9 +149,9 @@ class MetricCard extends React.Component {
     Object.keys(metricsRef).forEach(metric => {
       const metrics = {};
       Object.keys(metricsRef[metric])
-        .filter(k => k !== "tableName")
+        .filter(k => k !== 'tableName')
         .forEach(key => {
-          if (Object.keys(metricsRef[metric][key]).indexOf("two") === -1) {
+          if (Object.keys(metricsRef[metric][key]).indexOf('two') === -1) {
             metrics[metricsRef[metric][key]] = this.props.data[metric][key][
               yearIndx
             ];
@@ -154,7 +163,7 @@ class MetricCard extends React.Component {
             });
           }
         });
-      annualMetricsData[metricsRef[metric]["tableName"]] = { ...metrics };
+      annualMetricsData[metricsRef[metric]['tableName']] = { ...metrics };
     });
 
     return annualMetricsData;
@@ -163,9 +172,9 @@ class MetricCard extends React.Component {
   _renderAnnualPlot() {
     if (!this.props.data.flowMatrix) {
       return (
-        <div style={{ height: "399px", margin: "0 auto" }}>
-          <p style={{ paddingTop: "200px", paddingLeft: "185px" }}>
-            {":( Sorry, could not get annual flow data for this gauge!"}
+        <div style={{ height: '399px', margin: '0 auto' }}>
+          <p style={{ paddingTop: '200px', paddingLeft: '185px' }}>
+            {':( Sorry, could not get annual flow data for this gauge!'}
           </p>
         </div>
       );
@@ -177,9 +186,9 @@ class MetricCard extends React.Component {
 
     if (filteredData.length > 200) {
       return (
-        <div style={{ height: "429px", margin: "0 auto" }}>
-          <p style={{ paddingTop: "160px", paddingLeft: "220px" }}>
-            {":( Sorry, too many NaN for the plot! Slide forward or backword"}
+        <div style={{ height: '429px', margin: '0 auto' }}>
+          <p style={{ paddingTop: '160px', paddingLeft: '220px' }}>
+            {':( Sorry, too many NaN for the plot! Slide forward or backword'}
           </p>
         </div>
       );
@@ -188,17 +197,17 @@ class MetricCard extends React.Component {
     return (
       <ErrorBoundary>
         <React.Fragment>
-          <div style={styles.yLabel}>{"Flow Value (cfs)"}</div>
+          <div style={styles.yLabel}>{'Flow Value (cfs)'}</div>
           <div style={styles.xLabel}>{`Water year hydrograph for ${
             this.state.currentYear
           }`}</div>
           {/* {this._renderYearStatus(this.props.data.condition)} */}
-          <div style={{ marginLeft: "20px" }}>
+          <div style={{ marginLeft: '20px' }}>
             <svg
               width={700}
               height={380}
               ref={el => (this.svg = el)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
             >
               <SimpleLinePlot
                 x={70}
@@ -226,89 +235,127 @@ class MetricCard extends React.Component {
     );
   }
 
+  handleSaveAsImageBtn() {
+    let fileName = `${this.props.data.name}_Year_${
+      this.state.currentYear
+    }_Flow_Plot.jpeg`;
+
+    saveAsImage(this.saveImageRef, { fileName });
+  }
+
   render() {
     if (!this.props.data) {
       return null;
     }
     return (
-      <Card style={styles.container}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <CardHeader
-            style={{ padding: "20px", margin: "auto", fontWeight: "bold" }}
-            title="Annual Flow Plot"
-            textStyle={{ paddingRight: "0px" }}
-            actAsExpander={false}
-            showExpandableButton={false}
+      <div
+        ref={ref => {
+          this.saveImageRef = ref;
+        }}
+      >
+        <Card style={styles.container}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <CardHeader
+              style={{ padding: '20px', margin: 'auto', fontWeight: 'bold' }}
+              title="Annual Flow Plot"
+              textStyle={{ paddingRight: '0px' }}
+              actAsExpander={false}
+              showExpandableButton={false}
+            />
+          </div>
+          <Divider />
+          <div
+            style={{
+              float: 'right',
+              display: 'flex',
+              justifyContent: 'space-between',
+              position: 'absolute',
+              zIndex: 1,
+              top: '57px',
+              width: 'auto',
+              left: '531px',
+            }}
+          >
+            <IconMenu
+              iconButtonElement={
+                <FlatButton
+                  className="tour-metricDetail-download"
+                  label="Download"
+                  style={{ marginTop: '10px' }}
+                  labelStyle={{ fontSize: '12px', color: Colors.gold }}
+                  icon={<FileDownload color={Colors.gold} />}
+                />
+              }
+            >
+              <MenuItem
+                primaryText="Plot As Image"
+                onClick={() => this.handleSaveAsImageBtn()}
+              />
+            </IconMenu>
+            <RaisedButton
+              className="tour-metricDetail-display"
+              label="Display"
+              backgroundColor={Colors.gold}
+              labelColor={Colors.white}
+              disabled={false}
+              style={{ margin: '10px 10px 14px 10px' }}
+              icon={<Setting />}
+              labelStyle={{ fontSize: '12px' }}
+              onClick={() => this._toggleDrawer(true)}
+            />
+          </div>
+
+          <Paper
+            style={{
+              width: 'auto',
+              overflow: 'hidden',
+              margin: 'auto',
+              position: 'relative',
+            }}
+          >
+            {this._renderAnnualPlot()}
+          </Paper>
+
+          <Slider
+            className="tour-metricDetail-slider"
+            min={this.props.data.yearRanges[0]}
+            max={
+              this.props.data.yearRanges[
+                this.props.data.yearRanges.length - 1
+              ] || this.props.data.Years.year[0] + 5
+            }
+            sliderStyle={{ marginBottom: '10px' }}
+            step={1}
+            style={{ width: '600px', margin: '0 auto' }}
+            value={this.state.currentYear}
+            onChange={(e, v) => this._handleSlider(e, v)}
           />
-        </div>
-        <Divider />
-        <RaisedButton
-          className="tour-metricDetail-display"
-          label="Display"
-          backgroundColor={Colors.gold}
-          labelColor={Colors.white}
-          disabled={false}
-          style={{
-            position: "absolute",
-            zIndex: 1,
-            top: "67px",
-            width: "auto",
-            left: "672px",
-          }}
-          icon={<Setting />}
-          labelStyle={{ fontSize: "12px" }}
-          onClick={() => this._toggleDrawer(true)}
-        />
-
-        <Paper
-          style={{
-            width: "auto",
-            overflow: "hidden",
-            margin: "auto",
-            position: "relative",
-          }}
-        >
-          {this._renderAnnualPlot()}
-        </Paper>
-
-        <Slider
-          className="tour-metricDetail-slider"
-          min={this.props.data.yearRanges[0]}
-          max={
-            this.props.data.yearRanges[this.props.data.yearRanges.length - 1] ||
-            this.props.data.Years.year[0] + 5
-          }
-          sliderStyle={{ marginBottom: "10px" }}
-          step={1}
-          style={{ width: "600px", margin: "0 auto" }}
-          value={this.state.currentYear}
-          onChange={(e, v) => this._handleSlider(e, v)}
-        />
-        {this._renderSliderHelper()}
-        <MetricGaugeDrawer
-          isDrawerOpen={this.state.isDrawerOpen}
-          toggleMetricGaugeDrawer={bool => this._toggleDrawer(bool)}
-          toggledMetrics={this.state.toggledMetrics}
-          logScale={this.state.logScale}
-          toggleAnnualFlowMetrics={metrics =>
-            this.toggleAnnualFlowMetrics(metrics)
-          }
-          handleToggleLogScale={bool => this.handleToggleLogScale(bool)}
-          handleHydrographOverlay={bool => this.handleHydrographOverlay(bool)}
-          handleFixedYaxis={percentile => this.handleFixedYaxis(percentile)}
-          isHydrographOverlay={this.state.isHydrographOverlay}
-          fixedYaxis={Number(this.state.fixedYaxis)}
-          currentGaugeId={null}
-          getYaxisMax={(gaugeId, percentile) =>
-            this.getYaxisMax(gaugeId, percentile)
-          }
-        />
-      </Card>
+          {this._renderSliderHelper()}
+          <MetricGaugeDrawer
+            isDrawerOpen={this.state.isDrawerOpen}
+            toggleMetricGaugeDrawer={bool => this._toggleDrawer(bool)}
+            toggledMetrics={this.state.toggledMetrics}
+            logScale={this.state.logScale}
+            toggleAnnualFlowMetrics={metrics =>
+              this.toggleAnnualFlowMetrics(metrics)
+            }
+            handleToggleLogScale={bool => this.handleToggleLogScale(bool)}
+            handleHydrographOverlay={bool => this.handleHydrographOverlay(bool)}
+            handleFixedYaxis={percentile => this.handleFixedYaxis(percentile)}
+            isHydrographOverlay={this.state.isHydrographOverlay}
+            fixedYaxis={Number(this.state.fixedYaxis)}
+            currentGaugeId={null}
+            getYaxisMax={(gaugeId, percentile) =>
+              this.getYaxisMax(gaugeId, percentile)
+            }
+          />
+        </Card>
+      </div>
     );
   }
 }
@@ -320,73 +367,73 @@ MetricCard.propTypes = {
 const styles = {
   container: {
     // width: "80%",
-    height: "570px",
-    overflow: "scroll",
+    height: '570px',
+    overflow: 'auto',
     // margin: "0 auto",
   },
   title: {
-    marginTop: "10px",
-    width: "100%",
-    textAlign: "center",
-    fontWeight: "500",
-    fontSize: "16px",
-    padding: "20px",
+    marginTop: '10px',
+    width: '100%',
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: '16px',
+    padding: '20px',
   },
   yLabel: {
-    position: "absolute",
-    fontSize: "16px",
-    left: "20px",
-    top: "140px",
-    color: "#616161",
-    writingMode: "vertical-rl",
-    transform: "rotate(-180deg)",
+    position: 'absolute',
+    fontSize: '16px',
+    left: '20px',
+    top: '140px',
+    color: '#616161',
+    writingMode: 'vertical-rl',
+    transform: 'rotate(-180deg)',
   },
   xLabel: {
-    width: "100%",
-    paddingTop: "20px",
-    margin: "5px 0px 5px 275px",
+    width: '100%',
+    paddingTop: '20px',
+    margin: '5px 0px 5px 275px',
   },
 };
 
 const metricsRef = {
   spring: {
-    tableName: "Springs",
-    rocs: "rateOfChange",
-    timings: "timing",
-    durations: "duration",
-    magnitudes: "magnitude",
+    tableName: 'Springs',
+    rocs: 'rateOfChange',
+    timings: 'timing',
+    durations: 'duration',
+    magnitudes: 'magnitude',
   },
 
   summer: {
-    tableName: "Summers",
-    durations_wet: "durationWet",
-    durations_flush: "durationFlush",
-    timings: "timing",
-    magnitudes_ten: "magnitude10",
-    magnitudes_fifty: "magnitude50",
-    no_flow_counts: "noFlowCount",
+    tableName: 'Summers',
+    durations_wet: 'durationWet',
+    durations_flush: 'durationFlush',
+    timings: 'timing',
+    magnitudes_ten: 'magnitude10',
+    magnitudes_fifty: 'magnitude50',
+    no_flow_counts: 'noFlowCount',
   },
 
   fall: {
-    tableName: "Falls",
-    timings: "timing",
-    wet_timings: "timingWet",
-    durations: "duration",
-    magnitudes: "magnitude",
+    tableName: 'Falls',
+    timings: 'timing',
+    wet_timings: 'timingWet',
+    durations: 'duration',
+    magnitudes: 'magnitude',
   },
 
   fallWinter: {
-    tableName: "FallWinters",
-    baseflows: "magWet",
+    tableName: 'FallWinters',
+    baseflows: 'magWet',
   },
 
   winter: {
-    tableName: "Winters",
+    tableName: 'Winters',
     magnitudes: {
-      two: "magnitude2",
-      ten: "magnitude10",
-      five: "magnitude5",
-      twenty: "magnitude20",
+      two: 'magnitude2',
+      ten: 'magnitude10',
+      five: 'magnitude5',
+      twenty: 'magnitude20',
     },
   },
 };

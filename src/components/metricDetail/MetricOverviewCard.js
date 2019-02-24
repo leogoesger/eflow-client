@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { find } from 'lodash';
-import { Card, CardHeader, RaisedButton, Divider } from 'material-ui';
+import {
+  Card,
+  CardHeader,
+  RaisedButton,
+  Divider,
+  FlatButton,
+  IconMenu,
+  MenuItem,
+} from 'material-ui';
 import Setting from 'material-ui/svg-icons/action/settings';
-import MenuItem from 'material-ui/MenuItem';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
+import { saveAsImage } from '../../utils/helpers';
 
 import { Colors } from '../../styles';
 import Loader from '../shared/loader/Loader';
@@ -15,6 +24,7 @@ import { conditionTypes } from '../../constants/conditionTypes';
 class MetricOverviewCard extends React.Component {
   constructor(props) {
     super(props);
+    this.saveImageRef;
     this.state = {
       condition: 'All',
       conditionValue: 0,
@@ -207,6 +217,14 @@ class MetricOverviewCard extends React.Component {
     );
   }
 
+  handleSaveAsImageBtn() {
+    let fileName = `BP_${this.state.condition}_Years_${
+      this.state.metricTableName
+    }_${this.state.metricColumnName}.jpeg`;
+
+    saveAsImage(this.saveImageRef, {fileName});
+  }
+
   render() {
     if (!this.props.allClassesBoxPlots) {
       return (
@@ -229,38 +247,74 @@ class MetricOverviewCard extends React.Component {
     );
     if (!metric) return null;
     return (
-      <React.Fragment>
+      <div
+        style={{ width: '840px' }}
+        ref={ref => {
+          this.saveImageRef = ref;
+        }}
+      >
         <Card style={styles.container}>
-          <RaisedButton
-            className="tour-metricDetail-display"
-            label="Display"
-            backgroundColor={Colors.gold}
-            labelColor={Colors.white}
-            disabled={false}
+          <div
             style={{
-              top: '25px',
-              zIndex: 1,
-              position: 'absolute',
-              left: '703px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '5px',
             }}
-            icon={<Setting />}
-            labelStyle={{ fontSize: '12px' }}
-            onClick={() => this.toggleDrawer(true)}
-          />
-          <div style={{ width: '60%', marginTop: '15px' }}>
-            <CardHeader
-              style={{ paddingRight: '0px', marginTop: '10px' }}
-              title={`Water Year Type: ${this.state.condition}`}
-              textStyle={{ paddingRight: '0px' }}
-              subtitle={`Category: ${
-                this._getDisplayValue('tableName', this.state.metricTableName)
-                  .displayTableName
-              } | Metric: ${metric.display}`}
-              subtitleStyle={{ color: Colors.gold }}
-              actAsExpander={false}
-              showExpandableButton={false}
-            />
+          >
+            <div style={{ width: '60%' }}>
+              <CardHeader
+                style={{ paddingRight: '0px', marginTop: '10px' }}
+                title={`Water Year Type: ${this.state.condition}`}
+                textStyle={{ paddingRight: '0px' }}
+                subtitle={`Category: ${
+                  this._getDisplayValue('tableName', this.state.metricTableName)
+                    .displayTableName
+                } | Metric: ${metric.display}`}
+                subtitleStyle={{ color: Colors.gold }}
+                actAsExpander={false}
+                showExpandableButton={false}
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                width: '40%',
+                marginTop: '10px',
+              }}
+            >
+              <IconMenu
+                iconButtonElement={
+                  <FlatButton
+                    className="tour-metricDetail-download"
+                    label="Download"
+                    style={{ marginLeft: '20px', marginTop: '10px' }}
+                    labelStyle={{ fontSize: '12px', color: Colors.gold }}
+                    icon={<FileDownload color={Colors.gold} />}
+                  />
+                }
+              >
+                <MenuItem
+                  primaryText="Plot As Image"
+                  onClick={() => this.handleSaveAsImageBtn()}
+                />
+              </IconMenu>
+              <div>
+                <RaisedButton
+                  className="tour-metricDetail-display"
+                  label="Display"
+                  backgroundColor={Colors.gold}
+                  labelColor={Colors.white}
+                  disabled={false}
+                  style={{ marginTop: '10px', marginRight: '10px' }}
+                  icon={<Setting />}
+                  labelStyle={{ fontSize: '12px' }}
+                  onClick={() => this.toggleDrawer(true)}
+                />
+              </div>
+            </div>
           </div>
+
           <Divider />
           {this._renderBoxplots()}
         </Card>
@@ -289,7 +343,7 @@ class MetricOverviewCard extends React.Component {
           toggleFixedYAxis={() => this.toggleFixedYAxis()}
           fixedYAxis={this.state.fixedYAxis}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -303,9 +357,9 @@ MetricOverviewCard.propTypes = {
 
 const styles = {
   container: {
-    width: '70%',
+    width: '100%',
     height: '600px',
-    overflow: 'scroll',
+    overflow: 'auto',
     margin: '0 auto',
     position: 'relative',
   },

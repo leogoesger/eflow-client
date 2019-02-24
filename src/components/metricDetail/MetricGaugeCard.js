@@ -11,6 +11,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Setting from 'material-ui/svg-icons/action/settings';
 import FileDownload from 'material-ui/svg-icons/file/file-download';
 import { Tooltip } from 'react-tippy';
+import { saveAsImage } from '../../utils/helpers';
 
 import Card, { CardHeader } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
@@ -22,6 +23,7 @@ import { CSVLink } from 'react-csv/lib';
 class MetricGaugeCard extends React.Component {
   constructor(props) {
     super(props);
+    this.saveImageRef;
     this.state = {
       currentYear: this.props.annualFlowData.Years.year[1],
       zoomTransform: null,
@@ -225,6 +227,11 @@ class MetricGaugeCard extends React.Component {
     });
   }
 
+  handleSaveAsImageBtn() {
+    const fileName = `${this.props.annualFlowData.Gauge.id}_Year_${this.state.currentYear}_Hydrograph.jpeg`;
+    saveAsImage(this.saveImageRef, {fileName});
+  }
+
   render() {
     if (!this.props.annualFlowData) {
       return null;
@@ -233,7 +240,12 @@ class MetricGaugeCard extends React.Component {
       classObject = classInfo[`class${annualFlowData.Gauge.classId}`];
 
     return (
-      <React.Fragment>
+      <div
+        style={{ width: '840px' }}
+        ref={ref => {
+          this.saveImageRef = ref;
+        }}
+      >
         <Card style={styles.container}>
           <div
             style={{
@@ -274,6 +286,10 @@ class MetricGaugeCard extends React.Component {
                   />
                 }
               >
+                <MenuItem
+                  primaryText="Plot As Image"
+                  onClick={() => this.handleSaveAsImageBtn()}
+                />
                 <MenuItem
                   primaryText="Annual Flow Matrix"
                   onClick={() => {
@@ -346,7 +362,7 @@ class MetricGaugeCard extends React.Component {
           />
           {this._renderSliderHelper()}
         </Card>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -365,9 +381,9 @@ MetricGaugeCard.propTypes = {
 
 const styles = {
   container: {
-    width: '70%',
+    width: '100%',
     height: '600px',
-    overflow: 'scroll',
+    overflow: 'auto',
     margin: '0 auto',
   },
   yLabel: {

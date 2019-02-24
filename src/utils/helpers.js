@@ -1,7 +1,8 @@
-import { history } from "../store/configureStore";
-import { fromJS } from "immutable";
-import { detect } from "detect-browser";
-import { assign, sortBy } from "lodash";
+import { history } from '../store/configureStore';
+import { fromJS } from 'immutable';
+import { detect } from 'detect-browser';
+import { assign, sortBy } from 'lodash';
+import * as domtoimage from 'dom-to-image-more';
 
 export function removeNaN(array) {
   const filteredArray = array.filter(ele => !isNaN(Number(ele)));
@@ -16,12 +17,12 @@ export function getNameErrorMessage(name) {
   if (isValid) {
     return null;
   } else {
-    return "Currently we only support names from English Alphabet!";
+    return 'Currently we only support names from English Alphabet!';
   }
 }
 
 export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
-  let siteLayers = defaultMapStyle.get("layers").toJS();
+  let siteLayers = defaultMapStyle.get('layers').toJS();
   const sitesData = {};
   geoSites.forEach(site => {
     const siteObj = {
@@ -33,16 +34,16 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
         imageUrl: site.imageUrl,
         geoRegionName: site.geoClass.geoRegion.name,
       },
-      type: "Feature",
+      type: 'Feature',
       geometry: {
-        type: "Point",
+        type: 'Point',
         coordinates: [
           site.geometry.coordinates[1],
           site.geometry.coordinates[0],
         ],
       },
     };
-    const currentGeoClass = site.geoClass.name.split("-")[0];
+    const currentGeoClass = site.geoClass.name.split('-')[0];
     if (!sitesData[currentGeoClass]) {
       siteLayers = siteLayers.concat(
         getSiteLayer(
@@ -51,8 +52,8 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
         ).toJS()
       );
       sitesData[currentGeoClass] = {
-        data: { type: "FeatureCollection", features: [] },
-        type: "geojson",
+        data: { type: 'FeatureCollection', features: [] },
+        type: 'geojson',
         cluster: false,
       };
     }
@@ -61,10 +62,10 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
 
   const newStyle = defaultMapStyle
     .set(
-      "sources",
-      fromJS(assign({}, defaultMapStyle.get("sources").toJS(), sitesData))
+      'sources',
+      fromJS(assign({}, defaultMapStyle.get('sources').toJS(), sitesData))
     )
-    .set("layers", fromJS(siteLayers));
+    .set('layers', fromJS(siteLayers));
   return newStyle;
 }
 
@@ -77,28 +78,28 @@ export const toCamelCase = text =>
   text
     .split(/[_-\s]+/)
     .map(toCamelWord)
-    .join("");
+    .join('');
 
 export function navigateTo(pathname, query) {
   history.push({ pathname, query });
 }
 
 export function copyTextToClipboard(text) {
-  var textArea = document.createElement("textarea");
-  textArea.style.position = "fixed";
+  var textArea = document.createElement('textarea');
+  textArea.style.position = 'fixed';
   textArea.style.top = 0;
   textArea.style.left = 0;
 
-  textArea.style.width = "2em";
-  textArea.style.height = "2em";
+  textArea.style.width = '2em';
+  textArea.style.height = '2em';
 
   textArea.style.padding = 0;
 
-  textArea.style.border = "none";
-  textArea.style.outline = "none";
-  textArea.style.boxShadow = "none";
+  textArea.style.border = 'none';
+  textArea.style.outline = 'none';
+  textArea.style.boxShadow = 'none';
 
-  textArea.style.background = "transparent";
+  textArea.style.background = 'transparent';
 
   textArea.value = text;
   document.body.appendChild(textArea);
@@ -106,7 +107,7 @@ export function copyTextToClipboard(text) {
   textArea.select();
 
   try {
-    document.execCommand("copy");
+    document.execCommand('copy');
   } catch (err) {
     throw err;
   }
@@ -120,18 +121,18 @@ export const getCurrentMonthYear = () => {
 };
 
 const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 const dateFromDay = (year, day) => {
@@ -177,7 +178,7 @@ export function validateEmail(email) {
 
 export function getEmailErrorMessage(email) {
   if (email && !validateEmail(email)) {
-    return "Invalid Email address";
+    return 'Invalid Email address';
   }
 }
 
@@ -190,10 +191,10 @@ export function validatePassword(password) {
 
 export function getPasswordErrorMessage(password) {
   if (!password || validatePassword(password)) {
-    return "";
+    return '';
   }
   if (!validatePassword(password)) {
-    return "Should be between 4 to 20 characters";
+    return 'Should be between 4 to 20 characters';
   }
 }
 
@@ -209,18 +210,18 @@ export function getMapStyle(
   classifications.forEach(geoClass => {
     combinedMapStyle[`class${geoClass.classId}`] = {
       data: geoClass.geometry,
-      type: "geojson",
+      type: 'geojson',
     };
 
     let newDataLayer = dataLayer
-      .set("source", `class${geoClass.classId}`)
-      .set("id", `class${geoClass.classId}`);
+      .set('source', `class${geoClass.classId}`)
+      .set('id', `class${geoClass.classId}`);
     combinedLayer.push(newDataLayer.toJS());
   });
 
   const newCombinedLayer = fromJS(
     defaultMapStyle
-      .get("layers")
+      .get('layers')
       .toJS()
       .concat(combinedLayer)
       .concat(gaugeLayer)
@@ -228,17 +229,17 @@ export function getMapStyle(
 
   const mapStyle = defaultMapStyle
     .set(
-      "sources",
+      'sources',
       fromJS(
-        assign({}, defaultMapStyle.get("sources").toJS(), combinedMapStyle)
+        assign({}, defaultMapStyle.get('sources').toJS(), combinedMapStyle)
       )
     )
-    .set("layers", newCombinedLayer);
+    .set('layers', newCombinedLayer);
 
   const combinedGauges = {
     gauges: {
-      data: { type: "FeatureCollection", features: [] },
-      type: "geojson",
+      data: { type: 'FeatureCollection', features: [] },
+      type: 'geojson',
     },
   };
   gauges.forEach(gauge => {
@@ -250,9 +251,9 @@ export function getMapStyle(
         },
       };
       const geometry = {
-        type: "Feature",
+        type: 'Feature',
         geometry: {
-          type: "Point",
+          type: 'Point',
           coordinates: [
             gauge.geometry.coordinates[1],
             gauge.geometry.coordinates[0],
@@ -265,8 +266,8 @@ export function getMapStyle(
     }
   });
   const mapStyle_gauge = mapStyle.set(
-    "sources",
-    fromJS(assign({}, mapStyle.get("sources").toJS(), combinedGauges))
+    'sources',
+    fromJS(assign({}, mapStyle.get('sources').toJS(), combinedGauges))
   );
 
   return mapStyle_gauge;
@@ -275,15 +276,15 @@ export function getMapStyle(
 export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   const newCombinedLayer = fromJS(
     defaultMapStyle
-      .get("layers")
+      .get('layers')
       .toJS()
       .concat(gaugeLayer)
   );
 
   const combinedGauges = {
     gauges: {
-      data: { type: "FeatureCollection", features: [] },
-      type: "geojson",
+      data: { type: 'FeatureCollection', features: [] },
+      type: 'geojson',
     },
   };
   gauges.forEach(gauge => {
@@ -296,9 +297,9 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
         },
       };
       const geometry = {
-        type: "Feature",
+        type: 'Feature',
         geometry: {
-          type: "Point",
+          type: 'Point',
           coordinates: [
             gauge.geometry.coordinates[1],
             gauge.geometry.coordinates[0],
@@ -312,10 +313,10 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   });
   const mapStyle = defaultMapStyle
     .set(
-      "sources",
-      fromJS(assign({}, defaultMapStyle.get("sources").toJS(), combinedGauges))
+      'sources',
+      fromJS(assign({}, defaultMapStyle.get('sources').toJS(), combinedGauges))
     )
-    .set("layers", newCombinedLayer);
+    .set('layers', newCombinedLayer);
 
   return mapStyle;
 }
@@ -329,9 +330,9 @@ export const locateY = (data, x) => {
 
 const _getBrowserMajorVersion = version => {
   if (version) {
-    const versionNumbers = version.split(".");
+    const versionNumbers = version.split('.');
     if (versionNumbers.length) {
-      return parseInt(versionNumbers[0].replace(/[^0-9]/g, ""), 10);
+      return parseInt(versionNumbers[0].replace(/[^0-9]/g, ''), 10);
     }
   }
   return null;
@@ -343,27 +344,27 @@ export const isBrowserNotSupported = () => {
     const majorVersion = _getBrowserMajorVersion(browser.version);
     if (majorVersion) {
       switch (browser.name) {
-        case "chrome":
+        case 'chrome':
           if (majorVersion <= 50) {
             return true;
           }
           return false;
-        case "firefox":
+        case 'firefox':
           if (majorVersion <= 50) {
             return true;
           }
           return false;
-        case "safari":
+        case 'safari':
           if (majorVersion <= 10) {
             return true;
           }
           return false;
-        case "ie":
+        case 'ie':
           if (majorVersion <= 11) {
             return true;
           }
           return false;
-        case "edge":
+        case 'edge':
           if (majorVersion <= 11) {
             return true;
           }
@@ -377,4 +378,22 @@ export const isBrowserNotSupported = () => {
   } else {
     return false;
   }
+};
+
+const filterDOMs = node => {
+  return (
+    node.className !== 'tour-metricDetail-display' &&
+    node.className !== 'tour-metricDetail-download'
+  );
+};
+
+export const saveAsImage = (dom, options) => {
+  domtoimage
+    .toJpeg(dom, { filter: filterDOMs, height: options.height })
+    .then(imgUrl => {
+      let link = document.createElement('a');
+      link.download = options.fileName;
+      link.href = imgUrl;
+      link.click();
+    });
 };
