@@ -1,17 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as d3 from "d3";
-import { Paper, Divider, RaisedButton } from "material-ui";
-import { CardHeader } from "material-ui/Card";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import Setting from "material-ui/svg-icons/action/settings";
-import Compare from "material-ui/svg-icons/action/compare-arrows";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as d3 from 'd3';
+import {
+  Paper,
+  Divider,
+  RaisedButton,
+  FlatButton,
+  IconMenu,
+  MenuItem,
+} from 'material-ui';
+import { CardHeader } from 'material-ui/Card';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Setting from 'material-ui/svg-icons/action/settings';
+import Compare from 'material-ui/svg-icons/action/compare-arrows';
+import { saveAsImage } from '../../../utils/helpers';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
 
-import { LinePlot } from "../../shared/plots";
-import { classInfo } from "../../../constants/classification";
+import { LinePlot } from '../../shared/plots';
+import { classInfo } from '../../../constants/classification';
 
-import { Colors } from "../../../styles";
-import MetricDrawer from "./MetricDrawer";
+import { Colors } from '../../../styles';
+import MetricDrawer from './MetricDrawer';
 
 const colors = {
   NINTY: Colors.NINTY,
@@ -26,6 +35,7 @@ const colors = {
 class Hydrograph extends React.Component {
   constructor(props) {
     super(props);
+    this.saveImageRef;
     this.state = {
       open: false,
       hydroData: null,
@@ -53,13 +63,13 @@ class Hydrograph extends React.Component {
       .scaleExtent([-10, 10])
       .translateExtent([[-100, -100], [700 + 100, 420 + 100]])
       .extent([[-100, -100], [700 + 100, 420 + 100]])
-      .on("zoom", () => this.zoomed());
+      .on('zoom', () => this.zoomed());
   }
 
   componentDidMount() {
     d3.select(this.svg).call(this.zoom);
     if (this.props.currentGauge || this.props.currentClassification)
-      this.handleToggle("overlay");
+      this.handleToggle('overlay');
     this._setHydrographUploadData();
   }
 
@@ -96,8 +106,8 @@ class Hydrograph extends React.Component {
       <div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
           <CardHeader
@@ -108,7 +118,7 @@ class Hydrograph extends React.Component {
             subtitleColor={currentGaugeClass.colors[0]}
             actAsExpander={false}
             showExpandableButton={false}
-            style={{ padding: "15px 0px 15px 10px" }}
+            style={{ padding: '15px 0px 15px 10px' }}
           />
         </div>
         <Divider />
@@ -123,8 +133,8 @@ class Hydrograph extends React.Component {
       <div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
           <CardHeader
@@ -133,7 +143,7 @@ class Hydrograph extends React.Component {
             subtitle={`ID: ${this.props.currentClassification.id}`}
             actAsExpander={false}
             showExpandableButton={false}
-            style={{ padding: "15px 0px 15px 10px" }}
+            style={{ padding: '15px 0px 15px 10px' }}
           />
         </div>
         <Divider />
@@ -207,11 +217,11 @@ class Hydrograph extends React.Component {
   handleToggle(cent) {
     let plots = { ...this.state.plots };
 
-    if (cent === "OVERLAY") plots["overlay"] = true;
+    if (cent === 'OVERLAY') plots['overlay'] = true;
     else plots[cent] = !this.state.plots[cent];
 
     this.setState({ plots }, () => {
-      if (cent === "overlay" && !plots[cent]) {
+      if (cent === 'overlay' && !plots[cent]) {
         this.setState({ hydroData: { ...this.state.hydroUploadData } });
       } else
         this.setState({
@@ -229,32 +239,32 @@ class Hydrograph extends React.Component {
     };
 
     if (overlay) {
-      colors.MAX = max ? Colors.MAX + "4D" : "rgba(0, 0, 0, 0)";
-      colors.MIN = min ? Colors.MIN + "4D" : "rgba(0, 0, 0, 0)";
-      colors.NINTY = Colors.NINTY + "4D";
-      colors.FIFTY = Colors.FIFTY + "4D";
-      colors.TEN = Colors.TEN + "4D";
-      colors.SEVENTYFIVE = Colors.SEVENTYFIVE + "4D";
-      colors.TWENTYFIVE = Colors.TWENTYFIVE + "4D";
+      colors.MAX = max ? Colors.MAX + '4D' : 'rgba(0, 0, 0, 0)';
+      colors.MIN = min ? Colors.MIN + '4D' : 'rgba(0, 0, 0, 0)';
+      colors.NINTY = Colors.NINTY + '4D';
+      colors.FIFTY = Colors.FIFTY + '4D';
+      colors.TEN = Colors.TEN + '4D';
+      colors.SEVENTYFIVE = Colors.SEVENTYFIVE + '4D';
+      colors.TWENTYFIVE = Colors.TWENTYFIVE + '4D';
     } else {
-      colors.MAX = "rgba(0, 0, 0, 0)";
-      colors.MIN = "rgba(0, 0, 0, 0)";
-      colors.NINTY = "rgba(0, 0, 0, 0)";
-      colors.FIFTY = "rgba(0, 0, 0, 0)";
-      colors.TEN = "rgba(0, 0, 0, 0)";
-      colors.SEVENTYFIVE = "rgba(0, 0, 0, 0)";
-      colors.TWENTYFIVE = "rgba(0, 0, 0, 0)";
+      colors.MAX = 'rgba(0, 0, 0, 0)';
+      colors.MIN = 'rgba(0, 0, 0, 0)';
+      colors.NINTY = 'rgba(0, 0, 0, 0)';
+      colors.FIFTY = 'rgba(0, 0, 0, 0)';
+      colors.TEN = 'rgba(0, 0, 0, 0)';
+      colors.SEVENTYFIVE = 'rgba(0, 0, 0, 0)';
+      colors.TWENTYFIVE = 'rgba(0, 0, 0, 0)';
     }
 
-    colors.min = min ? Colors.MIN : "rgba(0, 0, 0, 0)";
-    colors.max = max ? Colors.MAX : "rgba(0, 0, 0, 0)";
-    colors.ninty = ninty ? Colors.NINTY : "rgba(0, 0, 0, 0)";
-    colors.fifty = fifty ? Colors.FIFTY : "rgba(0, 0, 0, 0)";
-    colors.ten = ten ? Colors.TEN : "rgba(0, 0, 0, 0)";
+    colors.min = min ? Colors.MIN : 'rgba(0, 0, 0, 0)';
+    colors.max = max ? Colors.MAX : 'rgba(0, 0, 0, 0)';
+    colors.ninty = ninty ? Colors.NINTY : 'rgba(0, 0, 0, 0)';
+    colors.fifty = fifty ? Colors.FIFTY : 'rgba(0, 0, 0, 0)';
+    colors.ten = ten ? Colors.TEN : 'rgba(0, 0, 0, 0)';
     colors.seventy_five = seventy_five
       ? Colors.SEVENTYFIVE
-      : "rgba(0, 0, 0, 0)";
-    colors.twenty_five = twenty_five ? Colors.TWENTYFIVE : "rgba(0, 0, 0, 0)";
+      : 'rgba(0, 0, 0, 0)';
+    colors.twenty_five = twenty_five ? Colors.TWENTYFIVE : 'rgba(0, 0, 0, 0)';
   }
 
   toggleMetricDrawer(action) {
@@ -279,50 +289,73 @@ class Hydrograph extends React.Component {
         <Divider />
         <div
           style={{
-            margin: "auto",
-            display: "flex",
-            justifyContent: "space-between",
+            margin: 'auto',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
           {(this.props.currentGauge || this.props.currentClassification) &&
           this.state.plots.overlay ? (
-            <div style={{ float: "left", display: "flex" }}>
-              <div style={{ float: "left" }}>
+            <div style={{ float: 'left', display: 'flex' }}>
+              <div style={{ float: 'left' }}>
                 <FloatingActionButton
                   mini={true}
                   disabled={true}
-                  disabledColor={"gray"}
-                  style={{ margin: "10px" }}
+                  disabledColor={'gray'}
+                  style={{ margin: '10px' }}
                 >
                   <Compare />
                 </FloatingActionButton>
               </div>
-              <div style={{ float: "right" }}>{this._renderTitleInfo()}</div>
+              <div style={{ float: 'right' }}>{this._renderTitleInfo()}</div>
             </div>
           ) : (
-            <div style={{ height: "60px" }} />
+            <div style={{ height: '60px' }} />
           )}
-          <div style={{ float: "right" }}>
+
+          <div
+            style={{
+              float: 'right',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <IconMenu
+              iconButtonElement={
+                <FlatButton
+                  className="tour-metricDetail-download"
+                  label="Download"
+                  style={{ marginTop: '10px' }}
+                  labelStyle={{ fontSize: '12px', color: Colors.gold }}
+                  icon={<FileDownload color={Colors.gold} />}
+                />
+              }
+            >
+              <MenuItem
+                primaryText="Plot As Image"
+                onClick={() => this.handleSaveAsImageBtn()}
+              />
+            </IconMenu>
             <RaisedButton
               className="tour-metricDetail-display"
               label="Display"
               backgroundColor={Colors.gold}
               labelColor={Colors.white}
               disabled={false}
-              style={{ marginTop: "10px", marginRight: "10px" }}
+              style={{ margin: '10px 10px 14px 10px' }}
               icon={<Setting />}
-              labelStyle={{ fontSize: "12px" }}
+              labelStyle={{ fontSize: '12px' }}
               onClick={() => this.toggleMetricDrawer(true)}
             />
           </div>
         </div>
 
-        <div style={styles.yLabel}>{"Daily flow / Average annual Flow"} </div>
+        <div style={styles.yLabel}>{'Daily flow / Average annual Flow'} </div>
         <svg
           width={750}
           height={450}
           ref={el => (this.svg = el)}
-          style={{ cursor: "pointer", marginLeft: "30px" }}
+          style={{ cursor: 'pointer', marginLeft: '30px' }}
         >
           <LinePlot
             x={410 / 10}
@@ -332,7 +365,7 @@ class Hydrograph extends React.Component {
             data={this.state.hydroData}
             xValue={value => value.date}
             yValue={value => value.flow}
-            highestKey={"ninty"}
+            highestKey={'ninty'}
             colors={colors}
             overLayBoxPlotData={[]}
             verticalOverlayBoxPlotData={[]}
@@ -347,12 +380,22 @@ class Hydrograph extends React.Component {
   async selectRowHandler(gaugeId) {
     await this.props.fetchCurrentGauge(gaugeId);
     this._setHydrographData();
-    if (!this.state.plots.overlay) this.handleToggle("overlay");
+    if (!this.state.plots.overlay) this.handleToggle('overlay');
+  }
+
+  handleSaveAsImageBtn() {
+    let fileName = `${this.props.data.name}_Hydrograph.jpeg`;
+
+    saveAsImage(this.saveImageRef, { fileName });
   }
 
   render() {
     return (
-      <React.Fragment>
+      <div
+        ref={ref => {
+          this.saveImageRef = ref;
+        }}
+      >
         <Paper className="tour-hydro-general-display">
           {this._renderDRHs(this.state.hydroData)}
         </Paper>
@@ -368,7 +411,7 @@ class Hydrograph extends React.Component {
           updateHoveredGauge={this.props.updateHoveredGauge}
           fetchCurrentGauge={this.props.fetchCurrentGauge}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -391,74 +434,73 @@ Hydrograph.propTypes = {
 
 const styles = {
   banner: {
-    backgroundColor: "#424242",
-    height: "230px",
-    zIndex: "0",
+    backgroundColor: '#424242',
+    height: '230px',
+    zIndex: '0',
   },
 
   yLabel: {
-    position: "absolute",
-    fontSize: "14px",
-    left: "20px",
-    top: "235px",
-    writingMode: "vertical-rl",
-    transform: "rotate(-180deg)",
+    position: 'absolute',
+    fontSize: '14px',
+    left: '20px',
+    top: '235px',
+    writingMode: 'vertical-rl',
+    transform: 'rotate(-180deg)',
   },
   labels: {
-    display: "flex",
-    margin: "auto",
-    justifyContent: "space-around",
-    paddingBottom: "20px",
+    display: 'flex',
+    margin: 'auto',
+    justifyContent: 'space-around',
+    paddingBottom: '20px',
   },
   label: {
-    height: "10px",
-    width: "10px",
-    marginTop: "0px",
+    height: '10px',
+    width: '10px',
+    marginTop: '0px',
   },
   graph: {
-    width: "100%",
-    marginBottom: "20px",
-    borderRadius: "0px",
-    overflow: "visible",
+    width: '100%',
+    marginBottom: '20px',
+    borderRadius: '0px',
+    overflow: 'visible',
   },
   plotTitle: {
-    marginTop: "10px",
-    width: "100%",
-    textAlign: "center",
-    fontWeight: "800",
-    fontSize: "16px",
-    padding: "20px",
+    width: 'auto',
+    textAlign: 'center',
+    fontWeight: '800',
+    fontSize: '16px',
+    padding: '20px',
   },
-  labelName: { fontSize: "14px" },
+  labelName: { fontSize: '14px' },
   minMax: {
-    width: "180px",
-    position: "absolute",
-    right: "0px",
-    top: "20px",
+    width: '180px',
+    position: 'absolute',
+    right: '0px',
+    top: '20px',
   },
   labelStyle: {
-    fontSize: "16px",
-    color: "#757575",
+    fontSize: '16px',
+    color: '#757575',
   },
   btnContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "96%",
-    margin: "30px auto",
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '96%',
+    margin: '30px auto',
   },
 
   track: {
-    height: "14px",
-    borderRadius: "30",
+    height: '14px',
+    borderRadius: '30',
   },
   thumb: {
-    position: "absolute",
-    top: "1px",
-    left: "1px",
-    width: "15px",
-    height: "15px",
-    lineHeight: "24px",
-    borderRadius: "50%",
+    position: 'absolute',
+    top: '1px',
+    left: '1px',
+    width: '15px',
+    height: '15px',
+    lineHeight: '24px',
+    borderRadius: '50%',
   },
 };
 
