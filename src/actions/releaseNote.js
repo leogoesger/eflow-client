@@ -13,6 +13,15 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Feb 25th, 2019',
+            version: 'v2.17',
+            title: 'Plots- Save as Image (jpge)',
+            tasks: [
+              'Plots- Save as Image (jpge)',
+              'Upload checks & warns for missing values in pairs',
+            ],
+          },
+          {
             date: 'Feb 21st, 2019',
             version: 'v2.16',
             title: 'Annual Metric Result download with Water Year Type',

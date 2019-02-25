@@ -293,7 +293,7 @@ class MetricCard extends React.Component {
               }
             >
               <MenuItem
-                primaryText="Plot As Image"
+                primaryText="Save As Image"
                 onClick={() => this.handleSaveAsImageBtn()}
               />
             </IconMenu>

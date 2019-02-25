@@ -1,25 +1,25 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import csv from "csvtojson";
-import { TextField, DatePicker, Snackbar } from "material-ui";
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import csv from 'csvtojson';
+import { TextField, DatePicker, Snackbar } from 'material-ui';
 
-import upload from "../APIs/upload";
-import Layout from "../components/uploader/Layout";
-import { getMe } from "../actions/user";
-import Styles from "../styles/Styles";
-import Loader from "../components/shared/loader/Loader";
-import { params } from "../constants/params";
+import upload from '../APIs/upload';
+import Layout from '../components/uploader/Layout';
+import { getMe } from '../actions/user';
+import Styles from '../styles/Styles';
+import Loader from '../components/shared/loader/Loader';
+import { params } from '../constants/params';
 
 class Uploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
+      message: '',
       flows: null,
       dates: null,
-      start_date: new Date("10/01/2000"),
-      name: "",
+      start_date: new Date('10/01/2000'),
+      name: '',
       userParams: JSON.parse(JSON.stringify(params)),
       loading: false,
       isError: false,
@@ -32,10 +32,10 @@ class Uploader extends React.Component {
   stringProcessor(csvStr) {
     csv({})
       .fromString(csvStr)
-      .on("err", err => this.setState({ message: err.toString() }))
+      .on('err', err => this.setState({ message: err.toString() }))
       .then(data => {
         const dataTypes = Object.keys(data[0]);
-        if (!("flow" in data[0]) || !("date" in data[0])) {
+        if (!('flow' in data[0]) || !('date' in data[0])) {
           return this.setState({
             isError: true,
             message: `Invalid Data Types: ${dataTypes[0]} or ${dataTypes[1]}`,
@@ -44,10 +44,26 @@ class Uploader extends React.Component {
 
         const flows = [];
         const dates = [];
-        data.forEach(d => {
+        for (let d of data) {
+          if (!Number.isNaN(d.flow) && !d.date) {
+            return this.setState({
+              isError: true,
+              flows: [],
+              dates: [],
+              message: `Invalid Data Types: Some rows are missing date value`,
+            });
+          } else if (!d.flow.trim() && d.date) {
+            return this.setState({
+              isError: true,
+              flows: [],
+              dates: [],
+              message: `Invalid Data Types: Some rows are missing flow value`,
+            });
+          }
+
           flows.push(Number(d.flow));
           dates.push(d.date);
-        });
+        }
         this.setState({ flows, dates, isError: false });
       });
   }
@@ -59,8 +75,10 @@ class Uploader extends React.Component {
   }
 
   isEnabled() {
-    const { flows, dates, start_date, name } = this.state;
-    return Boolean(flows && dates && start_date && name && this.props.enabled);
+    const { flows, dates, start_date, name, isError } = this.state;
+    return Boolean(
+      flows && dates && start_date && name && this.props.enabled && !isError
+    );
   }
 
   async onSubmit() {
@@ -121,9 +139,9 @@ class Uploader extends React.Component {
         <Loader loading={this.state.loading} />
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "600px",
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '600px',
           }}
         >
           <DatePicker
@@ -158,7 +176,7 @@ class Uploader extends React.Component {
         />
 
         {!this.props.enabled && (
-          <div style={{ fontSize: "13px", color: "#e65100" }}>
+          <div style={{ fontSize: '13px', color: '#e65100' }}>
             Maximum upload reached, please delete existing files before
             uploading more!
           </div>
@@ -168,7 +186,7 @@ class Uploader extends React.Component {
           open={Boolean(this.state.message)}
           message={this.state.message}
           autoHideDuration={4000}
-          onRequestClose={() => this.setState({ message: "" })}
+          onRequestClose={() => this.setState({ message: '' })}
         />
       </div>
     );
