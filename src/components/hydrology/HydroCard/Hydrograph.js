@@ -269,33 +269,31 @@ class Hydrograph extends React.Component {
 
           <div style={styles.btnContainer}>
             <FlatButton
-              label="Upload Data"
-              labelStyle={{ fontSize: '12px', color: Colors.gold }}
-              icon={<Upload color={Colors.gold} />}
-              onClick={() => navigateTo('/profile')}
-            />
-            <FlatButton
               label="Save As Image"
+              style={{ marginRight: '20px' }}
               labelStyle={{ fontSize: '12px', color: Colors.gold }}
               icon={<Image color={Colors.gold} />}
               onClick={() => this.handleSaveAsImageBtn()}
             />
-            <FlatButton
-              label="Gauge List"
-              labelStyle={{ fontSize: '12px', color: Colors.gold }}
-              icon={<Reply color={Colors.gold} />}
-              onClick={() => removeClassGaugeProps()}
-            />
-            <RaisedButton
-              className="tour-hydro-metricDetail"
-              label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
-              backgroundColor={Colors.gold}
-              labelColor={Colors.white}
-              disabled={false}
-              icon={currentGauge ? <TimeLine /> : <ViewDay />}
-              labelStyle={{ fontSize: '12px' }}
-              onClick={() => navigateTo('/metricDetail')}
-            />
+            <div>
+              <FlatButton
+                label="Gauge List"
+                style={{ marginRight: '20px' }}
+                labelStyle={{ fontSize: '12px', color: Colors.gold }}
+                icon={<Reply color={Colors.gold} />}
+                onClick={() => removeClassGaugeProps()}
+              />
+              <RaisedButton
+                className="tour-hydro-metricDetail"
+                label={currentGauge ? 'Annual Flow Plot' : 'Class Box plot'}
+                backgroundColor={Colors.gold}
+                labelColor={Colors.white}
+                disabled={false}
+                icon={currentGauge ? <TimeLine /> : <ViewDay />}
+                labelStyle={{ fontSize: '12px' }}
+                onClick={() => navigateTo('/metricDetail')}
+              />
+            </div>
           </div>
         </Paper>
       </div>
