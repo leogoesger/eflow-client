@@ -6,7 +6,7 @@ import { CardHeader } from 'material-ui/Card';
 import Reply from 'material-ui/svg-icons/content/reply';
 import TimeLine from 'material-ui/svg-icons/action/timeline';
 import ViewDay from 'material-ui/svg-icons/action/view-day';
-import Upload from 'material-ui/svg-icons/file/cloud-upload';
+// import Upload from 'material-ui/svg-icons/file/cloud-upload';
 import Image from 'material-ui/svg-icons/image/image';
 import { navigateTo, saveAsImage } from '../../../utils/helpers';
 import { LinePlot } from '../../shared/plots';
