@@ -1,25 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Snackbar, Paper } from "material-ui";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Snackbar, Paper } from 'material-ui';
 
-import Layout from "../components/admin/Layout";
-import adminActions from "../APIs/admin";
-import { navigateTo } from "../utils/helpers";
+import Layout from '../components/admin/Layout';
+import adminActions from '../APIs/admin';
+import { navigateTo } from '../utils/helpers';
 import {
   removeUser,
   getFailedUpload,
   getMe,
   getUploads,
-} from "../actions/user";
-import { fetchAppInfo } from "../actions/appInfo";
+} from '../actions/user';
+import { fetchAppInfo } from '../actions/appInfo';
+import Loader from '../components/shared/loader/Loader';
 
 class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       snackOpen: false,
-      message: "",
+      message: '',
+      failedOffset: 0,
+      offset: 0,
+      limit: 7, //change this # to increase/decrease # of records per page
+      loading: true,
     };
     this.updateClassMetricHandler = this.updateClassMetricHandler.bind(this);
     this.updateGaugeMetricHandler = this.updateGaugeMetricHandler.bind(this);
@@ -39,27 +44,54 @@ class Admin extends React.Component {
     this.responseMessage = this.responseMessage.bind(this);
   }
 
-  componentDidMount() {
-    if (!localStorage.getItem("ff_jwt")) {
+  async componentDidMount() {
+    if (!localStorage.getItem('ff_jwt')) {
       this.props.removeUser();
-      localStorage.removeItem("ff_jwt");
-      navigateTo("/login");
+      localStorage.removeItem('ff_jwt');
+      navigateTo('/login');
     }
-    document.title = "eFlows | Admin";
+    document.title = 'eFlows | Admin';
     this.props.fetchAppInfo();
-    this.props.getFailedUpload();
-    this.props.getUploads();
+    this.getPagedFailedUploads(0);
+    this.getPagedUploads(0);
+    await this.setState({ loading: false });
+  }
+
+  async getPagedFailedUploads(page) {
+    await this.setState({ loading: true });
+    await this.setState(
+      { failedOffset: this.state.failedOffset + this.state.limit * page },
+      () =>
+        this.props.getFailedUpload({
+          limit: this.state.limit,
+          offset: this.state.failedOffset,
+        })
+    );
+    await this.setState({ loading: false });
+  }
+
+  async getPagedUploads(page) {
+    await this.setState({ loading: true });
+    await this.setState(
+      { offset: this.state.offset + this.state.limit * page },
+      () =>
+        this.props.getUploads({
+          limit: this.state.limit,
+          offset: this.state.offset,
+        })
+    );
+    await this.setState({ loading: false });
   }
 
   responseMessage() {
     return this.setState({
       snackOpen: true,
-      message: "Success, wait 1 min before next action!",
+      message: 'Success, wait 1 min before next action!',
     });
   }
 
   _handleRequestClose() {
-    this.setState({ snackOpen: false, message: "" });
+    this.setState({ snackOpen: false, message: '' });
   }
 
   updateClassMetricHandler() {
@@ -74,7 +106,7 @@ class Admin extends React.Component {
     adminActions.broadcastMessage(msg).then(() => {
       this.setState({
         snackOpen: true,
-        message: "Success, wait 1 min before next action!",
+        message: 'Success, wait 1 min before next action!',
       });
     });
   }
@@ -106,6 +138,7 @@ class Admin extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Loader loading={this.state.loading} />
         <div style={styles.banner} />
         <Paper style={styles.paperStyle}>
           <Layout
@@ -121,9 +154,13 @@ class Admin extends React.Component {
             appInfo={this.props.appInfo}
             failedUploads={this.props.failedUploads}
             getMe={this.props.getMe}
-            getFailedUpload={this.props.getFailedUpload}
+            getFailedUpload={page => this.getPagedFailedUploads(page)}
             uploads={this.props.uploads}
-            getUploads={this.props.getUploads}
+            getUploads={page => this.getPagedUploads(page)}
+            limit={this.state.limit}
+            failedLimit={this.state.failedLimit}
+            offset={this.state.offset}
+            failedOffset={this.state.failedOffset}
           />
         </Paper>
 
@@ -151,9 +188,9 @@ const mapDispatchToProps = dispatch => {
   return {
     removeUser: () => dispatch(removeUser()),
     fetchAppInfo: () => dispatch(fetchAppInfo()),
-    getFailedUpload: () => dispatch(getFailedUpload()),
+    getFailedUpload: pagination => dispatch(getFailedUpload(pagination)),
     getMe: () => dispatch(getMe()),
-    getUploads: () => dispatch(getUploads()),
+    getUploads: pagination => dispatch(getUploads(pagination)),
   };
 };
 
@@ -163,26 +200,26 @@ Admin.propTypes = {
   appInfo: PropTypes.object,
   fetchAppInfo: PropTypes.func,
   getFailedUpload: PropTypes.func,
-  failedUploads: PropTypes.array,
+  failedUploads: PropTypes.object,
   getMe: PropTypes.func,
-  uploads: PropTypes.array,
+  uploads: PropTypes.object,
   getUploads: PropTypes.func,
 };
 
 const styles = {
   banner: {
-    backgroundColor: "#424242",
-    height: "230px",
-    zIndex: "0",
+    backgroundColor: '#424242',
+    height: '230px',
+    zIndex: '0',
   },
   paperStyle: {
-    height: "600px",
-    margin: "-60px auto 160px auto",
-    width: "1000px",
-    zIndex: "2",
-    overflow: "scroll",
+    height: '600px',
+    margin: '-60px auto 160px auto',
+    width: '1000px',
+    zIndex: '2',
+    overflow: 'scroll',
   },
-  warningIcon: { color: "#616161", height: "60px", width: "60px" },
+  warningIcon: { color: '#616161', height: '60px', width: '60px' },
 };
 
 export default connect(

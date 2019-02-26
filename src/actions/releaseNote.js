@@ -15,10 +15,11 @@ export function fetchReleaseNotes() {
           {
             date: 'Feb 25th, 2019',
             version: 'v2.17',
-            title: 'Plots- Save as Image (jpge)',
+            title: 'Plots- Save as Image (jpge)/Admin Pagination',
             tasks: [
               'Plots- Save as Image (jpge)',
               'Upload checks & warns for missing values in pairs',
+              'Admin->Uploads/Failed Uploads pagination',
             ],
           },
           {
