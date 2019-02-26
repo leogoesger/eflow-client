@@ -8,12 +8,6 @@ import { CSVLink } from 'react-csv';
 import { navigateTo } from '../../utils/helpers';
 
 import { Colors } from '../../styles';
-import upload from '../../APIs/upload';
-
-const onDelete = async (id, getUploads) => {
-  await upload.deleteTimeSeries(id);
-  getUploads();
-};
 
 const getCSVdata = data => {
   const csvData = [['date', 'flow']];
@@ -23,7 +17,7 @@ const getCSVdata = data => {
   return csvData;
 };
 
-const RenderUpload = ({ data, getUploads }) => {
+const RenderUpload = ({ data, handleDeleteUpload }) => {
   const date = new Date(data.createdAt);
   const csvData = getCSVdata(data);
   return (
@@ -65,15 +59,7 @@ const RenderUpload = ({ data, getUploads }) => {
             </CSVLink>
           </Tooltip>
         </div>
-        {/* <div
-          style={{
-            margin: "20px -120px 10px 0px",
-            fontSize: "20px",
-            color: "#bdbdbd",
-          }}
-        >
-          {"|"}
-        </div> */}
+
         <div
           style={{
             marginTop: '20px',
@@ -82,7 +68,7 @@ const RenderUpload = ({ data, getUploads }) => {
         >
           <Tooltip title={'Delete'} position="top" arrow={true}>
             <Delete
-              onClick={() => onDelete(data.id, getUploads)}
+              onClick={() => handleDeleteUpload(data.id)}
               color={'#f9a825'}
               style={{
                 cursor: 'pointer',
@@ -97,7 +83,7 @@ const RenderUpload = ({ data, getUploads }) => {
 
 RenderUpload.propTypes = {
   data: PropTypes.object,
-  getUploads: PropTypes.func,
+  handleDeleteUpload: PropTypes.func,
 };
 
 export default RenderUpload;

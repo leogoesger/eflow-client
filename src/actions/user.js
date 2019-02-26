@@ -1,6 +1,6 @@
-import request from "superagent";
-import { UserTypes as types } from "../action-types";
-import { navigateTo } from "../utils/helpers";
+import request from 'superagent';
+import { UserTypes as types } from '../action-types';
+import { navigateTo } from '../utils/helpers';
 
 const fetchBroadCastMessageObject = message => {
   return {
@@ -65,7 +65,7 @@ export function fetchBroadCastMessage(message) {
 
 export function removeErrorMessage() {
   return dispatch => {
-    dispatch(userErrorMessage(""));
+    dispatch(userErrorMessage(''));
   };
 }
 
@@ -88,15 +88,15 @@ export function loginUser(user) {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/user/login`)
         .send(user);
-      localStorage.setItem("ff_jwt", response.body.ff_jwt);
+      localStorage.setItem('ff_jwt', response.body.ff_jwt);
       dispatch(loginUserObject(response.body));
-      if (response.body.role === "ADMIN") {
-        return navigateTo("/admin");
+      if (response.body.role === 'ADMIN') {
+        return navigateTo('/admin');
       }
-      navigateTo("/");
+      navigateTo('/');
     } catch (e) {
-      dispatch(userErrorMessage("Log In Failed!"));
-      localStorage.removeItem("ff_jwt");
+      dispatch(userErrorMessage('Log In Failed!'));
+      localStorage.removeItem('ff_jwt');
     }
   };
 }
@@ -107,24 +107,24 @@ export function signUpUser(user) {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/user/signup`)
         .send(user);
-      localStorage.setItem("ff_jwt", response.body.ff_jwt);
+      localStorage.setItem('ff_jwt', response.body.ff_jwt);
       dispatch(loginUserObject(response.body));
-      if (response.body.role === "ADMIN") {
-        return navigateTo("/admin");
+      if (response.body.role === 'ADMIN') {
+        return navigateTo('/admin');
       }
-      navigateTo("/");
+      navigateTo('/');
     } catch (e) {
-      localStorage.removeItem("ff_jwt");
-      dispatch(userErrorMessage("Sign Up Failed!"));
+      localStorage.removeItem('ff_jwt');
+      dispatch(userErrorMessage('Sign Up Failed!'));
     }
   };
 }
 
 export function removeUser() {
   return dispatch => {
-    localStorage.removeItem("ff_jwt");
+    localStorage.removeItem('ff_jwt');
     dispatch(removeUserObject());
-    navigateTo("/");
+    navigateTo('/');
   };
 }
 
@@ -133,39 +133,39 @@ export function getMe() {
     try {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/user/getme`)
-        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
+        .send({ ff_jwt: localStorage.getItem('ff_jwt') });
       dispatch(loginUserObject(response.body));
       // response.body.role === "ADMIN"
       //   ? navigateTo("/admin")
       //   : navigateTo("/profile");
     } catch (error) {
-      localStorage.removeItem("ff_jwt");
+      localStorage.removeItem('ff_jwt');
     }
   };
 }
 
-export function getFailedUpload() {
+export function getFailedUpload(pagination) {
   return async dispatch => {
     try {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/admin/get-failed-uploads`)
-        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
+        .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...pagination });
       dispatch(failedUpload(response.body));
     } catch (error) {
-      localStorage.removeItem("ff_jwt");
+      localStorage.removeItem('ff_jwt');
     }
   };
 }
 
-export function getUploads() {
+export function getUploads(pagination) {
   return async dispatch => {
     try {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/admin/get-uploads`)
-        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
+        .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...pagination });
       dispatch(uploads(response.body));
     } catch (error) {
-      localStorage.removeItem("ff_jwt");
+      localStorage.removeItem('ff_jwt');
     }
   };
 }
@@ -175,10 +175,10 @@ export function getUploadById(id) {
     try {
       const response = await request
         .post(`${process.env.SERVER_ADDRESS}/api/user/get-upload/${id}`)
-        .send({ ff_jwt: localStorage.getItem("ff_jwt") });
+        .send({ ff_jwt: localStorage.getItem('ff_jwt') });
       dispatch(uploadData(response.body));
     } catch (error) {
-      localStorage.removeItem("ff_jwt");
+      localStorage.removeItem('ff_jwt');
     }
   };
 }

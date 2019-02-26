@@ -1,35 +1,27 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-  // Divider,
-  // TextField,
-  // SelectField,
-  Menu,
-  MenuItem,
-  // RaisedButton,
-} from "material-ui";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Menu, MenuItem, Divider, IconButton } from 'material-ui';
 
-// import { Colors } from "../../styles";
-// import Styles from "../../styles/Styles";
-// import AdminActionBtn from "./AdminActionBtn";
-import AWSUploads from "./AWSUploads";
-import AppInfo from "./AppInfo";
-import RenderFailedUpload from "./RenderFailedUpload";
-import RenderUpload from "./RenderUpload";
-import { navigateTo } from "../../utils/helpers";
+import AWSUploads from './AWSUploads';
+import AppInfo from './AppInfo';
+import RenderFailedUpload from './RenderFailedUpload';
+import RenderUpload from './RenderUpload';
+import { navigateTo } from '../../utils/helpers';
+import upload from '../../APIs/upload';
 
-import Eject from "material-ui/svg-icons/action/eject";
-import Divider from "material-ui/Divider";
-import Book from "material-ui/svg-icons/av/library-books";
-import Info from "material-ui/svg-icons/action/info";
-import FailedUpload from "material-ui/svg-icons/file/cloud-off";
-import Upload from "material-ui/svg-icons/file/cloud-done";
+import Eject from 'material-ui/svg-icons/action/eject';
+import Book from 'material-ui/svg-icons/av/library-books';
+import Info from 'material-ui/svg-icons/action/info';
+import FailedUpload from 'material-ui/svg-icons/file/cloud-off';
+import Upload from 'material-ui/svg-icons/file/cloud-done';
+import LeftArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import RightArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "Sorry, we are updating the website for the next 2 mins!",
+      message: 'Sorry, we are updating the website for the next 2 mins!',
       classId: 1,
       loadAdmin: true,
       loadAppInfo: false,
@@ -54,16 +46,16 @@ class Layout extends React.Component {
   }
 
   _handleChange(v, field) {
-    if (field === "classId") {
+    if (field === 'classId') {
       return this.setState({ [field]: v + 1 });
     }
     return this.setState({ [field]: v });
   }
 
   logoutUser() {
-    localStorage.removeItem("ff_jwt");
+    localStorage.removeItem('ff_jwt');
     this.props.removeUser();
-    navigateTo("/");
+    navigateTo('/');
   }
 
   updateGaugeMetricHandler() {
@@ -72,6 +64,20 @@ class Layout extends React.Component {
 
   broadcastMessageHandler() {
     this.props.broadcastMessage(this.state.message);
+  }
+
+  async handleDeleteUpload(id) {
+    await upload.deleteTimeSeries(id);
+    if (this.props.offset === this.props.uploads.count - 1)
+      this.props.getUploads(-1);
+    else this.props.getUploads(0);
+  }
+
+  async handleDeleteFailedUpload(id) {
+    await upload.deleteTimeSeries(id);
+    if (this.props.failedOffset === this.props.failedUploads.count - 1)
+      this.props.getFailedUpload(-1);
+    else this.props.getFailedUpload(0);
   }
 
   renderClicked(clicked) {
@@ -89,6 +95,9 @@ class Layout extends React.Component {
       updateGaugeMetric,
       uploads,
       getUploads,
+      offset,
+      limit,
+      failedOffset,
     } = this.props;
 
     if (clicked.loadAdmin) {
@@ -109,15 +118,23 @@ class Layout extends React.Component {
     } else if (clicked.loadFailedUploads) {
       return (
         <div>
-          <h1 style={{ padding: "40px 20px" }}>Failed Uploads</h1>
+          {this.renderHeader(
+            'Failed Uploads',
+            failedUploads,
+            failedOffset,
+            limit,
+            getFailedUpload
+          )}
 
-          {failedUploads &&
-            failedUploads.map((data, key) => {
+          {failedUploads.rows &&
+            failedUploads.rows.map((data, key) => {
               return (
                 <RenderFailedUpload
                   key={key}
                   data={data}
-                  getFailedUpload={getFailedUpload}
+                  handleDeleteFailedUpload={id =>
+                    this.handleDeleteFailedUpload(id)
+                  }
                 />
               );
             })}
@@ -125,12 +142,23 @@ class Layout extends React.Component {
       );
     } else if (clicked.loadUploads) {
       return (
-        <div>
-          <h1 style={{ padding: "40px 20px" }}>Uploaded Files</h1>
-          {uploads &&
-            uploads.map((data, key) => {
+        <div style={{ position: 'relative' }}>
+          {this.renderHeader(
+            'Uploaded Files',
+            uploads,
+            offset,
+            limit,
+            getUploads
+          )}
+
+          {uploads.rows &&
+            uploads.rows.map((data, key) => {
               return (
-                <RenderUpload key={key} data={data} getUploads={getUploads} />
+                <RenderUpload
+                  key={key}
+                  data={data}
+                  handleDeleteUpload={id => this.handleDeleteUpload(id)}
+                />
               );
             })}
         </div>
@@ -139,13 +167,60 @@ class Layout extends React.Component {
     return null;
   }
 
+  renderHeader(title, data, offset, limit, getData) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
+        <span style={{ margin: '25px 0px', fontWeight: 'bold' }}>{title}</span>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <div
+            style={{
+              fontSize: '13px',
+              margin: '25px 0px',
+            }}
+          >{`${offset + 1} - ${
+            offset + limit > data.count ? data.count : offset + limit
+          } of ${data.count}`}</div>
+          <div style={{ margin: '9px 0px' }}>
+            <IconButton
+              tooltip={`Previous ${limit}`}
+              tooltipPosition="bottom-center"
+              disabled={!offset}
+              onClick={() => getData(-1)}
+            >
+              <LeftArrow />
+            </IconButton>
+            <IconButton
+              tooltip={`Next ${limit}`}
+              tooltipPosition="bottom-center"
+              disabled={data.count > offset + limit ? false : true}
+              onClick={() => getData(1)}
+            >
+              <RightArrow />
+            </IconButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
         <div
           style={{
-            width: "20%",
-            float: "left",
+            width: '20%',
+            float: 'left',
           }}
         >
           <Menu>
@@ -153,23 +228,23 @@ class Layout extends React.Component {
               primaryText="Admin"
               value={0}
               leftIcon={<Book />}
-              onClick={() => this.onClickHandler("loadAdmin")}
+              onClick={() => this.onClickHandler('loadAdmin')}
             />
-            <Divider style={{ width: "98%" }} />
+            <Divider style={{ width: '98%' }} />
             <MenuItem
               primaryText="App Info"
               leftIcon={<Info />}
-              onClick={() => this.onClickHandler("loadAppInfo")}
+              onClick={() => this.onClickHandler('loadAppInfo')}
             />
             <MenuItem
               primaryText="Uploaded Files"
               leftIcon={<Upload />}
-              onClick={() => this.onClickHandler("loadUploads")}
+              onClick={() => this.onClickHandler('loadUploads')}
             />
             <MenuItem
               primaryText="Failed Uploads"
               leftIcon={<FailedUpload />}
-              onClick={() => this.onClickHandler("loadFailedUploads")}
+              onClick={() => this.onClickHandler('loadFailedUploads')}
             />
             <MenuItem
               primaryText="Log Out"
@@ -181,13 +256,13 @@ class Layout extends React.Component {
 
         <div
           style={{
-            width: "78%",
-            float: "right",
-            borderLeft: "1px solid rgb(224,224,224)",
-            height: "inherit",
+            width: '78%',
+            float: 'right',
+            borderLeft: '1px solid rgb(224,224,224)',
+            height: 'inherit',
           }}
         >
-          <div style={{ width: "90%", margin: "auto" }}>
+          <div style={{ width: '90%', margin: 'auto' }}>
             {this.renderClicked(this.state)}
           </div>
         </div>
@@ -206,12 +281,15 @@ Layout.propTypes = {
   uploadGaugeHydrograph: PropTypes.func,
   removeUser: PropTypes.func,
   uploadFlowConditionHandler: PropTypes.func,
-  failedUploads: PropTypes.array,
+  failedUploads: PropTypes.object,
   appInfo: PropTypes.object,
   getMe: PropTypes.func,
   getFailedUpload: PropTypes.func,
-  uploads: PropTypes.array,
+  uploads: PropTypes.object,
   getUploads: PropTypes.func,
+  limit: PropTypes.number,
+  failedOffset: PropTypes.number,
+  offset: PropTypes.number,
 };
 
 export default Layout;
