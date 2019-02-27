@@ -23,6 +23,13 @@ const loginUserObject = user => {
   };
 };
 
+const userUploadsObj = uploads => {
+  return {
+    type: types.USER_UPLOADS_OBJECT,
+    uploads,
+  };
+};
+
 const failedUpload = uploads => {
   return {
     type: types.ADMIN_FAILED_UPLOAD,
@@ -177,6 +184,19 @@ export function getUploadById(id) {
         .post(`${process.env.SERVER_ADDRESS}/api/user/get-upload/${id}`)
         .send({ ff_jwt: localStorage.getItem('ff_jwt') });
       dispatch(uploadData(response.body));
+    } catch (error) {
+      localStorage.removeItem('ff_jwt');
+    }
+  };
+}
+
+export function getUserUploads(pagination) {
+  return async dispatch => {
+    try {
+      const response = await request
+        .post(`${process.env.SERVER_ADDRESS}/api/user/get_user_uploads/`)
+        .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...pagination });
+      dispatch(userUploadsObj(response.body));
     } catch (error) {
       localStorage.removeItem('ff_jwt');
     }
