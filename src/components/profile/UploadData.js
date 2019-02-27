@@ -9,6 +9,7 @@ import {
   classification,
 } from '../../constants/classification';
 import { ActionIcons } from './ActionIcons';
+import upload from '../../APIs/upload';
 
 class UploadData extends React.Component {
   constructor(props) {
@@ -16,6 +17,18 @@ class UploadData extends React.Component {
     this.state = {
       open: false,
     };
+  }
+
+  async handleDeleteUpload(id) {
+    await upload.deleteTimeSeries(id);
+    if (this.props.offset === this.props.count - 1)
+      this.props.getPagedUserUploads(-1);
+    else this.props.getPagedUserUploads(0);
+  }
+
+  async onPredict(id) {
+    await upload.predictTimeSeries(id);
+    this.props.getPagedUserUploads(0);
   }
 
   onClickHandler() {
@@ -45,7 +58,7 @@ class UploadData extends React.Component {
   }
 
   render() {
-    const { data, getMe } = { ...this.props };
+    const { data } = { ...this.props };
     const date = new Date(data.createdAt);
 
     return (
@@ -72,7 +85,7 @@ class UploadData extends React.Component {
                   }}
                 >
                   <div
-                    style={{ padding: '15px 0px 5px 15px', fontSize: '24px' }}
+                    style={{ padding: '15px 0px 5px 15px', fontSize: '20px' }}
                   >
                     {data.name}
                   </div>
@@ -94,14 +107,19 @@ class UploadData extends React.Component {
               </div>
               <CardText
                 style={{
-                  fontSize: '16px',
+                  fontSize: '15px',
                   color: Colors.grey,
-                  marginTop: '16px',
+                  marginTop: '15px',
                 }}
               >{`Created at: ${date.getMonth() +
                 1}/${date.getDate()}/${date.getFullYear()}`}</CardText>
             </div>
-            <ActionIcons data={data} getMe={getMe} id={this.props.id} />
+            <ActionIcons
+              data={data}
+              id={this.props.id}
+              handleDeleteUpload={id => this.handleDeleteUpload(id)}
+              onPredict={id => this.onPredict(id)}
+            />
           </div>
         </Card>
       </React.Fragment>
@@ -112,12 +130,9 @@ class UploadData extends React.Component {
 UploadData.propTypes = {
   id: PropTypes.number,
   data: PropTypes.object,
-  getMe: PropTypes.func,
-  currentGauge: PropTypes.object,
-  gauges: PropTypes.array,
-  removeClassGaugeProps: PropTypes.func,
-  currentClassification: PropTypes.object,
-  fetchCurrentGauge: PropTypes.func,
+  offset: PropTypes.number,
+  count: PropTypes.number,
+  getPagedUserUploads: PropTypes.func,
 };
 
 export default UploadData;

@@ -1,13 +1,13 @@
-import { UserTypes as types } from "../action-types";
-import objectAssign from "object-assign";
+import { UserTypes as types } from '../action-types';
+import objectAssign from 'object-assign';
 
 type STATE = {};
 type ACTION = {};
 const initialState: STATE = {
   message: null,
-  submitEmailMessage: "",
+  submitEmailMessage: '',
   currentUser: null,
-  userErrorMessage: "",
+  userErrorMessage: '',
   failedUploads: null,
   uploads: null,
   uploadData: null,
@@ -23,6 +23,15 @@ export default function(state: STATE = initialState, action: ACTION) {
 
     case types.USER_LOGIN_OBJECT:
       return objectAssign({}, state, { currentUser: action.user });
+
+    case types.USER_UPLOADS_OBJECT:
+      return objectAssign({}, state, {
+        currentUser: {
+          ...state.currentUser,
+          uploadData: action.uploads.rows,
+          uploadCount: action.uploads.count,
+        },
+      });
 
     case types.REMOVE_USER_OBJECT:
       return objectAssign({}, state, { currentUser: null });

@@ -10,19 +10,19 @@ import Loader from '../shared/loader/Loader';
 import Share from 'material-ui/svg-icons/social/share';
 
 import { copyTextToClipboard } from '../../utils/helpers';
-import upload from '../../APIs/upload';
+// import upload from '../../APIs/upload';
 import Download from './Download';
 import Colors from '../../styles/Colors';
 
-const onDelete = async (id, getMe) => {
-  await upload.deleteTimeSeries(id);
-  getMe();
-};
+// const onDelete = async (id, getMe) => {
+//   await upload.deleteTimeSeries(id);
+//   getMe();
+// };
 
-const onPredict = async (id, getMe) => {
-  await upload.predictTimeSeries(id);
-  getMe();
-};
+// const onPredict = async (id, getMe) => {
+//   await upload.predictTimeSeries(id);
+//   getMe();
+// };
 
 export class ActionIcons extends React.Component {
   constructor(props) {
@@ -47,14 +47,14 @@ export class ActionIcons extends React.Component {
 
   async onPredict(id) {
     this.setState({ loading: true });
-    await onPredict(id, this.props.getMe);
+    await this.props.onPredict(id);
     // await upload.predictTimeSeries(id);
     // this.getMe();
     this.setState({ loading: false });
   }
 
   render() {
-    const { data, getMe, id } = this.props;
+    const { data, id } = this.props;
     return (
       <div
         style={{
@@ -128,7 +128,7 @@ export class ActionIcons extends React.Component {
             <Tooltip title={'Delete'} position="top" arrow={true}>
               <IconButton>
                 <Delete
-                  onClick={() => onDelete(data.id, getMe)}
+                  onClick={() => this.props.handleDeleteUpload(data.id)}
                   color={'#f9a825'}
                   style={{
                     cursor: 'pointer',
@@ -182,5 +182,6 @@ export class ActionIcons extends React.Component {
 ActionIcons.propTypes = {
   id: PropTypes.any,
   data: PropTypes.object,
-  getMe: PropTypes.func,
+  handleDeleteUpload: PropTypes.func,
+  onPredict: PropTypes.func,
 };

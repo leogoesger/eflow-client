@@ -268,7 +268,7 @@ export const paramRange = {
       step: 0.01,
       map: 'Peak Sensitivity',
       description:
-        'Sensitivity factor for identifying the peak that signals the start of the wet season. A smaller value detects more peaks.',
+        'Sensitivity factor for identifying potential wet season initiation peaks. A smaller value detects more peaks.',
     },
     sigma: {
       min: 0,
