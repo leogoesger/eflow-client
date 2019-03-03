@@ -20,9 +20,11 @@ class Uploader extends React.Component {
       dates: null,
       start_date: new Date('10/01/2000'),
       name: '',
+      fileName: '',
       userParams: JSON.parse(JSON.stringify(params)),
       loading: false,
       isError: false,
+      location: '',
     };
     this.reader = new FileReader();
     this.onSubmit = this.onSubmit.bind(this);
@@ -83,7 +85,7 @@ class Uploader extends React.Component {
 
   async onSubmit() {
     this.setState({ loading: true });
-    const { flows, dates, start_date, name, userParams } = this.state;
+    const { flows, dates, start_date, name, userParams, location } = this.state;
 
     if (flows.length !== dates.length) {
       return this.setState({
@@ -99,6 +101,7 @@ class Uploader extends React.Component {
         start_date: `${start_date.getMonth() + 1}/${start_date.getDate()}`,
         name,
         params: { ...userParams },
+        location,
       });
 
       this.props.getMe();
@@ -116,6 +119,7 @@ class Uploader extends React.Component {
   }
 
   readFile(fileToRead) {
+    this.setState({ fileName: fileToRead[0].name });
     this.reader.readAsText(fileToRead[0]);
     this.reader.onload = e => this.stringProcessor(e.target.result);
   }
@@ -141,7 +145,8 @@ class Uploader extends React.Component {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            width: '600px',
+            width: '96%',
+            marginBottom: '10px',
           }}
         >
           <DatePicker
@@ -160,6 +165,15 @@ class Uploader extends React.Component {
             floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
             onChange={(_event, value) => this.setState({ name: value })}
           />
+          <TextField
+            hintText="Yuba River @ Lat,Lon or Address"
+            value={this.state.location}
+            floatingLabelText="River Name & Location (optional)"
+            underlineFocusStyle={Styles.underlineFocusStyle}
+            floatingLabelStyle={Styles.floatingLabelStyle}
+            floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
+            onChange={(_event, value) => this.setState({ location: value })}
+          />
         </div>
 
         <Layout
@@ -173,6 +187,7 @@ class Uploader extends React.Component {
           handleSlider={(e, value, season, param) =>
             this.handleSlider(e, value, season, param)
           }
+          fileName={this.state.fileName}
         />
 
         {!this.props.enabled && (

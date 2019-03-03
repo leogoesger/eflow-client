@@ -43,11 +43,12 @@ class Params extends React.Component {
       <React.Fragment>
         <RaisedButton
           label="Params (Optional)"
-          backgroundColor={Colors.grey}
+          backgroundColor={Colors.lightGrey}
           labelColor={Colors.white}
           labelStyle={{ fontSize: '12px' }}
           onClick={() => this.handleOpen()}
-          style={{ margin: '20px 10px' }}
+          //style={{ margin: '20px 10px' }}
+          disabled={!this.props.enabled}
         />
 
         <Dialog
@@ -133,6 +134,7 @@ Params.propTypes = {
   userParams: PropTypes.object,
   setUserParams: PropTypes.func,
   handleSlider: PropTypes.func,
+  enabled: PropTypes.bool,
 };
 
 export default Params;
