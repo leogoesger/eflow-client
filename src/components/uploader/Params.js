@@ -9,6 +9,7 @@ import {
   MenuItem,
 } from 'material-ui';
 import { Colors } from '../../styles';
+import Tune from 'material-ui/svg-icons/image/tune';
 
 import Styles from '../../styles/Styles';
 import ParamsSliders from './ParamsSliders';
@@ -41,13 +42,18 @@ class Params extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <RaisedButton
+        <FlatButton
           label="Params (Optional)"
-          backgroundColor={Colors.grey}
-          labelColor={Colors.white}
-          labelStyle={{ fontSize: '12px' }}
+          icon={
+            <Tune
+              style={{ width: '30px', height: '30px' }}
+              color={Colors.gold}
+            />
+          }
+          labelStyle={{ fontSize: '12px', fontWeight: '700' }}
           onClick={() => this.handleOpen()}
-          style={{ margin: '20px 10px' }}
+          //style={{ margin: '20px 10px' }}
+          disabled={!this.props.enabled}
         />
 
         <Dialog
@@ -133,6 +139,7 @@ Params.propTypes = {
   userParams: PropTypes.object,
   setUserParams: PropTypes.func,
   handleSlider: PropTypes.func,
+  enabled: PropTypes.bool,
 };
 
 export default Params;
