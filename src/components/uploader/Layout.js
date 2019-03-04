@@ -32,11 +32,11 @@ class Uploader extends React.Component {
       <div
         style={{
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           justifyContent: 'space-between',
-          position: 'relative',
-          margin: 'auto',
-          width: '75%',
+          position: 'absolute',
+          top: '30px',
+          left: '575px',
         }}
       >
         <FlatButton
@@ -48,13 +48,12 @@ class Uploader extends React.Component {
               color={Colors.gold}
             />
           }
-          labelColor={Colors.white}
           labelStyle={{
             fontSize: '14px',
             fontWeight: '700',
             // color: 'black !important',
           }}
-          style={{ height: '36px' }}
+          style={{ height: '36px', textAlign: 'left' }}
         >
           <input
             onChange={e => onUpload(e.target.files)}
@@ -78,10 +77,9 @@ class Uploader extends React.Component {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            float: 'right',
             justifyContent: 'space-around',
             position: 'relative',
-            margin: '0px',
+            marginTop: '30px',
           }}
         >
           <Tooltip

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { getMe, getUserUploads } from '../actions/user';
 import { navigateTo } from '../utils/helpers';
 
+import Loader from '../components/shared/loader/Loader';
+
 const UserHoc = Component => {
   class EnhancedComponent extends React.Component {
     constructor(props) {
@@ -16,12 +18,15 @@ const UserHoc = Component => {
       };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+      document.title = 'Eflow | Profile';
+      await this.props.getMe();
       if (!this.props.currentUser) {
         return navigateTo('/login');
       }
 
       this.getPagedUserUploads(0);
+      this.setState({ loading: false });
     }
 
     async getPagedUserUploads(page) {
@@ -39,14 +44,17 @@ const UserHoc = Component => {
 
     render() {
       return (
-        <Component
-          currentUser={this.props.currentUser}
-          getMe={this.props.getMe}
-          offset={this.state.offset}
-          limit={this.state.limit}
-          getPagedUserUploads={page => this.getPagedUserUploads(page)}
-          loading={this.state.loading}
-        />
+        <div>
+          <Loader loading={this.state.loading} />
+          <Component
+            currentUser={this.props.currentUser}
+            getMe={this.props.getMe}
+            offset={this.state.offset}
+            limit={this.state.limit}
+            getPagedUserUploads={page => this.getPagedUserUploads(page)}
+            loading={this.state.loading}
+          />
+        </div>
       );
     }
   }

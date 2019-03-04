@@ -2,6 +2,10 @@ export const params = {
   winter_params: {
     max_zero_allowed_per_year: 270,
     max_nan_allowed_per_year: 100,
+    broad_sigma: 15, //fall_params
+    peak_detect_perc: 0.3, //fall_params
+    wet_threshold_perc: 0.2, //fall_params
+    peak_sensitivity_wet: 0.005, //fall_params
   },
   fall_params: {
     max_zero_allowed_per_year: 270,
@@ -195,6 +199,44 @@ export const paramRange = {
       description:
         'Maximum NA value days allowed in a single water year. If value is exceeded, then calculations will not be performed.',
     },
+
+    /* Following params are from fall_params */
+    broad_sigma: {
+      min: 0,
+      max: 25,
+      step: 1,
+      map: 'Large Smoothing Filter',
+      mapWith: 'Wet Season',
+      description:
+        'Large smoothing filter used to find start timing of the wet season. Recommended value between 10-20. ',
+    }, // Larger filter to find wet season peak
+    peak_detect_perc: {
+      min: 0,
+      max: 1,
+      step: 0.1,
+      map: 'Peak Detect %',
+      mapWith: 'Wet Season',
+      description:
+        'The relative magnitude required for the start of the wet season peak',
+    },
+    wet_threshold_perc: {
+      min: 0,
+      max: 1,
+      step: 0.01,
+      mapWith: 'Wet Season',
+      map: 'Wet Threshold %',
+      description:
+        "The flow at the start of the wet season must be a certain percentage of that year's max flow.",
+    },
+    peak_sensitivity_wet: {
+      min: 0.001,
+      max: 5,
+      step: 0.01,
+      mapWith: 'Wet Season',
+      map: 'Peak Sensitivity - Wet Season Start',
+      description:
+        'Sensitivity factor for identifying the peak that signals the start of the wet season. A smaller value detects more peaks.',
+    },
   },
 
   fall_params: {
@@ -214,22 +256,24 @@ export const paramRange = {
       description:
         'Maximum zero-flow days allowed in a single water year. If value is exceeded, then calculations will not be performed.',
     },
-    broad_sigma: {
-      min: 0,
-      max: 25,
-      step: 1,
-      map: 'Large Smoothing Filter',
-      description:
-        'Large smoothing filter used to find start timing of the wet season. Recommended value between 10-20. ',
-    }, // Larger filter to find wet season peak
-    peak_detect_perc: {
-      min: 0,
-      max: 1,
-      step: 0.1,
-      map: 'Peak Detect %',
-      description:
-        'The relative magnitude required for the start of the wet season peak',
-    },
+    // broad_sigma: {
+    //   min: 0,
+    //   max: 25,
+    //   step: 1,
+    //   map: 'Large Smoothing Filter',
+    //   mapWith: 'Wet Season',
+    //   description:
+    //     'Large smoothing filter used to find start timing of the wet season. Recommended value between 10-20. ',
+    // }, // Larger filter to find wet season peak
+    // peak_detect_perc: {
+    //   min: 0,
+    //   max: 1,
+    //   step: 0.1,
+    //   map: 'Peak Detect %',
+    //   mapWith: 'Wet Season',
+    //   description:
+    //     'The relative magnitude required for the start of the wet season peak',
+    // },
     max_nan_allowed_per_year: {
       min: 0,
       max: 366,
@@ -254,14 +298,15 @@ export const paramRange = {
       description:
         'Maximum allowed duration of the wet season initation peak, from the start to the end of the peak. ',
     },
-    wet_threshold_perc: {
-      min: 0,
-      max: 1,
-      step: 0.01,
-      map: 'Wet Threshold %',
-      description:
-        "The flow at the start of the wet season must be a certain percentage of that year's max flow.",
-    },
+    // wet_threshold_perc: {
+    //   min: 0,
+    //   max: 1,
+    //   step: 0.01,
+    //   mapWith: 'Wet Season',
+    //   map: 'Wet Threshold %',
+    //   description:
+    //     "The flow at the start of the wet season must be a certain percentage of that year's max flow.",
+    // },
     peak_sensitivity: {
       min: 0.001,
       max: 5,
@@ -286,14 +331,15 @@ export const paramRange = {
       description:
         'Medium smoothing filter to find wet season initation peak. Recommended value between 5-15. ',
     },
-    peak_sensitivity_wet: {
-      min: 0.001,
-      max: 5,
-      step: 0.01,
-      map: 'Peak Sensitivity - Wet Season Start',
-      description:
-        'Sensitivity factor for identifying the peak that signals the start of the wet season. A smaller value detects more peaks.',
-    },
+    // peak_sensitivity_wet: {
+    //   min: 0.001,
+    //   max: 5,
+    //   step: 0.01,
+    //   mapWith: 'Wet Season',
+    //   map: 'Peak Sensitivity - Wet Season Start',
+    //   description:
+    //     'Sensitivity factor for identifying the peak that signals the start of the wet season. A smaller value detects more peaks.',
+    // },
     flush_threshold_perc: {
       min: 0,
       max: 1,

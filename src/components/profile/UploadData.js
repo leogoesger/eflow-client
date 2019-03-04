@@ -60,6 +60,9 @@ class UploadData extends React.Component {
   render() {
     const { data } = { ...this.props };
     const date = new Date(data.createdAt);
+    let riverInfo = '';
+    if (data.riverName) riverInfo += `River: ${data.riverName} | `;
+    if (data.location) riverInfo += `Location: ${data.location}`;
 
     return (
       <React.Fragment>
@@ -100,7 +103,7 @@ class UploadData extends React.Component {
                       color: `rgb(255, 179, 0)`,
                     }}
                   >
-                    {data.location}
+                    {riverInfo}
                   </div>
 
                   {/* {!data.predictions.length && (

@@ -1,13 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Paper, Snackbar } from "material-ui";
-import Layout from "../components/login/Layout";
-import { loginUser, removeErrorMessage } from "../actions/user";
+import React from 'react';
+import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Paper, Snackbar } from 'material-ui';
+import Layout from '../components/login/Layout';
+import { loginUser, removeErrorMessage } from '../actions/user';
 
 class Login extends React.Component {
   componentDidMount() {
-    document.title = "eFlows | Login";
+    document.title = 'eFlows | Login';
+    if (localStorage.getItem('ff_jwt')) {
+      return <Redirect to="/profile" />;
+    }
   }
 
   render() {
@@ -54,17 +58,17 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   banner: {
-    backgroundColor: "#424242",
-    height: "230px",
-    zIndex: "0",
+    backgroundColor: '#424242',
+    height: '230px',
+    zIndex: '0',
   },
   paperStyle: {
-    height: "600px",
-    margin: "-60px auto 160px auto",
-    width: "1000px",
-    zIndex: "2",
+    height: '600px',
+    margin: '-60px auto 160px auto',
+    width: '1000px',
+    zIndex: '2',
   },
-  warningIcon: { color: "#616161", height: "60px", width: "60px" },
+  warningIcon: { color: '#616161', height: '60px', width: '60px' },
 };
 export default connect(
   mapStateToProps,
