@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { cloneDeep, assign, last } from "lodash";
-import { fromJS } from "immutable";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { cloneDeep, assign, last } from 'lodash';
+import { fromJS } from 'immutable';
 
-import { getCombinedLayer, toCamelCase } from "../utils/helpers";
+import { getCombinedLayer, toCamelCase } from '../utils/helpers';
 
 export const GeoMapHOC = (
   WrappedComponent,
@@ -20,6 +20,9 @@ export const GeoMapHOC = (
       this.state = {
         hoveredFeature: null,
         clickedFeature: null,
+        siteIdentity: null,
+        siteLat: null,
+        siteLon: null,
         mapStyle: defaultMapStyle,
         reserveMapStyle: defaultMapStyle,
         hoverMode: true,
@@ -36,21 +39,21 @@ export const GeoMapHOC = (
         (nextProps.geoSite && nextProps.geoSite !== this.props.geoSite) ||
         Boolean(
           this.props.geoSite &&
-            last(this.state.mapStyle.toJS().layers).id !== "currentSite"
+            last(this.state.mapStyle.toJS().layers).id !== 'currentSite'
         )
       ) {
         const newLayers = cloneDeep(this.state.mapStyle.toJS().layers).concat(
-          getSiteLayerLarge(nextProps.geoSite.geoClass.split("-")[0]).toJS()
+          getSiteLayerLarge(nextProps.geoSite.geoClass.split('-')[0]).toJS()
         );
 
         const sitesData = {
           currentSite: {
             data: {
-              type: "FeatureCollection",
+              type: 'FeatureCollection',
               features: [
                 {
                   geometry: {
-                    type: "Point",
+                    type: 'Point',
                     coordinates: [
                       nextProps.geoSite.geometry.coordinates[1],
                       nextProps.geoSite.geometry.coordinates[0],
@@ -58,26 +61,26 @@ export const GeoMapHOC = (
                   },
                   properties: {
                     geoClassId: Number(
-                      nextProps.geoSite.geoClass.split("-")[1]
+                      nextProps.geoSite.geoClass.split('-')[1]
                     ),
                   },
-                  type: "Feature",
+                  type: 'Feature',
                 },
               ],
             },
-            type: "geojson",
+            type: 'geojson',
             cluster: false,
           },
         };
 
         const newStyle = defaultMapStyle
           .set(
-            "sources",
+            'sources',
             fromJS(
-              assign({}, this.state.mapStyle.get("sources").toJS(), sitesData)
+              assign({}, this.state.mapStyle.get('sources').toJS(), sitesData)
             )
           )
-          .set("layers", fromJS(newLayers));
+          .set('layers', fromJS(newLayers));
 
         return this.setState({ mapStyle: newStyle, reserveMapStyle: newStyle });
       }
@@ -99,16 +102,31 @@ export const GeoMapHOC = (
 
     setHoverEffect(event) {
       const regionLayer = event.features.find(el => el.properties.Region);
+      const geoSite = event.features.find(el => el.properties.siteIdentity);
+      //console.log(geoSite.properties.siteIdentity);
+      if (geoSite)
+        this.setState({
+          siteIdentity: geoSite.properties.siteIdentity,
+          siteLat: geoSite.geometry.coordinates[1],
+          siteLon: geoSite.geometry.coordinates[0],
+        });
+      else
+        this.setState({
+          siteIdentity: null,
+          siteLat: null,
+          siteLon: null,
+        });
+
       const regionIndex = this.state.reserveMapStyle
-        .get("layers")
+        .get('layers')
         .toJS()
         .findIndex(
           e => e.id === `region-${toCamelCase(regionLayer.properties.Region)}`
         );
 
       const mapStyle = this.state.reserveMapStyle.setIn(
-        ["layers", regionIndex, "paint", "fill-color"],
-        "hsla(0, 0%, 0%, 0.4)"
+        ['layers', regionIndex, 'paint', 'fill-color'],
+        'hsla(0, 0%, 0%, 0.4)'
       );
       this.setState({ mapStyle });
     }
@@ -119,22 +137,24 @@ export const GeoMapHOC = (
         hoverMode: true,
         clickedFeature: null,
       });
-      this.props.updateCurrentRegion("");
+      this.props.updateCurrentRegion('');
     }
 
     toggleLayer(layerKeys, status) {
       let mapStyle = this.state.mapStyle;
+
       mapStyle
-        .get("layers")
+        .get('layers')
         .toJS()
         .map((layer, index) => {
           if (layer.id.includes(layerKeys)) {
             mapStyle = mapStyle.setIn(
-              ["layers", index, "layout", "visibility"],
+              ['layers', index, 'layout', 'visibility'],
               status
             );
           }
         });
+
       this.setState({ mapStyle, reserveMapStyle: mapStyle });
     }
 
@@ -190,13 +210,17 @@ export const GeoMapHOC = (
     }
 
     render() {
+      //console.log(this.state.mapStyle.toJS());
       return (
-        <div style={{ position: "relative" }}>
+        <div style={{ position: 'relative' }}>
           <WrappedComponent
             mapStyle={this.state.mapStyle}
             {...this.props}
             onClick={e => this.onClick(e)}
             onHover={e => this.onHover(e)}
+            siteIdentity={this.state.siteIdentity}
+            siteLat={this.state.siteLat}
+            siteLon={this.state.siteLon}
           />
           <MapControl
             toggleLayer={(keys, status) => this.toggleLayer(keys, status)}

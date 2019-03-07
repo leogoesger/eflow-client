@@ -27,7 +27,7 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
   geoSites.forEach(site => {
     const siteObj = {
       properties: {
-        geoClassId: Number(site.geoClass.name[site.geoClass.name.length - 1]), //use for color
+        geoClassId: Number(site.geoClass.name.split('-')[1]), //use for color
         siteIdentity: site.identity, //for hover
         geoClassName: site.geoClass.name, //for hover
         siteId: site.id,

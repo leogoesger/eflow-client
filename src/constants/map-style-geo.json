@@ -25,8 +25,7 @@
   },
   "sources": {
     "composite": {
-      "url":
-        "mapbox://mapbox.mapbox-streets-v7,leogoesger.bgou28ji,leogoesger.dxk7vbd0,leogoesger.1qd17caw,leogoesger.6p3lfm0y,leogoesger.daucd12f,leogoesger.advo2mh6,leogoesger.11n7mzx4,leogoesger.134aemer,leogoesger.6qarwpp2,leogoesger.9dkxihcb,leogoesger.dxo2e82k,leogoesger.98birf06,leogoesger.6xt0veab,leogoesger.b9lnu35d",
+      "url": "mapbox://mapbox.mapbox-streets-v7,leogoesger.bgou28ji,leogoesger.dxk7vbd0,leogoesger.1qd17caw,leogoesger.6p3lfm0y,leogoesger.daucd12f,leogoesger.advo2mh6,leogoesger.11n7mzx4,leogoesger.134aemer,leogoesger.6qarwpp2,leogoesger.9dkxihcb,leogoesger.dxo2e82k,leogoesger.98birf06,leogoesger.6xt0veab,leogoesger.b9lnu35d",
       "type": "vector"
     }
   },
@@ -107,7 +106,7 @@
       "source": "composite",
       "source-layer": "Class3-7o2fmu",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "hsl(187, 100%, 42%)",
@@ -120,7 +119,7 @@
       "source": "composite",
       "source-layer": "Class4-1sxwkn",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "hsl(26, 100%, 50%)",
@@ -133,7 +132,7 @@
       "source": "composite",
       "source-layer": "Class6-4osdj8",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "hsl(134, 88%, 26%)",
@@ -146,7 +145,7 @@
       "source": "composite",
       "source-layer": "Class7-9pkku2",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "hsl(340, 83%, 66%)",
@@ -159,7 +158,7 @@
       "source": "composite",
       "source-layer": "Class8-0ztc53",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "hsl(262, 47%, 55%)",
@@ -172,7 +171,7 @@
       "source": "composite",
       "source-layer": "Class9-3j4gme",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "hsl(333, 82%, 45%)",
@@ -185,7 +184,7 @@
       "source": "composite",
       "source-layer": "SM_HSR_GW_merge-505fc1",
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": [

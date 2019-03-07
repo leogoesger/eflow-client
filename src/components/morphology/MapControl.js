@@ -3,13 +3,14 @@ import Toggle from 'material-ui/Toggle';
 import PropTypes from 'prop-types';
 import Divider from 'material-ui/Divider';
 
-import {Colors} from '../../styles';
+import { Colors } from '../../styles';
 
 export default class MapControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      class: true,
+      class: false,
+      SAC: true,
       SFE: true,
       WS: true,
       PGR: true,
@@ -21,7 +22,7 @@ export default class MapControl extends React.Component {
   handleToggle(property) {
     const status = this.state[property] ? 'none' : 'visible';
     this.props.toggleLayer(property, status);
-    this.setState({[property]: !this.state[property]});
+    this.setState({ [property]: !this.state[property] });
   }
 
   render() {
@@ -34,20 +35,25 @@ export default class MapControl extends React.Component {
             colors: ['#fdd835', '#ffee58'],
           },
           {
-            name: 'WS',
-            display: 'Sacramento WS',
+            name: 'SAC',
+            display: 'Sacramento',
             colors: ['#ff6f00', '#ffcc80'],
           },
-          {
-            name: 'PGR',
-            display: 'Sacramento PGR',
-            colors: ['#087f23', '#a5d6a7'],
-          },
-          {
-            name: 'RGW',
-            display: 'Sacramento RGW',
-            colors: ['#7E57C2', '#e1bee7'],
-          },
+          // {
+          //   name: 'WS',
+          //   display: 'Sacramento WS',
+          //   colors: ['#ff6f00', '#ffcc80'],
+          // },
+          // {
+          //   name: 'PGR',
+          //   display: 'Sacramento PGR',
+          //   colors: ['#087f23', '#a5d6a7'],
+          // },
+          // {
+          //   name: 'RGW',
+          //   display: 'Sacramento RGW',
+          //   colors: ['#7E57C2', '#e1bee7'],
+          // },
         ].map(geoClass => {
           return (
             <Toggle
@@ -57,13 +63,13 @@ export default class MapControl extends React.Component {
               value={'empty'}
               onClick={() => this.handleToggle(geoClass.name)}
               toggled={this.state[geoClass.name]}
-              thumbSwitchedStyle={{backgroundColor: geoClass.colors[0]}}
-              trackSwitchedStyle={{backgroundColor: geoClass.colors[1]}}
+              thumbSwitchedStyle={{ backgroundColor: geoClass.colors[0] }}
+              trackSwitchedStyle={{ backgroundColor: geoClass.colors[1] }}
             />
           );
         })}
         <Divider
-          style={{marginTop: '4px', marginBottom: '4px', height: '2px'}}
+          style={{ marginTop: '4px', marginBottom: '4px', height: '2px' }}
         />
         <Toggle
           label={'Hydrologic Classifications'}
