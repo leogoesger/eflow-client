@@ -21,7 +21,12 @@ export function getNameErrorMessage(name) {
   }
 }
 
-export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
+export function getCombinedLayer(
+  geoSites,
+  defaultMapStyle,
+  getSiteLayer,
+  checkedClasses
+) {
   let siteLayers = defaultMapStyle.get('layers').toJS();
   const sitesData = {};
   geoSites.forEach(site => {
@@ -46,10 +51,7 @@ export function getCombinedLayer(geoSites, defaultMapStyle, getSiteLayer) {
     const currentGeoClass = site.geoClass.name.split('-')[0];
     if (!sitesData[currentGeoClass]) {
       siteLayers = siteLayers.concat(
-        getSiteLayer(
-          currentGeoClass,
-          site.geoClass.geoRegion.abbreviation
-        ).toJS()
+        getSiteLayer(currentGeoClass, checkedClasses[currentGeoClass]).toJS()
       );
       sitesData[currentGeoClass] = {
         data: { type: 'FeatureCollection', features: [] },

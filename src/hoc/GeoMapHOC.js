@@ -27,6 +27,29 @@ export const GeoMapHOC = (
         reserveMapStyle: defaultMapStyle,
         hoverMode: true,
         dialogFeature: null,
+        checkedClasses: {
+          SAC: {
+            1: true,
+            2: true,
+            3: true,
+            4: true,
+            5: true,
+            6: true,
+            7: true,
+            8: true,
+            9: true,
+            10: true,
+          },
+          SFE: {
+            1: true,
+            2: true,
+            3: true,
+            4: true,
+            5: true,
+            6: true,
+            7: true,
+          },
+        },
       };
     }
 
@@ -88,7 +111,8 @@ export const GeoMapHOC = (
       const mapStyle = getCombinedLayer(
         nextProps.geoSites,
         defaultMapStyle,
-        getSiteLayer
+        getSiteLayer,
+        this.state.checkedClasses
       );
       this.setState({
         mapStyle,
@@ -143,6 +167,28 @@ export const GeoMapHOC = (
     toggleLayer(layerKeys, status) {
       let mapStyle = this.state.mapStyle;
 
+      if (layerKeys !== 'class') {
+        if (status === 'none') {
+          this.setState(
+            {
+              checkedClasses: {
+                ...this.changedCheckedStatus(layerKeys, false),
+              },
+            },
+            () => this.updateCombinedLayer()
+          );
+        }
+        if (status === 'visible') {
+          let tmp = this.changedCheckedStatus(layerKeys, true);
+          this.setState(
+            {
+              checkedClasses: { ...tmp },
+            },
+            () => this.updateCombinedLayer()
+          );
+        }
+      }
+
       mapStyle
         .get('layers')
         .toJS()
@@ -156,6 +202,16 @@ export const GeoMapHOC = (
         });
 
       this.setState({ mapStyle, reserveMapStyle: mapStyle });
+    }
+
+    changedCheckedStatus(region, status) {
+      const tmp = cloneDeep(this.state.checkedClasses);
+
+      Object.keys(tmp[region]).forEach(cls => {
+        tmp[region][cls] = status;
+      });
+      //console.log(tmp);
+      return tmp;
     }
 
     onHover(event) {
@@ -209,6 +265,27 @@ export const GeoMapHOC = (
       );
     }
 
+    updateCombinedLayer() {
+      const mapStyle = getCombinedLayer(
+        this.props.geoSites,
+        defaultMapStyle,
+        getSiteLayer,
+        this.state.checkedClasses
+      );
+      this.setState({
+        mapStyle,
+        reserveMapStyle: mapStyle,
+      });
+    }
+
+    handleCheckedBox(reg, cls) {
+      const tmpCheckedClasses = cloneDeep(this.state.checkedClasses);
+      tmpCheckedClasses[reg][cls] = !this.state.checkedClasses[reg][cls];
+      this.setState({ checkedClasses: { ...tmpCheckedClasses } }, () =>
+        this.updateCombinedLayer()
+      );
+    }
+
     render() {
       //console.log(this.state.mapStyle.toJS());
       return (
@@ -224,6 +301,8 @@ export const GeoMapHOC = (
           />
           <MapControl
             toggleLayer={(keys, status) => this.toggleLayer(keys, status)}
+            handleCheckedBox={(reg, cls) => this.handleCheckedBox(reg, cls)}
+            checkedClasses={this.state.checkedClasses}
           />
           <MapLegend
             region={this.state.clickedFeature}

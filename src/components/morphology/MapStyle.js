@@ -3,7 +3,15 @@ import MAP_STYLE from '../../constants/map-style-geo.json';
 
 export const defaultMapStyle = fromJS(MAP_STYLE);
 
-export const getSiteLayer = (source, regionName) => {
+export const getSiteLayer = (source, allClasses) => {
+  const stops = [];
+
+  //add images to checked classes
+  Object.keys(allClasses).forEach(cls => {
+    if (allClasses[cls]) stops.push([Number(cls), `${source}-${cls}`]);
+    else stops.push([Number(cls), `None`]);
+  });
+
   return fromJS({
     id: source,
     source: source,
@@ -12,18 +20,7 @@ export const getSiteLayer = (source, regionName) => {
     layout: {
       'icon-image': {
         property: 'geoClassId',
-        stops: [
-          [1, `${source}-1`],
-          [2, `${source}-2`],
-          [3, `${source}-3`],
-          [4, `${source}-4`],
-          [5, `${source}-5`],
-          [6, `${source}-6`],
-          [7, `${source}-7`],
-          [8, `${source}-8`],
-          [9, `${source}-9`],
-          [10, `${source}-10`],
-        ],
+        stops: stops,
       },
       'icon-allow-overlap': true,
       'symbol-avoid-edges': true,
