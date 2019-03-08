@@ -7,10 +7,13 @@ export const getSiteLayer = (source, allClasses) => {
   const stops = [];
 
   //add images to checked classes
-  Object.keys(allClasses).forEach(cls => {
-    if (allClasses[cls]) stops.push([Number(cls), `${source}-${cls}`]);
-    else stops.push([Number(cls), `None`]);
-  });
+  if(allClasses){
+    Object.keys(allClasses).forEach(cls => {
+      if (allClasses[cls]) stops.push([Number(cls), `${source}-${cls}`]);
+      else stops.push([Number(cls), `None`]);
+    });
+  }
+  
 
   return fromJS({
     id: source,
