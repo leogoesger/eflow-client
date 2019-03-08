@@ -53,7 +53,9 @@ const ProfileLayout = ({
             >
               this sample csv file
             </a>{' '}
-            for a data format example.
+            for a data format example. Tool is under development for user
+            uploaded streamflow data, please use results with caution.
+            <br />
           </div>
           <Uploader enabled={true} />
         </div>

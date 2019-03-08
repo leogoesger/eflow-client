@@ -105,17 +105,6 @@ class Uploader extends React.Component {
             style={{ width: '100px', marginLeft: '20px' }}
           />
         </div>
-        {/* </div>
-         <div
-          style={{
-            marginLeft: '304px',
-            marginTop: '-10px',
-          }}
-        >
-          <span style={{ fontSize: '12px', color: '#d32f2f' }}>
-            Optional: Select a hydrologic class to refine metric results
-          </span>
-        </div> */}
       </div>
     );
   }
