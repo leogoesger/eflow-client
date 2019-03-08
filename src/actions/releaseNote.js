@@ -13,6 +13,21 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Mar 7th, 2019',
+            version: 'v2.19',
+            title: 'Geomorphology update',
+            tasks: [
+              'Updated Geo data',
+              'Nested class toggles for Geomorphology',
+            ],
+          },
+          {
+            date: 'Feb 4th, 2019',
+            version: 'v2.18',
+            title: 'Uploads with River Name and Location (optional)',
+            tasks: ['User can add River Name & Location to uploads'],
+          },
+          {
             date: 'Feb 25th, 2019',
             version: 'v2.17.1',
             title: 'Plots- Save as Image (jpge)/Admin Pagination',

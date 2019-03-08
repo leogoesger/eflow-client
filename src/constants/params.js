@@ -1,4 +1,9 @@
 export const params = {
+  general_params: {
+    annual_result_low_Percentille_filter: 0,
+    annual_result_high_Percentille_filter: 100,
+    max_nan_allowed_per_year: 100,
+  },
   winter_params: {
     max_zero_allowed_per_year: 270,
     max_nan_allowed_per_year: 100,
@@ -48,11 +53,6 @@ export const params = {
     max_peak_flow_date: 325,
     min_summer_flow_percent: 0.125,
     min_flow_rate: 1,
-  },
-  general_params: {
-    annual_result_low_Percentille_filter: 0,
-    annual_result_high_Percentille_filter: 100,
-    max_nan_allowed_per_year: 100,
   },
 };
 
@@ -181,6 +181,34 @@ export const classParms = {
 };
 
 export const paramRange = {
+  general_params: {
+    map: 'General Parameters',
+    annual_result_low_Percentille_filter: {
+      min: 0,
+      max: 50,
+      step: 1,
+      map: 'Annual Result Low Percentile Filter',
+      description:
+        'Optionally filter outputs to only include results above this percentile (e.g., 10th percentile). Leave at 0 to not filter results. ',
+    },
+    annual_result_high_Percentille_filter: {
+      min: 51,
+      max: 100,
+      step: 1,
+      map: 'Annual Result Max Percentile Filter',
+      description:
+        'Optionally filter outputs to only include results below this percentile (e.g., 90th percentile). Leave at 100 to not filter results.  ',
+    },
+    max_nan_allowed_per_year: {
+      min: 0,
+      max: 366,
+      step: 1,
+      map: 'Max NaN Allowed/Year',
+      description:
+        'Set a maximum amount of NA values allowed per water year, above which no metrics will be calculated. ',
+    },
+  },
+
   winter_params: {
     map: 'Wet Season',
     max_zero_allowed_per_year: {
@@ -366,6 +394,7 @@ export const paramRange = {
         'Latest accepted date for fall flush, in Julian Dates counting from Oct 1st = 0 (i.e. Dec 15th = 75).',
     },
   },
+
   spring_params: {
     map: 'Spring Recession',
     max_zero_allowed_per_year: {
@@ -555,34 +584,6 @@ export const paramRange = {
       map: 'Min Flow Rate',
       description:
         'Minimum flow rate needed in the water year for dry season metrics to be calculated. ',
-    },
-  },
-
-  general_params: {
-    map: 'General Parameters',
-    annual_result_low_Percentille_filter: {
-      min: 0,
-      max: 50,
-      step: 1,
-      map: 'Annual Result Low Percentile Filter',
-      description:
-        'Optionally filter outputs to only include results above this percentile (e.g., 10th percentile). Leave at 0 to not filter results. ',
-    },
-    annual_result_high_Percentille_filter: {
-      min: 51,
-      max: 100,
-      step: 1,
-      map: 'Annual Result Max Percentile Filter',
-      description:
-        'Optionally filter outputs to only include results below this percentile (e.g., 90th percentile). Leave at 100 to not filter results.  ',
-    },
-    max_nan_allowed_per_year: {
-      min: 0,
-      max: 366,
-      step: 1,
-      map: 'Max NaN Allowed/Year',
-      description:
-        'Set a maximum amount of NA values allowed per water year, above which no metrics will be calculated. ',
     },
   },
 };
