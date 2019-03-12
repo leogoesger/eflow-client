@@ -27,6 +27,11 @@
     "composite": {
       "url": "mapbox://mapbox.mapbox-streets-v7,leogoesger.bgou28ji,leogoesger.dxk7vbd0,leogoesger.1qd17caw,leogoesger.6p3lfm0y,leogoesger.daucd12f,leogoesger.advo2mh6,leogoesger.11n7mzx4,leogoesger.134aemer,leogoesger.6qarwpp2,leogoesger.9dkxihcb,leogoesger.dxo2e82k,leogoesger.98birf06,leogoesger.6xt0veab,leogoesger.b9lnu35d",
       "type": "vector"
+    },
+    "mapbox://mapbox.satellite": {
+      "url": "mapbox://mapbox.satellite",
+      "type": "raster",
+      "tileSize": 256
     }
   },
   "sprite": "mapbox://sprites/leogoesger/cjhavecle00tt2rn8oiaa2eyf",
@@ -48,6 +53,14 @@
       "paint": {
         "fill-color": "hsl(212, 37%, 69%)"
       }
+    },
+    {
+      "id": "satellite",
+      "type": "raster",
+      "metadata": {},
+      "source": "mapbox://mapbox.satellite",
+      "layout": { "visibility": "none" },
+      "paint": { "raster-opacity": 0.6 }
     },
     {
       "id": "admin state",

@@ -127,7 +127,7 @@ export const GeoMapHOC = (
     setHoverEffect(event) {
       const regionLayer = event.features.find(el => el.properties.Region);
       const geoSite = event.features.find(el => el.properties.siteIdentity);
-      //console.log(geoSite.properties.siteIdentity);
+
       if (geoSite)
         this.setState({
           siteIdentity: geoSite.properties.siteIdentity,
@@ -167,7 +167,7 @@ export const GeoMapHOC = (
     toggleLayer(layerKeys, status) {
       let mapStyle = this.state.mapStyle;
 
-      if (layerKeys !== 'class') {
+      if (['class', 'satellite'].indexOf(layerKeys) < 0) {
         if (status === 'none') {
           this.setState(
             {

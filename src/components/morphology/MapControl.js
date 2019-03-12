@@ -43,6 +43,7 @@ export default class MapControl extends React.Component {
     super(props);
     this.state = {
       class: false,
+      satellite: false,
       SFE: true,
       SAC: true,
       WS: true,
@@ -184,12 +185,20 @@ export default class MapControl extends React.Component {
               height: '2px',
             }}
           />
-          <Toggle
+          {/* <Toggle
             label={'Hydrologic Classifications'}
             labelStyle={styles.labelStyle}
             value={'empty'}
             onClick={() => this.handleToggle('class')}
             toggled={this.state.class}
+            style={{ marginTop: '5px' }}
+          /> */}
+          <Toggle
+            label={'Satellite View'}
+            labelStyle={styles.labelStyle}
+            value={'empty'}
+            onClick={() => this.handleToggle('satellite')}
+            toggled={this.state.satellite}
             style={{ marginTop: '5px' }}
           />
           {this.renderExtendedController()}
