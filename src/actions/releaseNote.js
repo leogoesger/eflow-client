@@ -13,6 +13,14 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Mar 12th, 2019',
+            version: 'v2.19.1',
+            title: 'Geomorphology with Satellite view toggle',
+            tasks: [
+              'Geomorphology - Satellite view toggle'
+            ],
+          },
+          {
             date: 'Mar 7th, 2019',
             version: 'v2.19',
             title: 'Geomorphology update',

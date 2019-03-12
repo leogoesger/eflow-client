@@ -7,6 +7,7 @@ import { Tooltip } from 'react-tippy';
 import { geoClasses } from '../../constants/geoClasses';
 import Expand from 'material-ui/svg-icons/image/navigate-next';
 import Collaps from 'material-ui/svg-icons/image/navigate-before';
+import Satellite from 'material-ui/svg-icons/maps/satellite';
 
 import { Colors } from '../../styles';
 
@@ -43,6 +44,7 @@ export default class MapControl extends React.Component {
     super(props);
     this.state = {
       class: false,
+      satellite: false,
       SFE: true,
       SAC: true,
       WS: true,
@@ -184,12 +186,25 @@ export default class MapControl extends React.Component {
               height: '2px',
             }}
           />
-          <Toggle
+          {/* <Toggle
             label={'Hydrologic Classifications'}
             labelStyle={styles.labelStyle}
             value={'empty'}
             onClick={() => this.handleToggle('class')}
             toggled={this.state.class}
+            style={{ marginTop: '5px' }}
+          /> */}
+          <Toggle
+            label={
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <Satellite color="rgb(97,97,97)" />
+                <div style={{ marginLeft: '5px' }}>Satellite View</div>
+              </div>
+            }
+            labelStyle={styles.labelStyle}
+            value={'empty'}
+            onClick={() => this.handleToggle('satellite')}
+            toggled={this.state.satellite}
             style={{ marginTop: '5px' }}
           />
           {this.renderExtendedController()}

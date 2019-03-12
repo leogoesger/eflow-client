@@ -19,6 +19,7 @@ export const GeoMapHOC = (
       super(props);
       this.state = {
         hoveredFeature: null,
+        lastHovered: '',
         clickedFeature: null,
         siteIdentity: null,
         siteLat: null,
@@ -127,7 +128,7 @@ export const GeoMapHOC = (
     setHoverEffect(event) {
       const regionLayer = event.features.find(el => el.properties.Region);
       const geoSite = event.features.find(el => el.properties.siteIdentity);
-      //console.log(geoSite.properties.siteIdentity);
+
       if (geoSite)
         this.setState({
           siteIdentity: geoSite.properties.siteIdentity,
@@ -141,18 +142,11 @@ export const GeoMapHOC = (
           siteLon: null,
         });
 
-      const regionIndex = this.state.reserveMapStyle
-        .get('layers')
-        .toJS()
-        .findIndex(
-          e => e.id === `region-${toCamelCase(regionLayer.properties.Region)}`
-        );
-
-      const mapStyle = this.state.reserveMapStyle.setIn(
-        ['layers', regionIndex, 'paint', 'fill-color'],
-        'hsla(0, 0%, 0%, 0.4)'
+      this.setPaint(
+        regionLayer.properties.Region,
+        regionLayer.properties.Region,
+        0.4
       );
-      this.setState({ mapStyle });
     }
 
     removeSelection() {
@@ -167,7 +161,7 @@ export const GeoMapHOC = (
     toggleLayer(layerKeys, status) {
       let mapStyle = this.state.mapStyle;
 
-      if (layerKeys !== 'class') {
+      if (['class', 'satellite'].indexOf(layerKeys) < 0) {
         if (status === 'none') {
           this.setState(
             {
@@ -210,13 +204,27 @@ export const GeoMapHOC = (
       Object.keys(tmp[region]).forEach(cls => {
         tmp[region][cls] = status;
       });
-      //console.log(tmp);
       return tmp;
+    }
+
+    setPaint(region, hoveredOver, paint) {
+      const regionIndex = this.state.reserveMapStyle
+        .get('layers')
+        .toJS()
+        .findIndex(e => e.id === `region-${toCamelCase(region)}`);
+
+      const mapStyle = this.state.reserveMapStyle.setIn(
+        ['layers', regionIndex, 'paint', 'fill-color'],
+        `hsla(0, 0%, 0%, ${paint})`
+      );
+      return this.setState({ mapStyle, lastHovered: hoveredOver });
     }
 
     onHover(event) {
       if (event.features.length === 0 || !this.state.hoverMode) {
-        return null;
+        if (this.state.lastHovered) {
+          this.setPaint(this.state.lastHovered, null, 0.07);
+        } else return null;
       }
 
       if (event.features.some(el => el.properties.Region)) {
