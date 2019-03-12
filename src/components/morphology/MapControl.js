@@ -7,6 +7,7 @@ import { Tooltip } from 'react-tippy';
 import { geoClasses } from '../../constants/geoClasses';
 import Expand from 'material-ui/svg-icons/image/navigate-next';
 import Collaps from 'material-ui/svg-icons/image/navigate-before';
+import Satellite from 'material-ui/svg-icons/maps/satellite';
 
 import { Colors } from '../../styles';
 
@@ -194,7 +195,12 @@ export default class MapControl extends React.Component {
             style={{ marginTop: '5px' }}
           /> */}
           <Toggle
-            label={'Satellite View'}
+            label={
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <Satellite color="rgb(97,97,97)" />
+                <div style={{ marginLeft: '5px' }}>Satellite View</div>
+              </div>
+            }
             labelStyle={styles.labelStyle}
             value={'empty'}
             onClick={() => this.handleToggle('satellite')}
