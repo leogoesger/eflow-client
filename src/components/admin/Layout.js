@@ -115,7 +115,7 @@ class Layout extends React.Component {
         />
       );
     } else if (clicked.loadAppInfo) {
-      return <AppInfo appInfo={appInfo} />;
+      return <div>{appInfo && <AppInfo appInfo={appInfo} />}</div>;
     } else if (clicked.loadFailedUploads) {
       return (
         <div>
@@ -237,16 +237,21 @@ class Layout extends React.Component {
               primaryText="App Info"
               leftIcon={<Info />}
               onClick={() => this.onClickHandler('loadAppInfo')}
+              disabled={!this.props.appInfo}
             />
             <MenuItem
               primaryText="Uploaded Files"
               leftIcon={<Upload />}
               onClick={() => this.onClickHandler('loadUploads')}
+              disabled={!(this.props.uploads && this.props.uploads.rows)}
             />
             <MenuItem
               primaryText="Failed Uploads"
               leftIcon={<FailedUpload />}
               onClick={() => this.onClickHandler('loadFailedUploads')}
+              disabled={
+                !(this.props.failedUploads && this.props.failedUploads.rows)
+              }
             />
             <MenuItem
               primaryText="Log Out"
