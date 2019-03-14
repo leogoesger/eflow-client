@@ -220,7 +220,6 @@ export const GeoMapHOC = (
       return this.setState({
         mapStyle,
         lastHovered: hoveredOver,
-        reserveMapStyle: mapStyle,
       });
     }
 
