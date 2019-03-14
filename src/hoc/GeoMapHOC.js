@@ -217,7 +217,10 @@ export const GeoMapHOC = (
         ['layers', regionIndex, 'paint', 'fill-color'],
         `hsla(0, 0%, 0%, ${paint})`
       );
-      return this.setState({ mapStyle, lastHovered: hoveredOver });
+      return this.setState({
+        mapStyle,
+        lastHovered: hoveredOver,
+      });
     }
 
     onHover(event) {
@@ -276,7 +279,7 @@ export const GeoMapHOC = (
     updateCombinedLayer() {
       const mapStyle = getCombinedLayer(
         this.props.geoSites,
-        defaultMapStyle,
+        this.state.mapStyle,
         getSiteLayer,
         this.state.checkedClasses
       );

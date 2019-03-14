@@ -13,12 +13,19 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Mar 14th, 2019',
+            version: 'v2.19.2',
+            title: 'Geomorphology Satellite view & Admin bug fixes',
+            tasks: [
+              'Geomorphology - Persistent Satellite toggle when box checked/unchecked',
+              'Admin - Displays loading page while Admin page is being loaded',
+            ],
+          },
+          {
             date: 'Mar 12th, 2019',
             version: 'v2.19.1',
             title: 'Geomorphology with Satellite view toggle',
-            tasks: [
-              'Geomorphology - Satellite view toggle'
-            ],
+            tasks: ['Geomorphology - Satellite view toggle'],
           },
           {
             date: 'Mar 7th, 2019',

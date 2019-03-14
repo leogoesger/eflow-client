@@ -8,6 +8,7 @@ import RenderFailedUpload from './RenderFailedUpload';
 import RenderUpload from './RenderUpload';
 import { navigateTo } from '../../utils/helpers';
 import upload from '../../APIs/upload';
+import Loader from '../shared/loader/Loader';
 
 import Eject from 'material-ui/svg-icons/action/eject';
 import Book from 'material-ui/svg-icons/av/library-books';
@@ -217,6 +218,7 @@ class Layout extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Loader loading={this.props.loading} />
         <div
           style={{
             width: '20%',
@@ -290,6 +292,7 @@ Layout.propTypes = {
   limit: PropTypes.number,
   failedOffset: PropTypes.number,
   offset: PropTypes.number,
+  loading: PropTypes.bool,
 };
 
 export default Layout;

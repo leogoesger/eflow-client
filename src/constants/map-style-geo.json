@@ -369,7 +369,7 @@
       "layout": { "visibility": "visible" },
       "paint": {
         "fill-opacity": 0.6,
-        "fill-color": "hsla(0, 0%, 0%, 0.2)"
+        "fill-color": "hsla(0, 0%, 0%, 0.07)"
       }
     },
     {

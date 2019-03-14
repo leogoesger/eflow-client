@@ -13,7 +13,6 @@ import {
   getUploads,
 } from '../actions/user';
 import { fetchAppInfo } from '../actions/appInfo';
-import Loader from '../components/shared/loader/Loader';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -50,10 +49,11 @@ class Admin extends React.Component {
       localStorage.removeItem('ff_jwt');
       navigateTo('/login');
     }
+    await this.setState({ loading: true });
     document.title = 'eFlows | Admin';
-    this.props.fetchAppInfo();
-    this.getPagedFailedUploads(0);
-    this.getPagedUploads(0);
+    await this.props.fetchAppInfo();
+    await this.getPagedFailedUploads(0);
+    await this.getPagedUploads(0);
     await this.setState({ loading: false });
   }
 
@@ -138,7 +138,6 @@ class Admin extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Loader loading={this.state.loading} />
         <div style={styles.banner} />
         <Paper style={styles.paperStyle}>
           <Layout
@@ -161,6 +160,7 @@ class Admin extends React.Component {
             failedLimit={this.state.failedLimit}
             offset={this.state.offset}
             failedOffset={this.state.failedOffset}
+            loading={this.state.loading}
           />
         </Paper>
 
