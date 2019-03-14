@@ -17,7 +17,7 @@ export function fetchReleaseNotes() {
             version: 'v2.19.2',
             title: 'Geomorphology Satellite view & Admin bug fixes',
             tasks: [
-              'Geomorphology - Persistant Satellite toggle when box checked/unchecked',
+              'Geomorphology - Persistent Satellite toggle when box checked/unchecked',
               'Admin - Displays loading page while Admin page is being loaded',
             ],
           },
