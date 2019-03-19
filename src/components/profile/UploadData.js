@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Card, CardText } from 'material-ui';
+import { Card, CardText, Snackbar } from 'material-ui';
 import { cloneDeep } from 'lodash';
 import { getDateFromJulian } from '../../utils/helpers';
-
+import Loader from '../shared/loader/Loader';
 import { Colors } from '../../styles';
 import {
   classificationColor,
@@ -21,6 +21,9 @@ class UploadData extends React.Component {
     this.state = {
       open: false,
       userParams: {},
+      loading: false,
+      isError: false,
+      message: '',
     };
   }
 
@@ -102,7 +105,7 @@ class UploadData extends React.Component {
   }
 
   async onSubmit() {
-    this.setState({ loading: true });
+    this.setState({ loading: true, open: false });
     const { userParams } = this.state;
     const { data } = this.props;
     const { flows, dates } = this.getFlowObj(data);
@@ -134,17 +137,16 @@ class UploadData extends React.Component {
         dates,
         params: { ...tmpUserParams },
         id: data.id,
+        start_date: data.startDate,
       });
 
       this.setState({
-        open: false,
         loading: false,
       });
     } catch (error) {
       this.setState({
         loading: false,
         isError: true,
-        open: false,
         message: `Could not process data`,
       });
     }
@@ -159,6 +161,7 @@ class UploadData extends React.Component {
 
     return (
       <React.Fragment>
+        <Loader loading={this.state.loading} />
         <Card
           style={{
             margin: '10px auto',
@@ -246,6 +249,12 @@ class UploadData extends React.Component {
           }
           reCalc={true}
           onSubmit={() => this.onSubmit()}
+        />
+        <Snackbar
+          open={Boolean(this.state.message)}
+          message={this.state.message}
+          autoHideDuration={4000}
+          onRequestClose={() => this.setState({ message: '' })}
         />
       </React.Fragment>
     );
