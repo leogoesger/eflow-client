@@ -5,7 +5,8 @@ import { IconButton, Snackbar } from 'material-ui';
 import { Tooltip } from 'react-tippy';
 import Delete from 'material-ui/svg-icons/action/delete';
 import Open from 'material-ui/svg-icons/action/open-in-new';
-import Predict from 'material-ui/svg-icons/editor/bubble-chart';
+// import Predict from 'material-ui/svg-icons/editor/bubble-chart';
+import Refresh from 'material-ui/svg-icons/navigation/refresh';
 import Loader from '../shared/loader/Loader';
 import Share from 'material-ui/svg-icons/social/share';
 
@@ -85,36 +86,31 @@ export class ActionIcons extends React.Component {
         </div>
         <div style={{ display: 'flex' }}>
           <Download data={data} />
-          {!data.predictions.length && (
-            <React.Fragment>
-              <div
-                style={{
-                  marginTop: '6px',
-                  fontSize: '36px',
-                  color: '#bdbdbd',
-                }}
-              >
-                {'|'}
-              </div>
-              <div>
-                <Tooltip
-                  title={'Predict Classification'}
-                  position="top"
-                  arrow={true}
-                >
-                  <IconButton>
-                    <Predict
-                      onClick={() => this.onPredict(data.id)}
-                      color={'#f9a825'}
-                      style={{
-                        cursor: 'pointer',
-                      }}
-                    />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            <div
+              style={{
+                marginTop: '6px',
+                fontSize: '36px',
+                color: '#bdbdbd',
+              }}
+            >
+              {'|'}
+            </div>
+            <div>
+              <Tooltip title={'Recalculate'} position="top" arrow={true}>
+                <IconButton>
+                  <Refresh
+                    onClick={() => this.onPredict(data.id)}
+                    color={'#f9a825'}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            </div>
+          </React.Fragment>
+
           <div
             style={{
               marginTop: '6px',
