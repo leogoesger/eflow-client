@@ -19,10 +19,10 @@ const upload = {
       .send({ ff_jwt: localStorage.getItem('ff_jwt'), id });
   },
 
-  predictTimeSeries: id => {
+  predictTimeSeries: (id, uploadDataId) => {
     return request
       .post(`${process.env.SERVER_ADDRESS}/api/class-predict`)
-      .send({ ff_jwt: localStorage.getItem('ff_jwt'), id });
+      .send({ ff_jwt: localStorage.getItem('ff_jwt'), id, uploadDataId });
   },
 };
 

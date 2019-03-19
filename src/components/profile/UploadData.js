@@ -57,9 +57,20 @@ class UploadData extends React.Component {
     else this.props.getPagedUserUploads(0);
   }
 
-  async onPredict(id) {
-    await upload.predictTimeSeries(id);
-    await this.props.getPagedUserUploads(0);
+  async onPredict(uploadDataId) {
+    let id = null;
+    if (this.props.data.predictions && this.props.data.predictions[0])
+      id = this.props.data.predictions[0].id;
+
+    if (id) {
+      this.setState({
+        userParams: classParms[this.props.data.predictions[0].prediction],
+        open: true,
+      });
+    } else {
+      await upload.predictTimeSeries(id, uploadDataId);
+      await this.props.getPagedUserUploads(0);
+    }
   }
 
   onClickHandler() {
@@ -139,7 +150,7 @@ class UploadData extends React.Component {
         id: data.id,
         start_date: data.startDate,
       });
-
+      await this.props.getPagedUserUploads(0);
       this.setState({
         loading: false,
       });
@@ -192,7 +203,7 @@ class UploadData extends React.Component {
                   >
                     {data.name}
                   </div>
-                  {!data.predictions.length && (
+                  {/* {!data.predictions.length && (
                     <div
                       style={{
                         color: '#d2691e',
@@ -206,7 +217,7 @@ class UploadData extends React.Component {
                     </div>
                   )}
                   {data.predictions.length > 0 &&
-                    this.getClassPrediction(data.predictions)}
+                    this.getClassPrediction(data.predictions)} */}
                   <div
                     style={{
                       padding: '0px 0px 0px 15px',
@@ -223,7 +234,7 @@ class UploadData extends React.Component {
                   fontSize: '15px',
                   color: Colors.grey,
                   padding: '15px 14px 0px 15px',
-                  // marginTop: !data.location ? '1px' : '0px',
+                  marginTop: '10px',
                 }}
               >{`Created at: ${date.getMonth() +
                 1}/${date.getDate()}/${date.getFullYear()}`}</CardText>

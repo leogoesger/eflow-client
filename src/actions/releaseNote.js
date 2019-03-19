@@ -13,6 +13,14 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Mar 19th, 2019',
+            version: 'v2.20',
+            title: 'User uploads recalculation',
+            tasks: [
+              'Allows users to recalculate uploads with user defined params',
+            ],
+          },
+          {
             date: 'Mar 14th, 2019',
             version: 'v2.19.2',
             title: 'Geomorphology Satellite view & Admin bug fixes',
