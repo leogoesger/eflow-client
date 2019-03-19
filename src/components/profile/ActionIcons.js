@@ -5,7 +5,7 @@ import { IconButton, Snackbar } from 'material-ui';
 import { Tooltip } from 'react-tippy';
 import Delete from 'material-ui/svg-icons/action/delete';
 import Open from 'material-ui/svg-icons/action/open-in-new';
-// import Predict from 'material-ui/svg-icons/editor/bubble-chart';
+import Predict from 'material-ui/svg-icons/editor/bubble-chart';
 import Loader from '../shared/loader/Loader';
 import Share from 'material-ui/svg-icons/social/share';
 
@@ -85,7 +85,7 @@ export class ActionIcons extends React.Component {
         </div>
         <div style={{ display: 'flex' }}>
           <Download data={data} />
-          {/* {!data.predictions.length && (
+          {!data.predictions.length && (
             <React.Fragment>
               <div
                 style={{
@@ -114,7 +114,7 @@ export class ActionIcons extends React.Component {
                 </Tooltip>
               </div>
             </React.Fragment>
-          )} */}
+          )}
           <div
             style={{
               marginTop: '6px',

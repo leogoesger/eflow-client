@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { getMe, getUserUploads } from '../actions/user';
 import { navigateTo } from '../utils/helpers';
 
-import Loader from '../components/shared/loader/Loader';
+// import Loader from '../components/shared/loader/Loader';
 
 const UserHoc = Component => {
   class EnhancedComponent extends React.Component {
@@ -26,26 +26,34 @@ const UserHoc = Component => {
       }
 
       this.getPagedUserUploads(0);
-      this.setState({ loading: false });
     }
 
     async getPagedUserUploads(page) {
       await this.setState({ loading: true });
-      await this.setState(
-        { offset: this.state.offset + this.state.limit * page },
-        () =>
+      if (!page) {
+        await this.setState({ offset: 0 }, () =>
           this.props.getUserUploads({
             limit: this.state.limit,
             offset: this.state.offset,
           })
-      );
+        );
+      } else {
+        await this.setState(
+          { offset: this.state.offset + this.state.limit * page },
+          () =>
+            this.props.getUserUploads({
+              limit: this.state.limit,
+              offset: this.state.offset,
+            })
+        );
+      }
       await this.setState({ loading: false });
     }
 
     render() {
       return (
         <div>
-          <Loader loading={this.state.loading} />
+          {/* <Loader loading={this.state.loading} /> */}
           <Component
             currentUser={this.props.currentUser}
             getMe={this.props.getMe}

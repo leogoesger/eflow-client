@@ -61,8 +61,8 @@ class Admin extends React.Component {
     await this.setState({ loading: true });
     await this.setState(
       { failedOffset: this.state.failedOffset + this.state.limit * page },
-      () =>
-        this.props.getFailedUpload({
+      async () =>
+        await this.props.getFailedUpload({
           limit: this.state.limit,
           offset: this.state.failedOffset,
         })
@@ -74,8 +74,8 @@ class Admin extends React.Component {
     await this.setState({ loading: true });
     await this.setState(
       { offset: this.state.offset + this.state.limit * page },
-      () =>
-        this.props.getUploads({
+      async () =>
+        await this.props.getUploads({
           limit: this.state.limit,
           offset: this.state.offset,
         })

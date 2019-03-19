@@ -5,11 +5,17 @@ import File from 'material-ui/svg-icons/file/cloud-upload';
 import { Colors } from '../../styles';
 import Params from './Params';
 import { Tooltip } from 'react-tippy';
+import Tune from 'material-ui/svg-icons/image/tune';
 
 class Uploader extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { open: false };
     this.fileInput;
+  }
+
+  handleDialog(bool) {
+    this.setState({ open: bool });
   }
 
   render() {
@@ -87,11 +93,26 @@ class Uploader extends React.Component {
             position="top"
             arrow={true}
           >
+            <FlatButton
+              label="Params (Optional)"
+              icon={
+                <Tune
+                  style={{ width: '30px', height: '30px' }}
+                  color={Colors.gold}
+                />
+              }
+              labelStyle={{ fontSize: '12px', fontWeight: '700' }}
+              onClick={() => this.handleDialog(true)}
+              //style={{ margin: '20px 10px' }}
+              disabled={!this.props.enabled}
+            />
+
             <Params
               userParams={userParams}
               setUserParams={setUserParams}
               handleSlider={handleSlider}
-              enabled={enabled}
+              open={this.state.open}
+              handleDialog={bool => this.handleDialog(bool)}
             />
           </Tooltip>
 

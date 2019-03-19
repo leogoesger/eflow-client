@@ -130,10 +130,12 @@ class Uploader extends React.Component {
         riverName,
       });
 
-      this.props.getMe();
+      this.props.getPagedUserUploads(null);
       this.setState({
         userParams: JSON.parse(JSON.stringify(params)),
         loading: false,
+        fileName: '',
+        name: '',
       });
     } catch (error) {
       this.setState({
@@ -146,9 +148,15 @@ class Uploader extends React.Component {
   }
 
   readFile(fileToRead) {
-    this.setState({ fileName: fileToRead[0].name });
-    this.reader.readAsText(fileToRead[0]);
-    this.reader.onload = e => this.stringProcessor(e.target.result);
+    if (fileToRead.length) {
+      const fileName =
+        fileToRead[0].name.length > 20
+          ? fileToRead[0].name.slice(0, 20).concat('...')
+          : fileToRead[0].name;
+      this.setState({ fileName });
+      this.reader.readAsText(fileToRead[0]);
+      this.reader.onload = e => this.stringProcessor(e.target.result);
+    }
   }
 
   setUserParams(userParams) {
@@ -275,7 +283,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 Uploader.propTypes = {
-  uploadResorts: PropTypes.func,
+  getPagedUserUploads: PropTypes.func,
   getMe: PropTypes.func,
   enabled: PropTypes.bool,
 };
