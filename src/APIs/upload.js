@@ -7,6 +7,12 @@ const upload = {
       .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...d });
   },
 
+  upDateTimeSeries: d => {
+    return request
+      .put(`${process.env.SERVER_ADDRESS}/api/upDateData`)
+      .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...d });
+  },
+
   deleteTimeSeries: id => {
     return request
       .del(`${process.env.SERVER_ADDRESS}/api/uploadData`)

@@ -34,10 +34,10 @@ const ProfileLayout = ({
       <div style={styles.banner} />
       <Paper style={styles.paperStyle}>
         <div
-          style={{ fontSize: '36px', margin: '40px 20px 20px 20px' }}
+          style={{ fontSize: '36px', margin: '20px 20px 20px 20px' }}
         >{`Welcome, ${currentUser.firstName}`}</div>
 
-        <div style={{ margin: '40px 20px 20px 20px', color: Colors.grey }}>
+        <div style={{ margin: '20px 20px 20px 20px', color: Colors.grey }}>
           <div style={{ lineHeight: '20px' }}>
             Upload your time series data here. The application requires a commas
             separated values (.csv) file with two columns: column 1 contains
@@ -57,7 +57,7 @@ const ProfileLayout = ({
             uploaded streamflow data, please use results with caution.
             <br />
           </div>
-          <Uploader enabled={true} />
+          <Uploader enabled={true} getPagedUserUploads={getPagedUserUploads} />
         </div>
         <div>
           <Divider style={{ margin: '0px' }} />

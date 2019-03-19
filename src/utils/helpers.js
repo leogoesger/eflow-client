@@ -173,6 +173,12 @@ export function getCalenderDateFromJulian(julianDate) {
   return calenderDate;
 }
 
+export function getDateFromJulian(julianDate, year) {
+  const date = dateFromDay(year, julianDate + 1),
+    calenderDate = `${date.getMonth() + 1}/${date.getDate()}/${year}`;
+  return calenderDate;
+}
+
 export function validateEmail(email) {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   return regex.test(email);

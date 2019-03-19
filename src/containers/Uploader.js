@@ -130,7 +130,7 @@ class Uploader extends React.Component {
         riverName,
       });
 
-      this.props.getMe();
+      this.props.getPagedUserUploads(null);
       this.setState({
         userParams: JSON.parse(JSON.stringify(params)),
         loading: false,
@@ -275,7 +275,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 Uploader.propTypes = {
-  uploadResorts: PropTypes.func,
+  getPagedUserUploads: PropTypes.func,
   getMe: PropTypes.func,
   enabled: PropTypes.bool,
 };
