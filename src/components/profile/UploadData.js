@@ -203,7 +203,7 @@ class UploadData extends React.Component {
                   >
                     {data.name}
                   </div>
-                  {!data.predictions.length && (
+                  {/* {!data.predictions.length && (
                     <div
                       style={{
                         color: '#d2691e',
@@ -217,7 +217,7 @@ class UploadData extends React.Component {
                     </div>
                   )}
                   {data.predictions.length > 0 &&
-                    this.getClassPrediction(data.predictions)}
+                    this.getClassPrediction(data.predictions)} */}
                   <div
                     style={{
                       padding: '0px 0px 0px 15px',
@@ -234,7 +234,7 @@ class UploadData extends React.Component {
                   fontSize: '15px',
                   color: Colors.grey,
                   padding: '15px 14px 0px 15px',
-                  // marginTop: !data.location ? '1px' : '0px',
+                  marginTop: '10px',
                 }}
               >{`Created at: ${date.getMonth() +
                 1}/${date.getDate()}/${date.getFullYear()}`}</CardText>
