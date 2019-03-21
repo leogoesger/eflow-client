@@ -265,11 +265,19 @@ export const GeoMapHOC = (
         geoClassName,
         geoRegionName,
       } = this.state.dialogFeature;
+      const geoRegion = this.props.geoRegions.find(
+        region => region.name === geoRegionName
+      );
+
+      const defaultImgUrl = geoRegion.geoClasses.find(
+        cls => cls.name === geoClassName
+      ).defaultImageUrl;
+
       return (
         <MapDialog
           title={geoRegionName}
           subtitle={geoClassName}
-          imageUrl={imageUrl}
+          imageUrl={imageUrl || defaultImgUrl}
           dialogFeature={this.state.dialogFeature}
           handleClose={() => this.setState({ dialogFeature: null })}
         />
@@ -329,6 +337,7 @@ export const GeoMapHOC = (
     geoSites: PropTypes.array,
     updateCurrentRegion: PropTypes.func,
     geoSite: PropTypes.object,
+    geoRegions: PropTypes.array,
   };
 
   return EnhancedComponent;

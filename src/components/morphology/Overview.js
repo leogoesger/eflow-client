@@ -1,16 +1,17 @@
 // @flow
 /* eslint react/prop-types: 0 */
-import * as React from "react";
-import { Card, CardHeader, CardText } from "material-ui/Card";
-import FlatButton from "material-ui/FlatButton";
-import Dialog from "material-ui/Dialog";
+import * as React from 'react';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import { cloneDeep } from 'lodash';
 
-import DialogAttributes from "./DialogAttributes";
-import DialogArchetypes from "./DialogArchetypes";
-import DialogImages from "./DialogImages";
-import Warning from "./Warning";
-import MapDialog from "./MapDialog";
-import { Colors } from "../../styles";
+import DialogAttributes from './DialogAttributes';
+import DialogArchetypes from './DialogArchetypes';
+import DialogImages from './DialogImages';
+import Warning from './Warning';
+import MapDialog from './MapDialog';
+import { Colors } from '../../styles';
 
 type Props = {
   geoRegions: Array<GeoRegion>,
@@ -45,11 +46,11 @@ export default class Overview extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      title: "",
-      subtitle: "",
-      imageUrl: "",
+      title: '',
+      subtitle: '',
+      imageUrl: '',
       dialogFeature: null,
-      dialogType: "",
+      dialogType: '',
       geoClass: null,
     };
   }
@@ -68,22 +69,22 @@ export default class Overview extends React.Component<Props, State> {
   }
 
   _onRequestClose() {
-    this.setState({ dialogType: "" });
+    this.setState({ dialogType: '' });
     this.props.updateCurrentSite(null);
   }
 
   renderDialogContent() {
     switch (this.state.dialogType) {
-      case "siteImages":
+      case 'siteImages':
         return (
           <DialogImages
             updateCurrentSite={d => this.props.updateCurrentSite(d)}
             geoClass={this.state.geoClass}
           />
         );
-      case "attributes":
+      case 'attributes':
         return <DialogAttributes geoClass={this.state.geoClass} />;
-      case "archetypes":
+      case 'archetypes':
         return <DialogArchetypes geoClass={this.state.geoClass} />;
       default:
         return null;
@@ -91,9 +92,18 @@ export default class Overview extends React.Component<Props, State> {
   }
 
   renderGeoClasses(region: GeoRegion) {
+    const geoClasses = cloneDeep(region.geoClasses);
+
+    geoClasses.sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      })
+    );
+
     return (
       <CardText expandable={true}>
-        {region.geoClasses.map(geoClass => {
+        {geoClasses.map(geoClass => {
           return (
             <Card key={geoClass.name}>
               <CardHeader
@@ -103,20 +113,20 @@ export default class Overview extends React.Component<Props, State> {
                 showExpandableButton={true}
               />
               <CardText expandable={true}>
-                <div style={{ marginBottom: "20px" }}>
+                <div style={{ marginBottom: '20px' }}>
                   {geoClass.description}
                 </div>
                 <div
-                  style={{ display: "flex", justifyContent: "space-around" }}
+                  style={{ display: 'flex', justifyContent: 'space-around' }}
                 >
                   <img
                     src={geoClass.archetypes.syntheticArchetype.imageUrl}
                     alt="archetypes"
-                    style={{ height: "220px", cursor: "pointer" }}
+                    style={{ height: '220px', cursor: 'pointer' }}
                     onClick={() =>
                       this.setState({
                         geoClass,
-                        dialogType: "archetypes",
+                        dialogType: 'archetypes',
                       })
                     }
                   />
@@ -124,11 +134,11 @@ export default class Overview extends React.Component<Props, State> {
                     <img
                       src={geoClass.geoSites[0].imageUrl}
                       alt="siteImages"
-                      style={{ height: "220px", cursor: "pointer" }}
+                      style={{ height: '220px', cursor: 'pointer' }}
                       onClick={() =>
                         this.setState({
                           geoClass,
-                          dialogType: "siteImages",
+                          dialogType: 'siteImages',
                         })
                       }
                     />
@@ -139,19 +149,19 @@ export default class Overview extends React.Component<Props, State> {
 
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    position: "relative",
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    position: 'relative',
                   }}
                 >
                   <FlatButton
                     label="Median Attributes"
-                    style={{ marginTop: "20px" }}
-                    labelStyle={{ fontSize: "12px", color: Colors.gold }}
+                    style={{ marginTop: '20px' }}
+                    labelStyle={{ fontSize: '12px', color: Colors.gold }}
                     onClick={() =>
                       this.setState({
                         geoClass,
-                        dialogType: "attributes",
+                        dialogType: 'attributes',
                       })
                     }
                   />
@@ -177,19 +187,19 @@ export default class Overview extends React.Component<Props, State> {
 
     if (!displayedRegions.length) {
       return (
-        <div style={{ margin: "60px" }}>
-          {"Sorry, there is no data to display at the moment :("}
+        <div style={{ margin: '60px' }}>
+          {'Sorry, there is no data to display at the moment :('}
         </div>
       );
     }
 
     return (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: 'relative' }}>
         {displayedRegions.map((region: GeoRegion) => {
           return (
             <Card
               key={region.name}
-              style={{ marginBottom: "10px" }}
+              style={{ marginBottom: '10px' }}
               initiallyExpanded={true}
             >
               <CardHeader
@@ -211,9 +221,9 @@ export default class Overview extends React.Component<Props, State> {
           modal={false}
           open={Boolean(this.state.dialogType)}
           onRequestClose={() => this._onRequestClose()}
-          bodyStyle={{ padding: "0px" }}
-          contentStyle={{ width: "600px" }}
-          style={{ marginLeft: "320px" }}
+          bodyStyle={{ padding: '0px' }}
+          contentStyle={{ width: '600px' }}
+          style={{ marginLeft: '320px' }}
           overlayStyle={{ opacity: 0.3 }}
         >
           {this.renderDialogContent()}
