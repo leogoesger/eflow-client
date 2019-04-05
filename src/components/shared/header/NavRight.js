@@ -6,7 +6,7 @@ import {
   IconMenu,
   MenuItem,
   IconButton,
-  Divider,
+  Divider
 } from 'material-ui';
 import { purple500 } from 'material-ui/styles/colors';
 
@@ -18,6 +18,7 @@ import Face from 'material-ui/svg-icons/action/face';
 import Doc from 'material-ui/svg-icons/action/book';
 import Book from 'material-ui/svg-icons/av/library-books';
 import MoreVertIcon from 'material-ui/svg-icons/action/account-circle';
+import More from 'material-ui/svg-icons/navigation/arrow-drop-down';
 
 import { navigateTo } from '../../../utils/helpers';
 import { Colors, Theme } from '../../../styles';
@@ -25,7 +26,7 @@ import { Colors, Theme } from '../../../styles';
 export default class NavRight extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { menuOpen: false };
+    this.state = { openDoc: false };
   }
 
   renderNonLoggedInMenu() {
@@ -101,18 +102,74 @@ export default class NavRight extends React.Component {
     );
   }
 
+  handleDocClick() {
+    this.setState({ openDoc: !this.state.openDoc });
+  }
+
+  renderOptions() {
+    return (
+      <IconMenu
+        iconButtonElement={
+          <IconButton>
+            <More color="rgba(0, 0, 0, 0.60)" />
+          </IconButton>
+        }
+        anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
+        targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+        open={this.state.openDoc}
+      >
+        <MenuItem
+          value="0"
+          primaryText="Website Docs"
+          href="https://eflows.gitbook.io/project/website_summary"
+          target="_blank"
+        />
+        <Divider />
+        <MenuItem
+          value="2"
+          primaryText="Metrics Calculation Docs"
+          href="https://eflow.gitbook.io/ffc-readme/functional-flow-calculator/metrics"
+          target="_blank"
+        />
+        <Divider />
+        <MenuItem
+          value="3"
+          primaryText="eFlows Instructional Webinars"
+          href="https://www.youtube.com/watch?v=nN08f3nFGe8"
+          target="_blank"
+        />
+      </IconMenu>
+    );
+  }
+
   render() {
     return (
       <div style={styles.userDiv}>
-        <FlatButton
-          href="https://eflows.gitbook.io/project/website_summary"
-          label="Docs"
-          target="_blank"
-          icon={<Doc />}
-          style={styles.headerButton}
-          labelStyle={styles.headerWhiteButtonLabel}
-          hoverColor={'white'}
-        />
+        <div
+          style={{ marginRight: '20px' }}
+          onClick={() => this.handleDocClick()}
+        >
+          <FlatButton
+            label={'Docs'}
+            icon={<Doc />}
+            style={styles.headerButton}
+            labelStyle={{
+              ...styles.headerWhiteButtonLabel,
+              marginRight: '-14px'
+            }}
+            hoverColor={'white'}
+          />
+          <div
+            style={{
+              zIndex: '1',
+              position: 'relative',
+              top: '-41px',
+              right: '-75px'
+            }}
+          >
+            {this.renderOptions()}
+          </div>
+        </div>
         <FlatButton
           className="tour-paper"
           label="Papers"
@@ -148,12 +205,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-end',
     marginTop: '10px',
-    lineHeight: '30px',
+    lineHeight: '30px'
   },
   headerButton: {
     height: '36px',
     color: Colors.grey,
-    borderRadius: Theme.buttonBorderRadius,
+    borderRadius: Theme.buttonBorderRadius
   },
   headerWhiteButtonLabel: {
     marginLeft: '2px',
@@ -161,11 +218,11 @@ const styles = {
     textTransform: 'none',
     color: Colors.grey,
     fontSize: Theme.buttonLabelSmall,
-    padding: '5px 0px',
-  },
+    padding: '5px 0px'
+  }
 };
 
 NavRight.propTypes = {
   currentUser: PropTypes.object,
-  removeUser: PropTypes.func,
+  removeUser: PropTypes.func
 };
