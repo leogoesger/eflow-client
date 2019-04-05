@@ -123,6 +123,7 @@ export default class NavRight extends React.Component {
           primaryText="Website Docs"
           href="https://eflows.gitbook.io/project/website_summary"
           target="_blank"
+          onClick={() => this.handleDocClick()}
         />
         <Divider />
         <MenuItem
@@ -130,6 +131,7 @@ export default class NavRight extends React.Component {
           primaryText="Metrics Calculation Docs"
           href="https://eflow.gitbook.io/ffc-readme/functional-flow-calculator/metrics"
           target="_blank"
+          onClick={() => this.handleDocClick()}
         />
         <Divider />
         <MenuItem
@@ -137,6 +139,7 @@ export default class NavRight extends React.Component {
           primaryText="eFlows Instructional Webinars"
           href="https://www.youtube.com/watch?v=nN08f3nFGe8"
           target="_blank"
+          onClick={() => this.handleDocClick()}
         />
       </IconMenu>
     );
