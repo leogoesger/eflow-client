@@ -120,7 +120,7 @@ export default class NavRight extends React.Component {
       >
         <MenuItem
           value="0"
-          primaryText="Website Docs"
+          primaryText="Website Documentation"
           href="https://eflows.gitbook.io/project/website_summary"
           target="_blank"
           onClick={() => this.handleDocClick()}
@@ -128,7 +128,7 @@ export default class NavRight extends React.Component {
         <Divider />
         <MenuItem
           value="2"
-          primaryText="Metrics Calculation Docs"
+          primaryText="Metrics Calculation Documentation"
           href="https://eflow.gitbook.io/ffc-readme/functional-flow-calculator/metrics"
           target="_blank"
           onClick={() => this.handleDocClick()}
@@ -153,13 +153,10 @@ export default class NavRight extends React.Component {
           onClick={() => this.handleDocClick()}
         >
           <FlatButton
-            label={'Docs'}
+            label={'Resources'}
             icon={<Doc />}
             style={styles.headerButton}
-            labelStyle={{
-              ...styles.headerWhiteButtonLabel,
-              marginRight: '-14px'
-            }}
+            labelStyle={styles.headerWhiteButtonLabel}
             hoverColor={'white'}
           />
           <div
@@ -167,7 +164,7 @@ export default class NavRight extends React.Component {
               zIndex: '1',
               position: 'relative',
               top: '-41px',
-              right: '-75px'
+              right: '-100px'
             }}
           >
             {this.renderOptions()}
