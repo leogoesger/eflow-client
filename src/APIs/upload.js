@@ -7,9 +7,9 @@ const upload = {
       .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...d });
   },
 
-  upDateTimeSeries: d => {
+  updateTimeSeries: d => {
     return request
-      .put(`${process.env.SERVER_ADDRESS}/api/upDateData`)
+      .put(`${process.env.SERVER_ADDRESS}/api/updateData`)
       .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...d });
   },
 
@@ -23,7 +23,7 @@ const upload = {
     return request
       .post(`${process.env.SERVER_ADDRESS}/api/class-predict`)
       .send({ ff_jwt: localStorage.getItem('ff_jwt'), id, uploadDataId });
-  },
+  }
 };
 
 export default upload;
