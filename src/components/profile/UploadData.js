@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Card, CardText, Snackbar } from 'material-ui';
 import { cloneDeep } from 'lodash';
-import { getDateFromJulian } from '../../utils/helpers';
 import Loader from '../shared/loader/Loader';
 import { Colors } from '../../styles';
 import {
   classificationColor,
-  classification,
+  classification
 } from '../../constants/classification';
 import { ActionIcons } from './ActionIcons';
 import upload from '../../APIs/upload';
 import Params from '../uploader/Params';
-import { classParms } from '../../constants/params';
+import { classParms, params } from '../../constants/params';
 
 class UploadData extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class UploadData extends React.Component {
       userParams: {},
       loading: false,
       isError: false,
-      message: '',
+      message: ''
     };
   }
 
@@ -31,7 +30,7 @@ class UploadData extends React.Component {
     if (!this.props.data.predictions[0] && nextProps.data.predictions[0]) {
       this.setState({
         userParams: classParms[nextProps.data.predictions[0].prediction],
-        open: true,
+        open: true
       });
     }
   }
@@ -41,6 +40,9 @@ class UploadData extends React.Component {
   }
 
   setUserParams(userParams) {
+    if (!userParams) {
+      return this.setState({ userParams: JSON.parse(JSON.stringify(params)) });
+    }
     this.setState({ userParams });
   }
 
@@ -65,7 +67,7 @@ class UploadData extends React.Component {
     if (id) {
       this.setState({
         userParams: classParms[this.props.data.predictions[0].prediction],
-        open: true,
+        open: true
       });
     } else {
       await upload.predictTimeSeries(id, uploadDataId);
@@ -99,66 +101,64 @@ class UploadData extends React.Component {
     );
   }
 
-  getFlowObj() {
-    const { yearRanges, flowMatrix } = this.props.data;
-    const flows = [];
-    const dates = [];
+  // getFlowObj() {
+  //   const { yearRanges, flowMatrix } = this.props.data;
+  //   const flows = [];
+  //   const dates = [];
 
-    yearRanges.forEach((year, indx) => {
-      flowMatrix.forEach((fl, julianDate) => {
-        if (fl[indx] >= 0) {
-          flows.push(Number(fl[indx]));
-          dates.push(getDateFromJulian(julianDate, year));
-        }
-      });
-    });
-    return { flows, dates };
-  }
+  //   yearRanges.forEach((year, indx) => {
+  //     flowMatrix.forEach((fl, julianDate) => {
+  //       if (fl[indx] >= 0) {
+  //         flows.push(Number(fl[indx]));
+  //         dates.push(getDateFromJulian(julianDate, year));
+  //       }
+  //     });
+  //   });
+  //   return { flows, dates };
+  // }
 
   async onSubmit() {
     this.setState({ loading: true, open: false });
     const { userParams } = this.state;
     const { data } = this.props;
-    const { flows, dates } = this.getFlowObj(data);
+    // const { flows, dates } = this.getFlowObj(data);
 
     const tmpUserParams = cloneDeep(userParams);
 
     const {
       max_zero_allowed_per_year,
-      max_nan_allowed_per_year,
+      max_nan_allowed_per_year
     } = tmpUserParams['winter_params'];
 
     delete tmpUserParams['winter_params'];
 
     tmpUserParams['winter_params'] = {
       max_zero_allowed_per_year,
-      max_nan_allowed_per_year,
+      max_nan_allowed_per_year
     };
 
-    if (flows.length !== dates.length) {
-      return this.setState({
-        flows: [],
-        dates: [],
-        message: "Length of flow and date's arrays are not equal",
-      });
-    }
+    // if (flows.length !== dates.length) {
+    //   return this.setState({
+    //     flows: [],
+    //     dates: [],
+    //     message: "Length of flow and date's arrays are not equal"
+    //   });
+    // }
     try {
-      await upload.upDateTimeSeries({
-        flows,
-        dates,
+      await upload.updateTimeSeries({
         params: { ...tmpUserParams },
         id: data.id,
-        start_date: data.startDate,
+        start_date: data.startDate
       });
       await this.props.getPagedUserUploads(0);
       this.setState({
-        loading: false,
+        loading: false
       });
     } catch (error) {
       this.setState({
         loading: false,
         isError: true,
-        message: `Could not process data`,
+        message: `Could not process data`
       });
     }
   }
@@ -176,14 +176,14 @@ class UploadData extends React.Component {
         <Card
           style={{
             margin: '10px auto',
-            width: '70%',
+            width: '70%'
           }}
         >
           <div
             style={{
               display: 'flex',
               width: '100%',
-              justifyContent: 'space-between',
+              justifyContent: 'space-between'
             }}
           >
             <div style={{ width: '400px' }}>
@@ -191,14 +191,14 @@ class UploadData extends React.Component {
                 <Link
                   to={{
                     pathname: `uploads/${this.props.id}`,
-                    ...this.props,
+                    ...this.props
                   }}
                 >
                   <div
                     style={{
                       padding: '15px 0px 0px 15px',
                       fontSize: '20px',
-                      color: 'rgba(0,0,0,0.87)',
+                      color: 'rgba(0,0,0,0.87)'
                     }}
                   >
                     {data.name}
@@ -222,7 +222,7 @@ class UploadData extends React.Component {
                     style={{
                       padding: '0px 0px 0px 15px',
                       fontSize: '13px',
-                      color: `rgb(255, 179, 0)`,
+                      color: `rgb(255, 179, 0)`
                     }}
                   >
                     {riverInfo ? riverInfo : <div style={{ height: '13px' }} />}
@@ -234,7 +234,7 @@ class UploadData extends React.Component {
                   fontSize: '15px',
                   color: Colors.grey,
                   padding: '15px 14px 0px 15px',
-                  marginTop: '10px',
+                  marginTop: '10px'
                 }}
               >{`Created at: ${date.getMonth() +
                 1}/${date.getDate()}/${date.getFullYear()}`}</CardText>
@@ -277,7 +277,7 @@ UploadData.propTypes = {
   data: PropTypes.object,
   offset: PropTypes.number,
   count: PropTypes.number,
-  getPagedUserUploads: PropTypes.func,
+  getPagedUserUploads: PropTypes.func
 };
 
 export default UploadData;
