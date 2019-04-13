@@ -5,6 +5,36 @@ import * as d3 from 'd3';
 import Axis from './Axis';
 import BoxplotOverlay from './BoxplotOverlay';
 
+const keyMapping = {
+  TEN: (
+    <span>
+      10<sup>th</sup>
+    </span>
+  ),
+  TWENTYFIVE: (
+    <span>
+      25<sup>th</sup>
+    </span>
+  ),
+  FIFTY: (
+    <span>
+      50<sup>th</sup>
+    </span>
+  ),
+  SEVENTYFIVE: (
+    <span>
+      75<sup>th</sup>
+    </span>
+  ),
+  NINTY: (
+    <span>
+      90<sup>th</sup>
+    </span>
+  ),
+  MAX: <span>MAX</span>,
+  MIN: <span>MIN</span>
+};
+
 export default class LinePlot extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +42,9 @@ export default class LinePlot extends React.Component {
     this.yScale = d3.scaleLinear();
     this.line = d3.line();
     this.updateD3(props);
+    this.state = {
+      toolTipData: []
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,40 +82,15 @@ export default class LinePlot extends React.Component {
     // }
 
     this.yScale.domain([0, yMax]).range([height, 0]);
-    // console.log(
-    //   d3
-    //     .select('svg g')
-    //     .selectAll('path')
-    //     .on('mouseover', d => console.log(d))
-    // );
+    //tooltip
+    d3.select('svg g').on('mouseover', () => {
+      this.handleMouseMove(d3.mouse(d3.event.currentTarget));
+    });
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
       .y(d => this.yScale(this.props.yValue(d)))
       .curve(d3.curveCardinal);
-
-    /* //Tooltip on plot hover
-      const tooltip = d3.select('svg').append('g');
-
-    d3.select('svg').on('touchmove mousemove', function() {
-      const { date, value } = bisect(d3.mouse(this)[0]);
-
-      tooltip.attr('transform', `translate(${x(date)},${y(value)})`).call(
-        callout,
-        `${value.toLocaleString(undefined, {
-          style: 'currency',
-          currency: 'USD',
-        })}
-    ${date.toLocaleString(undefined, {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    })}`
-      );
-    });
-
-    svg.on('touchend mouseleave', () => tooltip.call(callout, null));
-    */
 
     if (zoomTransform && zoomType === 'detail') {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
@@ -104,6 +112,74 @@ export default class LinePlot extends React.Component {
     }
 
     return transform;
+  }
+
+  async findClosest(data, value, accessor) {
+    const elements = await Object.keys(data).map(key => {
+      const array = data[key];
+      if (!array || !array.length) {
+        return null;
+      }
+
+      const bisect = d3.bisector(accessor).right;
+      const pointIndex = bisect(array, value);
+      const left = array[pointIndex - 1],
+        right = array[pointIndex];
+
+      let element;
+
+      // take the closer element
+      if (left && right) {
+        element =
+          Math.abs(value - accessor(left)) < Math.abs(value - accessor(right))
+            ? left
+            : right;
+      } else if (left) {
+        element = left;
+      } else {
+        element = right;
+      }
+      return { [key]: { ...element } };
+    });
+    return elements;
+  }
+
+  async handleMouseMove([mouseX, mouseY]) {
+    // find nearest data point
+    const { data, xValue } = this.props;
+
+    // convert the mouse x and y to the domain x and y using our chart scale
+    let domainX = this.xScale.invert(mouseX);
+    let domainY = this.yScale.invert(mouseY);
+
+    // if the mouse is outside the domain, consider it having exited
+    if (
+      domainX < this.xScale.domain()[0] ||
+      domainX > this.xScale.domain()[1]
+    ) {
+      domainX = null;
+    }
+    if (
+      domainY < this.yScale.domain()[0] ||
+      domainY > this.yScale.domain()[1]
+    ) {
+      domainY = null;
+    }
+
+    // send an action indicating which point to highlight if we are near one, otherwise indicate
+    // no point should be highlighted.
+    if (
+      domainX !== null &&
+      domainY !== null &&
+      mouseX != null &&
+      mouseY != null
+    ) {
+      // find the nearest point to the x value
+      const toolTipData = await this.findClosest(data, domainX, d => xValue(d));
+      this.setState({ toolTipData });
+    } else {
+      return;
+    }
   }
 
   renderLines(transform) {
@@ -155,6 +231,40 @@ export default class LinePlot extends React.Component {
     });
   }
 
+  renderToolTips() {
+    const { toolTipData } = this.state;
+    return (
+      <foreignObject
+        style={{
+          x: '550',
+          y: '0',
+          width: '50',
+          height: '100',
+          opacity: '0.6',
+          background: 'white',
+          border: 'black',
+          borderWidth: '1px'
+        }}
+      >
+        <div
+          style={{
+            fontSize: '9px'
+          }}
+        >
+          {toolTipData &&
+            toolTipData.map((tip, indx) => {
+              const key = Object.keys(tip)[0];
+              return (
+                <div key={indx}>
+                  {keyMapping[key]} : {tip[key].flow}
+                </div>
+              );
+            })}
+        </div>
+      </foreignObject>
+    );
+  }
+
   render() {
     const {
       data,
@@ -189,6 +299,7 @@ export default class LinePlot extends React.Component {
           {this.renderBoxplots(overLayBoxPlotData)}
           {this.renderVerticalBoxPlots(verticalOverlayBoxPlotData)}
           {this.renderLines(transform)}
+          {this.renderToolTips()}
         </g>
       );
     } else {
