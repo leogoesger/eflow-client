@@ -1,3 +1,4 @@
+/* eslint-disable react/no-find-dom-node */
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
@@ -32,7 +33,17 @@ const keyMapping = {
     </span>
   ),
   MAX: <span>MAX</span>,
-  MIN: <span>MIN</span>
+  MIN: <span>MIN</span>,
+  TWENTY_FIVE: (
+    <span>
+      25<sup>th</sup>
+    </span>
+  ),
+  SEVENTY_FIVE: (
+    <span>
+      75<sup>th</sup>
+    </span>
+  )
 };
 
 export default class LinePlot extends React.Component {
@@ -43,7 +54,8 @@ export default class LinePlot extends React.Component {
     this.line = d3.line();
     this.updateD3(props);
     this.state = {
-      toolTipData: []
+      toolTipData: [],
+      displayTips: false
     };
   }
 
@@ -82,10 +94,6 @@ export default class LinePlot extends React.Component {
     // }
 
     this.yScale.domain([0, yMax]).range([height, 0]);
-    //tooltip
-    d3.select('svg g').on('mouseover', () => {
-      this.handleMouseMove(d3.mouse(d3.event.currentTarget));
-    });
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
@@ -96,6 +104,21 @@ export default class LinePlot extends React.Component {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
+
+    //tooltip
+    d3.selectAll('path').on('mousemove', () => {
+      this.handleMouseMove(d3.mouse(d3.event.currentTarget));
+    });
+  }
+
+  componentDidUpdate() {
+    d3.selectAll('svg')
+      .on('mouseenter', () => {
+        this.setState({ displayTips: true });
+      })
+      .on('mouseleave', () => {
+        this.setState({ displayTips: false });
+      });
   }
 
   _transform() {
@@ -234,34 +257,36 @@ export default class LinePlot extends React.Component {
   renderToolTips() {
     const { toolTipData } = this.state;
     return (
-      <foreignObject
-        style={{
-          x: '550',
-          y: '0',
-          width: '50',
-          height: '100',
-          opacity: '0.6',
-          background: 'white',
-          border: 'black',
-          borderWidth: '1px'
-        }}
-      >
-        <div
+      this.state.displayTips && (
+        <foreignObject
           style={{
-            fontSize: '9px'
+            x: '550',
+            y: '0',
+            width: '50',
+            height: '100',
+            opacity: '0.6',
+            background: 'white',
+            border: 'black',
+            borderWidth: '1px'
           }}
         >
-          {toolTipData &&
-            toolTipData.map((tip, indx) => {
-              const key = Object.keys(tip)[0];
-              return (
-                <div key={indx}>
-                  {keyMapping[key]} : {tip[key].flow}
-                </div>
-              );
-            })}
-        </div>
-      </foreignObject>
+          <div
+            style={{
+              fontSize: '9px'
+            }}
+          >
+            {toolTipData &&
+              toolTipData.map((tip, indx) => {
+                const key = Object.keys(tip)[0];
+                return (
+                  <div key={indx}>
+                    {keyMapping[key.toUpperCase()]} : {tip[key].flow}
+                  </div>
+                );
+              })}
+          </div>
+        </foreignObject>
+      )
     );
   }
 
