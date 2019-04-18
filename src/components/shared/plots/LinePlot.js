@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 
 import Axis from './Axis';
 import BoxplotOverlay from './BoxplotOverlay';
+import { getCalenderDateFromOffset } from '../../../utils/helpers';
 
 const keyMapping = {
   TEN: (
@@ -256,6 +257,12 @@ export default class LinePlot extends React.Component {
 
   renderToolTips() {
     const { toolTipData } = this.state;
+    let date = null;
+    if (toolTipData && toolTipData[0]['ten' || 'TEN']) {
+      let jDate = toolTipData[0]['ten' || 'TEN'].date;
+      date = getCalenderDateFromOffset(jDate);
+    }
+
     return (
       this.state.displayTips && (
         <foreignObject
@@ -275,15 +282,20 @@ export default class LinePlot extends React.Component {
               fontSize: '9px'
             }}
           >
-            {toolTipData &&
-              toolTipData.map((tip, indx) => {
-                const key = Object.keys(tip)[0];
-                return (
-                  <div key={indx}>
-                    {keyMapping[key.toUpperCase()]} : {tip[key].flow}
-                  </div>
-                );
-              })}
+            {toolTipData && (
+              <div>
+                {date && <span>{date}</span>}
+                {toolTipData.map((tip, indx) => {
+                  if (tip === null) return;
+                  const key = Object.keys(tip)[0];
+                  return (
+                    <div key={indx}>
+                      {keyMapping[key.toUpperCase()]} : {tip[key].flow}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </foreignObject>
       )

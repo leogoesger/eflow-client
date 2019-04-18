@@ -7,7 +7,7 @@ import {
   RaisedButton,
   FlatButton,
   IconMenu,
-  MenuItem,
+  MenuItem
 } from 'material-ui';
 import { CardHeader } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -29,7 +29,7 @@ const colors = {
   TWENTYFIVE: Colors.TWENTYFIVE,
   TEN: Colors.TEN,
   MAX: Colors.MAX,
-  MIN: Colors.MIN,
+  MIN: Colors.MIN
 };
 
 class Hydrograph extends React.Component {
@@ -54,9 +54,9 @@ class Hydrograph extends React.Component {
         seventy_five: true,
         fifty: true,
         twenty_five: true,
-        ten: true,
+        ten: true
       },
-      openDrawer: false,
+      openDrawer: false
     };
     this.zoom = d3
       .zoom()
@@ -79,7 +79,7 @@ class Hydrograph extends React.Component {
 
   zoomed() {
     this.setState({
-      zoomTransform: d3.event.transform,
+      zoomTransform: d3.event.transform
     });
   }
 
@@ -107,7 +107,7 @@ class Hydrograph extends React.Component {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           <CardHeader
@@ -134,7 +134,7 @@ class Hydrograph extends React.Component {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           <CardHeader
@@ -159,7 +159,7 @@ class Hydrograph extends React.Component {
       SEVENTYFIVE: [],
       NINTY: [],
       MIN: [],
-      MAX: [],
+      MAX: []
     };
 
     let hydrographs;
@@ -174,18 +174,18 @@ class Hydrograph extends React.Component {
         hydrograph.data.forEach((ele, index) => {
           hydroData[hydrograph.percentille].push({
             date: index + 1,
-            flow: ele,
+            flow: ele
           });
         });
       });
-    }
+    } else hydroData = null;
 
     this.setState({ hydroCompareData: hydroData }, () => {
       this.setState({
         hydroData: {
           ...this.state.hydroUploadData,
-          ...this.state.hydroCompareData,
-        },
+          ...this.state.hydroCompareData
+        }
       });
     });
   }
@@ -198,7 +198,7 @@ class Hydrograph extends React.Component {
       seventy_five: [],
       ninty: [],
       min: [],
-      max: [],
+      max: []
     };
 
     Object.keys(this.props.data.DRH).forEach(hydrograph => {
@@ -227,15 +227,15 @@ class Hydrograph extends React.Component {
         this.setState({
           hydroData: {
             ...this.state.hydroUploadData,
-            ...this.state.hydroCompareData,
-          },
+            ...this.state.hydroCompareData
+          }
         });
     });
   }
 
   changePlotsColor() {
     let { overlay, min, max, ninty, fifty, ten, seventy_five, twenty_five } = {
-      ...this.state.plots,
+      ...this.state.plots
     };
 
     if (overlay) {
@@ -291,7 +291,7 @@ class Hydrograph extends React.Component {
           style={{
             margin: 'auto',
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           {(this.props.currentGauge || this.props.currentClassification) &&
@@ -317,7 +317,7 @@ class Hydrograph extends React.Component {
             style={{
               float: 'right',
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'space-between'
             }}
           >
             <IconMenu
@@ -355,7 +355,7 @@ class Hydrograph extends React.Component {
           width={750}
           height={450}
           ref={el => (this.svg = el)}
-          style={{ cursor: 'pointer', marginLeft: '30px' }}
+          style={{ marginLeft: '30px' }}
         >
           <LinePlot
             x={410 / 10}
@@ -429,14 +429,14 @@ Hydrograph.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
   classifications: PropTypes.array,
-  updateHoveredGauge: PropTypes.func,
+  updateHoveredGauge: PropTypes.func
 };
 
 const styles = {
   banner: {
     backgroundColor: '#424242',
     height: '230px',
-    zIndex: '0',
+    zIndex: '0'
   },
 
   yLabel: {
@@ -445,53 +445,53 @@ const styles = {
     left: '20px',
     top: '235px',
     writingMode: 'vertical-rl',
-    transform: 'rotate(-180deg)',
+    transform: 'rotate(-180deg)'
   },
   labels: {
     display: 'flex',
     margin: 'auto',
     justifyContent: 'space-around',
-    paddingBottom: '20px',
+    paddingBottom: '20px'
   },
   label: {
     height: '10px',
     width: '10px',
-    marginTop: '0px',
+    marginTop: '0px'
   },
   graph: {
     width: '100%',
     marginBottom: '20px',
     borderRadius: '0px',
-    overflow: 'visible',
+    overflow: 'visible'
   },
   plotTitle: {
     width: 'auto',
     textAlign: 'center',
     fontWeight: '800',
     fontSize: '16px',
-    padding: '20px',
+    padding: '20px'
   },
   labelName: { fontSize: '14px' },
   minMax: {
     width: '180px',
     position: 'absolute',
     right: '0px',
-    top: '20px',
+    top: '20px'
   },
   labelStyle: {
     fontSize: '16px',
-    color: '#757575',
+    color: '#757575'
   },
   btnContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '96%',
-    margin: '30px auto',
+    margin: '30px auto'
   },
 
   track: {
     height: '14px',
-    borderRadius: '30',
+    borderRadius: '30'
   },
   thumb: {
     position: 'absolute',
@@ -500,8 +500,8 @@ const styles = {
     width: '15px',
     height: '15px',
     lineHeight: '24px',
-    borderRadius: '50%',
-  },
+    borderRadius: '50%'
+  }
 };
 
 export default Hydrograph;
