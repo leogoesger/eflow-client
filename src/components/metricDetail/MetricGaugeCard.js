@@ -18,7 +18,7 @@ import Divider from 'material-ui/Divider';
 import { classInfo } from '../../constants/classification';
 import { SimpleLinePlot } from '../shared/plots';
 import { Colors } from '../../styles';
-import { CSVLink } from 'react-csv/lib';
+// import { CSVLink } from 'react-csv/lib';
 
 class MetricGaugeCard extends React.Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class MetricGaugeCard extends React.Component {
 
   componentDidUpdate() {
     d3.select(this.svg).call(this.zoom);
+    // this.getAnnualMetricResultFile(this.props.annualFlowData);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -228,8 +229,10 @@ class MetricGaugeCard extends React.Component {
   }
 
   handleSaveAsImageBtn() {
-    const fileName = `${this.props.annualFlowData.Gauge.id}_Year_${this.state.currentYear}_Hydrograph.jpeg`;
-    saveAsImage(this.saveImageRef, {fileName});
+    const fileName = `${this.props.annualFlowData.Gauge.id}_Year_${
+      this.state.currentYear
+    }_Hydrograph.jpeg`;
+    saveAsImage(this.saveImageRef, { fileName });
   }
 
   render() {
@@ -299,7 +302,17 @@ class MetricGaugeCard extends React.Component {
                     return window.open(url1);
                   }}
                 />
-                <CSVLink
+                <MenuItem
+                  primaryText="Annual Metric Result"
+                  onClick={() => {
+                    const url1 = `${process.env.S3_BUCKET}annual_flow_result/${
+                      annualFlowData.Gauge.id
+                    }_annual_result_matrix.csv`;
+                    return window.open(url1);
+                  }}
+                />
+
+                {/* <CSVLink
                   filename={`${
                     annualFlowData.Gauge.id
                   }_annual_result_matrix.csv`}
@@ -307,7 +320,7 @@ class MetricGaugeCard extends React.Component {
                   data={this.state.data}
                 >
                   <MenuItem primaryText="Annual Metric Result" />
-                </CSVLink>
+                </CSVLink> */}
                 <MenuItem
                   primaryText="Metrics Read Me"
                   onClick={() =>
