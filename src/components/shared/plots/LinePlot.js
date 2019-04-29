@@ -259,6 +259,8 @@ export default class LinePlot extends React.Component {
     let { toolTipData } = this.state;
     let date = null;
 
+    //console.log(toolTipData);
+
     if (
       toolTipData &&
       toolTipData[0] &&
@@ -290,7 +292,7 @@ export default class LinePlot extends React.Component {
             x: overlay ? this.props.width - 40 : this.props.width,
             y: '0',
             width: overlay ? '90' : '50',
-            height: '100',
+            height: '55',
             opacity: '0.6',
             background: 'white',
             border: 'black',

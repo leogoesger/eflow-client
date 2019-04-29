@@ -13,6 +13,12 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Apr 29th, 2019',
+            version: 'v2.3',
+            title: 'Hoverover DRH plots tooltips',
+            tasks: ['Displays DRH plot data when hover overed with mouse']
+          },
+          {
             date: 'Apr 5th, 2019',
             version: 'v2.21',
             title: 'Documentation tab updated',
