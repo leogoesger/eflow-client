@@ -33,8 +33,8 @@ const keyMapping = {
       90<sup>th</sup>
     </span>
   ),
-  MAX: <span>MAX</span>,
-  MIN: <span>MIN</span>,
+  // MAX: <span>MAX</span>,
+  // MIN: <span>MIN</span>,
   TWENTY_FIVE: (
     <span>
       25<sup>th</sup>
@@ -163,7 +163,7 @@ export default class LinePlot extends React.Component {
       } else {
         element = right;
       }
-      return { [key]: { ...element } };
+      return { [key]: element };
     });
     return elements;
   }
@@ -256,20 +256,40 @@ export default class LinePlot extends React.Component {
   }
 
   renderToolTips() {
-    const { toolTipData } = this.state;
+    let { toolTipData } = this.state;
     let date = null;
-    if (toolTipData && toolTipData[0]['ten' || 'TEN']) {
-      let jDate = toolTipData[0]['ten' || 'TEN'].date;
+
+    if (
+      toolTipData &&
+      toolTipData[0] &&
+      toolTipData[0][Object.keys(toolTipData[0])[0]]
+    ) {
+      let jDate = toolTipData[0][Object.keys(toolTipData[0])[0]].date;
       date = getCalenderDateFromOffset(jDate);
+    }
+
+    let keys = toolTipData.map(tip => Object.keys(tip)[0]);
+
+    let overlayTipData;
+    let overlay = false;
+    if (keys.includes('ten') && keys.includes('TEN')) {
+      overlay = true;
+
+      overlayTipData = toolTipData.filter(
+        tip => Object.keys(tip)[0] === Object.keys(tip)[0].toUpperCase()
+      );
+      toolTipData = toolTipData.filter(
+        tip => Object.keys(tip)[0] === Object.keys(tip)[0].toLowerCase()
+      );
     }
 
     return (
       this.state.displayTips && (
         <foreignObject
           style={{
-            x: '550',
+            x: overlay ? this.props.width - 40 : this.props.width,
             y: '0',
-            width: '50',
+            width: overlay ? '90' : '50',
             height: '100',
             opacity: '0.6',
             background: 'white',
@@ -277,23 +297,55 @@ export default class LinePlot extends React.Component {
             borderWidth: '1px'
           }}
         >
-          <div
-            style={{
-              fontSize: '9px'
-            }}
-          >
-            {toolTipData && (
-              <div>
-                {date && <span>{date}</span>}
-                {toolTipData.map((tip, indx) => {
-                  if (tip === null) return;
-                  const key = Object.keys(tip)[0];
-                  return (
-                    <div key={indx}>
-                      {keyMapping[key.toUpperCase()]} : {tip[key].flow}
-                    </div>
-                  );
-                })}
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div
+              style={{
+                fontSize: '9px',
+                width: '55px'
+              }}
+            >
+              {toolTipData && (
+                <div>
+                  {date && <span style={{ fontWeight: 'bold' }}>{date}</span>}
+                  {toolTipData.map((tip, indx) => {
+                    if (tip === null) return;
+                    const key = Object.keys(tip)[0];
+                    if (
+                      key.toUpperCase() !== 'MAX' &&
+                      key.toUpperCase() !== 'MIN'
+                    ) {
+                      return (
+                        <div key={indx}>
+                          {keyMapping[key.toUpperCase()]} : {tip[key].flow}
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              )}
+            </div>
+            {overlayTipData && (
+              <div
+                style={{
+                  fontSize: '9px',
+                  width: '35px'
+                }}
+              >
+                {overlayTipData && (
+                  <div>
+                    {date && <span style={{ fontWeight: 'bold' }}>Comp</span>}
+                    {overlayTipData.map((tip, indx) => {
+                      if (tip === null) return;
+                      const key = Object.keys(tip)[0];
+                      if (
+                        key.toUpperCase() !== 'MAX' &&
+                        key.toUpperCase() !== 'MIN'
+                      ) {
+                        return <div key={indx}>{tip[key].flow}</div>;
+                      }
+                    })}
+                  </div>
+                )}
               </div>
             )}
           </div>
