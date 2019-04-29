@@ -18,7 +18,7 @@ import Divider from 'material-ui/Divider';
 import { classInfo } from '../../constants/classification';
 import { SimpleLinePlot } from '../shared/plots';
 import { Colors } from '../../styles';
-// import { CSVLink } from 'react-csv/lib';
+import { CSVLink } from 'react-csv/lib';
 
 class MetricGaugeCard extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class MetricGaugeCard extends React.Component {
       currentYear: this.props.annualFlowData.Years.year[1],
       zoomTransform: null,
       isDrawerOpen: false,
-      data: [],
+      data: []
     };
     this.zoom = d3
       .zoom()
@@ -45,7 +45,6 @@ class MetricGaugeCard extends React.Component {
 
   componentDidUpdate() {
     d3.select(this.svg).call(this.zoom);
-    // this.getAnnualMetricResultFile(this.props.annualFlowData);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,12 +53,13 @@ class MetricGaugeCard extends React.Component {
       this.props.annualFlowData.Years.gaugeId
     ) {
       this.setState({ currentYear: nextProps.annualFlowData.Years.year[0] });
+      this.getAnnualMetricResultFile(nextProps.annualFlowData);
     }
   }
 
   zoomed() {
     this.setState({
-      zoomTransform: d3.event.transform,
+      zoomTransform: d3.event.transform
     });
   }
 
@@ -71,7 +71,7 @@ class MetricGaugeCard extends React.Component {
     await this.setState({ currentYear: v });
     this.props.fetchAnnualFlowData({
       gaugeId: this.props.annualFlowData.Years.gaugeId,
-      year: this.state.currentYear,
+      year: this.state.currentYear
     });
   }
 
@@ -95,7 +95,7 @@ class MetricGaugeCard extends React.Component {
           margin: '0 auto',
           justifyContent: 'space-around',
           fontSize: '14px',
-          color: Colors.lightGrey,
+          color: Colors.lightGrey
         }}
       >
         <div>{year[0]}</div>
@@ -112,7 +112,7 @@ class MetricGaugeCard extends React.Component {
           marginTop: '-15px',
           display: 'flex',
           justifyContent: 'flex-end',
-          marginRight: '20px',
+          marginRight: '20px'
         }}
       >
         {this.state.currentYear >
@@ -221,10 +221,10 @@ class MetricGaugeCard extends React.Component {
         let data = d.data;
         data.splice(1, 0, [
           'Water Year Type',
-          ...annualFlowData.Gauge.conditions[0].conditions,
+          ...annualFlowData.Gauge.conditions[0].conditions
         ]);
         this.setState({ data: data });
-      },
+      }
     });
   }
 
@@ -254,7 +254,7 @@ class MetricGaugeCard extends React.Component {
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              marginTop: '5px',
+              marginTop: '5px'
             }}
           >
             <div style={{ width: '60%' }}>
@@ -275,7 +275,7 @@ class MetricGaugeCard extends React.Component {
                 display: 'flex',
                 justifyContent: 'space-around',
                 width: '40%',
-                marginTop: '10px',
+                marginTop: '10px'
               }}
             >
               <IconMenu
@@ -302,7 +302,7 @@ class MetricGaugeCard extends React.Component {
                     return window.open(url1);
                   }}
                 />
-                <MenuItem
+                {/* <MenuItem
                   primaryText="Annual Metric Result"
                   onClick={() => {
                     const url1 = `${process.env.S3_BUCKET}annual_flow_result/${
@@ -310,9 +310,9 @@ class MetricGaugeCard extends React.Component {
                     }_annual_result_matrix.csv`;
                     return window.open(url1);
                   }}
-                />
+                /> */}
 
-                {/* <CSVLink
+                <CSVLink
                   filename={`${
                     annualFlowData.Gauge.id
                   }_annual_result_matrix.csv`}
@@ -320,7 +320,7 @@ class MetricGaugeCard extends React.Component {
                   data={this.state.data}
                 >
                   <MenuItem primaryText="Annual Metric Result" />
-                </CSVLink> */}
+                </CSVLink>
                 <MenuItem
                   primaryText="Metrics Read Me"
                   onClick={() =>
@@ -352,7 +352,7 @@ class MetricGaugeCard extends React.Component {
               width: '90%',
               overflow: 'hidden',
               margin: '30px auto',
-              position: 'relative',
+              position: 'relative'
             }}
           >
             {this._renderAnnualPlot()}
@@ -389,7 +389,7 @@ MetricGaugeCard.propTypes = {
   isHydrographOverlay: PropTypes.bool,
   hydrograph: PropTypes.object,
   yMax: PropTypes.number,
-  fixedYaxisPercentile: PropTypes.number,
+  fixedYaxisPercentile: PropTypes.number
 };
 
 const styles = {
@@ -397,7 +397,7 @@ const styles = {
     width: '100%',
     height: '600px',
     overflow: 'auto',
-    margin: '0 auto',
+    margin: '0 auto'
   },
   yLabel: {
     position: 'absolute',
@@ -406,12 +406,12 @@ const styles = {
     top: '140px',
     color: '#616161',
     writingMode: 'vertical-rl',
-    transform: 'rotate(-180deg)',
+    transform: 'rotate(-180deg)'
   },
   xLabel: {
     width: '100%',
     paddingTop: '20px',
-    margin: '0px 0px 0px 230px',
-  },
+    margin: '0px 0px 0px 230px'
+  }
 };
 export default MetricGaugeCard;

@@ -1,9 +1,51 @@
+/* eslint-disable react/no-find-dom-node */
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import Axis from './Axis';
 import BoxplotOverlay from './BoxplotOverlay';
+import { getCalenderDateFromOffset } from '../../../utils/helpers';
+
+const keyMapping = {
+  TEN: (
+    <span>
+      10<sup>th</sup>
+    </span>
+  ),
+  TWENTYFIVE: (
+    <span>
+      25<sup>th</sup>
+    </span>
+  ),
+  FIFTY: (
+    <span>
+      50<sup>th</sup>
+    </span>
+  ),
+  SEVENTYFIVE: (
+    <span>
+      75<sup>th</sup>
+    </span>
+  ),
+  NINTY: (
+    <span>
+      90<sup>th</sup>
+    </span>
+  ),
+  // MAX: <span>MAX</span>,
+  // MIN: <span>MIN</span>,
+  TWENTY_FIVE: (
+    <span>
+      25<sup>th</sup>
+    </span>
+  ),
+  SEVENTY_FIVE: (
+    <span>
+      75<sup>th</sup>
+    </span>
+  )
+};
 
 export default class LinePlot extends React.Component {
   constructor(props) {
@@ -12,6 +54,10 @@ export default class LinePlot extends React.Component {
     this.yScale = d3.scaleLinear();
     this.line = d3.line();
     this.updateD3(props);
+    this.state = {
+      toolTipData: [],
+      displayTips: false
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,45 +95,31 @@ export default class LinePlot extends React.Component {
     // }
 
     this.yScale.domain([0, yMax]).range([height, 0]);
-    // console.log(
-    //   d3
-    //     .select('svg g')
-    //     .selectAll('path')
-    //     .on('mouseover', d => console.log(d))
-    // );
 
     this.line
       .x(d => this.xScale(this.props.xValue(d)))
       .y(d => this.yScale(this.props.yValue(d)))
       .curve(d3.curveCardinal);
 
-    /* //Tooltip on plot hover
-      const tooltip = d3.select('svg').append('g');
-
-    d3.select('svg').on('touchmove mousemove', function() {
-      const { date, value } = bisect(d3.mouse(this)[0]);
-
-      tooltip.attr('transform', `translate(${x(date)},${y(value)})`).call(
-        callout,
-        `${value.toLocaleString(undefined, {
-          style: 'currency',
-          currency: 'USD',
-        })}
-    ${date.toLocaleString(undefined, {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    })}`
-      );
-    });
-
-    svg.on('touchend mouseleave', () => tooltip.call(callout, null));
-    */
-
     if (zoomTransform && zoomType === 'detail') {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
+
+    //tooltip
+    d3.selectAll('path').on('mousemove', () => {
+      this.handleMouseMove(d3.mouse(d3.event.currentTarget));
+    });
+  }
+
+  componentDidUpdate() {
+    d3.selectAll('svg')
+      .on('mouseenter', () => {
+        this.setState({ displayTips: true });
+      })
+      .on('mouseleave', () => {
+        this.setState({ displayTips: false });
+      });
   }
 
   _transform() {
@@ -104,6 +136,74 @@ export default class LinePlot extends React.Component {
     }
 
     return transform;
+  }
+
+  async findClosest(data, value, accessor) {
+    const elements = await Object.keys(data).map(key => {
+      const array = data[key];
+      if (!array || !array.length) {
+        return null;
+      }
+
+      const bisect = d3.bisector(accessor).right;
+      const pointIndex = bisect(array, value);
+      const left = array[pointIndex - 1],
+        right = array[pointIndex];
+
+      let element;
+
+      // take the closer element
+      if (left && right) {
+        element =
+          Math.abs(value - accessor(left)) < Math.abs(value - accessor(right))
+            ? left
+            : right;
+      } else if (left) {
+        element = left;
+      } else {
+        element = right;
+      }
+      return { [key]: element };
+    });
+    return elements;
+  }
+
+  async handleMouseMove([mouseX, mouseY]) {
+    // find nearest data point
+    const { data, xValue } = this.props;
+
+    // convert the mouse x and y to the domain x and y using our chart scale
+    let domainX = this.xScale.invert(mouseX);
+    let domainY = this.yScale.invert(mouseY);
+
+    // if the mouse is outside the domain, consider it having exited
+    if (
+      domainX < this.xScale.domain()[0] ||
+      domainX > this.xScale.domain()[1]
+    ) {
+      domainX = null;
+    }
+    if (
+      domainY < this.yScale.domain()[0] ||
+      domainY > this.yScale.domain()[1]
+    ) {
+      domainY = null;
+    }
+
+    // send an action indicating which point to highlight if we are near one, otherwise indicate
+    // no point should be highlighted.
+    if (
+      domainX !== null &&
+      domainY !== null &&
+      mouseX != null &&
+      mouseY != null
+    ) {
+      // find the nearest point to the x value
+      const toolTipData = await this.findClosest(data, domainX, d => xValue(d));
+      this.setState({ toolTipData });
+    } else {
+      return;
+    }
   }
 
   renderLines(transform) {
@@ -155,6 +255,107 @@ export default class LinePlot extends React.Component {
     });
   }
 
+  renderToolTips() {
+    let { toolTipData } = this.state;
+    let date = null;
+
+    //console.log(toolTipData);
+
+    if (
+      toolTipData &&
+      toolTipData[0] &&
+      toolTipData[0][Object.keys(toolTipData[0])[0]]
+    ) {
+      let jDate = toolTipData[0][Object.keys(toolTipData[0])[0]].date;
+      date = getCalenderDateFromOffset(jDate);
+    }
+
+    let keys = toolTipData.map(tip => Object.keys(tip)[0]);
+
+    let overlayTipData;
+    let overlay = false;
+    if (keys.includes('ten') && keys.includes('TEN')) {
+      overlay = true;
+
+      overlayTipData = toolTipData.filter(
+        tip => Object.keys(tip)[0] === Object.keys(tip)[0].toUpperCase()
+      );
+      toolTipData = toolTipData.filter(
+        tip => Object.keys(tip)[0] === Object.keys(tip)[0].toLowerCase()
+      );
+    }
+
+    return (
+      this.state.displayTips && (
+        <foreignObject
+          style={{
+            x: overlay ? this.props.width - 40 : this.props.width,
+            y: '0',
+            width: overlay ? '90' : '50',
+            height: '55',
+            opacity: '0.6',
+            background: 'white',
+            border: 'black',
+            borderWidth: '1px'
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div
+              style={{
+                fontSize: '9px',
+                width: '55px'
+              }}
+            >
+              {toolTipData && (
+                <div>
+                  {date && <span style={{ fontWeight: 'bold' }}>{date}</span>}
+                  {toolTipData.map((tip, indx) => {
+                    if (tip === null) return;
+                    const key = Object.keys(tip)[0];
+                    if (
+                      key.toUpperCase() !== 'MAX' &&
+                      key.toUpperCase() !== 'MIN'
+                    ) {
+                      return (
+                        <div key={indx}>
+                          {keyMapping[key.toUpperCase()]} : {tip[key].flow}
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              )}
+            </div>
+            {overlayTipData && (
+              <div
+                style={{
+                  fontSize: '9px',
+                  width: '35px'
+                }}
+              >
+                {overlayTipData && (
+                  <div>
+                    {date && <span style={{ fontWeight: 'bold' }}>Comp</span>}
+                    {overlayTipData.map((tip, indx) => {
+                      if (tip === null) return;
+                      const key = Object.keys(tip)[0];
+                      if (
+                        key.toUpperCase() !== 'MAX' &&
+                        key.toUpperCase() !== 'MIN'
+                      ) {
+                        return <div key={indx}>{tip[key].flow}</div>;
+                      }
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </foreignObject>
+      )
+    );
+  }
+
   render() {
     const {
       data,
@@ -189,6 +390,7 @@ export default class LinePlot extends React.Component {
           {this.renderBoxplots(overLayBoxPlotData)}
           {this.renderVerticalBoxPlots(verticalOverlayBoxPlotData)}
           {this.renderLines(transform)}
+          {this.renderToolTips()}
         </g>
       );
     } else {
