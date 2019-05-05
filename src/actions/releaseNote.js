@@ -13,6 +13,14 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'May 5th, 2019',
+            version: 'v2.31',
+            title: 'Hoverover DRH/Annual plots tooltips',
+            tasks: [
+              'Displays DRH/Annual plot data when hover overed with mouse'
+            ]
+          },
+          {
             date: 'Apr 29th, 2019',
             version: 'v2.3',
             title: 'Hoverover DRH plots tooltips',

@@ -5,47 +5,8 @@ import * as d3 from 'd3';
 
 import Axis from './Axis';
 import BoxplotOverlay from './BoxplotOverlay';
-import { getCalenderDateFromOffset } from '../../../utils/helpers';
-
-const keyMapping = {
-  TEN: (
-    <span>
-      10<sup>th</sup>
-    </span>
-  ),
-  TWENTYFIVE: (
-    <span>
-      25<sup>th</sup>
-    </span>
-  ),
-  FIFTY: (
-    <span>
-      50<sup>th</sup>
-    </span>
-  ),
-  SEVENTYFIVE: (
-    <span>
-      75<sup>th</sup>
-    </span>
-  ),
-  NINTY: (
-    <span>
-      90<sup>th</sup>
-    </span>
-  ),
-  // MAX: <span>MAX</span>,
-  // MIN: <span>MIN</span>,
-  TWENTY_FIVE: (
-    <span>
-      25<sup>th</sup>
-    </span>
-  ),
-  SEVENTY_FIVE: (
-    <span>
-      75<sup>th</sup>
-    </span>
-  )
-};
+import RenderToolTips from './RenderToolTips';
+import { findClosest } from '../../../utils/helpers';
 
 export default class LinePlot extends React.Component {
   constructor(props) {
@@ -138,35 +99,35 @@ export default class LinePlot extends React.Component {
     return transform;
   }
 
-  async findClosest(data, value, accessor) {
-    const elements = await Object.keys(data).map(key => {
-      const array = data[key];
-      if (!array || !array.length) {
-        return null;
-      }
+  // async findClosest(data, value, accessor) {
+  //   const elements = await Object.keys(data).map(key => {
+  //     const array = data[key];
+  //     if (!array || !array.length) {
+  //       return null;
+  //     }
 
-      const bisect = d3.bisector(accessor).right;
-      const pointIndex = bisect(array, value);
-      const left = array[pointIndex - 1],
-        right = array[pointIndex];
+  //     const bisect = d3.bisector(accessor).right;
+  //     const pointIndex = bisect(array, value);
+  //     const left = array[pointIndex - 1],
+  //       right = array[pointIndex];
 
-      let element;
+  //     let element;
 
-      // take the closer element
-      if (left && right) {
-        element =
-          Math.abs(value - accessor(left)) < Math.abs(value - accessor(right))
-            ? left
-            : right;
-      } else if (left) {
-        element = left;
-      } else {
-        element = right;
-      }
-      return { [key]: element };
-    });
-    return elements;
-  }
+  //     // take the closer element
+  //     if (left && right) {
+  //       element =
+  //         Math.abs(value - accessor(left)) < Math.abs(value - accessor(right))
+  //           ? left
+  //           : right;
+  //     } else if (left) {
+  //       element = left;
+  //     } else {
+  //       element = right;
+  //     }
+  //     return { [key]: element };
+  //   });
+  //   return elements;
+  // }
 
   async handleMouseMove([mouseX, mouseY]) {
     // find nearest data point
@@ -199,7 +160,7 @@ export default class LinePlot extends React.Component {
       mouseY != null
     ) {
       // find the nearest point to the x value
-      const toolTipData = await this.findClosest(data, domainX, d => xValue(d));
+      const toolTipData = await findClosest(data, domainX, d => xValue(d));
       this.setState({ toolTipData });
     } else {
       return;
@@ -255,106 +216,106 @@ export default class LinePlot extends React.Component {
     });
   }
 
-  renderToolTips() {
-    let { toolTipData } = this.state;
-    let date = null;
+  // renderToolTips() {
+  //   let { toolTipData } = this.state;
+  //   let date = null;
 
-    //console.log(toolTipData);
+  //   //console.log(toolTipData);
 
-    if (
-      toolTipData &&
-      toolTipData[0] &&
-      toolTipData[0][Object.keys(toolTipData[0])[0]]
-    ) {
-      let jDate = toolTipData[0][Object.keys(toolTipData[0])[0]].date;
-      date = getCalenderDateFromOffset(jDate);
-    }
+  //   if (
+  //     toolTipData &&
+  //     toolTipData[0] &&
+  //     toolTipData[0][Object.keys(toolTipData[0])[0]]
+  //   ) {
+  //     let jDate = toolTipData[0][Object.keys(toolTipData[0])[0]].date;
+  //     date = getCalenderDateFromOffset(jDate);
+  //   }
 
-    let keys = toolTipData.map(tip => Object.keys(tip)[0]);
+  //   let keys = toolTipData.map(tip => Object.keys(tip)[0]);
 
-    let overlayTipData;
-    let overlay = false;
-    if (keys.includes('ten') && keys.includes('TEN')) {
-      overlay = true;
+  //   let overlayTipData;
+  //   let overlay = false;
+  //   if (keys.includes('ten') && keys.includes('TEN')) {
+  //     overlay = true;
 
-      overlayTipData = toolTipData.filter(
-        tip => Object.keys(tip)[0] === Object.keys(tip)[0].toUpperCase()
-      );
-      toolTipData = toolTipData.filter(
-        tip => Object.keys(tip)[0] === Object.keys(tip)[0].toLowerCase()
-      );
-    }
+  //     overlayTipData = toolTipData.filter(
+  //       tip => Object.keys(tip)[0] === Object.keys(tip)[0].toUpperCase()
+  //     );
+  //     toolTipData = toolTipData.filter(
+  //       tip => Object.keys(tip)[0] === Object.keys(tip)[0].toLowerCase()
+  //     );
+  //   }
 
-    return (
-      this.state.displayTips && (
-        <foreignObject
-          style={{
-            x: overlay ? this.props.width - 40 : this.props.width,
-            y: '0',
-            width: overlay ? '90' : '50',
-            height: '55',
-            opacity: '0.6',
-            background: 'white',
-            border: 'black',
-            borderWidth: '1px'
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div
-              style={{
-                fontSize: '9px',
-                width: '55px'
-              }}
-            >
-              {toolTipData && (
-                <div>
-                  {date && <span style={{ fontWeight: 'bold' }}>{date}</span>}
-                  {toolTipData.map((tip, indx) => {
-                    if (tip === null) return;
-                    const key = Object.keys(tip)[0];
-                    if (
-                      key.toUpperCase() !== 'MAX' &&
-                      key.toUpperCase() !== 'MIN'
-                    ) {
-                      return (
-                        <div key={indx}>
-                          {keyMapping[key.toUpperCase()]} : {tip[key].flow}
-                        </div>
-                      );
-                    }
-                  })}
-                </div>
-              )}
-            </div>
-            {overlayTipData && (
-              <div
-                style={{
-                  fontSize: '9px',
-                  width: '35px'
-                }}
-              >
-                {overlayTipData && (
-                  <div>
-                    {date && <span style={{ fontWeight: 'bold' }}>Comp</span>}
-                    {overlayTipData.map((tip, indx) => {
-                      if (tip === null) return;
-                      const key = Object.keys(tip)[0];
-                      if (
-                        key.toUpperCase() !== 'MAX' &&
-                        key.toUpperCase() !== 'MIN'
-                      ) {
-                        return <div key={indx}>{tip[key].flow}</div>;
-                      }
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </foreignObject>
-      )
-    );
-  }
+  //   return (
+  //     this.state.displayTips && (
+  //       <foreignObject
+  //         style={{
+  //           x: overlay ? this.props.width - 40 : this.props.width,
+  //           y: '0',
+  //           width: overlay ? '90' : '50',
+  //           height: '55',
+  //           opacity: '0.6',
+  //           background: 'white',
+  //           border: 'black',
+  //           borderWidth: '1px'
+  //         }}
+  //       >
+  //         <div style={{ display: 'flex', flexDirection: 'row' }}>
+  //           <div
+  //             style={{
+  //               fontSize: '9px',
+  //               width: '55px'
+  //             }}
+  //           >
+  //             {toolTipData && (
+  //               <div>
+  //                 {date && <span style={{ fontWeight: 'bold' }}>{date}</span>}
+  //                 {toolTipData.map((tip, indx) => {
+  //                   if (tip === null) return;
+  //                   const key = Object.keys(tip)[0];
+  //                   if (
+  //                     key.toUpperCase() !== 'MAX' &&
+  //                     key.toUpperCase() !== 'MIN'
+  //                   ) {
+  //                     return (
+  //                       <div key={indx}>
+  //                         {keyMapping[key.toUpperCase()]} : {tip[key].flow}
+  //                       </div>
+  //                     );
+  //                   }
+  //                 })}
+  //               </div>
+  //             )}
+  //           </div>
+  //           {overlayTipData && (
+  //             <div
+  //               style={{
+  //                 fontSize: '9px',
+  //                 width: '35px'
+  //               }}
+  //             >
+  //               {overlayTipData && (
+  //                 <div>
+  //                   {date && <span style={{ fontWeight: 'bold' }}>Comp</span>}
+  //                   {overlayTipData.map((tip, indx) => {
+  //                     if (tip === null) return;
+  //                     const key = Object.keys(tip)[0];
+  //                     if (
+  //                       key.toUpperCase() !== 'MAX' &&
+  //                       key.toUpperCase() !== 'MIN'
+  //                     ) {
+  //                       return <div key={indx}>{tip[key].flow}</div>;
+  //                     }
+  //                   })}
+  //                 </div>
+  //               )}
+  //             </div>
+  //           )}
+  //         </div>
+  //       </foreignObject>
+  //     )
+  //   );
+  // }
 
   render() {
     const {
@@ -390,7 +351,12 @@ export default class LinePlot extends React.Component {
           {this.renderBoxplots(overLayBoxPlotData)}
           {this.renderVerticalBoxPlots(verticalOverlayBoxPlotData)}
           {this.renderLines(transform)}
-          {this.renderToolTips()}
+          {this.state.toolTipData && this.state.displayTips && (
+            <RenderToolTips
+              toolTipData={this.state.toolTipData}
+              width={this.props.width}
+            />
+          )}
         </g>
       );
     } else {
