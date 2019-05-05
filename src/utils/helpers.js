@@ -1,4 +1,5 @@
 import { history } from '../store/configureStore';
+import * as d3 from 'd3';
 import { fromJS } from 'immutable';
 import { detect } from 'detect-browser';
 import { assign, sortBy } from 'lodash';
@@ -21,6 +22,63 @@ export function getNameErrorMessage(name) {
   }
 }
 
+export async function findClosest(data, value, accessor, simpleLine) {
+  if (simpleLine) {
+    const array = data;
+    if (!array || !array.length) {
+      return null;
+    }
+
+    const bisect = d3.bisector(accessor).right;
+    const pointIndex = bisect(array, value);
+    const left = array[pointIndex - 1],
+      right = array[pointIndex];
+
+    let element;
+
+    // take the closer element
+    if (left && right) {
+      element =
+        Math.abs(value - accessor(left)) < Math.abs(value - accessor(right))
+          ? left
+          : right;
+    } else if (left) {
+      element = left;
+    } else {
+      element = right;
+    }
+    //console.log(element);
+    return [element];
+  }
+  const elements = await Object.keys(data).map(key => {
+    const array = data[key];
+    if (!array || !array.length) {
+      return null;
+    }
+
+    const bisect = d3.bisector(accessor).right;
+    const pointIndex = bisect(array, value);
+    const left = array[pointIndex - 1],
+      right = array[pointIndex];
+
+    let element;
+
+    // take the closer element
+    if (left && right) {
+      element =
+        Math.abs(value - accessor(left)) < Math.abs(value - accessor(right))
+          ? left
+          : right;
+    } else if (left) {
+      element = left;
+    } else {
+      element = right;
+    }
+    return { [key]: element };
+  });
+  return elements;
+}
+
 export function getCombinedLayer(
   geoSites,
   defaultMapStyle,
@@ -37,16 +95,16 @@ export function getCombinedLayer(
         geoClassName: site.geoClass.name, //for hover
         siteId: site.id,
         imageUrl: site.imageUrl,
-        geoRegionName: site.geoClass.geoRegion.name,
+        geoRegionName: site.geoClass.geoRegion.name
       },
       type: 'Feature',
       geometry: {
         type: 'Point',
         coordinates: [
           site.geometry.coordinates[1],
-          site.geometry.coordinates[0],
-        ],
-      },
+          site.geometry.coordinates[0]
+        ]
+      }
     };
     const currentGeoClass = site.geoClass.name.split('-')[0];
     if (!sitesData[currentGeoClass]) {
@@ -56,7 +114,7 @@ export function getCombinedLayer(
       sitesData[currentGeoClass] = {
         data: { type: 'FeatureCollection', features: [] },
         type: 'geojson',
-        cluster: false,
+        cluster: false
       };
     }
     sitesData[currentGeoClass].data.features.push(siteObj);
@@ -134,7 +192,7 @@ const MONTH_NAMES = [
   'Sep',
   'Oct',
   'Nov',
-  'Dec',
+  'Dec'
 ];
 
 const dateFromDay = (year, day) => {
@@ -218,7 +276,7 @@ export function getMapStyle(
   classifications.forEach(geoClass => {
     combinedMapStyle[`class${geoClass.classId}`] = {
       data: geoClass.geometry,
-      type: 'geojson',
+      type: 'geojson'
     };
 
     let newDataLayer = dataLayer
@@ -247,16 +305,16 @@ export function getMapStyle(
   const combinedGauges = {
     gauges: {
       data: { type: 'FeatureCollection', features: [] },
-      type: 'geojson',
-    },
+      type: 'geojson'
+    }
   };
   gauges.forEach(gauge => {
     if (gauge.geometry) {
       const properties = {
         properties: {
           stationName: gauge.stationName,
-          classId: gauge.classId,
-        },
+          classId: gauge.classId
+        }
       };
       const geometry = {
         type: 'Feature',
@@ -264,9 +322,9 @@ export function getMapStyle(
           type: 'Point',
           coordinates: [
             gauge.geometry.coordinates[1],
-            gauge.geometry.coordinates[0],
-          ],
-        },
+            gauge.geometry.coordinates[0]
+          ]
+        }
       };
       combinedGauges.gauges.data.features.push(
         assign({}, geometry, properties)
@@ -292,8 +350,8 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
   const combinedGauges = {
     gauges: {
       data: { type: 'FeatureCollection', features: [] },
-      type: 'geojson',
-    },
+      type: 'geojson'
+    }
   };
   gauges.forEach(gauge => {
     if (gauge.geometry) {
@@ -301,8 +359,8 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
         properties: {
           stationName: gauge.stationName,
           classId: gauge.classId,
-          gaugeId: gauge.id,
-        },
+          gaugeId: gauge.id
+        }
       };
       const geometry = {
         type: 'Feature',
@@ -310,9 +368,9 @@ export function getGaugeLayer(gauges, defaultMapStyle, gaugeLayer) {
           type: 'Point',
           coordinates: [
             gauge.geometry.coordinates[1],
-            gauge.geometry.coordinates[0],
-          ],
-        },
+            gauge.geometry.coordinates[0]
+          ]
+        }
       };
       combinedGauges.gauges.data.features.push(
         assign({}, geometry, properties)

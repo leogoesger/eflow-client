@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import { metricReference } from '../../../constants/metrics';
-import { getJulianOffsetDate } from '../../../utils/helpers';
+import { getJulianOffsetDate, findClosest } from '../../../utils/helpers';
 import Axis from './Axis';
+import RenderToolTips from './RenderToolTips';
 import { Colors } from '../../../styles';
 
 export default class SimpleLinePlot extends React.Component {
@@ -14,10 +15,24 @@ export default class SimpleLinePlot extends React.Component {
     this.yScale = d3.scaleLinear();
     this.line = d3.line();
     this.updateD3(props);
+    this.state = {
+      toolTipData: [],
+      displayTips: false
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     this.updateD3(nextProps);
+  }
+
+  componentDidUpdate() {
+    d3.selectAll('svg')
+      .on('mouseenter', () => {
+        this.setState({ displayTips: true });
+      })
+      .on('mouseleave', () => {
+        this.setState({ displayTips: false });
+      });
   }
 
   updateD3(props) {
@@ -31,7 +46,7 @@ export default class SimpleLinePlot extends React.Component {
       zoomType,
       logScale,
       yMax,
-      fixedYaxisPercentile,
+      fixedYaxisPercentile
     } = props;
 
     if (logScale) {
@@ -59,6 +74,10 @@ export default class SimpleLinePlot extends React.Component {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
+    //tooltip
+    d3.selectAll('path').on('mousemove', () => {
+      this.handleMouseMove(d3.mouse(d3.event.currentTarget));
+    });
   }
 
   _transform() {
@@ -75,6 +94,49 @@ export default class SimpleLinePlot extends React.Component {
     }
 
     return transform;
+  }
+
+  async handleMouseMove([mouseX, mouseY]) {
+    // find nearest data point
+    const { data, xValue } = this.props;
+
+    // convert the mouse x and y to the domain x and y using our chart scale
+    let domainX = this.xScale.invert(mouseX);
+    let domainY = this.yScale.invert(mouseY);
+
+    // if the mouse is outside the domain, consider it having exited
+    if (
+      domainX < this.xScale.domain()[0] ||
+      domainX > this.xScale.domain()[1]
+    ) {
+      domainX = null;
+    }
+    if (
+      domainY < this.yScale.domain()[0] ||
+      domainY > this.yScale.domain()[1]
+    ) {
+      domainY = null;
+    }
+
+    // send an action indicating which point to highlight if we are near one, otherwise indicate
+    // no point should be highlighted.
+    if (
+      domainX !== null &&
+      domainY !== null &&
+      mouseX != null &&
+      mouseY != null
+    ) {
+      // find the nearest point to the x value
+      const toolTipData = await findClosest(
+        data,
+        domainX,
+        d => xValue(d),
+        true
+      );
+      this.setState({ toolTipData });
+    } else {
+      return;
+    }
   }
 
   _renderOverLay(transform) {
@@ -181,13 +243,16 @@ export default class SimpleLinePlot extends React.Component {
           stroke={this.props.color}
         />
         {this._renderOverLay(transform)}
+        {this.state.toolTipData && this.state.displayTips && (
+          <RenderToolTips toolTipData={this.state.toolTipData} width={width} />
+        )}
       </g>
     );
   }
 }
 
 SimpleLinePlot.defaultProps = {
-  width: 400,
+  width: 400
 };
 
 SimpleLinePlot.propTypes = {
@@ -207,5 +272,5 @@ SimpleLinePlot.propTypes = {
   isHydrographOverlay: PropTypes.bool,
   hydrograph: PropTypes.object,
   yMax: PropTypes.number,
-  fixedYaxisPercentile: PropTypes.number,
+  fixedYaxisPercentile: PropTypes.number
 };

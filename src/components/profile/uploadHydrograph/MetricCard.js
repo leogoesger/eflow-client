@@ -10,7 +10,7 @@ import {
   Divider,
   IconMenu,
   FlatButton,
-  MenuItem,
+  MenuItem
 } from 'material-ui';
 import Setting from 'material-ui/svg-icons/action/settings';
 import { SimpleLinePlot } from '../../shared/plots';
@@ -33,7 +33,7 @@ class MetricCard extends React.Component {
       isHydrographOverlay: false,
       fixedYaxis: 0,
       toggledMetrics: [],
-      yMax: 475,
+      yMax: 475
     };
     this.zoom = d3
       .zoom()
@@ -53,7 +53,7 @@ class MetricCard extends React.Component {
 
   zoomed() {
     this.setState({
-      zoomTransform: d3.event.transform,
+      zoomTransform: d3.event.transform
     });
   }
 
@@ -94,7 +94,7 @@ class MetricCard extends React.Component {
       flowDataPOR = flowDataPOR.concat(flow);
     });
     this.setState({
-      yMax: d3.quantile(removeNaN(flowDataPOR), percentile),
+      yMax: d3.quantile(removeNaN(flowDataPOR), percentile)
     });
   }
 
@@ -112,7 +112,7 @@ class MetricCard extends React.Component {
           margin: '0 auto',
           justifyContent: 'space-around',
           fontSize: '14px',
-          color: Colors.lightGrey,
+          color: Colors.lightGrey
         }}
       >
         <div>{year[0]}</div>
@@ -143,7 +143,7 @@ class MetricCard extends React.Component {
       Falls: {},
       Summers: {},
       FallWinters: {},
-      Winters: {},
+      Winters: {}
     };
 
     Object.keys(metricsRef).forEach(metric => {
@@ -201,7 +201,6 @@ class MetricCard extends React.Component {
           <div style={styles.xLabel}>{`Water year hydrograph for ${
             this.state.currentYear
           }`}</div>
-          {/* {this._renderYearStatus(this.props.data.condition)} */}
           <div style={{ marginLeft: '20px' }}>
             <svg
               width={700}
@@ -257,7 +256,7 @@ class MetricCard extends React.Component {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'space-between'
             }}
           >
             <CardHeader
@@ -278,7 +277,7 @@ class MetricCard extends React.Component {
               zIndex: 1,
               top: '57px',
               width: 'auto',
-              left: '531px',
+              left: '531px'
             }}
           >
             <IconMenu
@@ -315,7 +314,7 @@ class MetricCard extends React.Component {
               width: 'auto',
               overflow: 'hidden',
               margin: 'auto',
-              position: 'relative',
+              position: 'relative'
             }}
           >
             {this._renderAnnualPlot()}
@@ -361,14 +360,14 @@ class MetricCard extends React.Component {
 }
 
 MetricCard.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.object
 };
 
 const styles = {
   container: {
     // width: "80%",
     height: '570px',
-    overflow: 'auto',
+    overflow: 'auto'
     // margin: "0 auto",
   },
   title: {
@@ -377,7 +376,7 @@ const styles = {
     textAlign: 'center',
     fontWeight: '500',
     fontSize: '16px',
-    padding: '20px',
+    padding: '20px'
   },
   yLabel: {
     position: 'absolute',
@@ -386,13 +385,13 @@ const styles = {
     top: '140px',
     color: '#616161',
     writingMode: 'vertical-rl',
-    transform: 'rotate(-180deg)',
+    transform: 'rotate(-180deg)'
   },
   xLabel: {
     width: '100%',
     paddingTop: '20px',
-    margin: '5px 0px 5px 275px',
-  },
+    margin: '5px 0px 5px 275px'
+  }
 };
 
 const metricsRef = {
@@ -401,7 +400,7 @@ const metricsRef = {
     rocs: 'rateOfChange',
     timings: 'timing',
     durations: 'duration',
-    magnitudes: 'magnitude',
+    magnitudes: 'magnitude'
   },
 
   summer: {
@@ -411,7 +410,7 @@ const metricsRef = {
     timings: 'timing',
     magnitudes_ten: 'magnitude10',
     magnitudes_fifty: 'magnitude50',
-    no_flow_counts: 'noFlowCount',
+    no_flow_counts: 'noFlowCount'
   },
 
   fall: {
@@ -419,12 +418,12 @@ const metricsRef = {
     timings: 'timing',
     wet_timings: 'timingWet',
     durations: 'duration',
-    magnitudes: 'magnitude',
+    magnitudes: 'magnitude'
   },
 
   fallWinter: {
     tableName: 'FallWinters',
-    baseflows: 'magWet',
+    baseflows: 'magWet'
   },
 
   winter: {
@@ -433,9 +432,9 @@ const metricsRef = {
       two: 'magnitude2',
       ten: 'magnitude10',
       five: 'magnitude5',
-      twenty: 'magnitude20',
-    },
-  },
+      twenty: 'magnitude20'
+    }
+  }
 };
 
 export default MetricCard;

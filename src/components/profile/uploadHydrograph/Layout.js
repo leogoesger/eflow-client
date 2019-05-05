@@ -17,7 +17,7 @@ class Layout extends React.Component {
     this.state = {
       loadDRH: true,
       loadAFP: false,
-      loadBP: false,
+      loadBP: false
     };
   }
 
@@ -31,7 +31,7 @@ class Layout extends React.Component {
     const resetStates = {
       loadDRH: false,
       loadAFP: false,
-      loadBP: false,
+      loadBP: false
     };
 
     resetStates[e] = true;
@@ -83,7 +83,7 @@ class Layout extends React.Component {
           <div
             style={{
               width: '20%',
-              height: '100%',
+              height: '100%'
             }}
           >
             <div
@@ -91,7 +91,7 @@ class Layout extends React.Component {
                 height: '640px',
                 display: 'flex',
                 justifyContent: 'space-between',
-                flexDirection: 'column',
+                flexDirection: 'column'
               }}
             >
               <div>
@@ -146,14 +146,14 @@ class Layout extends React.Component {
             style={{
               width: '80%',
               margin: '0 auto',
-              boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px',
+              boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px'
             }}
           >
             <div
               style={{
                 width: '90%',
                 margin: '30px auto',
-                position: 'relative',
+                position: 'relative'
               }}
             >
               {this.renderClicked(this.state)}
@@ -174,14 +174,14 @@ Layout.propTypes = {
   removeClassGaugeProps: PropTypes.func,
   classifications: PropTypes.array,
   fetchClassification: PropTypes.func,
-  updateHoveredGauge: PropTypes.func,
+  updateHoveredGauge: PropTypes.func
 };
 
 const styles = {
   banner: {
     backgroundColor: '#424242',
     height: '230px',
-    zIndex: '0',
+    zIndex: '0'
   },
   paperStyle: {
     display: 'flex',
@@ -191,14 +191,14 @@ const styles = {
     backgroundColor: 'white',
     width: '1100px',
     zIndex: '2',
-    overflow: 'scroll',
+    overflow: 'scroll'
   },
   selectedMenu: {
     borderRightStyle: 'solid',
     borderWidth: '3px',
-    marginRight: '5px',
-    borderColor: 'rgba(0, 188, 212, 0.5)',
-  },
+    marginRight: '0px',
+    borderColor: 'rgba(0, 188, 212, 0.5)'
+  }
 };
 
 export default Layout;
