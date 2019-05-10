@@ -20,7 +20,7 @@ const colors = {
   SEVENTYFIVE: Colors.SEVENTYFIVE,
   FIFTY: Colors.FIFTY,
   TWENTYFIVE: Colors.TWENTYFIVE,
-  TEN: Colors.TEN,
+  TEN: Colors.TEN
 };
 
 class Hydrograph extends React.Component {
@@ -33,7 +33,7 @@ class Hydrograph extends React.Component {
       springTiming: false,
       summerTiming: false,
       zoomTransform: null,
-      minMax: false,
+      minMax: false
     };
     this.zoom = d3
       .zoom()
@@ -54,7 +54,7 @@ class Hydrograph extends React.Component {
 
   zoomed() {
     this.setState({
-      zoomTransform: d3.event.transform,
+      zoomTransform: d3.event.transform
     });
   }
 
@@ -82,7 +82,7 @@ class Hydrograph extends React.Component {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           <CardHeader
@@ -116,7 +116,7 @@ class Hydrograph extends React.Component {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           <CardHeader
@@ -148,7 +148,7 @@ class Hydrograph extends React.Component {
       SEVENTYFIVE: [],
       NINTY: [],
       MIN: [],
-      MAX: [],
+      MAX: []
     };
     let hydrographs;
     hydrographs = nextProps.currentGauge
@@ -197,7 +197,7 @@ class Hydrograph extends React.Component {
   _renderDRHs(hydroData) {
     let yearRanges = '';
     if (this.props.currentGauge) {
-      const years = this.props.currentGauge.years[0].allYears;
+      const years = this.props.currentGauge.years[0].year;
       yearRanges = `${years[0]}-${years[years.length - 1]}`;
     }
 
@@ -251,7 +251,7 @@ class Hydrograph extends React.Component {
     fileName += `_Hydrograph.jpeg`;
     saveAsImage(this.saveImageRef, {
       fileName,
-      height: 520,
+      height: 520
     });
   }
 
@@ -309,7 +309,7 @@ Hydrograph.propTypes = {
   removeClassGaugeProps: PropTypes.func,
   overLayBoxPlotMethods: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
-  verticalOverlayBoxPlotData: PropTypes.array,
+  verticalOverlayBoxPlotData: PropTypes.array
 };
 
 const styles = {
@@ -319,7 +319,7 @@ const styles = {
     left: '18px',
     top: '180px',
     writingMode: 'vertical-rl',
-    transform: 'rotate(-180deg)',
+    transform: 'rotate(-180deg)'
   },
   labels: {
     width: '90%',
@@ -327,43 +327,43 @@ const styles = {
     justifyContent: 'space-around',
     position: 'absolute',
     top: '480px',
-    left: '40px',
+    left: '40px'
   },
   label: {
     height: '10px',
     width: '10px',
-    marginTop: '0px',
+    marginTop: '0px'
   },
   graph: {
     height: '750px',
     width: '650px',
     marginBottom: '20px',
-    borderRadius: '0px',
+    borderRadius: '0px'
   },
   plotTitle: {
     marginTop: '40px',
     width: '100%',
     textAlign: 'center',
     fontWeight: '500',
-    fontSize: '16px',
+    fontSize: '16px'
   },
   labelName: { fontSize: '14px', marginLeft: '-35px', marginTop: '-2px' },
   minMax: {
     width: '180px',
     position: 'absolute',
     right: '0px',
-    top: '20px',
+    top: '20px'
   },
   labelStyle: {
     fontSize: '16px',
-    color: '#757575',
+    color: '#757575'
   },
   btnContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '96%',
-    margin: '30px auto',
-  },
+    margin: '30px auto'
+  }
 };
 
 export default Hydrograph;
