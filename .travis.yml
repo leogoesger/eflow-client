@@ -1,9 +1,9 @@
 language: node_js
-cache: yarn
+cache: npm
 node_js:
-  - "8"
+  - '10.5.0'
 script:
-  - yarn lint
-  - yarn test:cover
+  - npm run lint
+  - npm run test:cover
 after_success:
-  - yarn test:cover:CI
+  - npm run test:cover:CI

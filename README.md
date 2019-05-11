@@ -21,18 +21,18 @@ This project uses [NodeJS](https://nodejs.org/), [ExpressJS](https://expressjs.c
 3.  Install your dependencies
 
     ```
-    cd path/to/eflow-api; yarn
+    cd path/to/eflow-api; npm install
     ```
 
 4.  Start your app
 
     ```
-    yarn start
+    npm start
     ```
 
 ## Testing
 
-Simply run `yarn test` and all your tests in the `test/` directory will be run.
+Simply run `npm run test` and all your tests in the `test/` directory will be run.
 
 ## CI
 
@@ -53,7 +53,7 @@ For more information on all the things you can do with Sequelize CLI visit [sequ
 ## Scripts
 
 ```
-"test": "NODE_ENV=test yarn run test-prepare ; NODE_ENV=test npm run mocha", # Clear database before all the tests are run
+"test": "NODE_ENV=test npm run test-prepare ; NODE_ENV=test npm run mocha", # Clear database before all the tests are run
 "test-cover": "NODE_ENV=test nyc --reporter=text npm run mocha",             # Generate test coverage report locally
 "test-coverage": "nyc report --reporter=text-lcov | coveralls",              # Generate test coverage and send it to Coveralls
 ```
