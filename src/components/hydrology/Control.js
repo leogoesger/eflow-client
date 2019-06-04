@@ -20,7 +20,7 @@ export default class Control extends React.Component {
       class8: true,
       class9: true,
       cities: false,
-      gauges: true,
+      gauges: true
     };
   }
 
@@ -42,7 +42,7 @@ export default class Control extends React.Component {
           value={'empty'}
           thumbSwitchedStyle={{
             size: '1',
-            backgroundColor: currentClass.colors[0],
+            backgroundColor: currentClass.colors[0]
           }}
           trackSwitchedStyle={{ backgroundColor: currentClass.colors[1] }}
           onClick={() => this.handleToggle(`class${index + 1}`)}
@@ -59,7 +59,7 @@ export default class Control extends React.Component {
           display: 'flex',
           justifyContent: 'space-around',
           width: '100%',
-          margin: '4px auto',
+          margin: '4px auto'
         }}
       >
         <IconMenu
@@ -114,23 +114,23 @@ export default class Control extends React.Component {
 
 Control.propTypes = {
   classifications: PropTypes.array,
-  hideLayer: PropTypes.func,
+  hideLayer: PropTypes.func
 };
 
 const styles = {
   BLcontainer: {
     backgroundColor: '#fff',
     position: 'absolute',
-    bottom: '60px',
-    left: '20px',
-    width: '140px',
-    height: '304px',
-    padding: '20px',
+    bottom: '51px',
+    left: '8px',
+    width: '135px',
+    height: '300px',
+    padding: '15px',
     boxShadow: '2px 2px 45px -5px rgba(110,110,110,1)',
-    zIndex: '8',
+    zIndex: '8'
   },
   labelStyle: {
     color: Colors.grey,
-    fontSize: '12px',
-  },
+    fontSize: '12px'
+  }
 };
