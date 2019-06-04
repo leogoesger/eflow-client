@@ -77,6 +77,12 @@ class Hydrograph extends React.Component {
   _renderGaugeInfo() {
     const currentGaugeClass =
       classInfo[`class${this.props.currentGauge.classId}`];
+
+    const color =
+      currentGaugeClass.abbre === 'SM'
+        ? 'rgb(217,210,69)'
+        : currentGaugeClass.colors[0];
+
     return (
       <div>
         <div
@@ -90,7 +96,7 @@ class Hydrograph extends React.Component {
             subtitle={`ID: ${this.props.currentGauge.id}, Class: ${
               currentGaugeClass.fullName
             }`}
-            subtitleColor={currentGaugeClass.colors[0]}
+            subtitleColor={color}
             actAsExpander={false}
             showExpandableButton={false}
             style={{ padding: '15px 0px 15px 10px' }}
@@ -111,6 +117,10 @@ class Hydrograph extends React.Component {
   _renderClassInfo() {
     const currentClass =
       classInfo[`class${this.props.currentClassification.id}`];
+
+    const color =
+      currentClass.abbre === 'SM' ? 'rgb(217,210,69)' : currentClass.colors[0];
+
     return (
       <div>
         <div
@@ -121,7 +131,7 @@ class Hydrograph extends React.Component {
         >
           <CardHeader
             title={this.props.currentClassification.name}
-            titleColor={currentClass.colors[0]}
+            titleColor={color}
             subtitle={`ID: ${this.props.currentClassification.id}`}
             actAsExpander={false}
             showExpandableButton={false}
