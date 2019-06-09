@@ -49,10 +49,10 @@ export const hoveredGaugeLayer = fromJS({
   paint: {
     'circle-radius': {
       base: 7,
-      stops: [[5, 4.5], [7, 5]]
+      stops: [[5, 6.5], [7, 7]]
     },
     'circle-stroke-color': 'rgb(100,100,100)',
-    'circle-stroke-width': 2,
+    'circle-stroke-width': 3,
     'circle-color': {
       property: 'classId',
       stops: [

@@ -224,7 +224,7 @@ Hydrology.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   classifications: PropTypes.array,
   gauges: PropTypes.array,
-  hoveredGauge: PropTypes.number,
+  hoveredGauge: PropTypes.object,
   tabValue: PropTypes.string,
   updateTab: PropTypes.func,
   currentGauge: PropTypes.object,

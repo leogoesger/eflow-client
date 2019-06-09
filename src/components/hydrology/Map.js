@@ -51,11 +51,7 @@ export default class Map extends React.Component {
   }
 
   _updateCurrentHoverGauge(nextProps) {
-    const hoveredGaugeDetails = nextProps.gauges.find(
-      gauge => gauge.id === nextProps.hoveredGauge
-    );
-
-    if (nextProps.hoveredGauge && hoveredGaugeDetails.geometry) {
+    if (nextProps.hoveredGauge && nextProps.hoveredGauge.geometry) {
       const hoveredGauge = {
         hoveredGauge: {
           data: {
@@ -66,11 +62,11 @@ export default class Map extends React.Component {
                 geometry: {
                   type: 'Point',
                   coordinates: [
-                    hoveredGaugeDetails.geometry.coordinates[1],
-                    hoveredGaugeDetails.geometry.coordinates[0]
+                    nextProps.hoveredGauge.geometry.coordinates[1],
+                    nextProps.hoveredGauge.geometry.coordinates[0]
                   ]
                 },
-                properties: { classId: hoveredGaugeDetails.classId }
+                properties: { classId: nextProps.hoveredGauge.classId }
               }
             ]
           },
@@ -113,7 +109,7 @@ export default class Map extends React.Component {
         )
       );
       this.setState({ mapStyle: newMapStyle });
-    } else if (nextProps.hoveredGauge && !hoveredGaugeDetails.geometry) {
+    } else if (nextProps.hoveredGauge && !this.props.hoveredGauge.geometry) {
       this.setState({
         open: true
       });
@@ -162,7 +158,11 @@ export default class Map extends React.Component {
     if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
       const hoveredFeature =
         features && features.find(f => f.layer.id.indexOf('gauge') >= 0);
-      this.props.updateHoveredGauge(hoveredFeature.properties.gaugeId);
+      this.props.updateHoveredGauge(
+        this.props.gauges.find(
+          gauge => gauge.id === hoveredFeature.properties.gaugeId
+        )
+      );
       return this.setState({ hoveredFeature, x: offsetX, y: offsetY });
     } else if (features.find(f => f.layer.id.indexOf('class') >= 0)) {
       const hoveredFeature =
@@ -246,7 +246,7 @@ export default class Map extends React.Component {
 
   _getSnackBarMessage() {
     if (this.props.hoveredGauge) {
-      return `Gauge ${this.props.hoveredGauge} does not have location Info.`;
+      return `Gauge ${this.props.hoveredGauge.id} does not have location Info.`;
     } else {
       return 'nothing';
     }
@@ -289,7 +289,7 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
-  hoveredGauge: PropTypes.number,
+  hoveredGauge: PropTypes.object,
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
   updateHoveredGauge: PropTypes.func

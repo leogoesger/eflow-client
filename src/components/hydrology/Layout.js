@@ -53,7 +53,7 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   tabValue: PropTypes.string,
-  hoveredGauge: PropTypes.number,
+  hoveredGauge: PropTypes.object,
   updateTab: PropTypes.func,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
