@@ -19,26 +19,26 @@ export default class Map extends React.Component {
       mapStyle: defaultMapStyle,
       data: {
         type: 'FeatureCollection',
-        features: [],
+        features: []
       },
       viewport: {
         width: 600,
         height: 800,
         latitude: 36.5,
         longitude: -119.4179,
-        zoom: 5.3,
+        zoom: 5.3
       },
       x: null,
       y: null,
       hoveredFeature: null,
-      loading: true,
+      loading: true
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.gauges && this.props.gauges !== nextProps.gauges) {
       this.setState({
-        mapStyle: getGaugeLayer(nextProps.gauges, defaultMapStyle, gaugeLayer),
+        mapStyle: getGaugeLayer(nextProps.gauges, defaultMapStyle, gaugeLayer)
       });
     } else if (
       nextProps.hoveredGauge &&
@@ -52,7 +52,7 @@ export default class Map extends React.Component {
 
   _updateCurrentHoverGauge(nextProps) {
     const hoveredGaugeDetails = nextProps.gauges.find(
-      gauge => gauge.id === nextProps.hoveredGauge.id
+      gauge => gauge.id === nextProps.hoveredGauge
     );
 
     if (nextProps.hoveredGauge && hoveredGaugeDetails.geometry) {
@@ -67,15 +67,15 @@ export default class Map extends React.Component {
                   type: 'Point',
                   coordinates: [
                     hoveredGaugeDetails.geometry.coordinates[1],
-                    hoveredGaugeDetails.geometry.coordinates[0],
-                  ],
+                    hoveredGaugeDetails.geometry.coordinates[0]
+                  ]
                 },
-                properties: { classId: hoveredGaugeDetails.classId },
-              },
-            ],
+                properties: { classId: hoveredGaugeDetails.classId }
+              }
+            ]
           },
-          type: 'geojson',
-        },
+          type: 'geojson'
+        }
       };
 
       //If the layer is not exist yet, this will create a new layer
@@ -115,14 +115,14 @@ export default class Map extends React.Component {
       this.setState({ mapStyle: newMapStyle });
     } else if (nextProps.hoveredGauge && !hoveredGaugeDetails.geometry) {
       this.setState({
-        open: true,
+        open: true
       });
     }
   }
 
   _handleRequestClose() {
     this.setState({
-      open: false,
+      open: false
     });
   }
 
@@ -156,7 +156,7 @@ export default class Map extends React.Component {
   _onHover(event) {
     const {
       features,
-      srcEvent: { offsetX, offsetY },
+      srcEvent: { offsetX, offsetY }
     } = event;
 
     if (features.find(f => f.layer.id.indexOf('gauges') >= 0)) {
@@ -246,7 +246,7 @@ export default class Map extends React.Component {
 
   _getSnackBarMessage() {
     if (this.props.hoveredGauge) {
-      return `Gauge ${this.props.hoveredGauge.id} does not have location Info.`;
+      return `Gauge ${this.props.hoveredGauge} does not have location Info.`;
     } else {
       return 'nothing';
     }
@@ -289,8 +289,8 @@ export default class Map extends React.Component {
 
 Map.propTypes = {
   gauges: PropTypes.array,
-  hoveredGauge: PropTypes.object,
+  hoveredGauge: PropTypes.number,
   fetchCurrentGauge: PropTypes.func,
   fetchClassification: PropTypes.func,
-  updateHoveredGauge: PropTypes.func,
+  updateHoveredGauge: PropTypes.func
 };

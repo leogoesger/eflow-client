@@ -53,7 +53,7 @@ export default class Layout extends React.Component {
 
 Layout.propTypes = {
   tabValue: PropTypes.string,
-  hoveredGauge: PropTypes.object,
+  hoveredGauge: PropTypes.number,
   updateTab: PropTypes.func,
   gauges: PropTypes.array,
   currentGauge: PropTypes.object,
@@ -65,7 +65,7 @@ Layout.propTypes = {
   updateHoveredGauge: PropTypes.func,
   overLayBoxPlotMethods: PropTypes.object,
   overLayBoxPlotData: PropTypes.array,
-  verticalOverlayBoxPlotData: PropTypes.array,
+  verticalOverlayBoxPlotData: PropTypes.array
 };
 
 const styles = {
@@ -74,6 +74,6 @@ const styles = {
     justifyContent: 'space-around',
     margin: '-60px auto 100px auto',
     height: '100%',
-    width: '1300px',
-  },
+    width: '1300px'
+  }
 };

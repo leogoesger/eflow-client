@@ -7,30 +7,30 @@ import { updateTab, updateHoveredGauge } from '../actions/hydrology';
 import {
   fetchClassification,
   removeCurrentClass,
-  fetchClassifications,
+  fetchClassifications
 } from '../actions/classification';
 import {
   fetchGauges,
   fetchCurrentGauge,
-  removeCurrentGauge,
+  removeCurrentGauge
 } from '../actions/gauge';
 import { fetchFallBoxPlotData, removeFallBoxPlotData } from '../actions/fall';
 import {
   fetchSpringBoxPlotData,
-  removeSpringBoxPlotData,
+  removeSpringBoxPlotData
 } from '../actions/spring';
 import {
   fetchSummerBoxPlotData,
-  removeSummerBoxPlotData,
+  removeSummerBoxPlotData
 } from '../actions/summer';
 import {
   fetchWinterBoxPlotData,
-  removeWinterBoxPlotData,
+  removeWinterBoxPlotData
 } from '../actions/winter';
 
 import {
   fetchFallWinterBoxPlotData,
-  removeFallWinterBoxPlotData,
+  removeFallWinterBoxPlotData
 } from '../actions/fallWinter';
 
 import UserTour from '../components/shared/UserTour';
@@ -48,7 +48,7 @@ const hydrologyTourSteps = [
         </div>
       </div>
     ),
-    position: 'top',
+    position: 'top'
   },
   {
     step: 2,
@@ -59,7 +59,7 @@ const hydrologyTourSteps = [
         {'Clicking on the slider will hide/display different map layers.'}
       </div>
     ),
-    position: 'bottom',
+    position: 'bottom'
   },
   {
     step: 3,
@@ -70,7 +70,7 @@ const hydrologyTourSteps = [
         {'This window will display hydrographs, gauges, and metrics data.'}
       </div>
     ),
-    position: 'bottom',
+    position: 'bottom'
   },
   {
     step: 4,
@@ -86,8 +86,8 @@ const hydrologyTourSteps = [
         </div>
       </div>
     ),
-    position: 'bottom',
-  },
+    position: 'bottom'
+  }
 ];
 
 export class Hydrology extends React.Component {
@@ -152,7 +152,7 @@ export class Hydrology extends React.Component {
       this.props.fallTimingBoxPlot,
       this.props.fallTimingWetBoxPlot,
       this.props.springTimingBoxPlot,
-      this.props.summerTimingBoxPlot,
+      this.props.summerTimingBoxPlot
     ].filter(d => d);
   }
 
@@ -166,7 +166,7 @@ export class Hydrology extends React.Component {
       this.props.summerMagnitude10BoxPlot,
       this.props.summerMagnitude50BoxPlot,
       this.props.fallMagnitudeBoxPlot,
-      this.props.fallWinterMagnitudeBoxPlot,
+      this.props.fallWinterMagnitudeBoxPlot
     ].filter(d => d);
   }
 
@@ -182,7 +182,7 @@ export class Hydrology extends React.Component {
       removeWinterBoxPlotData: d => this.props.removeWinterBoxPlotData(d),
       fetchFallWinterBoxPlotData: d => this.props.fetchFallWinterBoxPlotData(d),
       removeFallWinterBoxPlotData: d =>
-        this.props.removeFallWinterBoxPlotData(d),
+        this.props.removeFallWinterBoxPlotData(d)
     };
   }
 
@@ -224,7 +224,7 @@ Hydrology.propTypes = {
   fetchCurrentGauge: PropTypes.func,
   classifications: PropTypes.array,
   gauges: PropTypes.array,
-  hoveredGauge: PropTypes.object,
+  hoveredGauge: PropTypes.number,
   tabValue: PropTypes.string,
   updateTab: PropTypes.func,
   currentGauge: PropTypes.object,
@@ -255,7 +255,7 @@ Hydrology.propTypes = {
   summerMagnitude10BoxPlot: PropTypes.object,
   summerMagnitude50BoxPlot: PropTypes.object,
   fallMagnitudeBoxPlot: PropTypes.object,
-  fallWinterMagnitudeBoxPlot: PropTypes.object,
+  fallWinterMagnitudeBoxPlot: PropTypes.object
 };
 
 const mapStateToProps = state => {
@@ -278,7 +278,7 @@ const mapStateToProps = state => {
     summerMagnitude10BoxPlot: state.summer.magnitude10BoxPlot,
     summerMagnitude50BoxPlot: state.summer.magnitude50BoxPlot,
     fallMagnitudeBoxPlot: state.fall.magnitudeBoxPlot,
-    fallWinterMagnitudeBoxPlot: state.fallWinter.magnitudeBoxPlot,
+    fallWinterMagnitudeBoxPlot: state.fallWinter.magnitudeBoxPlot
   };
 };
 
@@ -303,7 +303,7 @@ const mapDispatchToProps = dispatch => {
     fetchFallWinterBoxPlotData: data =>
       dispatch(fetchFallWinterBoxPlotData(data)),
     removeFallWinterBoxPlotData: data =>
-      dispatch(removeFallWinterBoxPlotData(data)),
+      dispatch(removeFallWinterBoxPlotData(data))
   };
 };
 
@@ -311,8 +311,8 @@ const styles = {
   banner: {
     backgroundColor: '#424242',
     height: '230px',
-    zIndex: '0',
-  },
+    zIndex: '0'
+  }
 };
 export default connect(
   mapStateToProps,
