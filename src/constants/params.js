@@ -268,7 +268,7 @@ export const paramRange = {
   },
 
   fall_params: {
-    map: 'Wet Season Initiation',
+    map: 'Fall Flush',
     min_flush_percentage: {
       min: 0,
       max: 100,
@@ -341,7 +341,7 @@ export const paramRange = {
       step: 0.01,
       map: 'Peak Sensitivity',
       description:
-        'Sensitivity factor for identifying potential wet season initiation peaks. A smaller value detects more peaks.',
+        'Sensitivity factor for identifying potential fall flush peaks. A smaller value detects more peaks.',
     },
     sigma: {
       min: 0,
@@ -374,15 +374,14 @@ export const paramRange = {
       step: 0.1,
       map: 'Peak Percent Change',
       description:
-        'Size of the wet season initiation peak, from rising limb to top of the peak, must reach this amount of relative change',
+        'Size of the fall flush peak, from rising limb to top of the peak, must reach this amount of relative change',
     },
     min_flush_threshold: {
       min: 0,
       max: 1,
       step: 0.1,
       map: 'Min Flush Threshold',
-      description:
-        'Minimum allowable magnitude for wet season initiation peak flow.',
+      description: 'Minimum allowable magnitude for fall flush peak flow.',
     }, // minimum allowable magnitude threshold for fall flush flow
     // Latest accepted date for fall flush, in Julian Date counting from Oct 1st = 0. (i.e. Dec 15th = 75)
     date_cutoff: {

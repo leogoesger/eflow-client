@@ -21,45 +21,46 @@ const renderRow = summaryData => {
     return null;
   }
   return Object.keys(summaryData).map(key => {
-    if(summaryData[key] !== null){
-    if (summaryData[key].length === 3 && key !== 'abbreviation') {
-      return (
-        <TableRow
-          key={key}
-          style={{ height: '40px', padding: '0px', cursor: 'pointer' }}
-        >
-          <TableRowColumn style={{ height: '15px', paddingTop: '15px' }}>
-            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {key}
-            </Tooltip>
-          </TableRowColumn>
+    if (summaryData[key] !== null) {
+      if (summaryData[key].length === 3 && key !== 'abbreviation') {
+        return (
+          <TableRow
+            key={key}
+            style={{ height: '40px', padding: '0px', cursor: 'pointer' }}
+          >
+            <TableRowColumn style={{ height: '15px', paddingTop: '15px' }}>
+              <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+                {key}
+              </Tooltip>
+            </TableRowColumn>
 
-          <TableRowColumn style={{ height: '15px' }}>
-            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {metricNameMap[key].includes('Timing')
-                ? getCalenderDateFromJulian(Math.floor(summaryData[key][0]))
-                : summaryData[key][0]}
-            </Tooltip>
-          </TableRowColumn>
+            <TableRowColumn style={{ height: '15px' }}>
+              <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+                {metricNameMap[key].includes('Timing')
+                  ? getCalenderDateFromJulian(Math.floor(summaryData[key][0]))
+                  : summaryData[key][0]}
+              </Tooltip>
+            </TableRowColumn>
 
-          <TableRowColumn style={{ height: '15px' }}>
-            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {metricNameMap[key].includes('Timing')
-                ? getCalenderDateFromJulian(Math.floor(summaryData[key][1]))
-                : summaryData[key][1]}
-            </Tooltip>
-          </TableRowColumn>
+            <TableRowColumn style={{ height: '15px' }}>
+              <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+                {metricNameMap[key].includes('Timing')
+                  ? getCalenderDateFromJulian(Math.floor(summaryData[key][1]))
+                  : summaryData[key][1]}
+              </Tooltip>
+            </TableRowColumn>
 
-          <TableRowColumn style={{ height: '15px' }}>
-            <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
-              {metricNameMap[key].includes('Timing')
-                ? getCalenderDateFromJulian(Math.floor(summaryData[key][2]))
-                : summaryData[key][2]}
-            </Tooltip>
-          </TableRowColumn>
-        </TableRow>
-      );
-    }}
+            <TableRowColumn style={{ height: '15px' }}>
+              <Tooltip title={metricNameMap[key]} position="top" arrow={true}>
+                {metricNameMap[key].includes('Timing')
+                  ? getCalenderDateFromJulian(Math.floor(summaryData[key][2]))
+                  : summaryData[key][2]}
+              </Tooltip>
+            </TableRowColumn>
+          </TableRow>
+        );
+      }
+    }
   });
 };
 
@@ -143,7 +144,7 @@ const Summary = props => {
       )}
       {renderMetrics(
         props.summaryData,
-        'Wet Season Initiation',
+        'Fall Flush',
         'Duration, Magnitude, Timing, and Wet Season Timing',
         ['WSI_Dur', 'WSI_Mag', 'WSI_Tim', 'Wet_Tim']
       )}

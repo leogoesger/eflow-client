@@ -2,38 +2,38 @@ export const morphologyRegions = {
   klamath: {
     displayName: 'Klamath',
     searchKeys: ['klamath'],
-    colors: ['#66bb6a', '#98ee99']
+    colors: ['#66bb6a', '#98ee99'],
   },
   sacramento: {
     displayName: 'Sacramento',
     searchKeys: ['sacramento'],
-    colors: ['#7986cb', '#9fa8da']
+    colors: ['#7986cb', '#9fa8da'],
   },
   southCoast: {
     displayName: 'South Coast',
     searchKeys: ['southCoast'],
-    colors: ['#ef9a9a', '#f8bbd0']
+    colors: ['#ef9a9a', '#f8bbd0'],
   },
   southCentralCoast: {
     displayName: 'South Central Coast',
     searchKeys: ['southCentralCoast'],
-    colors: ['#9ccc65', '#c5e1a5']
+    colors: ['#9ccc65', '#c5e1a5'],
   },
   northCentralCoast: {
     displayName: 'North Central Coast',
     searchKeys: ['northCentralCoast'],
-    colors: ['#b39ddb', '#d1c4e9']
+    colors: ['#b39ddb', '#d1c4e9'],
   },
   northCoast: {
     displayName: 'North Coast',
     searchKeys: ['northCoast'],
-    colors: ['#80cbc4', '#80deea']
+    colors: ['#80cbc4', '#80deea'],
   },
   southForkEel: {
     displayName: 'South Fork Eel',
     searchKeys: ['southForkEel'],
-    colors: ['#fdd835', '#fff59d']
-  }
+    colors: ['#fdd835', '#fff59d'],
+  },
 };
 
 export const classification = [
@@ -45,7 +45,7 @@ export const classification = [
   'Perenial Groundwater and Rain',
   'Flashy, ephemeral rain',
   'Rain and seasonal groundwater',
-  'High elevation low precipitation'
+  'High elevation low precipitation',
 ];
 
 export const predictionMap = {
@@ -57,7 +57,7 @@ export const predictionMap = {
   'Perenial Groundwater and Rain': 'six',
   'Flashy, ephemeral rain': 'seven',
   'Rain and seasonal groundwater': 'eight',
-  'High elevation low precipitation': 'nine'
+  'High elevation low precipitation': 'nine',
 };
 
 export const classInfo = {
@@ -65,56 +65,56 @@ export const classInfo = {
     abbre: 'SM',
     fullName: 'Snowmelt',
     gaugeCount: 24,
-    colors: ['rgb(249,248,99)', 'rgba(249,248,99,0.6)']
+    colors: ['rgb(249,248,99)', 'rgba(249,248,99,0.6)'],
   },
   class2: {
     abbre: 'HSR',
     fullName: 'High-volume snowmelt and rain',
     gaugeCount: 7,
-    colors: ['rgb(85,186,54)', 'rgba(85,186,54,0.6)']
+    colors: ['rgb(85,186,54)', 'rgba(85,186,54,0.6)'],
   },
   class3: {
     abbre: 'LSR',
     fullName: 'Low-volume snowmelt and rain',
     gaugeCount: 65,
-    colors: ['rgb(180,231,73)', 'rgba(180,231,73,0.6)']
+    colors: ['rgb(180,231,73)', 'rgba(180,231,73,0.6)'],
   },
   class4: {
     abbre: 'WS',
     fullName: 'Winter Storms',
     gaugeCount: 34,
-    colors: ['rgb(0,17,166)', 'rgba(0,17,166,0.6)']
+    colors: ['rgb(0,17,166)', 'rgba(0,17,166,0.6)'],
   },
   class5: {
     abbre: 'GW',
     fullName: 'Groudwater',
     gaugeCount: 1,
-    colors: ['rgb(24,63,17)', 'rgba(24,63,17,0.6)']
+    colors: ['rgb(24,63,17)', 'rgba(24,63,17,0.6)'],
   },
   class6: {
     abbre: 'PGR',
     fullName: 'Perenial Groundwater and Rain',
     gaugeCount: 56,
-    colors: ['rgb(44,108,217)', 'rgba(44,108,217,0.6)']
+    colors: ['rgb(44,108,217)', 'rgba(44,108,217,0.6)'],
   },
   class7: {
     abbre: 'FER',
     fullName: 'Flashy, ephemeral rain',
     gaugeCount: 12,
-    colors: ['rgb(162,172,249)', 'rgba(162,172,249,0.6)']
+    colors: ['rgb(162,172,249)', 'rgba(162,172,249,0.6)'],
   },
   class8: {
     abbre: 'RGW',
     fullName: 'Rain and seasonal groundwater',
     gaugeCount: 23,
-    colors: ['rgb(137,224,248)', 'rgba(137,224,248,0.6)']
+    colors: ['rgb(137,224,248)', 'rgba(137,224,248,0.6)'],
   },
   class9: {
     abbre: 'HLP',
     fullName: 'High elevation low precipitation',
     gaugeCount: 2,
-    colors: ['rgb(217,210,69)', 'rgba(217,210,69,0.6)']
-  }
+    colors: ['rgb(217,210,69)', 'rgba(217,210,69,0.6)'],
+  },
 };
 export const classificationColor = [
   ['rgb(249,248,99)', 'rgba(249,248,99,0.6)'],
@@ -125,7 +125,7 @@ export const classificationColor = [
   ['rgb(44,108,217)', 'rgba(44,108,217,0.6)'],
   ['rgb(162,172,249)', 'rgba(162,172,249,0.6)'],
   ['rgb(137,224,248)', 'rgba(137,224,248,0.6)'],
-  ['rgb(217,210,69)', 'rgba(217,210,69,0.6)']
+  ['rgb(217,210,69)', 'rgba(217,210,69,0.6)'],
 ];
 
 export const metricNameMap = {
@@ -139,32 +139,32 @@ export const metricNameMap = {
   DS_Tim: 'Dry Season Timing',
   DS_Mag_10: 'Dry Season Magnitude 10P (CFS)',
   DS_Mag_50: 'Dry Season Magnitude 50P (CFS)',
-  DS_Dur_Fl: 'Dry Season Duration until Wet Season Initiation (Days)',
+  DS_Dur_Fl: 'Dry Season Duration until Fall Flush (Days)',
   DS_Dur_WS: 'Dry Season Duration until Wet Season Start (Days)',
   DS_No_Flow: 'Dry Season with no flow days (Days)',
-  WSI_Tim: 'Wet Season Initiation Timing',
-  WSI_Mag: 'Wet Season Initiation Magnitude (CFS)',
+  WSI_Tim: 'Fall Flush Timing',
+  WSI_Mag: 'Fall Flush Magnitude (CFS)',
   Wet_Tim: 'Wet Season Start Timing',
-  WSI_Dur: 'Wet Season Initiation Duration (Days)',
+  WSI_Dur: 'Fall Flush Duration (Days)',
   Wet_BFL_Mag: 'Wet Season Baseflow Magnitude 10P (CFS)',
-  Peak_Mag_2: 'High Flow Magnitude 2nd Percent Exceedance',
-  Peak_Tim_2: 'High Flow Timing 2nd Percent Exceedance',
-  Peak_Dur_2: 'High Flow Duration 2nd Percent Exceedance (Days)',
-  Peak_Fre_2: 'High Flow Frequency 2nd Percent Exceedance (Count)',
-  Peak_Mag_5: 'High Flow Magnitude 5th Percent Exceedance',
-  Peak_Tim_5: 'High Flow Timing 5th Percent Exceedance',
-  Peak_Dur_5: 'High Flow Duration 5th Percent Exceedance (Days)',
-  Peak_Fre_5: 'High Flow Frequency 5th Percent Exceedance (Count)',
-  Peak_Mag_10: 'High Flow Magnitude 10th Percent Exceedance',
-  Peak_Tim_10: 'High Flow Timing 10th Percent Exceedance',
-  Peak_Dur_10: 'High Flow Duration 10th Percent Exceedance (Days)',
-  Peak_Fre_10: 'High Flow Frequency 10th Percent Exceedance (Count)',
-  Peak_Mag_20: 'High Flow Magnitude 20th Percent Exceedance',
-  Peak_Tim_20: 'High Flow Timing 20th Percent Exceedance',
-  Peak_Dur_20: 'High Flow Duration 20th Percent Exceedance (Days)',
-  Peak_Fre_20: 'High Flow Frequency 20th Percent Exceedance (Count)',
-  Peak_Mag_50: 'High Flow Magnitude 50th Percent Exceedance',
-  Peak_Tim_50: 'High Flow Timing 50th Percent Exceedance',
-  Peak_Dur_50: 'High Flow Duration 50th Percent Exceedance (Days)',
-  Peak_Fre_50: 'High Flow Frequency 50th Percent Exceedance (Count)'
+  Peak_Mag_2: 'Peak Magnitude 2nd Percent Exceedance',
+  Peak_Tim_2: 'Peak Timing 2nd Percent Exceedance',
+  Peak_Dur_2: 'Peak Duration 2nd Percent Exceedance (Days)',
+  Peak_Fre_2: 'Peak Frequency 2nd Percent Exceedance (Count)',
+  Peak_Mag_5: 'Peak Magnitude 5th Percent Exceedance',
+  Peak_Tim_5: 'Peak Timing 5th Percent Exceedance',
+  Peak_Dur_5: 'Peak Duration 5th Percent Exceedance (Days)',
+  Peak_Fre_5: 'Peak Frequency 5th Percent Exceedance (Count)',
+  Peak_Mag_10: 'Peak Magnitude 10th Percent Exceedance',
+  Peak_Tim_10: 'Peak Timing 10th Percent Exceedance',
+  Peak_Dur_10: 'Peak Duration 10th Percent Exceedance (Days)',
+  Peak_Fre_10: 'Peak Frequency 10th Percent Exceedance (Count)',
+  Peak_Mag_20: 'Peak Magnitude 20th Percent Exceedance',
+  Peak_Tim_20: 'Peak Timing 20th Percent Exceedance',
+  Peak_Dur_20: 'Peak Duration 20th Percent Exceedance (Days)',
+  Peak_Fre_20: 'Peak Frequency 20th Percent Exceedance (Count)',
+  Peak_Mag_50: 'Peak Magnitude 50th Percent Exceedance',
+  Peak_Tim_50: 'Peak Timing 50th Percent Exceedance',
+  Peak_Dur_50: 'Peak Duration 50th Percent Exceedance (Days)',
+  Peak_Fre_50: 'Peak Frequency 50th Percent Exceedance (Count)',
 };
