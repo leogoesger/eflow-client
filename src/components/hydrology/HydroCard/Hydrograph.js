@@ -206,7 +206,6 @@ class Hydrograph extends React.Component {
 
   _renderDRHs(hydroData) {
     let yearRanges = '';
-    console.log(this.props.currentGauge);
     if (this.props.currentGauge) {
       const years = this.props.currentGauge.years[0].year;
       yearRanges = `${years[0]}-${years[years.length - 1]}`;
