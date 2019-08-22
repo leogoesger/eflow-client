@@ -46,28 +46,29 @@ class Download extends React.Component {
       ['SP_ROC', ...spring.rocs],
       ['DS_Tim', ...summer.timings],
       ['DS_Mag_50', ...summer.magnitudes_fifty],
-      ['DS_Mag_10', ...summer.magnitudes_ninety],
-      ['DS_Dur_WSI', ...summer.durations_flush],
+      ['DS_Mag_90', ...summer.magnitudes_ninety],
+      // ['DS_Dur_WSI', ...summer.durations_flush],
       ['DS_Dur_WS', ...summer.durations_wet],
       ['DS_No_Flow', ...summer.no_flow_counts],
-      ['WSI_Tim', ...fall.timings],
-      ['WSI_Mag', ...fall.magnitudes],
+      ['FA_Tim', ...fall.timings],
+      ['FA_Mag', ...fall.magnitudes],
       ['Wet_Tim', ...fall.wet_timings],
-      ['WSI_Dur', ...fall.durations],
-      ['Wet_BFL_Mag', ...fallWinter.baseflows_10],
-      ['Peak_Tim_2', ...winter.timings['two']],
+      ['FA_Dur', ...fall.durations],
+      ['Wet_BFL_Mag_10', ...fallWinter.baseflows_10],
+      ['Wet_BFL_Mag_50', ...fallWinter.baseflows_50],
+      // ['Peak_Tim_2', ...winter.timings['two']],
       ['Peak_Dur_2', ...winter.durations['two']],
       ['Peak_Fre_2', ...winter.frequencys['two']],
       ['Peak_Mag_2', ...winter.magnitudes['two']],
-      ['Peak_Tim_5', ...winter.timings['five']],
+      // ['Peak_Tim_5', ...winter.timings['five']],
       ['Peak_Dur_5', ...winter.durations['five']],
       ['Peak_Fre_5', ...winter.frequencys['five']],
       ['Peak_Mag_5', ...winter.magnitudes['five']],
-      ['Peak_Tim_10', ...winter.timings['ten']],
+      // ['Peak_Tim_10', ...winter.timings['ten']],
       ['Peak_Dur_10', ...winter.durations['ten']],
       ['Peak_Fre_10', ...winter.frequencys['ten']],
       ['Peak_Mag_10', ...winter.magnitudes['ten']],
-      ['Peak_Tim_20', ...winter.timings['twenty']],
+      // ['Peak_Tim_20', ...winter.timings['twenty']],
       ['Peak_Dur_20', ...winter.durations['twenty']],
       ['Peak_Fre_20', ...winter.frequencys['twenty']],
       ['Peak_Mag_20', ...winter.magnitudes['twenty']],
@@ -78,12 +79,12 @@ class Download extends React.Component {
         ...result,
         ['SP_Tim_Water', ...spring.timings_water],
         ['DS_Tim_Water', ...summer.timings_water],
-        ['WSI_Tim_Water', ...fall.timings_water],
+        ['FA_Tim_Water', ...fall.timings_water],
         ['Wet_Tim_Water', ...fall.wet_timings_water],
-        ['Peak_Tim_2_Water', ...winter.timings['two_water']],
-        ['Peak_Tim_5_Water', ...winter.timings['five_water']],
-        ['Peak_Tim_10_Water', ...winter.timings['ten_water']],
-        ['Peak_Tim_20_Water', ...winter.timings['twenty_water']],
+        // ['Peak_Tim_2_Water', ...winter.timings['two_water']],
+        // ['Peak_Tim_5_Water', ...winter.timings['five_water']],
+        // ['Peak_Tim_10_Water', ...winter.timings['ten_water']],
+        // ['Peak_Tim_20_Water', ...winter.timings['twenty_water']],
       ];
     }
 
@@ -153,7 +154,7 @@ class Download extends React.Component {
           primaryText="Metrics Read Me"
           onClick={() =>
             window.open(
-              'https://s3-us-west-1.amazonaws.com/funcflow/resources/Reference_Data.csv'
+              'https://funcflow.s3-us-west-1.amazonaws.com/resources/Metrics_reference.csv'
             )
           }
         />
