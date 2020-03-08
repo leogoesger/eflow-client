@@ -18,7 +18,7 @@ import Divider from 'material-ui/Divider';
 import { classInfo } from '../../constants/classification';
 import { SimpleLinePlot } from '../shared/plots';
 import { Colors } from '../../styles';
-import { CSVLink } from 'react-csv/lib';
+// import { CSVLink } from 'react-csv/lib';
 
 class MetricGaugeCard extends React.Component {
   constructor(props) {
@@ -29,6 +29,8 @@ class MetricGaugeCard extends React.Component {
       zoomTransform: null,
       isDrawerOpen: false,
       data: [],
+      data24: [],
+      dataSup: [],
     };
     this.zoom = d3
       .zoom()
@@ -174,9 +176,9 @@ class MetricGaugeCard extends React.Component {
     return (
       <React.Fragment>
         <div style={styles.yLabel}>{'Flow Value (cfs)'}</div>
-        <div style={styles.xLabel}>{`Water year hydrograph for ${
-          this.state.currentYear
-        }`}</div>
+        <div
+          style={styles.xLabel}
+        >{`Water year hydrograph for ${this.state.currentYear}`}</div>
         {this._renderYearStatus(this.props.annualFlowData.condition)}
         <div style={{ marginLeft: '20px' }}>
           <svg
@@ -211,9 +213,7 @@ class MetricGaugeCard extends React.Component {
   }
 
   getAnnualMetricResultFile(annualFlowData) {
-    const url2 = `${process.env.S3_BUCKET}annual_flow_result/${
-      annualFlowData.Gauge.id
-    }_annual_result_matrix.csv`;
+    const url2 = `${process.env.S3_BUCKET}annual_flow_result/${annualFlowData.Gauge.id}_annual_result_matrix.csv`;
 
     papa.parse(url2, {
       download: true,
@@ -229,9 +229,7 @@ class MetricGaugeCard extends React.Component {
   }
 
   handleSaveAsImageBtn() {
-    const fileName = `${this.props.annualFlowData.Gauge.id}_Year_${
-      this.state.currentYear
-    }_Hydrograph.jpeg`;
+    const fileName = `${this.props.annualFlowData.Gauge.id}_Year_${this.state.currentYear}_Hydrograph.jpeg`;
     saveAsImage(this.saveImageRef, { fileName });
   }
 
@@ -262,9 +260,7 @@ class MetricGaugeCard extends React.Component {
                 style={{ paddingRight: '0px', marginTop: '10px' }}
                 title={annualFlowData.Gauge.stationName}
                 textStyle={{ paddingRight: '0px' }}
-                subtitle={`ID: ${annualFlowData.Gauge.id}, Class: ${
-                  classObject.fullName
-                }`}
+                subtitle={`ID: ${annualFlowData.Gauge.id}, Class: ${classObject.fullName}`}
                 subtitleStyle={{ color: classObject.colors[0] }}
                 actAsExpander={false}
                 showExpandableButton={false}
@@ -296,36 +292,44 @@ class MetricGaugeCard extends React.Component {
                 <MenuItem
                   primaryText="Annual Flow Matrix"
                   onClick={() => {
-                    const url1 = `${process.env.S3_BUCKET}annual_flow_matrix/${
-                      annualFlowData.Gauge.id
-                    }.csv`;
+                    const url1 = `${process.env.S3_BUCKET}annual_flow_matrix/${annualFlowData.Gauge.id}.csv`;
                     return window.open(url1);
                   }}
                 />
-                {/* <MenuItem
+                <MenuItem
                   primaryText="Annual Metric Result"
                   onClick={() => {
-                    const url1 = `${process.env.S3_BUCKET}annual_flow_result/${
-                      annualFlowData.Gauge.id
-                    }_annual_result_matrix.csv`;
+                    const url1 = `${process.env.S3_BUCKET}annual_flow_result/${annualFlowData.Gauge.id}_annual_result_matrix_new.csv`;
                     return window.open(url1);
                   }}
-                /> */}
-
-                <CSVLink
-                  filename={`${
-                    annualFlowData.Gauge.id
-                  }_annual_result_matrix.csv`}
+                />
+                <MenuItem
+                  primaryText="Annual Metric Result Supplement"
+                  onClick={() => {
+                    const url1 = `${process.env.S3_BUCKET}annual_flow_result/${annualFlowData.Gauge.id}_annual_result_matrix_supplement.csv`;
+                    return window.open(url1);
+                  }}
+                />
+                {/* <CSVLink
+                  filename={`${annualFlowData.Gauge.id}_annual_result_matrix.csv`}
                   target="_blank"
                   data={this.state.data}
                 >
                   <MenuItem primaryText="Annual Metric Result" />
-                </CSVLink>
+                </CSVLink> */}
                 <MenuItem
                   primaryText="Metrics Read Me"
                   onClick={() =>
                     window.open(
-                      'https://funcflow.s3-us-west-1.amazonaws.com/resources/Metrics_reference.csv'
+                      'https://funcflow.s3-us-west-1.amazonaws.com/resources/Metrics_reference.csv?versionId=null'
+                    )
+                  }
+                />
+                <MenuItem
+                  primaryText="Day of Year Conversions"
+                  onClick={() =>
+                    window.open(
+                      'https://funcflow.s3-us-west-1.amazonaws.com/resources/Day_of_year_conversions.csv'
                     )
                   }
                 />

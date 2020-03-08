@@ -50,7 +50,7 @@ class HydroTabs extends React.Component {
         }}
         inkBarStyle={{backgroundColor: Colors.gold}}
       >
-        <Tab label="Data" value="a" className="tour-tab-1">
+        <Tab label="Data" value="a" className="tour-tab-1" disabled>
           <HydroInfo
             currentClassification={this.props.currentClassification}
             currentGauge={this.props.currentGauge}
