@@ -58,6 +58,10 @@ For more information on all the things you can do with Sequelize CLI visit [sequ
 "test-coverage": "nyc report --reporter=text-lcov | coveralls",              # Generate test coverage and send it to Coveralls
 ```
 
+## Deployment
+
+ssh into server, and re-build client directory.
+
 ## License
 
 Copyright (c) 2019

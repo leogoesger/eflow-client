@@ -299,14 +299,14 @@ class MetricGaugeCard extends React.Component {
                 <MenuItem
                   primaryText="Annual Metric Result"
                   onClick={() => {
-                    const url1 = `${process.env.S3_BUCKET}annual_flow_result/${annualFlowData.Gauge.id}_annual_result_matrix_new.csv`;
+                    const url1 = `${process.env.S3_BUCKET}annual_flow_result_24/${annualFlowData.Gauge.id}_annual_result_matrix.csv`;
                     return window.open(url1);
                   }}
                 />
                 <MenuItem
                   primaryText="Annual Metric Result Supplement"
                   onClick={() => {
-                    const url1 = `${process.env.S3_BUCKET}annual_flow_result/${annualFlowData.Gauge.id}_annual_result_matrix_supplement.csv`;
+                    const url1 = `${process.env.S3_BUCKET}annual_flow_result_supplemental/${annualFlowData.Gauge.id}_supplemental_results.csv`;
                     return window.open(url1);
                   }}
                 />
