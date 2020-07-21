@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as d3 from 'd3';
+import React from "react";
+import PropTypes from "prop-types";
+import * as d3 from "d3";
 
-import { metricReference } from '../../../constants/metrics';
-import { getJulianOffsetDate, findClosest } from '../../../utils/helpers';
-import Axis from './Axis';
-import RenderToolTips from './RenderToolTips';
-import { Colors } from '../../../styles';
+import { metricReference } from "../../../constants/metrics";
+import { getJulianOffsetDate, findClosest } from "../../../utils/helpers";
+import Axis from "./Axis";
+import RenderToolTips from "./RenderToolTips";
+import { Colors } from "../../../styles";
 
 export default class SimpleLinePlot extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class SimpleLinePlot extends React.Component {
     this.updateD3(props);
     this.state = {
       toolTipData: [],
-      displayTips: false
+      displayTips: false,
     };
   }
 
@@ -26,11 +26,11 @@ export default class SimpleLinePlot extends React.Component {
   }
 
   componentDidUpdate() {
-    d3.selectAll('svg')
-      .on('mouseenter', () => {
+    d3.selectAll("svg")
+      .on("mouseenter", () => {
         this.setState({ displayTips: true });
       })
-      .on('mouseleave', () => {
+      .on("mouseleave", () => {
         this.setState({ displayTips: false });
       });
   }
@@ -46,7 +46,7 @@ export default class SimpleLinePlot extends React.Component {
       zoomType,
       logScale,
       yMax,
-      fixedYaxisPercentile
+      fixedYaxisPercentile,
     } = props;
 
     if (logScale) {
@@ -55,27 +55,27 @@ export default class SimpleLinePlot extends React.Component {
       this.yScale = d3.scaleLinear();
     }
 
-    this.xScale.domain(d3.extent(data, d => xValue(d))).range([0, width]);
-    let yExtent = d3.extent(data, d => yValue(d));
+    this.xScale.domain(d3.extent(data, (d) => xValue(d))).range([0, width]);
+    let yExtent = d3.extent(data, (d) => yValue(d));
     if (fixedYaxisPercentile) {
       yExtent[1] = yMax;
     }
     this.yScale.domain(yExtent).range([height, 0]);
 
     this.line
-      .defined(d => {
+      .defined((d) => {
         return !isNaN(d.flow);
       })
-      .x(d => this.xScale(xValue(d)))
-      .y(d => this.yScale(yValue(d)))
+      .x((d) => this.xScale(xValue(d)))
+      .y((d) => this.yScale(yValue(d)))
       .curve(d3.curveCardinal);
 
-    if (zoomTransform && zoomType === 'detail') {
+    if (zoomTransform && zoomType === "detail") {
       this.xScale.domain(zoomTransform.rescaleX(this.xScale).domain());
       this.yScale.domain(zoomTransform.rescaleY(this.yScale).domain());
     }
     //tooltip
-    d3.selectAll('path').on('mousemove', () => {
+    d3.selectAll("path").on("mousemove", () => {
       this.handleMouseMove(d3.mouse(d3.event.currentTarget));
     });
   }
@@ -84,11 +84,12 @@ export default class SimpleLinePlot extends React.Component {
     const { zoomTransform, zoomType } = this.props;
     let x = 0,
       y = 0;
-    let transform = '';
+    let transform = "";
 
-    if (zoomTransform && zoomType === 'scale') {
-      transform = `translate(${x + zoomTransform.x}, ${y +
-        zoomTransform.y}) scale(${zoomTransform.k})`;
+    if (zoomTransform && zoomType === "scale") {
+      transform = `translate(${x + zoomTransform.x}, ${
+        y + zoomTransform.y
+      }) scale(${zoomTransform.k})`;
     } else {
       transform = `translate(${x}, ${y})`;
     }
@@ -130,7 +131,7 @@ export default class SimpleLinePlot extends React.Component {
       const toolTipData = await findClosest(
         data,
         domainX,
-        d => xValue(d),
+        (d) => xValue(d),
         true
       );
       this.setState({ toolTipData });
@@ -142,14 +143,14 @@ export default class SimpleLinePlot extends React.Component {
   _renderOverLay(transform) {
     const { annualFlowData, toggledMetrics } = this.props;
     if (!annualFlowData || !toggledMetrics) return null;
-    return Object.keys(annualFlowData).map(tableName => {
-      return Object.keys(annualFlowData[tableName]).map(columnName => {
+    return Object.keys(annualFlowData).map((tableName) => {
+      return Object.keys(annualFlowData[tableName]).map((columnName) => {
         const currentMetric = metricReference.filter(
-          m =>
+          (m) =>
             m.tableName === tableName &&
             m.columnName === columnName &&
             toggledMetrics.some(
-              metric =>
+              (metric) =>
                 metric.tableName === tableName &&
                 metric.columnName === columnName
             )
@@ -160,7 +161,7 @@ export default class SimpleLinePlot extends React.Component {
         }
         const metricValue = Number(annualFlowData[tableName][columnName]);
 
-        if (currentMetric.dimUnit === 'cfs' && metricValue) {
+        if (currentMetric.dimUnit === "cfs" && metricValue) {
           return (
             <line
               transform={transform}
@@ -173,7 +174,7 @@ export default class SimpleLinePlot extends React.Component {
               y2={this.yScale(metricValue)}
             />
           );
-        } else if (currentMetric.dimUnit === 'Date' && metricValue) {
+        } else if (currentMetric.dimUnit === "Date" && metricValue) {
           return (
             <line
               transform={transform}
@@ -198,7 +199,7 @@ export default class SimpleLinePlot extends React.Component {
       return null;
     }
 
-    return Object.keys(this.props.hydrograph).map(key => {
+    return Object.keys(this.props.hydrograph).map((key) => {
       return (
         <path
           key={key}
@@ -217,7 +218,7 @@ export default class SimpleLinePlot extends React.Component {
     const { data, x, y, height, width } = this.props;
     const transform = `translate(${x}, ${y})`;
     return (
-      <g style={{ fill: 'none' }} transform={this._transform()}>
+      <g style={{ fill: "none" }} transform={this._transform()}>
         <Axis
           scale={this.xScale}
           data={data}
@@ -252,7 +253,7 @@ export default class SimpleLinePlot extends React.Component {
 }
 
 SimpleLinePlot.defaultProps = {
-  width: 400
+  width: 400,
 };
 
 SimpleLinePlot.propTypes = {
@@ -272,5 +273,5 @@ SimpleLinePlot.propTypes = {
   isHydrographOverlay: PropTypes.bool,
   hydrograph: PropTypes.object,
   yMax: PropTypes.number,
-  fixedYaxisPercentile: PropTypes.number
+  fixedYaxisPercentile: PropTypes.number,
 };

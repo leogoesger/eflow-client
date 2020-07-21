@@ -1,29 +1,29 @@
-import request from 'superagent';
+import request from "superagent";
 
 const upload = {
-  uploadTimeSeries: d => {
+  uploadTimeSeries: (d) => {
     return request
       .post(`${process.env.SERVER_ADDRESS}/api/uploadData`)
-      .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...d });
+      .send({ ff_jwt: localStorage.getItem("ff_jwt"), ...d });
   },
 
-  updateTimeSeries: d => {
+  updateTimeSeries: (d) => {
     return request
       .put(`${process.env.SERVER_ADDRESS}/api/updateData`)
-      .send({ ff_jwt: localStorage.getItem('ff_jwt'), ...d });
+      .send({ ff_jwt: localStorage.getItem("ff_jwt"), ...d });
   },
 
-  deleteTimeSeries: id => {
+  deleteTimeSeries: (id) => {
     return request
       .del(`${process.env.SERVER_ADDRESS}/api/uploadData`)
-      .send({ ff_jwt: localStorage.getItem('ff_jwt'), id });
+      .send({ ff_jwt: localStorage.getItem("ff_jwt"), id });
   },
 
   predictTimeSeries: (id, uploadDataId) => {
     return request
       .post(`${process.env.SERVER_ADDRESS}/api/class-predict`)
-      .send({ ff_jwt: localStorage.getItem('ff_jwt'), id, uploadDataId });
-  }
+      .send({ ff_jwt: localStorage.getItem("ff_jwt"), id, uploadDataId });
+  },
 };
 
 export default upload;

@@ -10,7 +10,7 @@ export const metricReference = [
     columnName: "average",
     boxPlotOverLayMethods: ["", ""],
     colors: ["#f9a825", "#c17900"],
-    hidden: true
+    hidden: true,
   },
   {
     name: "allYearStandardDeviation",
@@ -23,7 +23,7 @@ export const metricReference = [
     colors: ["#fbc02d", "#c49000"],
     nonDimUnit: "none",
     dimUnit: "cfs",
-    hidden: true
+    hidden: true,
   },
   {
     name: "allYearCoeffientVariance",
@@ -36,7 +36,7 @@ export const metricReference = [
     colors: ["#fbc02d", "#c49000"],
     nonDimUnit: "none",
     dimUnit: "none",
-    hidden: true
+    hidden: true,
   },
   {
     name: "springTiming",
@@ -47,11 +47,11 @@ export const metricReference = [
     columnName: "timing",
     boxPlotOverLayMethods: [
       "fetchSpringBoxPlotData",
-      "removeSpringBoxPlotData"
+      "removeSpringBoxPlotData",
     ],
     colors: ["#2e7d32", "#005005"],
     nonDimUnit: "Date",
-    dimUnit: "Date"
+    dimUnit: "Date",
   },
   {
     name: "springMagnitude",
@@ -62,11 +62,11 @@ export const metricReference = [
     columnName: "magnitude",
     boxPlotOverLayMethods: [
       "fetchSpringBoxPlotData",
-      "removeSpringBoxPlotData"
+      "removeSpringBoxPlotData",
     ],
     colors: ["#388e3c", "#00600f"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   {
     name: "springDuration",
@@ -78,7 +78,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#43a047", "#00701a"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "springRateOfChange",
@@ -90,7 +90,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#4caf50", "#087f23"],
     nonDimUnit: "%",
-    dimUnit: "%"
+    dimUnit: "%",
   },
   {
     name: "summerTiming",
@@ -101,11 +101,11 @@ export const metricReference = [
     columnName: "timing",
     boxPlotOverLayMethods: [
       "fetchSummerBoxPlotData",
-      "removeSummerBoxPlotData"
+      "removeSummerBoxPlotData",
     ],
     colors: ["#d84315", "#9f0000"],
     nonDimUnit: "Date",
-    dimUnit: "Date"
+    dimUnit: "Date",
   },
   {
     name: "summerMagnitude10",
@@ -113,14 +113,14 @@ export const metricReference = [
     isBoxplotOverlay: true,
     tableName: "Summers",
     displayTableName: "Dry Season",
-    columnName: "magnitude10",
+    columnName: "magnitude50",
     boxPlotOverLayMethods: [
       "fetchSummerBoxPlotData",
-      "removeSummerBoxPlotData"
+      "removeSummerBoxPlotData",
     ],
     colors: ["#e64a19", "#ac0800"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   {
     name: "summerMagnitude50",
@@ -131,12 +131,12 @@ export const metricReference = [
     columnName: "magnitude50",
     boxPlotOverLayMethods: [
       "fetchSummerBoxPlotData",
-      "removeSummerBoxPlotData"
+      "removeSummerBoxPlotData",
     ],
     colors: ["#f4511e", "#b91400"],
     nonDimUnit: "none",
     dimUnit: "cfs",
-    hidden: true
+    hidden: true,
   },
   {
     name: "summerDurationFlush",
@@ -148,7 +148,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#ff5722", "#c41c00"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "summerDurationWet",
@@ -160,7 +160,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#ff7043", "#c63f17"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "summerNoFlow",
@@ -172,7 +172,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#ff8a65", "#c75b39"],
     nonDimUnit: "counts",
-    dimUnit: "counts"
+    dimUnit: "counts",
   },
   {
     name: "fallTiming",
@@ -180,11 +180,11 @@ export const metricReference = [
     isBoxplotOverlay: true,
     tableName: "Falls",
     displayTableName: "Fall Pulse",
-    columnName: "timing",
+    columnName: "timingWet",
     boxPlotOverLayMethods: ["fetchFallBoxPlotData", "removeFallBoxPlotData"],
     colors: ["#ff8f00", "#c56000"],
     nonDimUnit: "Date",
-    dimUnit: "Date"
+    dimUnit: "Date",
   },
   {
     name: "fallMagnitude",
@@ -196,7 +196,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["fetchFallBoxPlotData", "removeFallBoxPlotData"],
     colors: ["#ffa000", "#c67100"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   {
     name: "fallDuration",
@@ -208,7 +208,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#ffc107", "#c79100"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "fallTimingWet",
@@ -220,7 +220,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["fetchFallBoxPlotData", "removeFallBoxPlotData"],
     colors: ["#ffb300", "#c68400"],
     nonDimUnit: "Date",
-    dimUnit: "Date"
+    dimUnit: "Date",
   },
   {
     name: "fallwinterMagWet",
@@ -231,11 +231,11 @@ export const metricReference = [
     columnName: "magWet",
     boxPlotOverLayMethods: [
       "fetchFallWinterBoxPlotData",
-      "removeFallWinterBoxPlotData"
+      "removeFallWinterBoxPlotData",
     ],
     colors: ["#00695c", "#003d33"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   // {
   //   name: 'winterMagnitude2',
@@ -276,11 +276,11 @@ export const metricReference = [
     columnName: "magnitude10",
     boxPlotOverLayMethods: [
       "fetchWinterBoxPlotData",
-      "removeWinterBoxPlotData"
+      "removeWinterBoxPlotData",
     ],
     colors: ["#9c27b0", "#6a0080"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   {
     name: "winterMagnitude20",
@@ -291,11 +291,11 @@ export const metricReference = [
     columnName: "magnitude20",
     boxPlotOverLayMethods: [
       "fetchWinterBoxPlotData",
-      "removeWinterBoxPlotData"
+      "removeWinterBoxPlotData",
     ],
     colors: ["#ab47bc", "#790e8b"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   {
     name: "winterMagnitude50",
@@ -306,11 +306,11 @@ export const metricReference = [
     columnName: "magnitude50",
     boxPlotOverLayMethods: [
       "fetchWinterBoxPlotData",
-      "removeWinterBoxPlotData"
+      "removeWinterBoxPlotData",
     ],
     colors: ["#ba68c8", "#883997"],
     nonDimUnit: "none",
-    dimUnit: "cfs"
+    dimUnit: "cfs",
   },
   {
     name: "winterTiming2",
@@ -323,7 +323,7 @@ export const metricReference = [
     colors: ["#6a1b9a", "#38006b"],
     nonDimUnit: "Date",
     dimUnit: "Date",
-    hidden: true
+    hidden: true,
   },
   {
     name: "winterTiming5",
@@ -336,7 +336,7 @@ export const metricReference = [
     colors: ["#8e24aa", "#5c007a"],
     nonDimUnit: "Date",
     dimUnit: "Date",
-    hidden: true
+    hidden: true,
   },
   {
     name: "winterTiming10",
@@ -349,7 +349,7 @@ export const metricReference = [
     colors: ["#9c27b0", "#6a0080"],
     nonDimUnit: "Date",
     dimUnit: "Date",
-    hidden: true
+    hidden: true,
   },
   {
     name: "winterTiming20",
@@ -362,7 +362,7 @@ export const metricReference = [
     colors: ["#ab47bc", "#790e8b"],
     nonDimUnit: "Date",
     dimUnit: "Date",
-    hidden: true
+    hidden: true,
   },
   // {
   //   name: "winterTiming50",
@@ -387,7 +387,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#6a1b9a", "#38006b"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "winterDuration5",
@@ -399,7 +399,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#8e24aa", "#5c007a"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "winterDuration10",
@@ -411,7 +411,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#9c27b0", "#6a0080"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   {
     name: "winterDuration20",
@@ -423,7 +423,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#ab47bc", "#790e8b"],
     nonDimUnit: "days",
-    dimUnit: "days"
+    dimUnit: "days",
   },
   // {
   //   name: "winterDuration50",
@@ -447,7 +447,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#6a1b9a", "#38006b"],
     nonDimUnit: "counts",
-    dimUnit: "counts"
+    dimUnit: "counts",
   },
   {
     name: "winterFrequency5",
@@ -459,7 +459,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#8e24aa", "#5c007a"],
     nonDimUnit: "counts",
-    dimUnit: "counts"
+    dimUnit: "counts",
   },
   {
     name: "winterFrequency10",
@@ -471,7 +471,7 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#9c27b0", "#6a0080"],
     nonDimUnit: "counts",
-    dimUnit: "counts"
+    dimUnit: "counts",
   },
   {
     name: "winterFrequency20",
@@ -483,8 +483,8 @@ export const metricReference = [
     boxPlotOverLayMethods: ["", ""],
     colors: ["#ab47bc", "#790e8b"],
     nonDimUnit: "counts",
-    dimUnit: "counts"
-  }
+    dimUnit: "counts",
+  },
   // {
   //   name: "winterFrequency50",
   //   display: "High Flow Frequency 50P",

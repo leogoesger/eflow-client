@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   RaisedButton,
   Dialog,
   FlatButton,
-  Divider,
+  // Divider,
   SelectField,
   MenuItem,
-} from 'material-ui';
+} from "material-ui";
 
-import Styles from '../../styles/Styles';
-import ParamsSliders from './ParamsSliders';
-import { classification } from '../../constants/classification';
-import { classParms } from '../../constants/params';
+import Styles from "../../styles/Styles";
+// import ParamsSliders from "./ParamsSliders";
+import { classification } from "../../constants/classification";
+import { classParms } from "../../constants/params";
 
 class Params extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { class: '' };
+    this.state = { class: "Low-volume snowmelt and rain" };
   }
 
   _handleChange(v) {
@@ -30,61 +30,64 @@ class Params extends React.Component {
       <Dialog
         modal={false}
         open={this.props.open}
-        style={{ margin: 'auto', paddingTop: '0px' }}
+        style={{ margin: "auto", paddingTop: "0px" }}
         onRequestClose={() => this.props.handleDialog(false)}
         autoScrollBodyContent={true}
       >
         <div
           style={{
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'space-between',
-            marginBottom: '6px',
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "6px",
           }}
         >
-          <div style={{ fontSize: '22px', fontWeight: 600 }}>
+          <div style={{ fontSize: "22px", fontWeight: 600 }}>
             Select / Set Parameters <br />
-            <span style={{ fontSize: '12px', color: '#d32f2f' }}>
+            <span style={{ fontSize: "12px", color: "#d32f2f" }}>
               Optional: Select a stream class to refine metric results
             </span>
           </div>
 
           <SelectField
             floatingLabelText="Set Parameters Based on Stream Class"
-            style={{ marginTop: '-24px', width: '285px' }}
+            style={{ marginTop: "-24px", width: "285px" }}
             value={this.props.predictedClass || this.state.class}
             underlineFocusStyle={Styles.underlineFocusStyle}
             floatingLabelStyle={Styles.floatingLabelStyle}
             floatingLabelFocusStyle={Styles.floatingLabelFocusStyle}
-            onChange={(_event, value) => this._handleChange(value)}
+            onChange={(_event, value) => {
+              this._handleChange(value);
+              this.props.onClassSelect(value);
+            }}
           >
-            {classification.map(c => (
+            {classification.map((c) => (
               <MenuItem value={c} primaryText={c} key={c} />
             ))}
           </SelectField>
         </div>
 
-        <Divider />
-
+        {/* <Divider /> */}
+        {/* 
         <ParamsSliders
           params={this.props.userParams}
           handleSlider={this.props.handleSlider}
-        />
-        <Divider />
+        /> */}
+        {/* <Divider /> */}
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '20px',
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "20px",
           }}
         >
-          <FlatButton
+          {/* <FlatButton
             label="Reset to Default"
             key="0"
             primary={true}
             onClick={() => this.props.setUserParams()}
-          />
-          <div style={{ display: 'flex' }}>
+          /> */}
+          <div style={{ display: "flex" }}>
             <FlatButton
               label="Cancel"
               key="1"
@@ -92,8 +95,8 @@ class Params extends React.Component {
               onClick={() => this.props.handleDialog(false)}
             />
             <RaisedButton
-              label={this.props.reCalc ? 'Recalculate' : 'Save'}
-              style={{ marginLeft: '10px' }}
+              label={this.props.reCalc ? "Recalculate" : "Save"}
+              style={{ marginLeft: "10px" }}
               key="2"
               primary={true}
               onClick={
@@ -118,6 +121,7 @@ Params.propTypes = {
   predictedClass: PropTypes.string,
   reCalc: PropTypes.bool,
   onSubmit: PropTypes.func,
+  onClassSelect: PropTypes.func,
 };
 
 export default Params;
