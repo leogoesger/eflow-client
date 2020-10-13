@@ -40,57 +40,65 @@ class Download extends React.Component {
       ["Std", ...allYear.standard_deviations],
       ["Avg", ...allYear.average_annual_flows],
       ["CV", ...allYear.coefficient_variations],
-      ["SP_ROC", ...spring.rocs],
-      ["SP_Dur", ...spring.durations],
-      ["SP_Mag", ...spring.magnitudes],
-      ["SP_Tim", ...spring.timings_water],
-      ["DS_Tim", ...summer.timings_water],
-      ["DS_Mag_50", ...summer.magnitudes_fifty],
-      ["DS_Mag_90", ...summer.magnitudes_ninety],
-      // ['DS_Dur_WSI', ...summer.durations_flush],
-      ["DS_Dur_WS", ...summer.durations_wet],
-      ["DS_No_Flow", ...summer.no_flow_counts],
-      ["FA_Tim", ...fall.timings_water],
       ["FA_Mag", ...fall.magnitudes],
+      ["FA_Tim", ...fall.timings_water],
       ["FA_Dur", ...fall.durations],
       ["Wet_BFL_Mag_10", ...fallWinter.baseflows_10],
       ["Wet_BFL_Mag_50", ...fallWinter.baseflows_50],
-      // ['Peak_Tim_2', ...winter.timings['two']],
-      // ['Peak_Dur_2', ...winter.durations['two']],
-      // ['Peak_Fre_2', ...winter.frequencys['two']],
-      // ['Peak_Mag_2', ...winter.magnitudes['two']],
-      // ['Peak_Tim_5', ...winter.timings['five']],
-      // ['Peak_Dur_5', ...winter.durations['five']],
-      // ['Peak_Fre_5', ...winter.frequencys['five']],
-      // ['Peak_Mag_5', ...winter.magnitudes['five']],
-      // ['Peak_Tim_10', ...winter.timings['ten']],
+
+      ["Peak_2", ...winter.magnitudes["fifty"]],
+      ["Peak_5", ...winter.magnitudes["twenty"]],
+      ["Peak_10", ...winter.magnitudes["ten"]],
+      ["Peak_Dur_2", ...winter.durations["fifty"]],
+      ["Peak_Dur_5", ...winter.durations["twenty"]],
       ["Peak_Dur_10", ...winter.durations["ten"]],
+      ["Peak_Fre_2", ...winter.frequencys["fifty"]],
+      ["Peak_Fre_5", ...winter.frequencys["twenty"]],
       ["Peak_Fre_10", ...winter.frequencys["ten"]],
-      ["Peak_Mag_10", ...winter.magnitudes["ten"]],
+
+      ["SP_Mag", ...spring.magnitudes],
+      ["SP_Tim", ...spring.timings_water],
+      ["SP_Dur", ...spring.durations],
+      ["SP_ROC", ...spring.rocs],
+
+      ["DS_Mag_50", ...summer.magnitudes_fifty],
+      ["DS_Mag_90", ...summer.magnitudes_ninety],
+      ["DS_Tim", ...summer.timings_water],
+      ["DS_Dur_WS", ...summer.durations_wet],
+      // ['DS_Dur_WSI', ...summer.durations_flush],
+      // ["DS_No_Flow", ...summer.no_flow_counts],
+
+      // ['Peak_Mag_2', ...winter.magnitudes['two']],
+      // ['Peak_Mag_5', ...winter.magnitudes['five']],
+      // ["Peak_Mag_10", ...winter.magnitudes["ten"]],
       // ['Peak_Tim_20', ...winter.timings['twenty']],
-      ["Peak_Dur_20", ...winter.durations["twenty"]],
-      ["Peak_Fre_20", ...winter.frequencys["twenty"]],
-      ["Peak_Mag_20", ...winter.magnitudes["twenty"]],
-      ["Peak_Dur_50", ...winter.durations["fifty"]],
-      ["Peak_Fre_50", ...winter.frequencys["fifty"]],
-      ["Peak_Mag_50", ...winter.magnitudes["fifty"]],
+      // ["Peak_Fre_20", ...winter.frequencys["twenty"]],
+      // ["Peak_Dur_20", ...winter.durations["twenty"]],
+      // ["Peak_Mag_20", ...winter.magnitudes["twenty"]],
+      // ["Peak_Dur_50", ...winter.durations["fifty"]],
+      // ["Peak_Fre_50", ...winter.frequencys["fifty"]],
+      // ["Peak_Mag_50", ...winter.magnitudes["fifty"]],
     ];
 
     if (spring.timings_water) {
-      result = [
-        ...result,
-        ["SP_Tim_Water", ...spring.timings_water],
-        ["DS_Tim_Water", ...summer.timings_water],
-        ["FA_Tim_Water", ...fall.timings_water],
-        // ["Wet_Tim_Water", ...fall.wet_timings_water],
-        // ['Peak_Tim_2_Water', ...winter.timings['two_water']],
-        // ['Peak_Tim_5_Water', ...winter.timings['five_water']],
-        // ['Peak_Tim_10_Water', ...winter.timings['ten_water']],
-        // ['Peak_Tim_20_Water', ...winter.timings['twenty_water']],
-      ];
+      result.splice(9, 0, ["Wet_Tim_Water", ...fallWinter.wet_timings_water]);
+      result.splice(10, 0, ["Wet_BFL_Dur", ...fallWinter.wet_timings_water]);
+      // result = [
+      //   ...result,
+      //   ["SP_Tim_Water", ...spring.timings_water],
+      //   ["DS_Tim_Water", ...summer.timings_water],
+      //   ["FA_Tim_Water", ...fall.timings_water],
+      //   ["Wet_Tim_Water", ...fallWinter.wet_timings_water],
+      //   ['Peak_Tim_2_Water', ...winter.timings['two_water']],
+      //   ['Peak_Tim_5_Water', ...winter.timings['five_water']],
+      //   ['Peak_Tim_10_Water', ...winter.timings['ten_water']],
+      //   ['Peak_Tim_20_Water', ...winter.timings['twenty_water']],
+      // ];
     }
 
-    return result;
+    return result.map((d) => {
+      return d.map((_d) => (!_d ? "None" : _d));
+    });
   }
 
   render() {

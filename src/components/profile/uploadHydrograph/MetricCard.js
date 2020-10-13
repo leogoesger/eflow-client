@@ -172,7 +172,6 @@ class MetricCard extends React.Component {
       annualMetricsData[metricsRef[metric]["tableName"]] = { ...metrics };
     });
 
-    console.log(annualMetricsData);
     return annualMetricsData;
   }
 
