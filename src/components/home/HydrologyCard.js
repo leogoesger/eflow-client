@@ -69,7 +69,7 @@ export default class HydrologyCard extends React.Component {
 
             <Card style={{ ...styles.subContainerCard, width: "33%" }}>
               <div style={{ ...styles.title, minWidth: "175px" }}>
-                {"Dimensionless Reference Hydrographs"}
+                {"Dimensionless Observed Hydrographs"}
               </div>
               <CardText style={styles.text}>
                 {

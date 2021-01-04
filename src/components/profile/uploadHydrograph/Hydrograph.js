@@ -280,7 +280,8 @@ class Hydrograph extends React.Component {
     return (
       <div>
         <div style={styles.plotTitle}>
-          {`Dimensionless Reference Hydrograph ${
+        <p style={{fontSize: 14}}>Disclaimer on reference plots: The metrics may not be plotting correctly. The csv files are correct and can be downloaded by clickong on annual flow plot and then download. See updated list of website issues <a href="https://docs.google.com/document/d/1Xj1RobeHrSSAsEV9xtnJrhwXemcC2uR_Rlj4O0YIDjI/edit">here</a></p>
+          {`Dimensionless Observed Hydrograph ${
             this.props.data.yearRanges[0]
           }-${
             this.props.data.yearRanges[this.props.data.yearRanges.length - 1]

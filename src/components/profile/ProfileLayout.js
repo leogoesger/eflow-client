@@ -39,6 +39,15 @@ const ProfileLayout = ({
 
         <div style={{ margin: '20px 20px 20px 20px', color: Colors.grey }}>
           <div style={{ lineHeight: '20px' }}>
+            <p>The calculator was designed to be flexible and to accept data with missing values or partial years. For best results, the user is encouraged to clean data prior to upload. Suggested data cleaning steps include to:</p>
+            <ul>
+              <li>Subset to complete water years (i.e., October 1 to September 30)</li>
+              <li>Exclude water years with more than 7 total days of missing data</li>
+              <li>Exclude water years with more than 1 consecutive day of missing data</li>
+            </ul>
+            <p>
+              The natual stream class of your site should be selected prior to running the functional flows calculator so that the correct parameters are applied. The stream class for your site can be identified on the website landing page.
+            </p>
             Upload your time series data here. The application requires a commas
             separated values (.csv) file with two columns: column 1 contains
             dates (mm/dd/yyyy) and column 2 contains the corresponding daily
