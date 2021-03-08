@@ -82,7 +82,7 @@ class Download extends React.Component {
 
     if (spring.timings_water) {
       result.splice(9, 0, ["Wet_Tim_Water", ...fallWinter.wet_timings_water]);
-      result.splice(10, 0, ["Wet_BFL_Dur", ...fallWinter.wet_timings_water]);
+      result.splice(10, 0, ["Wet_BFL_Dur", ...fallWinter.bfl_durs]);
       // result = [
       //   ...result,
       //   ["SP_Tim_Water", ...spring.timings_water],
