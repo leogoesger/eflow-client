@@ -248,7 +248,7 @@ class Uploader extends React.Component {
           <Layout
             onUpload={(files) => this.readFile(files)}
             onSubmit={this.onSubmit}
-            onClassSelect={(c) => this.setState({ class_num: c })}
+            onClassSelect={(c) => this.setState({ class_num: c + 1 })}
             getMe={this.props.getMe}
             enabled={this.isEnabled()}
             isError={this.state.isError}
