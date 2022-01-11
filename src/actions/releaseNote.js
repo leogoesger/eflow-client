@@ -13,6 +13,14 @@ export function fetchReleaseNotes() {
       const releaseNotes = {
         body: [
           {
+            date: 'Jan 11th, 2022',
+            version: 'v2.32',
+            title: 'Fix upload error',
+            tasks: [
+              'Upload error'
+            ]
+          },
+          {
             date: 'May 5th, 2019',
             version: 'v2.31',
             title: 'Hoverover DRH/Annual plots tooltips',
