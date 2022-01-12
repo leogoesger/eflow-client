@@ -96,9 +96,7 @@ class Download extends React.Component {
       // ];
     }
 
-    return result.map((d) => {
-      return d.map((_d) => (!_d ? "None" : _d));
-    });
+    return result
   }
 
   render() {
