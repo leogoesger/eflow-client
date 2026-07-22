@@ -67,3 +67,21 @@ ssh into server, and re-build client directory.
 Copyright (c) 2019
 
 Licensed under the [MIT license](LICENSE).
+
+## Deployment to UC Davis Cluster
+
+Deployment to the cluster is done manually.
+
+```
+sudo su - leoqiu
+```
+
+You could change the env by editting `.env.prod` file, such as MAPBOX_API key.
+
+You could then redeploy with. The browser might cache the old version, delete all browser cache first before checking.
+
+This build process may take about 10 mins.
+
+```
+npm run build
+```
